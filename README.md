@@ -132,3 +132,49 @@ Nasıl çalışıyor:
 Gösterilen yön **manyetik kuzey**dir. Gerçek (coğrafi) kuzey isterseniz konum izni
 alıp `GeomagneticField(lat, lon, alt, time).declination` değerini açıya eklemeniz
 gerekir; Türkiye'de sapma yaklaşık 5-7° doğudur.
+
+## 5. Sorun giderme
+
+### "Kuruldu" dedi ama uygulama listede yok
+
+Önce hangi durumda olduğunuzu ayırın:
+
+`Ayarlar → Uygulamalar → Tüm uygulamaları göster` listesinde **Pusula** var mı?
+
+- **Varsa:** uygulama kurulu, sorun launcher'da. Aynı ekrandaki **Aç** düğmesiyle
+  hemen çalıştırabilirsiniz. Çekmecede görünmesi için: ana ekranı kapatıp açın
+  (ya da telefonu yeniden başlatın) ve launcher'ın **gizli uygulamalar**
+  ayarına bakın (Samsung: `Ana ekran ayarları → Uygulamaları gizle`,
+  Xiaomi: `Ayarlar → Uygulamalar → Uygulama kilidi → Gizli uygulamalar`).
+  Çekmece alfabetikse **P** harfinde arayın, ya da çekmecenin arama kutusuna
+  "Pusula" yazın.
+- **Yoksa:** kurulum aslında tamamlanmamış. Genelde Play Protect sessizce
+  engellemiştir: `Play Store → profil simgesi → Play Protect → Ayarlar →
+  Uygulamaları Play Protect ile tara` seçeneğini geçici olarak kapatıp APK'ya
+  tekrar dokunun, kurulumdan sonra geri açın. Kurulum ekranında **Yükle**
+  düğmesine bastığınızdan ve "Uygulama yüklendi" yazısını gördüğünüzden emin olun.
+
+v1.1'den itibaren ikon her yoğunluk için PNG olarak paketleniyor ve activity'nin
+kendi `label`/`icon` değerleri var — v1.0'da launcher'ın ikonu çözemeyip uygulamayı
+çekmecede göstermemesi mümkündü.
+
+### Geliştirici seçenekleri ayarlarda görünmüyor
+
+Bu menü varsayılan olarak gizlidir; yapı numarasına 7 kez dokununca ortaya çıkar.
+Yolu markaya göre değişir:
+
+| Marka | Yol |
+|---|---|
+| Pixel / stok Android | `Ayarlar → Telefon hakkında → Yapı numarası` |
+| Samsung | `Ayarlar → Telefon hakkında → Yazılım bilgileri → Derleme numarası` |
+| Xiaomi / Redmi (MIUI) | `Ayarlar → Telefon hakkında → MIUI sürümü` |
+| Oppo / Realme | `Ayarlar → Cihaz hakkında → Sürüm → Derleme numarası` |
+| Huawei | `Ayarlar → Telefon hakkında → Derleme numarası` |
+
+7 kez dokunduktan sonra ekran kilidi PIN'inizi ister, sonra "Artık
+geliştiricisiniz" mesajı çıkar. Menü şurada belirir:
+`Ayarlar → Sistem → Geliştirici seçenekleri` (MIUI'de `Ayarlar → Ek ayarlar →
+Geliştirici seçenekleri`). USB hata ayıklamayı oradan açarsınız.
+
+adb'yi hiç kullanmak istemiyorsanız gerek de yok — 1. yöntem (dosyaya dokunup
+kurmak) tek başına yeterlidir.
