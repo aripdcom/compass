@@ -31,6 +31,11 @@ android {
                 storePassword = keystoreProps.getProperty("storePassword")
                 keyAlias = keystoreProps.getProperty("keyAlias")
                 keyPassword = keystoreProps.getProperty("keyPassword")
+                // Üç şemayla da imzala: bazı OEM ROM'ları yalnızca v2 ile
+                // imzalı APK'ları "Uygulama yüklenmedi" diyerek reddedebiliyor.
+                enableV1Signing = true
+                enableV2Signing = true
+                enableV3Signing = true
             }
         }
     }

@@ -158,6 +158,28 @@ v1.1'den itibaren ikon her yoğunluk için PNG olarak paketleniyor ve activity'n
 kendi `label`/`icon` değerleri var — v1.0'da launcher'ın ikonu çözemeyip uygulamayı
 çekmecede göstermemesi mümkündü.
 
+### "Uygulama yüklenmedi" hatası
+
+Sırasıyla şunlara bakın:
+
+1. **Önce eski sürümü kaldırın.** En sık sebep budur. `Ayarlar → Uygulamalar →
+   Tüm uygulamaları göster → Pusula → Kaldır`. Aynı paket adına (`com.cem.pusula`)
+   sahip, farklı bir anahtarla imzalanmış bir kurulum varsa Android yeni APK'yı
+   "Uygulama yüklenmedi" diyerek reddeder. **Debug APK ile release APK'nın
+   imzaları farklıdır**, dolayısıyla debug'dan release'e geçerken kaldırma adımı
+   zorunludur. Listede görünmüyorsa yarım kalmış bir kurulum kalmış olabilir;
+   release APK'yı denemek çoğu zaman bunu da aşar.
+2. **Release APK'yı kullanın.** `pusula-1.1-release.apk` hata ayıklama bayrağı
+   taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
+   (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
+3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
+   release APK tam olarak **784.660 bayt** (~766 KB) olmalı. WhatsApp/Telegram
+   gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
+4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
+   taramayı geçici kapatın, kurun, sonra geri açın.
+5. **Depolama alanı.** 100 MB'ın altına düşmüş bir cihazda kurulum sessizce
+   başarısız olur.
+
 ### Geliştirici seçenekleri ayarlarda görünmüyor
 
 Bu menü varsayılan olarak gizlidir; yapı numarasına 7 kez dokununca ortaya çıkar.
