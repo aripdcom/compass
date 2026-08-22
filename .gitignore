@@ -1,9 +1,17 @@
 .gradle/
 build/
 local.properties
+
+# İmzalama anahtarı ve parolaları — asla commit edilmez
 keystore.properties
+keys/
 *.jks
 *.keystore
+
+# Üretilen APK'lar
+dist/
+
 .idea/
 *.iml
 .DS_Store
+.kotlin/

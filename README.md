@@ -9,6 +9,22 @@ ve Kotlin standart kütüphanesi kullanılıyor, kadran `Canvas` ile elle çizil
 - Tek izin: `ACCESS_COARSE_LOCATION` (yalnızca gerçek kuzey için; reddedilirse
   uygulama manyetik kuzeyle çalışmaya devam eder).
 
+## 0. Klasör düzeni
+
+```
+pusula/
+├── app/          uygulama kaynağı
+├── dist/         üretilen APK'lar          (gitignore'da)
+├── docs/         ekran görüntüleri, ikon
+├── keys/         imzalama anahtarı         (gitignore'da)
+└── keystore.properties                     (gitignore'da)
+```
+
+| Ekran | |
+|---|---|
+| ![Gerçek kuzey](docs/ekran-goruntusu-gercek-kuzey.png) | ![Manyetik kuzey](docs/ekran-goruntusu.png) |
+| Konum izni verilince: gerçek kuzey, altında manyetik yön ve sapma, kadranda mavi **M** işareti | İzin yokken: manyetik kuzeyle çalışmaya devam eder |
+
 ## 1. Hazır APK'yı telefona kurmak
 
 Derlenmiş APK: `app/build/outputs/apk/debug/app-debug.apk` (~800 KB)
@@ -93,11 +109,12 @@ telefonunuzda tutup güncelleyecekseniz, kendi anahtarınızla imzalanmış bir 
 APK üretin — böylece sürüm yükseltmelerinde "imza uyuşmuyor" hatası almazsınız.
 
 ```bash
-keytool -genkeypair -v -keystore ~/pusula-release.jks -alias pusula \
+mkdir -p keys
+keytool -genkeypair -v -keystore keys/pusula-release.jks -alias pusula \
     -keyalg RSA -keysize 2048 -validity 10000
 
 cat > keystore.properties <<EOF
-storeFile=/home/KULLANICI/pusula-release.jks
+storeFile=keys/pusula-release.jks
 storePassword=...
 keyAlias=pusula
 keyPassword=...
@@ -106,7 +123,10 @@ EOF
 ./gradlew assembleRelease   # -> app/build/outputs/apk/release/app-release.apk
 ```
 
-`keystore.properties` ve `.jks` dosyaları `.gitignore`'da — commit etmeyin,
+`storeFile` yolu proje köküne göre çözülür, bu yüzden proje klasörünü taşımak
+ayarı bozmaz.
+
+`keys/`, `dist/` ve `keystore.properties` `.gitignore`'da — commit etmeyin,
 **ve `.jks` dosyasını kaybetmeyin**: uygulamayı güncelleyebilmenin tek yolu odur.
 `keystore.properties` yoksa build dosyası bu bloğu sessizce atlar, `assembleDebug`
 her koşulda çalışır.
@@ -194,7 +214,7 @@ Sırasıyla şunlara bakın:
    imzaları farklıdır**, dolayısıyla debug'dan release'e geçerken kaldırma adımı
    zorunludur. Listede görünmüyorsa yarım kalmış bir kurulum kalmış olabilir;
    release APK'yı denemek çoğu zaman bunu da aşar.
-2. **Release APK'yı kullanın.** `pusula-1.1-release.apk` hata ayıklama bayrağı
+2. **Release APK'yı kullanın.** `dist/` içindeki release APK hata ayıklama bayrağı
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
@@ -219,7 +239,7 @@ cihazlarda en güvenilir yol adb ile kurmaktır:
 
 ```bash
 export ANDROID_HOME=$HOME/Android/Sdk
-$ANDROID_HOME/platform-tools/adb install -r pusula-1.1-release.apk
+$ANDROID_HOME/platform-tools/adb install -r dist/pusula-1.2-release.apk
 ```
 
 Kablosuz adb'de eşleştirme portu ile bağlantı portunun farklı olduğunu unutmayın;
