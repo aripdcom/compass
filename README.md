@@ -180,6 +180,28 @@ Sırasıyla şunlara bakın:
 5. **Depolama alanı.** 100 MB'ın altına düşmüş bir cihazda kurulum sessizce
    başarısız olur.
 
+### Doğrulanmış kurulum (Samsung Galaxy A51, Android 13)
+
+Uygulama SM-A515F / Android 13 (API 33, arm64-v8a) üzerinde kablosuz adb ile
+kurulup çalıştırıldı: kurulum `Success`, uygulama çekmecede ikonuyla görünüyor,
+sensör okuması doğru, logcat'te çökme yok.
+
+Aynı cihazda **dosyaya dokunarak kurmak "Uygulama yüklenmedi" veriyordu**, oysa
+telefondaki APK dosyasının sha256'sı kaynaktakiyle birebir aynıydı — yani dosya
+bozuk değildi, engel cihazın kurulum yolundaydı (Play Protect taraması ve/veya
+dosya yöneticisine verilmemiş "bilinmeyen uygulamaları yükle" izni). Samsung
+cihazlarda en güvenilir yol adb ile kurmaktır:
+
+```bash
+export ANDROID_HOME=$HOME/Android/Sdk
+$ANDROID_HOME/platform-tools/adb install -r pusula-1.1-release.apk
+```
+
+Kablosuz adb'de eşleştirme portu ile bağlantı portunun farklı olduğunu unutmayın;
+eşleştirdikten sonra bağlantı portu `adb mdns services` ile bulunur. Telefon ile
+bilgisayarın **aynı alt ağda** olması şart (192.168.1.x ile 192.168.2.x arasında
+yönlendirme yoktur).
+
 ### Geliştirici seçenekleri ayarlarda görünmüyor
 
 Bu menü varsayılan olarak gizlidir; yapı numarasına 7 kez dokununca ortaya çıkar.
