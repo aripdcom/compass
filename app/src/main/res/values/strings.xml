@@ -3,5 +3,8 @@
     <string name="app_name">Pusula</string>
     <string name="no_sensor">Bu cihazda pusula sensörü bulunamadı.</string>
     <string name="calibrate">Hassasiyet düşük — telefonu havada 8 çizer gibi hareket ettirin.</string>
-    <string name="hint_magnetic">Manyetik kuzey</string>
+    <string name="true_north">Gerçek kuzey</string>
+    <string name="magnetic_north">Manyetik kuzey</string>
+    <string name="need_location">Gerçek kuzey için konum izni gerekli — dokunun</string>
+    <string name="waiting_location">Konum bekleniyor…</string>
 </resources>

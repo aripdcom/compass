@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Manyetik sapmayı (gerçek kuzey) hesaplamak için; yaklaşık konum yeterli -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <!-- Pusula donanımı olmayan cihazlarda uygulama yine kurulabilsin diye required=false -->
     <uses-feature
         android:name="android.hardware.sensor.compass"

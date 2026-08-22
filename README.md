@@ -6,7 +6,8 @@ ve Kotlin standart kütüphanesi kullanılıyor, kadran `Canvas` ile elle çizil
 - `minSdk 24` (Android 7.0) — **Android 13 dahil** tüm sürümlerde çalışır
 - `targetSdk 34`
 - Paket adı: `com.cem.pusula`
-- Hiçbir izin (permission) istemez; konum izni gerekmez.
+- Tek izin: `ACCESS_COARSE_LOCATION` (yalnızca gerçek kuzey için; reddedilirse
+  uygulama manyetik kuzeyle çalışmaya devam eder).
 
 ## 1. Hazır APK'yı telefona kurmak
 
@@ -110,7 +111,31 @@ EOF
 `keystore.properties` yoksa build dosyası bu bloğu sessizce atlar, `assembleDebug`
 her koşulda çalışır.
 
-## 4. Kodun yapısı
+## 4. Gerçek kuzey ve manyetik kuzey
+
+Uygulama ikisini birden gösterir:
+
+- **Büyük rakam** gerçek (coğrafi) kuzeye göre yöndür — sapma bilinir bilinmez
+  buna geçer, bilinmiyorsa manyetik yönü gösterir ve altındaki etiket hangisi
+  olduğunu açıkça yazar.
+- **Alt satır** manyetik yönü ve o konumdaki sapmayı verir, örn.
+  `Manyetik 265° · Sapma 5,8°D`.
+- **Kadranda mavi "M" işareti** manyetik kuzeyin nereye düştüğünü gösterir.
+  Kadran gerçek kuzeye göre döndüğü için bu işaret K'dan sapma kadar uzakta durur.
+
+Sapma `GeomagneticField(enlem, boylam, rakım, zaman).declination` ile hesaplanır;
+doğuya doğru pozitiftir ve `gerçek = manyetik + sapma` formülüyle uygulanır.
+Türkiye'de yaklaşık +5° ile +7° arasındadır.
+
+Bunun için yaklaşık konum yeter, o yüzden yalnızca `ACCESS_COARSE_LOCATION`
+isteniyor. Konum `LocationManager`'ın en son bilinen konumundan alınır (Google
+Play Hizmetleri gerekmez); bulunan sapma `SharedPreferences`'a yazıldığı için
+sonraki açılışlarda gerçek kuzey anında gösterilir. İzin verilmezse alt satır
+"Gerçek kuzey için konum izni gerekli" yazar ve dokununca izni yeniden ister;
+kalıcı reddedilmişse uygulama ayarlarını açar. İzin olmadan da uygulama
+manyetik kuzeyle sorunsuz çalışır.
+
+## 5. Kodun yapısı
 
 | Dosya | İş |
 |---|---|
@@ -133,7 +158,7 @@ Gösterilen yön **manyetik kuzey**dir. Gerçek (coğrafi) kuzey isterseniz konu
 alıp `GeomagneticField(lat, lon, alt, time).declination` değerini açıya eklemeniz
 gerekir; Türkiye'de sapma yaklaşık 5-7° doğudur.
 
-## 5. Sorun giderme
+## 6. Sorun giderme
 
 ### "Kuruldu" dedi ama uygulama listede yok
 

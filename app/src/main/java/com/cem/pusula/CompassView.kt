@@ -21,6 +21,9 @@ class CompassView @JvmOverloads constructor(
 
     private var azimuth = 0f
 
+    /** Kadranın kuzeyine göre manyetik kuzeyin açısal farkı; null ise işaretlenmez. */
+    private var magneticOffset: Float? = null
+
     private val dialPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         color = Color.parseColor("#33FFFFFF")
@@ -49,11 +52,24 @@ class CompassView @JvmOverloads constructor(
         color = Color.parseColor("#E5484D")
         style = Paint.Style.FILL
     }
+    private val magneticPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.parseColor("#4C9AFF")
+        style = Paint.Style.STROKE
+    }
+    private val magneticLabelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.parseColor("#4C9AFF")
+        textAlign = Paint.Align.CENTER
+    }
 
     private val needle = Path()
 
     fun setAzimuth(degrees: Float) {
         azimuth = degrees
+        invalidate()
+    }
+
+    fun setMagneticNorthOffset(degrees: Float?) {
+        magneticOffset = degrees
         invalidate()
     }
 
@@ -101,6 +117,23 @@ class CompassView @JvmOverloads constructor(
                 cx,
                 cy - radius + radius * 0.30f - (labelPaint.ascent() + labelPaint.descent()) / 2f,
                 labelPaint
+            )
+            canvas.restore()
+        }
+
+        // Manyetik kuzey işareti: kadran gerçek kuzeye göre döndüğünde manyetik
+        // kuzey sapma kadar yanda kalır; nerede olduğunu göstermek için işaretlenir.
+        magneticOffset?.let { offset ->
+            canvas.save()
+            canvas.rotate(offset, cx, cy)
+            magneticPaint.strokeWidth = dp(2f)
+            canvas.drawLine(cx, cy - radius, cx, cy - radius * 0.86f, magneticPaint)
+            magneticLabelPaint.textSize = radius * 0.11f
+            canvas.drawText(
+                "M",
+                cx,
+                cy - radius * 0.86f + magneticLabelPaint.textSize,
+                magneticLabelPaint
             )
             canvas.restore()
         }
