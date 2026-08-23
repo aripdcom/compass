@@ -112,6 +112,49 @@ class SunTest {
         assertTrue((ekinoks.setAt - ekinoks.riseAt) / 3_600_000.0 in 12.0..12.3)
     }
 
+    /**
+     * Doğuş ve batış **yerel** güne ait olmalı, UTC gününe değil.
+     *
+     * Değişmez: doğuş ile batışın orta noktası yerel güneş öğlesidir; doğru
+     * demirlenmiş bir günde referans an bu öğleden en çok 12 saat uzakta olur.
+     * Gün UTC'ye demirlendiğinde Auckland'da (UTC+13) bu fark 19,5 saate
+     * çıkıyordu — yani dünün doğuşu ve batışı gösteriliyordu.
+     */
+    @Test
+    fun `dogus ve batis yerel gune ait`() {
+        // Boylamın her iki ucu: Auckland (+174,8), Honolulu (-157,8) ve İstanbul.
+        val konumlar = listOf(
+            Triple(-36.85, 174.76, "Auckland"),
+            Triple(21.31, -157.86, "Honolulu"),
+            Triple(istanbulLat, istanbulLon, "İstanbul")
+        )
+        // Yerel günün her saatinden örnek al: kayma günün yalnızca bir kısmında görünür.
+        for ((lat, lon, ad) in konumlar) {
+            for (saat in 0 until 24) {
+                val t = 1_768_507_200_000L + saat * 3_600_000L
+                val riseSet = Sun.riseSet(t, lat, lon)!!
+                val ogle = (riseSet.riseAt + riseSet.setAt) / 2
+                assertTrue(
+                    "$ad +$saat sa: öğleye uzaklık ${abs(t - ogle) / 3_600_000.0} saat",
+                    abs(t - ogle) < 12 * 3_600_000L
+                )
+            }
+        }
+    }
+
+    /**
+     * Kaymanın kullanıcıya görünen hâli: Auckland'da yerel sabah 09:00'da
+     * (UTC'de bir önceki günün 20:00'ı) batış hâlâ ilerideyken, UTC gününe
+     * demirlenmiş hesap çoktan geçmiş bir batış saati yazıyordu.
+     */
+    @Test
+    fun `tarih cizgisi yakininda batis ileride kalir`() {
+        val sabah = 1_768_507_200_000L   // 2026-01-16 09:00 NZDT = 2026-01-15 20:00 UTC
+        val riseSet = Sun.riseSet(sabah, -36.85, 174.76)!!
+        assertTrue("doğuş geçmişte olmalı", riseSet.riseAt < sabah)
+        assertTrue("batış ilerde olmalı", riseSet.setAt > sabah)
+    }
+
     /** Gün boyunca yükseklik hem pozitif hem negatif olmalı: gece ve gündüz var. */
     @Test
     fun `gun icinde hem gunduz hem gece var`() {

@@ -35,6 +35,9 @@ object Sun {
      */
     private const val HORIZON_DEGREES = -0.833
 
+    /** Boylamın her derecesi güneş saatini 4 dakika kaydırır. */
+    private const val MILLIS_PER_DEGREE = 240_000.0
+
     /**
      * Bugün güneşin hangi yönden doğup hangi yönden batacağı.
      *
@@ -66,6 +69,12 @@ object Sun {
      * dakikaya varan hata veriyordu. Bulunan an için deklinasyon ve zaman
      * denklemi yeniden hesaplanıp bir kez yineleniyor — kalan hata saniyeler
      * mertebesinde.
+     *
+     * Gün **yerel güneş gününe** demirlenir, UTC gününe değil. Aksi hâlde
+     * boylam büyüdükçe iki gün ayrışır ve sonuç bir gün kayar: Auckland'da
+     * (UTC+13) yerel sabah saat 09:00 UTC'de bir önceki güne düştüğü için
+     * uygulama dünün doğuş ve batışını gösteriyordu. `minutes` zaten `-4·boylam`
+     * içerdiğinden kaydırma yalnızca gün seçiminde uygulanır, sonuca eklenmez.
      */
     private fun horizonMoment(
         reference: Long,
@@ -74,7 +83,9 @@ object Sun {
         sunrise: Boolean
     ): Long? {
         val horizon = Math.toRadians(HORIZON_DEGREES)
-        val dayStart = reference - Math.floorMod(reference, 86_400_000L)
+        val solarShift = (longitude * MILLIS_PER_DEGREE).toLong()
+        val dayStart = reference + solarShift -
+            Math.floorMod(reference + solarShift, 86_400_000L)
         var moment = reference
         repeat(2) {
             val declination = declination(moment)
