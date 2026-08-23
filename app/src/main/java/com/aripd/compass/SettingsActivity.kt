@@ -29,6 +29,9 @@ class SettingsActivity : Activity() {
     private lateinit var palette: Palette
     private lateinit var column: LinearLayout
 
+    /** Ekranda duran diyalog; etkinlik yıkılırken kapatılmalı. */
+    private var dialog: AlertDialog? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         palette = Palette.of(prefs().getBoolean(Prefs.KEY_NIGHT, false))
@@ -48,6 +51,7 @@ class SettingsActivity : Activity() {
         )
         setContentView(scroll)
 
+        backRow()
         header(getString(R.string.settings_section_display))
         switchRow(
             R.string.settings_night, R.string.settings_night_summary,
@@ -119,6 +123,17 @@ class SettingsActivity : Activity() {
         note(getString(R.string.settings_marks_note))
 
         header(getString(R.string.settings_section_about))
+        actionRow(
+            getString(R.string.settings_gestures),
+            getString(R.string.settings_gestures_summary)
+        ) {
+            show(
+                AlertDialog.Builder(this)
+                    .setTitle(R.string.settings_gestures)
+                    .setMessage(R.string.settings_gestures_body)
+                    .setPositiveButton(android.R.string.ok, null)
+            )
+        }
         infoRow(getString(R.string.settings_version), versionLabel())
         linkRow(getString(R.string.settings_source), SOURCE_LABEL, SOURCE_URL)
         infoRow(getString(R.string.settings_license), getString(R.string.settings_license_value))
@@ -138,6 +153,53 @@ class SettingsActivity : Activity() {
             info.versionCode.toLong()
         }
         return getString(R.string.settings_version_format, info.versionName ?: "", code)
+    }
+
+    /**
+     * Geri satırı. Tema `NoActionBar` olduğu için sistem yukarı okunu
+     * göstermiyor; `parentActivityName` tanımlı olduğu hâlde görünür bir geri
+     * yolu yoktu. Kendi paletiyle çizilen bir satır hem gece modunda doğru
+     * renkte kalıyor hem de dokunma hedefi 48dp'yi tutuyor.
+     */
+    private fun backRow() {
+        column.addView(TextView(this).apply {
+            text = getString(R.string.settings_back, getString(R.string.app_name))
+            setTextColor(palette.textDim)
+            textSize = 16f
+            minHeight = dp(48)
+            gravity = Gravity.CENTER_VERTICAL
+            isClickable = true
+            isFocusable = true
+            setOnClickListener { finish() }
+        })
+    }
+
+    /** Dokununca bir iş yapan satır; anahtar yok, okunacak düğüm satırın kendisi. */
+    private fun actionRow(title: String, summary: String?, onClick: () -> Unit) {
+        val row = rowContainer()
+        val labels = labelColumn(title, summary)
+        labels.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+        row.isFocusable = true
+        row.contentDescription = if (summary == null) title else "$title. $summary"
+        row.addView(labels, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
+        row.setOnClickListener { onClick() }
+        column.addView(row)
+    }
+
+    /**
+     * Diyaloğu gösterir ve izler. Etkinlik yıkılırken (döndürme, gece moduna
+     * geçince gelen `recreate()`) açık kalan diyalog pencereyi sızdırıp
+     * logcat'e `WindowLeaked` düşürüyordu.
+     */
+    private fun show(builder: AlertDialog.Builder) {
+        dialog?.dismiss()
+        dialog = builder.show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dialog?.dismiss()
+        dialog = null
     }
 
     /** Dokunulamayan bilgi satırı. */
@@ -228,15 +290,16 @@ class SettingsActivity : Activity() {
         row.contentDescription = "${getString(titleRes)}. ${options[prefs().getInt(key, default)]}"
         row.addView(labels, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
         row.setOnClickListener {
-            AlertDialog.Builder(this)
-                .setTitle(getString(titleRes))
-                .setSingleChoiceItems(options, prefs().getInt(key, default)) { dialog, which ->
-                    prefs().edit().putInt(key, which).apply()
-                    (labels.getChildAt(1) as TextView).text = options[which]
-                    row.contentDescription = "${getString(titleRes)}. ${options[which]}"
-                    dialog.dismiss()
-                }
-                .show()
+            show(
+                AlertDialog.Builder(this)
+                    .setTitle(getString(titleRes))
+                    .setSingleChoiceItems(options, prefs().getInt(key, default)) { shown, which ->
+                        prefs().edit().putInt(key, which).apply()
+                        (labels.getChildAt(1) as TextView).text = options[which]
+                        row.contentDescription = "${getString(titleRes)}. ${options[which]}"
+                        shown.dismiss()
+                    }
+            )
         }
         column.addView(row)
     }

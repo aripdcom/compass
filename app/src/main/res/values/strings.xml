@@ -40,6 +40,10 @@
     <string name="target_right">Target %1$s · %2$s right</string>
     <string name="target_left">Target %1$s · %2$s left</string>
     <string name="settings_title">Settings</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Gestures</string>
+    <string name="settings_gestures_summary">What every tap and long press does</string>
+    <string name="settings_gestures_body">Tap the dial — lock the bearing; tap again to release\nLong-press the dial — save your position as a point\nTap the large degrees — switch night mode\nTap the location line — switch decimal ⇄ degrees-minutes-seconds\nLong-press the location line — copy or share\nTap the bottom line — enter a bearing by hand\nLong-press the bottom line — saved points and coordinate entry</string>
     <string name="settings_open">Settings</string>
     <string name="settings_section_display">DISPLAY</string>
     <string name="settings_night">Night mode</string>

@@ -40,6 +40,10 @@
     <string name="target_right">Obiettivo %1$s · %2$s a destra</string>
     <string name="target_left">Obiettivo %1$s · %2$s a sinistra</string>
     <string name="settings_title">Impostazioni</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Gesti</string>
+    <string name="settings_gestures_summary">Cosa fa ogni tocco e ogni pressione lunga</string>
+    <string name="settings_gestures_body">Tocca il quadrante — blocca la rotta; tocca di nuovo per liberarla\nTieni premuto il quadrante — salva la tua posizione come punto\nTocca i gradi grandi — cambia la modalità notturna\nTocca la riga della posizione — decimale ⇄ gradi-minuti-secondi\nTieni premuta la riga della posizione — copia o condividi\nTocca la riga in basso — inserisci una rotta a mano\nTieni premuta la riga in basso — punti salvati e inserimento coordinate</string>
     <string name="settings_open">Impostazioni</string>
     <string name="settings_section_display">SCHERMO</string>
     <string name="settings_night">Modalità notte</string>

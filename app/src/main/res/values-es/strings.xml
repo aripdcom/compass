@@ -40,6 +40,10 @@
     <string name="target_right">Objetivo %1$s · %2$s a la derecha</string>
     <string name="target_left">Objetivo %1$s · %2$s a la izquierda</string>
     <string name="settings_title">Ajustes</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Gestos</string>
+    <string name="settings_gestures_summary">Qué hace cada toque y cada pulsación larga</string>
+    <string name="settings_gestures_body">Tocar el dial — fijar el rumbo; tocar de nuevo lo libera\nMantener el dial — guardar tu posición como punto\nTocar los grados grandes — cambiar el modo nocturno\nTocar la línea de ubicación — decimal ⇄ grados-minutos-segundos\nMantener la línea de ubicación — copiar o compartir\nTocar la línea inferior — introducir un rumbo a mano\nMantener la línea inferior — puntos guardados y entrada de coordenadas</string>
     <string name="settings_open">Ajustes</string>
     <string name="settings_section_display">PANTALLA</string>
     <string name="settings_night">Modo nocturno</string>

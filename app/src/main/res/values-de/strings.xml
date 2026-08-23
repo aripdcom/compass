@@ -40,6 +40,10 @@
     <string name="target_right">Ziel %1$s · %2$s nach rechts</string>
     <string name="target_left">Ziel %1$s · %2$s nach links</string>
     <string name="settings_title">Einstellungen</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Gesten</string>
+    <string name="settings_gestures_summary">Was jedes Tippen und langes Drücken bewirkt</string>
+    <string name="settings_gestures_body">Zifferblatt tippen — Kurs sperren; erneut tippen löst ihn\nZifferblatt lang drücken — Standort als Punkt speichern\nGroße Gradzahl tippen — Nachtmodus umschalten\nStandortzeile tippen — dezimal ⇄ Grad-Minuten-Sekunden\nStandortzeile lang drücken — kopieren oder teilen\nUntere Zeile tippen — Kurs von Hand eingeben\nUntere Zeile lang drücken — gespeicherte Punkte und Koordinateneingabe</string>
     <string name="settings_open">Einstellungen</string>
     <string name="settings_section_display">ANZEIGE</string>
     <string name="settings_night">Nachtmodus</string>

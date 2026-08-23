@@ -40,6 +40,10 @@
     <string name="target_right">Hedef %1$s · %2$s sağa</string>
     <string name="target_left">Hedef %1$s · %2$s sola</string>
     <string name="settings_title">Ayarlar</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Hareketler</string>
+    <string name="settings_gestures_summary">Hangi dokunuş ve uzun basış ne yapar</string>
+    <string name="settings_gestures_body">Kadrana dokun — yönü kilitle; yeniden dokun bırak\nKadrana uzun bas — bulunduğun yeri nokta olarak kaydet\nBüyük dereceye dokun — gece modunu değiştir\nKonum satırına dokun — ondalık ⇄ derece-dakika-saniye\nKonum satırına uzun bas — kopyala ya da paylaş\nAlt satıra dokun — elle açı gir\nAlt satıra uzun bas — kayıtlı noktalar ve koordinat girişi</string>
     <string name="settings_open">Ayarlar</string>
     <string name="settings_section_display">GÖRÜNÜM</string>
     <string name="settings_night">Gece modu</string>

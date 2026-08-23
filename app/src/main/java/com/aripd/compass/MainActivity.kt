@@ -171,6 +171,9 @@ class MainActivity : Activity(), SensorEventListener {
 
     private val handler = Handler(Looper.getMainLooper())
 
+    /** Ekranda duran diyalog; etkinlik yıkılırken kapatılmalı. */
+    private var dialog: AlertDialog? = null
+
     /**
      * Titreşim için `performHapticFeedback` yerine doğrudan `Vibrator`:
      * Galaxy A51 / Android 13'te sabitlerin çoğu (CLOCK_TICK, KEYBOARD_TAP,
@@ -530,6 +533,23 @@ class MainActivity : Activity(), SensorEventListener {
         handler.post(sunTick)
     }
 
+    /**
+     * Diyaloğu gösterir ve izler. Etkinlik yıkılırken (döndürme, dil değişimi)
+     * açık kalan diyalog pencereyi sızdırıp logcat'e `WindowLeaked`
+     * düşürüyordu. Bir öncekini kapatmak aynı anda iki diyalog açılmasını da
+     * engelliyor — nokta listesinden koordinat girişine geçerken oluyordu.
+     */
+    private fun show(builder: AlertDialog.Builder) {
+        dialog?.dismiss()
+        dialog = builder.show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dialog?.dismiss()
+        dialog = null
+    }
+
     override fun onPause() {
         super.onPause()
         handler.removeCallbacks(sunTick)
@@ -711,13 +731,14 @@ class MainActivity : Activity(), SensorEventListener {
             getString(R.string.location_action_copy),
             getString(R.string.location_action_share)
         )
-        AlertDialog.Builder(this)
-            .setItems(actions) { _, which ->
-                if (which == 0) copyLocation()
-                else shareLocation(null, location.latitude, location.longitude)
-            }
-            .setNegativeButton(R.string.bearing_dialog_cancel, null)
-            .show()
+        show(
+            AlertDialog.Builder(this)
+                .setItems(actions) { _, which ->
+                    if (which == 0) copyLocation()
+                    else shareLocation(null, location.latitude, location.longitude)
+                }
+                .setNegativeButton(R.string.bearing_dialog_cancel, null)
+        )
     }
 
     /**
@@ -881,7 +902,7 @@ class MainActivity : Activity(), SensorEventListener {
         if (targetMagnetic != null) {
             builder.setNeutralButton(R.string.bearing_dialog_clear) { _, _ -> clearTarget() }
         }
-        builder.show()
+        show(builder)
     }
 
     /** Ekranda gösterilen açının seçili birimdeki sayısal karşılığı. */
@@ -1137,7 +1158,7 @@ class MainActivity : Activity(), SensorEventListener {
             }.toTypedArray()
             builder.setItems(labels) { _, which -> showWaypointActions(waypoints[which]) }
         }
-        builder.show()
+        show(builder)
     }
 
     private fun showWaypointActions(point: Waypoint) {
@@ -1146,17 +1167,18 @@ class MainActivity : Activity(), SensorEventListener {
             getString(R.string.location_action_share),
             getString(R.string.waypoint_delete)
         )
-        AlertDialog.Builder(this)
-            .setTitle(point.name)
-            .setItems(actions) { _, which ->
-                when (which) {
-                    0 -> showWaypointRename(point)
-                    1 -> shareLocation(point.name, point.latitude, point.longitude)
-                    else -> deleteWaypoint(point)
+        show(
+            AlertDialog.Builder(this)
+                .setTitle(point.name)
+                .setItems(actions) { _, which ->
+                    when (which) {
+                        0 -> showWaypointRename(point)
+                        1 -> shareLocation(point.name, point.latitude, point.longitude)
+                        else -> deleteWaypoint(point)
+                    }
                 }
-            }
-            .setNegativeButton(R.string.bearing_dialog_cancel, null)
-            .show()
+                .setNegativeButton(R.string.bearing_dialog_cancel, null)
+        )
     }
 
     private fun showWaypointRename(point: Waypoint) {
@@ -1175,16 +1197,17 @@ class MainActivity : Activity(), SensorEventListener {
             hint = getString(R.string.waypoint_name_hint)
             setSelectAllOnFocus(true)
         }
-        AlertDialog.Builder(this)
-            .setTitle(titleRes)
-            .setMessage(message)
-            .setView(pad(input))
-            .setPositiveButton(R.string.bearing_dialog_set) { _, _ ->
-                val name = Waypoints.sanitize(input.text.toString())
-                if (name.isNotEmpty()) onName(name)
-            }
-            .setNegativeButton(R.string.bearing_dialog_cancel, null)
-            .show()
+        show(
+            AlertDialog.Builder(this)
+                .setTitle(titleRes)
+                .setMessage(message)
+                .setView(pad(input))
+                .setPositiveButton(R.string.bearing_dialog_set) { _, _ ->
+                    val name = Waypoints.sanitize(input.text.toString())
+                    if (name.isNotEmpty()) onName(name)
+                }
+                .setNegativeButton(R.string.bearing_dialog_cancel, null)
+        )
     }
 
     /** Diyalog içindeki alanlar kenara yapışmasın diye. */
@@ -1207,21 +1230,22 @@ class MainActivity : Activity(), SensorEventListener {
             hint = getString(R.string.waypoint_coordinates_hint)
             setSelectAllOnFocus(true)
         }
-        AlertDialog.Builder(this)
-            .setTitle(R.string.waypoint_enter_coordinates)
-            .setView(pad(input))
-            .setPositiveButton(R.string.bearing_dialog_set) { _, _ ->
-                val point = Coordinates.parse(input.text.toString())
-                if (point == null) {
-                    Toast.makeText(
-                        this, R.string.waypoint_coordinates_unreadable, Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    askToSaveWaypoint(null, point.latitude, point.longitude)
+        show(
+            AlertDialog.Builder(this)
+                .setTitle(R.string.waypoint_enter_coordinates)
+                .setView(pad(input))
+                .setPositiveButton(R.string.bearing_dialog_set) { _, _ ->
+                    val point = Coordinates.parse(input.text.toString())
+                    if (point == null) {
+                        Toast.makeText(
+                            this, R.string.waypoint_coordinates_unreadable, Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        askToSaveWaypoint(null, point.latitude, point.longitude)
+                    }
                 }
-            }
-            .setNegativeButton(R.string.bearing_dialog_cancel, null)
-            .show()
+                .setNegativeButton(R.string.bearing_dialog_cancel, null)
+        )
     }
 
     /**

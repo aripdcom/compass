@@ -40,6 +40,10 @@
     <string name="target_right">Cible %1$s · %2$s à droite</string>
     <string name="target_left">Cible %1$s · %2$s à gauche</string>
     <string name="settings_title">Réglages</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Gestes</string>
+    <string name="settings_gestures_summary">Ce que fait chaque appui et appui long</string>
+    <string name="settings_gestures_body">Toucher le cadran — verrouiller le cap ; toucher à nouveau le libère\nAppui long sur le cadran — enregistrer votre position comme point\nToucher les grands degrés — basculer le mode nuit\nToucher la ligne de position — décimal ⇄ degrés-minutes-secondes\nAppui long sur la ligne de position — copier ou partager\nToucher la ligne du bas — saisir un cap à la main\nAppui long sur la ligne du bas — points enregistrés et saisie de coordonnées</string>
     <string name="settings_open">Réglages</string>
     <string name="settings_section_display">AFFICHAGE</string>
     <string name="settings_night">Mode nuit</string>
