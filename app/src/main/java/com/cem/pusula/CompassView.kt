@@ -8,6 +8,7 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import kotlin.math.abs
+import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
@@ -37,6 +38,9 @@ class CompassView @JvmOverloads constructor(
 
     /** Kaydedilen noktanın yönü; konum bilinmeden hesaplanamaz. */
     private var waypointBearing: Float? = null
+
+    /** Ay döndürülmemiş katmanda çizildiği için yarıçapı buradan taşınır. */
+    private var moonFraction: Float? = null
 
     /** Su terazisi gösterilsin mi; kapalıyken göbekte yalnızca küçük bir nokta olur. */
     var levelVisible: Boolean = true
@@ -212,25 +216,53 @@ class CompassView @JvmOverloads constructor(
             canvas.restore()
         }
 
-        // Yazılı işaretler: manyetik kuzey ve sabit noktalar. Hepsi tek listede
-        // toplanır, çünkü yarıçapları birbirine göre dağıtılıyor.
+        // Kadran işaretleri tek listede toplanır: yazılar (M, yerler) ve semboller
+        // (güneş, ay, nokta) aynı halkayı paylaştığı için yarıçapları birlikte
+        // dağıtılmalı. Ayrı ele alındıklarında yönleri yakın bir yazı ile bir
+        // sembol üst üste biniyordu -- ölçümde ay ile kaydedilen nokta bunu yaptı.
         magneticPaint.strokeWidth = dp(2f)
         qiblaPaint.strokeWidth = dp(2f)
-        // Yazı boyu kademeler arası mesafeden (0,09R) küçük kalmalı, yoksa farklı
-        // yarıçaptaki iki etiket yine üst üste biner.
         magneticLabelPaint.textSize = radius * 0.095f
         qiblaLabelPaint.textSize = radius * 0.085f
-        val labelled = ArrayList<Triple<Float, String, Boolean>>()
-        magneticOffset?.let { labelled.add(Triple(it, "M", true)) }
-        placeMarks.forEach { labelled.add(Triple(it.bearing, it.label, false)) }
-        assignLabelRadii(labelled.map { it.first }).forEachIndexed { index, fraction ->
-            val (bearing, label, magnetic) = labelled[index]
-            drawRimLabel(
-                canvas, cx, cy, radius, bearing, label,
-                if (magnetic) magneticPaint else qiblaPaint,
-                if (magnetic) magneticLabelPaint else qiblaLabelPaint,
-                fraction
-            )
+
+        val marks = ArrayList<RimItem>()
+        magneticOffset?.let {
+            marks.add(RimItem(it, halfWidth(magneticLabelPaint.measureText("M") / 2f, radius), KIND_MAGNETIC, "M"))
+        }
+        placeMarks.forEach {
+            marks.add(RimItem(it.bearing, halfWidth(qiblaLabelPaint.measureText(it.label) / 2f, radius), KIND_PLACE, it.label))
+        }
+        sunBearing?.let { marks.add(RimItem(it, halfWidth(dp(6f), radius), KIND_SUN, null)) }
+        moon?.let { marks.add(RimItem(it.bearing, halfWidth(dp(7.5f), radius), KIND_MOON, null)) }
+        waypointBearing?.let { marks.add(RimItem(it, halfWidth(dp(7f), radius), KIND_WAYPOINT, null)) }
+
+        val fractions = assignRimRadii(marks)
+        moonFraction = null
+        marks.forEachIndexed { index, item ->
+            val fraction = fractions[index]
+            when (item.kind) {
+                KIND_MAGNETIC ->
+                    drawRimLabel(canvas, cx, cy, radius, item.bearing, item.label!!, magneticPaint, magneticLabelPaint, fraction)
+                KIND_PLACE ->
+                    drawRimLabel(canvas, cx, cy, radius, item.bearing, item.label!!, qiblaPaint, qiblaLabelPaint, fraction)
+                KIND_SUN -> {
+                    canvas.save()
+                    canvas.rotate(item.bearing, cx, cy)
+                    sunPaint.style = if (sunAboveHorizon) Paint.Style.FILL else Paint.Style.STROKE
+                    sunPaint.strokeWidth = dp(2f)
+                    canvas.drawCircle(cx, cy - radius * fraction, dp(6f), sunPaint)
+                    canvas.restore()
+                }
+                KIND_WAYPOINT -> {
+                    canvas.save()
+                    canvas.rotate(item.bearing, cx, cy)
+                    waypointPaint.style = Paint.Style.FILL
+                    canvas.drawPath(diamond(cx, cy - radius * fraction, dp(7f)), waypointPaint)
+                    canvas.restore()
+                }
+                // Ay döndürülmemiş katmanda çizildiği için yarıçapı saklanır.
+                else -> moonFraction = fraction
+            }
         }
 
         // Güneşin gün boyu izleyeceği yol: doğuştan batışa, güneyin üzerinden.
@@ -252,27 +284,7 @@ class CompassView @JvmOverloads constructor(
             }
         }
 
-        // Güneş: manyetik alandan bağımsız olduğu için kadranı çapraz kontrol
-        // etmeye yarar. Etiket yerine disk çizilir, hem şekli hem rengi ayırt eder.
-        sunBearing?.let { bearing ->
-            canvas.save()
-            canvas.rotate(bearing, cx, cy)
-            sunPaint.style = if (sunAboveHorizon) Paint.Style.FILL else Paint.Style.STROKE
-            sunPaint.strokeWidth = dp(2f)
-            canvas.drawCircle(cx, cy - radius * 0.955f, dp(6f), sunPaint)
-            canvas.restore()
-        }
 
-        // Kaydedilen nokta: geri dönülecek yer. Etiket yerine baklava dilimi,
-        // çünkü yön harfleri 0,62-0,785R bandını kaplıyor ve üçüncü bir rim
-        // etiketine yer kalmıyor; noktanın adı zaten alt satırda mor yazıyor.
-        waypointBearing?.let { bearing ->
-            canvas.save()
-            canvas.rotate(bearing, cx, cy)
-            waypointPaint.style = Paint.Style.FILL
-            canvas.drawPath(diamond(cx, cy - radius * 0.955f, dp(7f)), waypointPaint)
-            canvas.restore()
-        }
 
         // Kilitli hedef: nişan alınacak yön. Kadranın içine uzanan çizgi,
         // telefonu bu çizgi boyunca döndürüp yönü tutmayı kolaylaştırır.
@@ -309,7 +321,7 @@ class CompassView @JvmOverloads constructor(
         // görünürdü. Konumu açıdan hesaplanır, simge ekrana dik çizilir.
         moon?.let { mark ->
             val angle = Math.toRadians((mark.bearing - azimuth).toDouble())
-            val distance = radius * SUN_ARC_RADIUS
+            val distance = radius * (moonFraction ?: RIM_RADII[0])
             val mx = cx + distance * sin(angle).toFloat()
             val my = cy - distance * cos(angle).toFloat()
             val discRadius = dp(7.5f)
@@ -332,29 +344,39 @@ class CompassView @JvmOverloads constructor(
     }
 
     /**
-     * Yazılı işaretlere yarıçap dağıtır. Aynı yarıçapta birbirine
-     * `LABEL_MIN_SEPARATION` dereceden yakın iki etiket üst üste biner; böyle bir
-     * durumda ikincisi bir alt yarıçapa iner. Somut ihtiyaç: Türkiye'den bakınca
-     * kıble ile Mescid-i Aksa arasında yalnızca ~2° var, sabit yarıçapla ikisi
-     * tek bir okunmaz yığın oluyordu.
+     * Kadran işaretlerine yarıçap dağıtır. Aynı yarıçapta, açısal genişlikleri
+     * toplamından yakın duran iki işaret üst üste biner; böyle bir durumda
+     * ikincisi bir alt yarıçapa iner. Genişler önce yerleşir, çünkü dar olanlar
+     * kalan boşluklara daha kolay sığar.
+     *
+     * Somut ihtiyaç: Türkiye'den bakınca kıble ile Mescid-i Aksa arasında ~2° var
+     * ve ay ile kaydedilen nokta da aynı yöne düşebiliyor.
      */
-    private fun assignLabelRadii(bearings: List<Float>): List<Float> {
-        val placed = Array(LABEL_RADII.size) { ArrayList<Float>() }
-        return bearings.map { bearing ->
-            var level = LABEL_RADII.lastIndex
-            for (candidate in LABEL_RADII.indices) {
+    private fun assignRimRadii(marks: List<RimItem>): FloatArray {
+        val fractions = FloatArray(marks.size)
+        val placed = Array(RIM_RADII.size) { ArrayList<RimItem>() }
+        marks.indices.sortedByDescending { marks[it].halfWidth }.forEach { index ->
+            val item = marks[index]
+            var level = RIM_RADII.lastIndex
+            for (candidate in RIM_RADII.indices) {
                 val clash = placed[candidate].any { other ->
-                    abs(((bearing - other + 540f) % 360f) - 180f) < LABEL_MIN_SEPARATION
+                    val gap = abs(((item.bearing - other.bearing + 540f) % 360f) - 180f)
+                    gap < item.halfWidth + other.halfWidth + RIM_MARGIN
                 }
                 if (!clash) {
                     level = candidate
                     break
                 }
             }
-            placed[level].add(bearing)
-            LABEL_RADII[level]
+            placed[level].add(item)
+            fractions[index] = RIM_RADII[level]
         }
+        return fractions
     }
+
+    /** Bir işaretin kadran merkezinden görülen açısal yarı genişliği (derece). */
+    private fun halfWidth(halfWidthPixels: Float, radius: Float): Float =
+        Math.toDegrees(atan2(halfWidthPixels.toDouble(), (radius * RIM_RADII[0]).toDouble())).toFloat()
 
     /**
      * Kadranla dönen bir işaret: dış çemberden içeri çizgi + ucunda etiket.
@@ -374,7 +396,9 @@ class CompassView @JvmOverloads constructor(
     ) {
         canvas.save()
         canvas.rotate(bearing, cx, cy)
-        canvas.drawLine(cx, cy - radius, cx, cy - radius * RIM_TICK_INNER, linePaint)
+        // Çizgi etiketin hemen üstünde biter: iç yarıçaplara inen etiketler
+        // kenardaki çentikten kopuk görünmesin diye.
+        canvas.drawLine(cx, cy - radius, cx, cy - radius * (labelFraction + 0.045f), linePaint)
         // Etiket, çizgiden bağımsız olarak verilen yarıçapa dikey ortalanır; yön
         // harfleri 0,70R civarında olduğu için etiketler onların dışında kalır.
         canvas.drawText(
@@ -456,8 +480,14 @@ class CompassView @JvmOverloads constructor(
          * Yazılı işaretlerin yerleşebileceği yarıçaplar. Yön harfleri 0,62-0,785R
          * bandını kapladığı için en içteki bile onların dışında kalır.
          */
-        private val LABEL_RADII = floatArrayOf(0.93f, 0.84f)
-        private const val LABEL_MIN_SEPARATION = 16f
+        /**
+         * İşaretlerin yerleşebileceği yarıçaplar. En içteki bile yön harflerinin
+         * bandının (0,62-0,785R) dışında kalır.
+         */
+        private val RIM_RADII = floatArrayOf(0.94f, 0.855f, 0.79f)
+
+        /** İki işaret arasında bırakılan asgari açısal boşluk (derece). */
+        private const val RIM_MARGIN = 1.5f
 
         /** Güneş yayının yarıçapı; dış çemberin hemen içinde. */
         private const val SUN_ARC_RADIUS = 0.965f

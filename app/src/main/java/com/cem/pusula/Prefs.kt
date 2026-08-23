@@ -10,6 +10,7 @@ object Prefs {
     const val KEY_NIGHT = "night"
     const val KEY_UNIT = "unit"
     const val KEY_KEEP_SCREEN = "keepScreen"
+    const val KEY_FULLSCREEN = "fullscreen"
     const val KEY_TRUE_NORTH = "trueNorth"
     const val KEY_SMOOTHING = "smoothing"
     const val KEY_VIBRATE = "vibrate"
@@ -21,6 +22,7 @@ object Prefs {
 
     const val DEFAULT_NIGHT = false
     const val DEFAULT_KEEP_SCREEN = true
+    const val DEFAULT_FULLSCREEN = true
     const val DEFAULT_TRUE_NORTH = true
     const val DEFAULT_VIBRATE = true
     const val DEFAULT_SHOW_MAGNETIC = true

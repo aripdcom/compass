@@ -31,6 +31,8 @@ import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.view.Surface
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.text.InputType
 import android.widget.EditText
@@ -125,6 +127,7 @@ class MainActivity : Activity(), SensorEventListener {
 
     // Ayarlardan okunan değerler; onResume'da tazelenir.
     private var nightMode = false
+    private var fullscreen = Prefs.DEFAULT_FULLSCREEN
     private var unit = Prefs.DEFAULT_UNIT
     private var useTrueNorth = Prefs.DEFAULT_TRUE_NORTH
     private var smoothingAlpha = Prefs.SMOOTHING_ALPHAS[Prefs.DEFAULT_SMOOTHING]
@@ -268,6 +271,8 @@ class MainActivity : Activity(), SensorEventListener {
             stored.getInt(Prefs.KEY_SMOOTHING, Prefs.DEFAULT_SMOOTHING)
                 .coerceIn(0, Prefs.SMOOTHING_ALPHAS.lastIndex)
         ]
+        fullscreen = stored.getBoolean(Prefs.KEY_FULLSCREEN, Prefs.DEFAULT_FULLSCREEN)
+        applyFullscreen()
         if (stored.getBoolean(Prefs.KEY_KEEP_SCREEN, Prefs.DEFAULT_KEEP_SCREEN)) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         } else {
@@ -276,6 +281,46 @@ class MainActivity : Activity(), SensorEventListener {
         applyPalette()
         applyMarks()
         lastShownDegree = -1   // yazılar yeni birimle hemen kurulsun
+    }
+
+    /**
+     * Tam ekran: durum ve gezinme çubukları gizlenir, kenardan kaydırınca geçici
+     * olarak geri gelir. Kadran ekranın tamamını kullandığı için kazanılan yer
+     * doğrudan kadranın çapına gider.
+     */
+    private fun applyFullscreen() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.setDecorFitsSystemWindows(!fullscreen)
+            val controller = window.insetsController
+            if (fullscreen) {
+                controller?.hide(WindowInsets.Type.systemBars())
+                controller?.systemBarsBehavior =
+                    WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            } else {
+                controller?.show(WindowInsets.Type.systemBars())
+            }
+        } else {
+            @Suppress("DEPRECATION")
+            window.decorView.systemUiVisibility = if (fullscreen) {
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                    View.SYSTEM_UI_FLAG_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            } else {
+                View.SYSTEM_UI_FLAG_VISIBLE
+            }
+        }
+    }
+
+    /**
+     * Çubuklar kaydırmayla geçici olarak göründükten sonra kendiliğinden
+     * gizlenmiyor; odak geri geldiğinde yeniden uygulanır.
+     */
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) applyFullscreen()
     }
 
     /** Kadran işaretlerini kuzey çerçevesine ve görünürlük ayarlarına göre kurar. */

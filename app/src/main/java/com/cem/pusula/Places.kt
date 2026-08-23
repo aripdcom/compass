@@ -29,3 +29,17 @@ object Places {
 
 /** Kadrana çizilecek tek bir yazılı işaret. */
 data class PlaceMark(val label: String, val bearing: Float)
+
+/** Kadranın kenarına yerleşecek bir işaret: yönü, açısal genişliği ve türü. */
+internal data class RimItem(
+    val bearing: Float,
+    val halfWidth: Float,
+    val kind: Int,
+    val label: String?
+)
+
+internal const val KIND_MAGNETIC = 0
+internal const val KIND_PLACE = 1
+internal const val KIND_SUN = 2
+internal const val KIND_MOON = 3
+internal const val KIND_WAYPOINT = 4

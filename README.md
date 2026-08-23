@@ -200,17 +200,27 @@ büyük daire yayının çıkış açısıdır — kıblenin tanımı da budur, 
 Açı gerçek kuzeye göredir. İstanbul'dan ölçülen değerler: Kâbe 152,0°,
 Mescid-i Aksa 150,1°, Vatikan 279,7°.
 
-İlk ikisi arasında **yalnızca 1,9° var** ve bu, kadran tasarımını doğrudan
-belirledi. Sabit yarıçapla iki etiket tek bir okunmaz yığın oluyordu; renk ya da
-şekil de çözmüyor, gece modunda renk zaten yok. İki katmanlı çözüm:
+İlk ikisi arasında **yalnızca 1,9° var** ve bu, kadran yerleşiminin tamamını
+belirledi. Kadranın kenarında altı ayrı işaret yarışıyor: **M** ve yer yazıları,
+güneş diski, ay diski, nokta baklavası. Üç katmanlı çözüm:
 
-1. **Birbirine 6°'den yakın işaretler tek etikette birleşir** (`Kıble·Aksa`),
+1. **Birbirine 6°'den yakın yer işaretleri tek etikette birleşir** (`Kıble·Aksa`),
    konumları vektörel ortalamadan. O çözünürlükte ikisi zaten aynı yöndür; kesin
    dereceler alt satırda yazar.
-2. Daha uzak ama yine de yakın olanlar (6-16°) **farklı yarıçaplara** dağıtılır.
-   Yarıçaplar 0,93R ve 0,84R; aradaki 0,09R, yazı boyundan (0,085R) büyük olacak
-   şekilde seçildi — ilk denemede 0,90/0,845 kullanmıştım, kademeler ayrıydı ama
-   aradaki 0,055R yazı yüksekliğinden küçük olduğu için etiketler yine biniyordu.
+2. Kalan işaretlerin hepsi — yazılar **ve** semboller — tek bir listede toplanıp
+   **yarıçaplara dağıtılır**: 0,94R, 0,855R, 0,79R. Bir işaret, aynı yarıçapta
+   açısal genişliklerinin toplamından yakın bir komşu bulursa bir alt kademeye
+   iner. Geniş olanlar önce yerleşir, çünkü dar olanlar kalan boşluklara daha
+   kolay sığar.
+3. Her işaretin açısal genişliği kendi piksel genişliğinden hesaplanır
+   (`atan(yarı_genişlik / yarıçap)`), yani uzun bir yazı kısa bir sembolden daha
+   çok yer kaplar ve komşularını daha kolay aşağı iter.
+
+Bu sistem iki ayrı hatadan doğdu. Önce yalnızca yazılar dağıtılıyordu ama
+kademeler 0,90 ve 0,845'ti; aradaki 0,055R yazı yüksekliğinden (0,10R) küçük
+olduğu için etiketler farklı yarıçapta olmalarına rağmen yine biniyordu. Sonra
+semboller hiç dağıtıma girmediği için ay ile kaydedilen nokta üst üste geldi.
+Şimdi ikisi de aynı sistemden geçiyor.
 
 **Hedef kilidi.** İki yolu var. Kadrana dokunmak o an baktığınız yönü kilitler;
 alt satıra dokunmak ise açıyı **sayıyla girmenizi** sağlar — haritadan okunan bir
@@ -414,6 +424,7 @@ yani gece modunda ayarlar ekranı da kırmızıya dönüyor.
 | **Gece modu** | Siyah zemin, kırmızı kadran. Büyük derece yazısına dokunmak da aynı işi yapar. |
 | **Açı birimi** | Derece (0-360) ya da NATO mili (0-6400). Bütün yön yazılarını etkiler; sapma derecede kalır, çünkü konumun fiziksel özelliğidir. |
 | **Ekranı açık tut** | `FLAG_KEEP_SCREEN_ON`. Kapatılabilir olması pil için önemli. |
+| **Tam ekran** | Durum ve gezinme çubuklarını gizler; kenardan kaydırınca geçici olarak geri gelirler. Kazanılan yer doğrudan kadranın çapına gider. |
 | **Gerçek kuzeyi kullan** | Kapatılırsa kadran manyetik kuzeye oturur. |
 | **Yumuşatma** | Sakin (0,06) / Dengeli (0,12) / Çevik (0,25). Ortadaki, uygulamanın başından beri kullandığı değer. |
 | **Ana yönlerde titreşim** | Tıkı tümüyle kapatır. |
@@ -513,7 +524,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **821.314 bayt** (~802 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **823.238 bayt** (~803 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.

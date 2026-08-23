@@ -57,6 +57,10 @@ class SettingsActivity : Activity() {
             R.string.settings_keep_screen, R.string.settings_keep_screen_summary,
             Prefs.KEY_KEEP_SCREEN, Prefs.DEFAULT_KEEP_SCREEN
         )
+        switchRow(
+            R.string.settings_fullscreen, R.string.settings_fullscreen_summary,
+            Prefs.KEY_FULLSCREEN, Prefs.DEFAULT_FULLSCREEN
+        )
 
         header(getString(R.string.settings_section_compass))
         switchRow(
