@@ -61,6 +61,7 @@ class MainActivity : Activity(), SensorEventListener {
     private lateinit var degreeText: TextView
     private lateinit var directionText: TextView
     private lateinit var infoText: TextView
+    private lateinit var marksText: TextView
     private lateinit var locationText: TextView
     private lateinit var targetText: TextView
     private lateinit var statusText: TextView
@@ -194,6 +195,7 @@ class MainActivity : Activity(), SensorEventListener {
         degreeText = findViewById(R.id.degreeText)
         directionText = findViewById(R.id.directionText)
         infoText = findViewById(R.id.infoText)
+        marksText = findViewById(R.id.marksText)
         locationText = findViewById(R.id.locationText)
         targetText = findViewById(R.id.targetText)
         statusText = findViewById(R.id.statusText)
@@ -438,6 +440,7 @@ class MainActivity : Activity(), SensorEventListener {
         degreeText.setTextColor(colors.text)
         directionText.setTextColor(colors.textDim)
         infoText.setTextColor(colors.textDim)
+        marksText.setTextColor(colors.textDim)
         locationText.setTextColor(colors.textDim)
         statusText.setTextColor(colors.warning)
         settingsButton.setTextColor(colors.textDim)
@@ -1043,13 +1046,17 @@ class MainActivity : Activity(), SensorEventListener {
                 magneticPart + "Sapma %.1f°%s".format(abs(decl), yon)
             }
         }
-        // Kıble ve güneş kadrandaki işaretlerle aynı renkte yazılır ki hangisinin
-        // hangisi olduğu bakınca anlaşılsın.
-        val text = SpannableStringBuilder(base)
+        infoText.text = base
+
+        // İşaret yönleri ayrı satırda: pusulanın kendi durumu (manyetik açı ve
+        // sapma) ile "neyin nerede olduğu" farklı sorular, hepsi tek satıra
+        // dizilince üç sıraya taşıp okunmaz oluyordu. Renkler kadrandaki
+        // işaretlerle eşleşir.
+        val marks = SpannableStringBuilder()
         Places.ALL.filter { it.prefKey in visiblePlaces }.forEach { place ->
             placeBearings[place.prefKey]?.let {
                 appendColored(
-                    text,
+                    marks,
                     getString(R.string.place_info, getString(place.labelRes), formatBearing(toDialFrame(it))),
                     palette.qibla
                 )
@@ -1059,20 +1066,11 @@ class MainActivity : Activity(), SensorEventListener {
             val label =
                 if (it.elevation > 0f) getString(R.string.sun_info, formatBearing(toDialFrame(it.azimuth)))
                 else getString(R.string.sun_info_below, formatBearing(toDialFrame(it.azimuth)))
-            appendColored(text, label, palette.sun)
-        }
-        moon?.takeIf { showMoon }?.let {
-            val percent = (it.illumination * 100).roundToInt()
-            appendColored(
-                text,
-                if (it.elevation > 0f) getString(R.string.moon_info, formatBearing(toDialFrame(it.azimuth)), percent)
-                else getString(R.string.moon_info_below, formatBearing(toDialFrame(it.azimuth)), percent),
-                palette.moon
-            )
+            appendColored(marks, label, palette.sun)
         }
         sunArc?.takeIf { showSunArc }?.let {
             appendColored(
-                text,
+                marks,
                 getString(
                     R.string.sun_rise_set,
                     formatBearing(toDialFrame(it.rise)),
@@ -1081,7 +1079,16 @@ class MainActivity : Activity(), SensorEventListener {
                 palette.sun
             )
         }
-        infoText.text = text
+        moon?.takeIf { showMoon }?.let {
+            val percent = (it.illumination * 100).roundToInt()
+            appendColored(
+                marks,
+                if (it.elevation > 0f) getString(R.string.moon_info, formatBearing(toDialFrame(it.azimuth)), percent)
+                else getString(R.string.moon_info_below, formatBearing(toDialFrame(it.azimuth)), percent),
+                palette.moon
+            )
+        }
+        marksText.text = marks
     }
 
     /**

@@ -215,6 +215,15 @@ güneş diski, ay diski, nokta baklavası. Üç katmanlı çözüm:
 3. Her işaretin açısal genişliği kendi piksel genişliğinden hesaplanır
    (`atan(yarı_genişlik / yarıçap)`), yani uzun bir yazı kısa bir sembolden daha
    çok yer kaplar ve komşularını daha kolay aşağı iter.
+4. Ekranın tepesindeki sabit gösterge de bu yarışa katılır: yerinden
+   oynatılamadığı için dış halkaya önceden yerleştirilir ve yakınına düşen
+   işaretler onun için de bir alt kademeye iner. Aksi hâlde telefonun baktığı
+   yöne denk gelen etiket göstergenin altında kalıyordu.
+
+Ekrandaki yazılar da anlamına göre ayrılmıştır: üst satır pusulanın kendi
+durumudur (manyetik açı ve sapma), kadranın altındaki satır ise işaretlerin
+yönleridir. Hepsi tek satıra dizilince üç sıraya taşıp okunmaz oluyordu; ayrıca
+bunlar farklı sorular — "pusula ne diyor" ile "neyin nerede olduğu".
 
 Bu sistem iki ayrı hatadan doğdu. Önce yalnızca yazılar dağıtılıyordu ama
 kademeler 0,90 ve 0,845'ti; aradaki 0,055R yazı yüksekliğinden (0,10R) küçük
@@ -524,7 +533,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **823.238 bayt** (~803 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **823.406 bayt** (~804 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.

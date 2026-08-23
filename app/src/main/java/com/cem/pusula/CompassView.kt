@@ -236,7 +236,10 @@ class CompassView @JvmOverloads constructor(
         moon?.let { marks.add(RimItem(it.bearing, halfWidth(dp(7.5f), radius), KIND_MOON, null)) }
         waypointBearing?.let { marks.add(RimItem(it, halfWidth(dp(7f), radius), KIND_WAYPOINT, null)) }
 
-        val fractions = assignRimRadii(marks)
+        // Tepedeki gösterge kadran çerçevesinde `azimuth` yönüne denk gelir:
+        // kadran -azimuth kadar döndüğü için o yön ekranın tepesine çıkar.
+        val topMarker = RimItem(azimuth, halfWidth(dp(7.2f), radius), KIND_MAGNETIC, null)
+        val fractions = assignRimRadii(marks, topMarker)
         moonFraction = null
         marks.forEachIndexed { index, item ->
             val fraction = fractions[index]
@@ -352,9 +355,13 @@ class CompassView @JvmOverloads constructor(
      * Somut ihtiyaç: Türkiye'den bakınca kıble ile Mescid-i Aksa arasında ~2° var
      * ve ay ile kaydedilen nokta da aynı yöne düşebiliyor.
      */
-    private fun assignRimRadii(marks: List<RimItem>): FloatArray {
+    private fun assignRimRadii(marks: List<RimItem>, fixed: RimItem?): FloatArray {
         val fractions = FloatArray(marks.size)
         val placed = Array(RIM_RADII.size) { ArrayList<RimItem>() }
+        // Ekranın tepesindeki sabit gösterge de yer kaplar ama yerinden
+        // oynatılamaz: dış halkaya önceden yerleştirilir, yakınına düşen
+        // işaretler onun için de bir alt kademeye iner.
+        fixed?.let { placed[0].add(it) }
         marks.indices.sortedByDescending { marks[it].halfWidth }.forEach { index ->
             val item = marks[index]
             var level = RIM_RADII.lastIndex

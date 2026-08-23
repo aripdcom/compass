@@ -47,12 +47,23 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="6dp"
-            android:minLines="2"
-            android:text=""
+                android:text=""
             android:textColor="#FF8A94A0"
             android:textSize="14sp" />
 
-        <TextView
+                        <TextView
+                    android:id="@+id/marksText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:minLines="2"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="6dp"
+                    android:text=""
+                    android:textColor="#FF8A94A0"
+                    android:textSize="14sp" />
+
+            <TextView
             android:id="@+id/locationText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
