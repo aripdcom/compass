@@ -27,6 +27,7 @@
     <string name="target_hint">Tocca il quadrante: blocca · pressione lunga: punto · qui: inserisci rilevamento</string>
     <string name="waypoint_line">%1$s %2$s · %3$s</string>
     <string name="waypoint_here">%1$s · sei qui</string>
+    <string name="waypoint_more">+%1$d altri</string>
     <string name="waypoint_saved">%1$s salvato</string>
     <string name="waypoint_cleared">%1$s eliminato</string>
     <string name="waypoint_needs_location">Nessuna posizione — punto non salvato</string>

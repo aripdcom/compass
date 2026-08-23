@@ -27,6 +27,7 @@
     <string name="target_hint">Kadrana dokun: yön kilitle · uzun bas: nokta · buraya dokun: açı gir</string>
     <string name="waypoint_line">%1$s %2$s · %3$s</string>
     <string name="waypoint_here">%1$s · buradasınız</string>
+    <string name="waypoint_more">+%1$d nokta</string>
     <string name="waypoint_saved">%1$s kaydedildi</string>
     <string name="waypoint_cleared">%1$s silindi</string>
     <string name="waypoint_needs_location">Konum yok — nokta kaydedilemedi</string>

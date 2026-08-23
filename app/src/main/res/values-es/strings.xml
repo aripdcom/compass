@@ -27,6 +27,7 @@
     <string name="target_hint">Toca la esfera: fijar rumbo · pulsación larga: punto · aquí: introducir rumbo</string>
     <string name="waypoint_line">%1$s %2$s · %3$s</string>
     <string name="waypoint_here">%1$s · estás aquí</string>
+    <string name="waypoint_more">+%1$d más</string>
     <string name="waypoint_saved">%1$s guardado</string>
     <string name="waypoint_cleared">%1$s borrado</string>
     <string name="waypoint_needs_location">Sin ubicación — no se pudo guardar el punto</string>

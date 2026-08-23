@@ -27,6 +27,7 @@
     <string name="target_hint">Zifferblatt tippen: Kurs sperren · lang drücken: Punkt · hier: Kurs eingeben</string>
     <string name="waypoint_line">%1$s %2$s · %3$s</string>
     <string name="waypoint_here">%1$s · Sie sind hier</string>
+    <string name="waypoint_more">+%1$d weitere</string>
     <string name="waypoint_saved">%1$s gespeichert</string>
     <string name="waypoint_cleared">%1$s gelöscht</string>
     <string name="waypoint_needs_location">Kein Standort — Punkt nicht gespeichert</string>

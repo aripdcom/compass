@@ -27,6 +27,7 @@
     <string name="target_hint">Tap dial: lock bearing · long press: save point · tap here: enter bearing</string>
     <string name="waypoint_line">%1$s %2$s · %3$s</string>
     <string name="waypoint_here">%1$s · you are here</string>
+    <string name="waypoint_more">+%1$d more</string>
     <string name="waypoint_saved">%1$s saved</string>
     <string name="waypoint_cleared">%1$s deleted</string>
     <string name="waypoint_needs_location">No location — cannot save point</string>

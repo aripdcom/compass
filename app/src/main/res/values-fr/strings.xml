@@ -27,6 +27,7 @@
     <string name="target_hint">Touchez le cadran : verrouiller · appui long : point · ici : saisir un cap</string>
     <string name="waypoint_line">%1$s %2$s · %3$s</string>
     <string name="waypoint_here">%1$s · vous y êtes</string>
+    <string name="waypoint_more">+%1$d autres</string>
     <string name="waypoint_saved">%1$s enregistré</string>
     <string name="waypoint_cleared">%1$s supprimé</string>
     <string name="waypoint_needs_location">Pas de position — point non enregistré</string>

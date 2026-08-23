@@ -948,11 +948,23 @@ class MainActivity : Activity(), SensorEventListener {
         refreshWaypointSpan()
     }
 
-    /** Çözümlerden nokta satırını kurar; renk ve birim buraya girer. */
+    /**
+     * Çözümlerden nokta satırını kurar; renk ve birim buraya girer.
+     *
+     * Yalnızca en yakın birkaç nokta yazılır. Sekiz nokta kayıtlıyken satır
+     * beş-altı satıra taşıyor ve ağırlığı 1 olan kadranın yerini yiyordu —
+     * kadran uygulamanın asıl işi. Gerisi sayıyla anılıyor; hepsi kadranda
+     * duruyor ve satıra uzun basınca açılan listede yazıyor.
+     */
     private fun refreshWaypointSpan() {
         val builder = SpannableStringBuilder()
-        waypointFixes.forEach { fix ->
+        val nearest = waypointFixes.sortedBy { it.distance }
+        nearest.take(WAYPOINT_LINE_LIMIT).forEach { fix ->
             appendColored(builder, waypointSegment(fix), palette.waypoint, "   ")
+        }
+        val hidden = nearest.size - WAYPOINT_LINE_LIMIT
+        if (hidden > 0) {
+            appendColored(builder, getString(R.string.waypoint_more, hidden), palette.waypoint, "   ")
         }
         waypointSpan = builder
     }
@@ -1504,6 +1516,9 @@ class MainActivity : Activity(), SensorEventListener {
 
         const val ARRIVED_MIN_METERS = 10f
         const val ARRIVED_MAX_METERS = 25f
+
+        /** Hedef satırında adıyla yazılan nokta sayısı; gerisi "+n" olur. */
+        const val WAYPOINT_LINE_LIMIT = 2
 
         const val KEY_WAYPOINTS = "waypoints"
 
