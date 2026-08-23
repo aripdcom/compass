@@ -1379,6 +1379,11 @@ class MainActivity : Activity(), SensorEventListener {
      * Hedef tıkı: iki darbe. Aradaki boşluk 60 ms, çünkü ERM motoru duruncaya
      * kadar geçen süre bundan kısa olursa iki darbe tek uzun titreşime karışıp
      * ana yön tıkından ayırt edilemez hâle geliyor.
+     *
+     * Cihazda doğrulandı (Galaxy A51 / Android 13): 60 ms bu motorda yetiyor,
+     * iki efekt elde rahatça ayırt ediliyor. Bu ölçüm önemli çünkü aynı cihazda
+     * `dumpsys` kaydının düşmesi de `performHapticFeedback`'in `true` dönmesi de
+     * titreşimin hissedildiği anlamına gelmiyordu.
      */
     private fun targetEffect(): LongArray =
         longArrayOf(CARDINAL_TICK_MS, TARGET_TICK_GAP_MS, CARDINAL_TICK_MS)

@@ -447,7 +447,11 @@ bozuyor. Görme engelli kullanıcı için kadranın tek hissedilebilir karşıl�
 İki efektin ayrı olması şart: aynı tık olsalardı "kuzeyden mi geçtim yoksa
 hedefe mi girdim" ayırt edilemezdi, oysa bakmadan yön tutmanın bütün anlamı o
 ayrımda. Çift tıkın iki darbesi arasında 60 ms var; daha kısası ERM motorunun
-duracak vakit bulamaması yüzünden tek uzun titreşime karışıyor.
+duracak vakit bulamaması yüzünden tek uzun titreşime karışıyor. **Cihazda
+doğrulandı** (Galaxy A51 / Android 13): 60 ms bu motorda yetiyor, iki efekt elde
+rahatça ayırt ediliyor. Bu bölümün geri kalanının anlattığı sebeple ölçüm şart
+oldu — aynı cihazda `dumpsys` kaydının düşmesi de `performHapticFeedback`'in
+`true` dönmesi de titreşimin hissedildiği anlamına gelmiyordu.
 
 Uygulama açılırken bir yöne bakıyorsanız titremez — ilk okuma yalnızca başlangıç
 bölgesini kaydeder. Algılamanın kendisi `Crossing.kt`'te ve sekiz testi var.
