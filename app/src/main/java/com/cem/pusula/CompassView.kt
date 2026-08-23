@@ -29,8 +29,8 @@ class CompassView @JvmOverloads constructor(
     /** Kilitlenen yön, kadranla aynı çerçevede (gerçek kuzey biliniyorsa ona göre). */
     private var targetBearing: Float? = null
 
-    /** Kâbe yönü; yalnızca konum bilindiğinde dolu olur. */
-    private var qiblaBearing: Float? = null
+    /** Kadranda yazıyla gösterilen sabit nokta yönleri (kıble, Aksa, Vatikan…). */
+    private var placeMarks: List<PlaceMark> = emptyList()
 
     /** Kaydedilen noktanın yönü; konum bilinmeden hesaplanamaz. */
     private var waypointBearing: Float? = null
@@ -129,8 +129,8 @@ class CompassView @JvmOverloads constructor(
         invalidate()
     }
 
-    fun setQiblaBearing(degrees: Float?) {
-        qiblaBearing = degrees
+    fun setPlaceMarks(marks: List<PlaceMark>) {
+        placeMarks = marks
         invalidate()
     }
 
@@ -187,19 +187,25 @@ class CompassView @JvmOverloads constructor(
             canvas.restore()
         }
 
-        // Manyetik kuzey işareti: kadran gerçek kuzeye göre döndüğünde manyetik
-        // kuzey sapma kadar yanda kalır; nerede olduğunu göstermek için işaretlenir.
-        magneticOffset?.let { offset ->
-            magneticPaint.strokeWidth = dp(2f)
-            magneticLabelPaint.textSize = radius * 0.11f
-            drawRimLabel(canvas, cx, cy, radius, offset, "M", magneticPaint, magneticLabelPaint, 0.90f)
-        }
-
-        // Kıble: konumdan hesaplanan Kâbe yönü, gerçek kuzeye göre.
-        qiblaBearing?.let { bearing ->
-            qiblaPaint.strokeWidth = dp(2f)
-            qiblaLabelPaint.textSize = radius * 0.10f
-            drawRimLabel(canvas, cx, cy, radius, bearing, "Kıble", qiblaPaint, qiblaLabelPaint, 0.845f)
+        // Yazılı işaretler: manyetik kuzey ve sabit noktalar. Hepsi tek listede
+        // toplanır, çünkü yarıçapları birbirine göre dağıtılıyor.
+        magneticPaint.strokeWidth = dp(2f)
+        qiblaPaint.strokeWidth = dp(2f)
+        // Yazı boyu kademeler arası mesafeden (0,09R) küçük kalmalı, yoksa farklı
+        // yarıçaptaki iki etiket yine üst üste biner.
+        magneticLabelPaint.textSize = radius * 0.095f
+        qiblaLabelPaint.textSize = radius * 0.085f
+        val labelled = ArrayList<Triple<Float, String, Boolean>>()
+        magneticOffset?.let { labelled.add(Triple(it, "M", true)) }
+        placeMarks.forEach { labelled.add(Triple(it.bearing, it.label, false)) }
+        assignLabelRadii(labelled.map { it.first }).forEachIndexed { index, fraction ->
+            val (bearing, label, magnetic) = labelled[index]
+            drawRimLabel(
+                canvas, cx, cy, radius, bearing, label,
+                if (magnetic) magneticPaint else qiblaPaint,
+                if (magnetic) magneticLabelPaint else qiblaLabelPaint,
+                fraction
+            )
         }
 
         // Güneş: manyetik alandan bağımsız olduğu için kadranı çapraz kontrol
@@ -260,6 +266,31 @@ class CompassView @JvmOverloads constructor(
             // Terazi yokken ibrenin merkezi boş kalmasın.
             canvas.drawCircle(cx, cy, dp(4f), levelFramePaint.apply { style = Paint.Style.FILL })
             levelFramePaint.style = Paint.Style.STROKE
+        }
+    }
+
+    /**
+     * Yazılı işaretlere yarıçap dağıtır. Aynı yarıçapta birbirine
+     * `LABEL_MIN_SEPARATION` dereceden yakın iki etiket üst üste biner; böyle bir
+     * durumda ikincisi bir alt yarıçapa iner. Somut ihtiyaç: Türkiye'den bakınca
+     * kıble ile Mescid-i Aksa arasında yalnızca ~2° var, sabit yarıçapla ikisi
+     * tek bir okunmaz yığın oluyordu.
+     */
+    private fun assignLabelRadii(bearings: List<Float>): List<Float> {
+        val placed = Array(LABEL_RADII.size) { ArrayList<Float>() }
+        return bearings.map { bearing ->
+            var level = LABEL_RADII.lastIndex
+            for (candidate in LABEL_RADII.indices) {
+                val clash = placed[candidate].any { other ->
+                    abs(((bearing - other + 540f) % 360f) - 180f) < LABEL_MIN_SEPARATION
+                }
+                if (!clash) {
+                    level = candidate
+                    break
+                }
+            }
+            placed[level].add(bearing)
+            LABEL_RADII[level]
         }
     }
 
@@ -338,6 +369,13 @@ class CompassView @JvmOverloads constructor(
     private fun dp(value: Float): Float = value * resources.displayMetrics.density
 
     companion object {
+        /**
+         * Yazılı işaretlerin yerleşebileceği yarıçaplar. Yön harfleri 0,62-0,785R
+         * bandını kapladığı için en içteki bile onların dışında kalır.
+         */
+        private val LABEL_RADII = floatArrayOf(0.93f, 0.84f)
+        private const val LABEL_MIN_SEPARATION = 16f
+
         /** İşaret çizgisinin dış çemberden içeri indiği nokta. */
         private const val RIM_TICK_INNER = 0.93f
 

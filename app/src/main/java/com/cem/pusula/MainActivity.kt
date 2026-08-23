@@ -84,8 +84,8 @@ class MainActivity : Activity(), SensorEventListener {
     /** Manyetik sapma (doğuya doğru pozitif). null ise gerçek kuzey bilinmiyor. */
     private var declination: Float? = null
 
-    /** Kâbe yönü, gerçek kuzeye göre. Konum bilinmeden hesaplanamaz. */
-    private var qiblaBearing: Float? = null
+    /** Sabit noktaların gerçek kuzeye göre yönleri; konum bilinmeden hesaplanamaz. */
+    private var placeBearings: Map<String, Float> = emptyMap()
 
     /**
      * Kilitlenen yön **manyetik** çerçevede saklanır: sapma sonradan öğrenilse
@@ -131,7 +131,7 @@ class MainActivity : Activity(), SensorEventListener {
     private var vibrateOnCardinals = Prefs.DEFAULT_VIBRATE
     private var showMagnetic = Prefs.DEFAULT_SHOW_MAGNETIC
     private var showLevel = Prefs.DEFAULT_SHOW_LEVEL
-    private var showQibla = Prefs.DEFAULT_SHOW_QIBLA
+    private var visiblePlaces: Set<String> = emptySet()
     private var showSun = Prefs.DEFAULT_SHOW_SUN
     private val palette: Palette get() = Palette.of(nightMode)
 
@@ -253,7 +253,10 @@ class MainActivity : Activity(), SensorEventListener {
         vibrateOnCardinals = stored.getBoolean(Prefs.KEY_VIBRATE, Prefs.DEFAULT_VIBRATE)
         showMagnetic = stored.getBoolean(Prefs.KEY_SHOW_MAGNETIC, Prefs.DEFAULT_SHOW_MAGNETIC)
         showLevel = stored.getBoolean(Prefs.KEY_SHOW_LEVEL, Prefs.DEFAULT_SHOW_LEVEL)
-        showQibla = stored.getBoolean(Prefs.KEY_SHOW_QIBLA, Prefs.DEFAULT_SHOW_QIBLA)
+        visiblePlaces = Places.ALL
+            .filter { stored.getBoolean(it.prefKey, it.defaultVisible) }
+            .map { it.prefKey }
+            .toSet()
         showSun = stored.getBoolean(Prefs.KEY_SHOW_SUN, Prefs.DEFAULT_SHOW_SUN)
         smoothingAlpha = Prefs.SMOOTHING_ALPHAS[
             stored.getInt(Prefs.KEY_SMOOTHING, Prefs.DEFAULT_SMOOTHING)
@@ -274,13 +277,63 @@ class MainActivity : Activity(), SensorEventListener {
         // Manyetik çerçevedeyken "M" kadranın kuzeyiyle çakışır, gösterilmez.
         compassView.setMagneticNorthOffset(if (useTrueNorth && showMagnetic) declination else null)
         compassView.levelVisible = showLevel
-        compassView.setQiblaBearing(if (showQibla) qiblaBearing?.let(::toDialFrame) else null)
+        compassView.setPlaceMarks(mergeNearbyMarks(
+            Places.ALL.filter { it.prefKey in visiblePlaces }.mapNotNull { place ->
+                placeBearings[place.prefKey]?.let {
+                    PlaceMark(getString(place.labelRes), toDialFrame(it))
+                }
+            }
+        ))
         compassView.setSun(
             if (showSun) sun?.azimuth?.let(::toDialFrame) else null,
             (sun?.elevation ?: 0f) > 0f
         )
         applyTarget()
         applyWaypoint()
+    }
+
+    /**
+     * Birbirine çok yakın işaretleri tek etikette toplar. Türkiye'den bakınca
+     * kıble ile Mescid-i Aksa arasında ~2° var; kadranda iki ayrı etiket
+     * göstermek hem okunmaz oluyor hem de bir bilgi katmıyor, çünkü o
+     * çözünürlükte ikisi zaten aynı yön. Kesin dereceler alt satırda yazıyor.
+     */
+    private fun mergeNearbyMarks(marks: List<PlaceMark>): List<PlaceMark> {
+        // Sıra listedeki sırayla korunur (Kâbe, Aksa, Vatikan); birleşen etiket
+        // "Kıble·Aksa" diye okunsun diye, yönlerine göre değil.
+        val remaining = marks.toMutableList()
+        val merged = ArrayList<PlaceMark>()
+        while (remaining.isNotEmpty()) {
+            val first = remaining.removeAt(0)
+            val group = arrayListOf(first)
+            val iterator = remaining.iterator()
+            while (iterator.hasNext()) {
+                val candidate = iterator.next()
+                if (angleBetween(candidate.bearing, first.bearing) < MERGE_DEGREES) {
+                    group.add(candidate)
+                    iterator.remove()
+                }
+            }
+            merged.add(
+                if (group.size == 1) first
+                else PlaceMark(group.joinToString("·") { it.label }, meanBearing(group.map { it.bearing }))
+            )
+        }
+        return merged
+    }
+
+    private fun angleBetween(a: Float, b: Float): Float = abs(((a - b + 540f) % 360f) - 180f)
+
+    /** Açı ortalaması vektörel alınır; 359° ile 2° arasında ortalama 0,5° olmalı. */
+    private fun meanBearing(bearings: List<Float>): Float {
+        var x = 0.0
+        var y = 0.0
+        bearings.forEach {
+            val radians = Math.toRadians(it.toDouble())
+            x += cos(radians)
+            y += sin(radians)
+        }
+        return ((Math.toDegrees(atan2(y, x)) + 360.0) % 360.0).toFloat()
     }
 
     /**
@@ -514,7 +567,9 @@ class MainActivity : Activity(), SensorEventListener {
         coordinates = latitude to longitude
         declination = field.declination
         expectedFieldStrength = field.fieldStrength / 1000f   // nT -> µT
-        qiblaBearing = bearingTo(latitude, longitude, KAABA_LATITUDE, KAABA_LONGITUDE)
+        placeBearings = Places.ALL.associate { place ->
+            place.prefKey to bearingTo(latitude, longitude, place.latitude, place.longitude)
+        }
         applyMarks()
         updateSun()
         lastShownDegree = -1   // yazıların hemen tazelenmesi için
@@ -929,8 +984,14 @@ class MainActivity : Activity(), SensorEventListener {
         // Kıble ve güneş kadrandaki işaretlerle aynı renkte yazılır ki hangisinin
         // hangisi olduğu bakınca anlaşılsın.
         val text = SpannableStringBuilder(base)
-        qiblaBearing?.takeIf { showQibla }?.let {
-            appendColored(text, getString(R.string.qibla_info, formatBearing(toDialFrame(it))), palette.qibla)
+        Places.ALL.filter { it.prefKey in visiblePlaces }.forEach { place ->
+            placeBearings[place.prefKey]?.let {
+                appendColored(
+                    text,
+                    getString(R.string.place_info, getString(place.labelRes), formatBearing(toDialFrame(it))),
+                    palette.qibla
+                )
+            }
         }
         sun?.takeIf { showSun }?.let {
             val label =
@@ -1038,6 +1099,9 @@ class MainActivity : Activity(), SensorEventListener {
         /** "Buradasınız" eşiğinin alt ve üst sınırı (metre). */
         const val SUN_UPDATE_MS = 60_000L
 
+        /** Bu açıdan yakın kadran işaretleri tek etikette birleşir. */
+        const val MERGE_DEGREES = 6f
+
         // Ana yöne bu kadar yaklaşınca tık verilir, bu kadar uzaklaşınca sıfırlanır.
         const val CARDINAL_ENTER_DEGREES = 2f
         const val CARDINAL_EXIT_DEGREES = 5f
@@ -1061,10 +1125,6 @@ class MainActivity : Activity(), SensorEventListener {
 
         /** Bu yaştan büyük fark varsa yeni fix koşulsuz kazanır. */
         const val FIX_STALE_MS = 60_000L
-
-        /** Kâbe'nin koordinatları (Mescid-i Haram, Mekke). */
-        const val KAABA_LATITUDE = 21.4224779
-        const val KAABA_LONGITUDE = 39.8251832
 
         /** Bu kadar yaklaşınca "hedeftesiniz" denir. */
         const val ON_TARGET_DEGREES = 2

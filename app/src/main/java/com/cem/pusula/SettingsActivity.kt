@@ -85,7 +85,9 @@ class SettingsActivity : Activity() {
             R.string.settings_show_level, R.string.settings_show_level_summary,
             Prefs.KEY_SHOW_LEVEL, Prefs.DEFAULT_SHOW_LEVEL
         )
-        switchRow(R.string.settings_show_qibla, 0, Prefs.KEY_SHOW_QIBLA, Prefs.DEFAULT_SHOW_QIBLA)
+        Places.ALL.forEach { place ->
+            switchRow(place.nameRes, 0, place.prefKey, place.defaultVisible)
+        }
         switchRow(R.string.settings_show_sun, 0, Prefs.KEY_SHOW_SUN, Prefs.DEFAULT_SHOW_SUN)
         note(getString(R.string.settings_marks_note))
     }

@@ -9,7 +9,13 @@
     <string name="magnetic_north">Manyetik kuzey</string>
     <string name="need_location">Gerçek kuzey için konum izni gerekli — dokunun</string>
     <string name="waiting_location">Konum bekleniyor…</string>
-    <string name="qibla_info">Kıble %1$s</string>
+    <string name="place_kaaba">Kâbe (kıble)</string>
+    <string name="place_kaaba_label">Kıble</string>
+    <string name="place_aqsa">Mescid-i Aksa</string>
+    <string name="place_aqsa_label">Aksa</string>
+    <string name="place_vatican">Vatikan</string>
+    <string name="place_vatican_label">Vatikan</string>
+    <string name="place_info">%1$s %2$s</string>
     <string name="approximate_location">yaklaşık</string>
     <string name="location_copied">Kopyalandı: %1$s</string>
     <string name="sun_info">Güneş %1$s</string>
@@ -53,7 +59,6 @@
     <string name="settings_show_magnetic_summary">Yalnızca gerçek kuzey kullanılırken görünür</string>
     <string name="settings_show_level">Su terazisi</string>
     <string name="settings_show_level_summary">Kadranın göbeğindeki kabarcık</string>
-    <string name="settings_show_qibla">Kıble</string>
     <string name="settings_show_sun">Güneş</string>
     <string name="settings_marks_note">Hedef ve nokta işaretleri burada yok: kadrana dokunarak ya da uzun basarak zaten açılıp kapanıyorlar.</string>
     <string name="mil_suffix">mil</string>

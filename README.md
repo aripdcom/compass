@@ -187,17 +187,30 @@ kaymaması için yerini her zaman ayırır (`minLines="2"`); aksi hâlde uyarı 
 
 ## 5. Kıble, hedef kilidi, su terazisi, konum ve nokta
 
-**Kıble.** Konum bilinince kadranda yeşil **Kıble** işareti ve üst satırda yön
-derecesi çıkar. Hesap, bulunduğunuz noktadan Kâbe'ye (21,4225°K / 39,8252°D)
-giden büyük daire yayının çıkış açısıdır — kıblenin tanımı budur, düz haritadaki
+**Yönler (kıble, Mescid-i Aksa, Vatikan).** Konum bilinince kadranda yeşil
+işaretler ve üst satırda dereceleri çıkar. Varsayılan olarak yalnızca kıble
+açıktır; diğerleri ayarlardan açılır. Hesap, bulunduğunuz noktadan hedefe giden
+büyük daire yayının çıkış açısıdır — kıblenin tanımı da budur, düz haritadaki
 "sağ alt köşe" yönü değil:
 
 ```
 θ = atan2( sin Δλ · cos φ₂ ,  cos φ₁ · sin φ₂ − sin φ₁ · cos φ₂ · cos Δλ )
 ```
 
-Açı gerçek kuzeye göredir, o yüzden kadranla aynı çerçevededir. İstanbul'dan
-yaklaşık 152°, Ankara'dan 158° civarı çıkar.
+Açı gerçek kuzeye göredir. İstanbul'dan ölçülen değerler: Kâbe 152,0°,
+Mescid-i Aksa 150,1°, Vatikan 279,7°.
+
+İlk ikisi arasında **yalnızca 1,9° var** ve bu, kadran tasarımını doğrudan
+belirledi. Sabit yarıçapla iki etiket tek bir okunmaz yığın oluyordu; renk ya da
+şekil de çözmüyor, gece modunda renk zaten yok. İki katmanlı çözüm:
+
+1. **Birbirine 6°'den yakın işaretler tek etikette birleşir** (`Kıble·Aksa`),
+   konumları vektörel ortalamadan. O çözünürlükte ikisi zaten aynı yöndür; kesin
+   dereceler alt satırda yazar.
+2. Daha uzak ama yine de yakın olanlar (6-16°) **farklı yarıçaplara** dağıtılır.
+   Yarıçaplar 0,93R ve 0,84R; aradaki 0,09R, yazı boyundan (0,085R) büyük olacak
+   şekilde seçildi — ilk denemede 0,90/0,845 kullanmıştım, kademeler ayrıydı ama
+   aradaki 0,055R yazı yüksekliğinden küçük olduğu için etiketler yine biniyordu.
 
 **Hedef kilidi.** İki yolu var. Kadrana dokunmak o an baktığınız yönü kilitler;
 alt satıra dokunmak ise açıyı **sayıyla girmenizi** sağlar — haritadan okunan bir
@@ -354,7 +367,7 @@ yani gece modunda ayarlar ekranı da kırmızıya dönüyor.
 | **Gerçek kuzeyi kullan** | Kapatılırsa kadran manyetik kuzeye oturur. |
 | **Yumuşatma** | Sakin (0,06) / Dengeli (0,12) / Çevik (0,25). Ortadaki, uygulamanın başından beri kullandığı değer. |
 | **Ana yönlerde titreşim** | Tıkı tümüyle kapatır. |
-| **Kadran işaretleri** | Manyetik kuzey (M), su terazisi, kıble ve güneşi ayrı ayrı gizler. |
+| **Kadran işaretleri** | Manyetik kuzey (M), su terazisi, güneş ve yön noktalarını (Kâbe, Mescid-i Aksa, Vatikan) ayrı ayrı açar/kapatır. |
 
 Hedef ve nokta işaretleri o listede yok, çünkü zaten kadrana dokunarak ya da uzun
 basarak açılıp kapanıyorlar; ayrıca bir anahtar koymak "kilitli ama görünmez
@@ -448,7 +461,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **811.967 bayt** (~792 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **815.077 bayt** (~795 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.
