@@ -31,7 +31,8 @@ pusula/
 
 ## 1. Hazır APK'yı telefona kurmak
 
-Derlenmiş APK: `app/build/outputs/apk/debug/app-debug.apk` (~800 KB)
+Derlenmiş APK: `app/build/outputs/apk/debug/app-debug.apk`
+(release sürümü ~233 KB; debug sürümü küçültme yapılmadığı için daha büyüktür)
 
 ### Yöntem A — Kabloyla, adb ile (en hızlı)
 
@@ -569,7 +570,31 @@ dosyalara taşındı. Ondalık ayracı da dile uyar: aynı sapma İngilizce'de
 Ekran okuyucu için kullanılan açık yön adları da her dilde ayrıdır
 (`kuzey kuzeydoğu` / `north-northeast` / `Nordnordost`).
 
-## 10. Pil
+## 10. Boyut
+
+Release APK **238.872 bayt** (~233 KB). R8 açıktır: kullanılmayan kod ve kaynaklar
+atılır, kalan kod küçültülür ve karıştırılır. Kapalıyken APK 854.752 bayttı,
+yani boyutun **%72'si** buradan geldi.
+
+Geriye kalanın dağılımı ilginç — kod artık en küçük parça:
+
+| Bölüm | Sıkıştırılmış | Pay |
+|---|---|---|
+| `res/` (ikonlar, beş yoğunlukta) | 144.290 B | %63 |
+| `resources.arsc` (metinler, altı dil) | 36.976 B | %16 |
+| `classes.dex` (bütün kod) | 32.911 B | %14 |
+| imza ve diğer | 16.322 B | %7 |
+
+Yani uygulamanın tamamı 33 KB kod; boyutu belirleyen şey ikon dosyaları.
+Küçültmek gerekirse sıradaki hedef orasıdır, kod değil.
+
+Uygulamada yansıma kullanılmadığı için `proguard-rules.pro` neredeyse boştur;
+manifest'teki activity'ler ve düzenlerde adıyla geçen `CompassView` için gereken
+kuralları AGP kendisi üretir. Karıştırma yığın izlerini okunmaz hâle getirdiğinden
+`app/build/outputs/mapping/release/mapping.txt` dosyası her yayında saklanmalıdır;
+`dist/` altına da kopyalanır.
+
+## 11. Pil
 
 Kadran, sensör olaylarının hızında değil **kendi hızında** çizilir: iki çizim
 arasında en az 50 ms bırakılır (~20 kare/saniye). Bunun ölçülen karşılığı 20
@@ -603,7 +628,7 @@ hem de o kadar yol alındığında gönderiyor, dolayısıyla **sabit duran tele
 GPS hiç fix göndermiyor** ve panel ağ konumunun ±100 m'sine düşüyordu. Süzgeç
 sıfırlandı; hassasiyet ±22 m'ye döndü.
 
-## 11. Testler
+## 12. Testler
 
 ```bash
 ./gradlew test          # 28 test, saniyeler içinde, cihaz gerekmez
@@ -644,7 +669,7 @@ yanlıştı; düzeltildi.
 
 JUnit yalnızca `testImplementation` olarak eklidir, APK'ya girmez — doğrulandı.
 
-## 12. Sorun giderme
+## 13. Sorun giderme
 
 ### "Kuruldu" dedi ama uygulama listede yok
 
@@ -684,7 +709,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **855.300 bayt** (~835 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **238.872 bayt** (~233 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.

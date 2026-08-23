@@ -13,8 +13,8 @@ android {
         applicationId = "com.cem.pusula"
         minSdk = 24          // Android 7.0
         targetSdk = 34       // Android 13/14 üzerinde sorunsuz çalışır
-        versionCode = 25
-        versionName = "3.4"
+        versionCode = 26
+        versionName = "3.5"
     }
 
 
@@ -42,7 +42,13 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            // R8: kullanılmayan kodu ve kaynakları atar, kalanı küçültür.
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
             if (keystorePropsFile.exists()) {
                 signingConfig = signingConfigs.getByName("release")
             }
