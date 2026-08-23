@@ -33,6 +33,9 @@ class CompassView @JvmOverloads constructor(
     /** Kâbe yönü; yalnızca konum bilindiğinde dolu olur. */
     private var qiblaBearing: Float? = null
 
+    /** Kaydedilen noktanın yönü; konum bilinmeden hesaplanamaz. */
+    private var waypointBearing: Float? = null
+
     // Su terazisi için eğim (derece). Düz tutulan telefonda ikisi de 0'dır.
     private var pitch = 0f
     private var roll = 0f
@@ -81,6 +84,14 @@ class CompassView @JvmOverloads constructor(
         color = COLOR_QIBLA
         textAlign = Paint.Align.CENTER
     }
+    private val waypointPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = COLOR_WAYPOINT
+        style = Paint.Style.STROKE
+    }
+    private val waypointLabelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = COLOR_WAYPOINT
+        textAlign = Paint.Align.CENTER
+    }
     private val targetPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = COLOR_TARGET
         style = Paint.Style.FILL
@@ -110,6 +121,11 @@ class CompassView @JvmOverloads constructor(
 
     fun setMagneticNorthOffset(degrees: Float?) {
         magneticOffset = degrees
+        invalidate()
+    }
+
+    fun setWaypointBearing(degrees: Float?) {
+        waypointBearing = degrees
         invalidate()
     }
 
@@ -182,14 +198,21 @@ class CompassView @JvmOverloads constructor(
         magneticOffset?.let { offset ->
             magneticPaint.strokeWidth = dp(2f)
             magneticLabelPaint.textSize = radius * 0.11f
-            drawRimLabel(canvas, cx, cy, radius, offset, "M", magneticPaint, magneticLabelPaint)
+            drawRimLabel(canvas, cx, cy, radius, offset, "M", magneticPaint, magneticLabelPaint, 0.90f)
         }
 
         // Kıble: konumdan hesaplanan Kâbe yönü, gerçek kuzeye göre.
         qiblaBearing?.let { bearing ->
             qiblaPaint.strokeWidth = dp(2f)
             qiblaLabelPaint.textSize = radius * 0.10f
-            drawRimLabel(canvas, cx, cy, radius, bearing, "Kıble", qiblaPaint, qiblaLabelPaint)
+            drawRimLabel(canvas, cx, cy, radius, bearing, "Kıble", qiblaPaint, qiblaLabelPaint, 0.845f)
+        }
+
+        // Kaydedilen nokta: geri dönülecek yer.
+        waypointBearing?.let { bearing ->
+            waypointPaint.strokeWidth = dp(2f)
+            waypointLabelPaint.textSize = radius * 0.10f
+            drawRimLabel(canvas, cx, cy, radius, bearing, "Nokta", waypointPaint, waypointLabelPaint, 0.79f)
         }
 
         // Kilitli hedef: nişan alınacak yön. Kadranın içine uzanan çizgi,
@@ -225,7 +248,11 @@ class CompassView @JvmOverloads constructor(
         drawLevel(canvas, cx, cy, radius)
     }
 
-    /** Kadranla dönen bir işaret: dış çemberden içeri kısa çizgi + altında etiket. */
+    /**
+     * Kadranla dönen bir işaret: dış çemberden içeri çizgi + ucunda etiket.
+     * Her işaret türü kendi yarıçapında yazılır; aksi hâlde yönleri çakıştığında
+     * (nokta tam kuzeydeyken "Nokta", "M" ve "K" gibi) etiketler üst üste biner.
+     */
     private fun drawRimLabel(
         canvas: Canvas,
         cx: Float,
@@ -234,12 +261,20 @@ class CompassView @JvmOverloads constructor(
         bearing: Float,
         label: String,
         linePaint: Paint,
-        textPaint: Paint
+        textPaint: Paint,
+        labelFraction: Float
     ) {
         canvas.save()
         canvas.rotate(bearing, cx, cy)
-        canvas.drawLine(cx, cy - radius, cx, cy - radius * 0.86f, linePaint)
-        canvas.drawText(label, cx, cy - radius * 0.86f + textPaint.textSize, textPaint)
+        canvas.drawLine(cx, cy - radius, cx, cy - radius * RIM_TICK_INNER, linePaint)
+        // Etiket, çizgiden bağımsız olarak verilen yarıçapa dikey ortalanır; yön
+        // harfleri 0,70R civarında olduğu için etiketler onların dışında kalır.
+        canvas.drawText(
+            label,
+            cx,
+            cy - radius * labelFraction - (textPaint.ascent() + textPaint.descent()) / 2f,
+            textPaint
+        )
         canvas.restore()
     }
 
@@ -282,9 +317,13 @@ class CompassView @JvmOverloads constructor(
         val COLOR_MAGNETIC = Color.parseColor("#4C9AFF")
         val COLOR_QIBLA = Color.parseColor("#3DD68C")
         val COLOR_TARGET = Color.parseColor("#F5B841")
+        val COLOR_WAYPOINT = Color.parseColor("#C77DFF")
 
         /** Kabarcık: ortalanınca nötr beyaz, kaçınca hedef sarısı. */
         private val COLOR_LEVEL = Color.parseColor("#F0F3F6")
+
+        /** İşaret çizgisinin dış çemberden içeri indiği nokta. */
+        private const val RIM_TICK_INNER = 0.93f
 
         /** Kabarcığın kenara dayandığı eğim ve "düz sayılır" eşiği (derece). */
         private const val MAX_TILT = 25f

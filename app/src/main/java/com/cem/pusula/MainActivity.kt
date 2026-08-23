@@ -103,6 +103,9 @@ class MainActivity : Activity(), SensorEventListener {
     /** Konum satırı derece-dakika-saniye mi gösteriyor; dokununca değişir. */
     private var showDms = false
 
+    /** Kaydedilen nokta (enlem, boylam); yoksa null. Kadrana uzun basınca konur. */
+    private var waypoint: Pair<Double, Double>? = null
+
     private val locationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) = applyLocation(location)
 
@@ -153,6 +156,14 @@ class MainActivity : Activity(), SensorEventListener {
             true
         }
         compassView.setOnClickListener { toggleTarget() }
+        compassView.setOnLongClickListener {
+            toggleWaypoint()
+            true
+        }
+
+        val wpLat = prefs().getFloat(KEY_WAYPOINT_LATITUDE, Float.NaN)
+        val wpLon = prefs().getFloat(KEY_WAYPOINT_LONGITUDE, Float.NaN)
+        if (!wpLat.isNaN() && !wpLon.isNaN()) waypoint = wpLat.toDouble() to wpLon.toDouble()
     }
 
     override fun onResume() {
@@ -250,6 +261,8 @@ class MainActivity : Activity(), SensorEventListener {
         if (!isBetterFix(location, lastLocation)) return
         lastLocation = location
         refreshLocationText()
+        applyWaypoint()
+        refreshTargetText()
         prefs().edit()
             .putFloat(KEY_LATITUDE, location.latitude.toFloat())
             .putFloat(KEY_LONGITUDE, location.longitude.toFloat())
@@ -411,28 +424,94 @@ class MainActivity : Activity(), SensorEventListener {
 
     private fun applyTarget() = compassView.setTargetBearing(shownTarget())
 
+    /**
+     * Hedef ve nokta bilgisini tek satırda toplar. İkisi de renk kodlu, kadrandaki
+     * işaretlerle eşleşsin diye; hiçbiri yoksa satır iki hareketi de anlatır.
+     */
     private fun refreshTargetText() {
-        val target = shownTarget()
-        val shown = lastShownDegree
-        if (target == null) {
+        val parts = SpannableStringBuilder()
+        targetSegment()?.let { appendColored(parts, it, CompassView.COLOR_TARGET) }
+        waypointSegment()?.let { appendColored(parts, it, CompassView.COLOR_WAYPOINT) }
+        if (parts.isEmpty()) {
             targetText.setTextColor(COLOR_HINT)
             targetText.text = getString(R.string.target_hint)
-            return
+        } else {
+            targetText.text = parts
         }
-        targetText.setTextColor(CompassView.COLOR_TARGET)
+    }
+
+    private fun appendColored(builder: SpannableStringBuilder, text: String, color: Int) {
+        if (builder.isNotEmpty()) builder.append("   ")
+        val start = builder.length
+        builder.append(text)
+        builder.setSpan(
+            ForegroundColorSpan(color),
+            start,
+            builder.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+    }
+
+    private fun targetSegment(): String? {
+        val target = shownTarget() ?: return null
         val targetDegree = target.roundToInt() % 360
-        if (shown < 0) {
-            targetText.text = getString(R.string.target_plain, targetDegree)
-            return
-        }
+        val shown = lastShownDegree
+        if (shown < 0) return getString(R.string.target_plain, targetDegree)
         // Hedefe kalan açı: pozitifse saat yönünde, yani sağa dönmek gerekir.
         val diff = ((target - shown + 540f) % 360f) - 180f
         val amount = abs(diff).roundToInt()
-        targetText.text = when {
+        return when {
             amount <= ON_TARGET_DEGREES -> getString(R.string.target_reached, targetDegree)
             diff > 0f -> getString(R.string.target_right, targetDegree, amount)
             else -> getString(R.string.target_left, targetDegree, amount)
         }
+    }
+
+    private fun waypointSegment(): String? {
+        val (wpLat, wpLon) = waypoint ?: return null
+        val here = lastLocation ?: return null
+        val bearing = bearingTo(here.latitude, here.longitude, wpLat, wpLon)
+        val results = FloatArray(1)
+        Location.distanceBetween(here.latitude, here.longitude, wpLat, wpLon, results)
+        return getString(R.string.waypoint_line, bearing.roundToInt() % 360, formatDistance(results[0]))
+    }
+
+    /** Yakında metre, uzakta kilometre; ondalık ayraç cihazın diline uyar. */
+    private fun formatDistance(meters: Float): String =
+        if (meters < 1000f) "%d m".format(meters.roundToInt())
+        else "%.1f km".format(meters / 1000f)
+
+    /** Kadrana uzun basmak bulunduğun yeri kaydeder; kayıtlıyken siler. */
+    private fun toggleWaypoint() {
+        val editor = prefs().edit()
+        if (waypoint != null) {
+            waypoint = null
+            editor.remove(KEY_WAYPOINT_LATITUDE).remove(KEY_WAYPOINT_LONGITUDE)
+            Toast.makeText(this, getString(R.string.waypoint_cleared), Toast.LENGTH_SHORT).show()
+        } else {
+            val here = lastLocation
+            if (here == null) {
+                Toast.makeText(this, getString(R.string.waypoint_needs_location), Toast.LENGTH_SHORT).show()
+                return
+            }
+            waypoint = here.latitude to here.longitude
+            editor.putFloat(KEY_WAYPOINT_LATITUDE, here.latitude.toFloat())
+                .putFloat(KEY_WAYPOINT_LONGITUDE, here.longitude.toFloat())
+            Toast.makeText(this, getString(R.string.waypoint_saved), Toast.LENGTH_SHORT).show()
+        }
+        editor.apply()
+        applyWaypoint()
+        refreshTargetText()
+    }
+
+    /** Noktanın kadrandaki yönü; gerçek kuzeye göre, kadranla aynı çerçevede. */
+    private fun applyWaypoint() {
+        val wp = waypoint
+        val here = lastLocation
+        compassView.setWaypointBearing(
+            if (wp == null || here == null) null
+            else bearingTo(here.latitude, here.longitude, wp.first, wp.second)
+        )
     }
 
     // --------------------------------------------------------------- sensör
@@ -656,6 +735,8 @@ class MainActivity : Activity(), SensorEventListener {
         const val KEY_LATITUDE = "latitude"
         const val KEY_LONGITUDE = "longitude"
         const val KEY_TARGET = "target"
+        const val KEY_WAYPOINT_LATITUDE = "waypointLatitude"
+        const val KEY_WAYPOINT_LONGITUDE = "waypointLongitude"
 
         /** Bu yaştan büyük fark varsa yeni fix koşulsuz kazanır. */
         const val FIX_STALE_MS = 60_000L

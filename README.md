@@ -185,7 +185,7 @@ vaka %31,9 sapma yapıyordu ve %30 eşiği kıl payı geçiyordu, %25 daha emniy
 kaymaması için yerini her zaman ayırır (`minLines="2"`); aksi hâlde uyarı her
 çıkışında kadran zıplıyordu.
 
-## 5. Kıble, hedef kilidi, su terazisi ve konum paneli
+## 5. Kıble, hedef kilidi, su terazisi, konum ve nokta
 
 **Kıble.** Konum bilinince kadranda yeşil **Kıble** işareti ve üst satırda yön
 derecesi çıkar. Hesap, bulunduğunuz noktadan Kâbe'ye (21,4225°K / 39,8252°D)
@@ -236,6 +236,27 @@ yazar — hata payı zaten kilometrelerce olur, bunu gizlemek yanıltıcı olurd
 Sapma için ağ konumu yeterdi; panel için GPS'in hassasiyeti de gerektiğinden
 artık iki sağlayıcı da dinlenir ve gelen fix'lerden en iyisi seçilir (bir
 dakikadan yeni olan koşulsuz kazanır, eşit yaştakilerde hata payı küçük olan).
+
+**Nokta kaydetme ve geri dönüş.** Kadrana **uzun basmak** bulunduğunuz yeri
+kaydeder; kadranda mor bir **Nokta** işareti ve alt satırda yön ile mesafe belirir:
+
+```
+Nokta 265° · 17 m
+```
+
+Tekrar uzun basmak siler. Nokta `SharedPreferences`'a yazıldığı için uygulamayı
+kapatsanız da durur. Yön, kıbleyle aynı büyük daire formülünden; mesafe
+`Location.distanceBetween` ile (WGS84 elipsoidi). Bir kilometrenin altında metre,
+üstünde kilometre yazar.
+
+Hedef ve nokta bilgisi tek satırda, kadrandaki işaretlerle aynı renklerde
+gösterilir; ikisi de yokken satır iki hareketi birden anlatır. Satır iki sıra yer
+kaplar (`minLines="2"`), yoksa nokta kaydedildiğinde ekran zıplardı.
+
+Kadran işaretlerinin etiketleri farklı yarıçaplara yazılır (`M` 0,90R, `Kıble`
+0,845R, `Nokta` 0,79R). Sebebi somut: nokta tam kuzeydeyken üç etiket de aynı
+noktaya düşüp okunmaz hâle geliyordu. Yarıçaplar yön harflerinin bandının
+(0,70R civarı) dışında kalacak şekilde seçildi.
 
 ## 6. Kodun yapısı
 
@@ -311,7 +332,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **790.807 bayt** (~772 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **792.987 bayt** (~774 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.
