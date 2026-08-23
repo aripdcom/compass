@@ -32,8 +32,8 @@ object Coordinates {
      */
     fun parse(text: String?): Point? {
         if (text.isNullOrBlank()) return null
-        return fromDms(text)
-            ?: fromNamedParameters(text)
+        return fromNamedParameters(text)
+            ?: fromDms(text)
             ?: fromPathSegments(text)
             ?: fromPlainPair(text)
     }
@@ -47,7 +47,23 @@ object Coordinates {
         if (text.isNullOrBlank()) return null
         val parenthesised = LABEL.find(text)?.groupValues?.get(1)?.trim()
         if (!parenthesised.isNullOrEmpty()) return decode(parenthesised)
-        return null
+        return leadingName(text)
+    }
+
+    /**
+     * Uygulamanın kendi paylaşım biçiminde ad ilk satırdadır
+     * (`Kamp\n41.0, 29.0\nhttps://...`). Cihazda denerken çıktı: koordinat geri
+     * okunuyordu ama ad kayboluyor ve nokta "Nokta 1" diye kaydediliyordu.
+     *
+     * İlk satır ancak ad *olabilecek* bir şeyse alınır — koordinatın kendisi,
+     * bir adres ya da aşırı uzun bir metin değilse.
+     */
+    private fun leadingName(text: String): String? {
+        val first = text.lineSequence().firstOrNull()?.trim().orEmpty()
+        if (first.isEmpty() || first.length > MAX_LABEL) return null
+        if (first.contains("://") || first.contains(':') && NUMBER.containsMatchIn(first)) return null
+        if (parse(first) != null) return null
+        return first
     }
 
     /** Adres kodlamasındaki `%20` ve `+` gibi kaçışları çözer. */
@@ -109,7 +125,9 @@ object Coordinates {
     private fun dmsValue(match: MatchResult): Double {
         val degrees = match.groupValues[1].toDouble()
         val minutes = match.groupValues[2].toDoubleOrNull() ?: 0.0
-        val seconds = match.groupValues[3].toDoubleOrNull() ?: 0.0
+        // Saniyede ondalık ayraç virgül de olabilir; uygulamanın kendi
+        // derece-dakika-saniye yazısı Türkçede virgülle yazıyor.
+        val seconds = match.groupValues[3].replace(',', '.').toDoubleOrNull() ?: 0.0
         val magnitude = degrees + minutes / 60.0 + seconds / 3600.0
         return if (match.groupValues[4].uppercase() in NEGATIVE_LETTERS) -magnitude else magnitude
     }
@@ -142,10 +160,28 @@ object Coordinates {
     private val MAP_FRAGMENT = Regex("""map=\d+(?:\.\d+)?/(-?\d+\.\d+)/(-?\d+\.\d+)""", RegexOption.IGNORE_CASE)
     private val AT_SEGMENT = Regex("""@(-?\d+\.\d+),(-?\d+\.\d+)""")
     /**
-     * Derece-dakika-saniye; dakika ve saniye isteğe bağlı. Yarımküre harfi
-     * zorunlu, çünkü işareti yalnızca o belirler.
+     * Derece-dakika-saniye. Dakika, saniye ve derece işaretinin kendisi isteğe
+     * bağlı: cihazda denerken `41 00 30 K 29 08 12 D` yazıldığında ayrıştırıcı
+     * bunu serbest sayı taramasına düşürüp ilk iki sayıyı alıyor ve sessizce
+     * (41,0) veriyordu — Atlantik'te bir nokta. İnsanlar `°` işaretini
+     * yazmıyor; tanımak gerekiyor.
+     *
+     * Yarımküre harfi zorunlu, çünkü işareti yalnızca o belirler ve gevşeyen
+     * kalıbı ayakta tutan tek çapa o.
+     *
+     * İki koruma var. Baştaki geriye bakış, derecenin bir sayının **ortasından**
+     * başlamasını engelliyor: `40,98767° K` içinden `67° K` çıkarmak yanlış bir
+     * koordinat üretirdi. Sondaki ileriye bakış ise harfin bir kelimenin başı
+     * olmamasını sağlıyor: `9,0 km` içindeki `k` yoksa yarımküre sanılırdı.
      */
-    private val DMS = Regex("""(\d{1,3})[°º]\s*(\d{1,2})?['′]?\s*([\d.]+)?["″]?\s*([NSEWKGDBnsewkgdb])""")
+    private val DMS = Regex(
+        """(?<![\d.,])(\d{1,3})\s*[°º]?\s*""" +
+            """(?:(\d{1,2})\s*['′]?\s*(?:(\d+(?:[.,]\d+)?)\s*["″]?\s*)?)?""" +
+            """([NSEWKGDBnsewkgdb])(?![\p{L}])"""
+    )
+
+    /** Adın makul üst sınırı; daha uzunu paylaşılan bir açıklama metnidir. */
+    private const val MAX_LABEL = 60
 
     private val LABEL = Regex("""\(([^)]{1,60})\)""")
     private val PERCENT = Regex("""%([0-9A-Fa-f]{2})""")

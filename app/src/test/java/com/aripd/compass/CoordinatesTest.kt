@@ -71,6 +71,39 @@ class CoordinatesTest {
         assertPoint(-41.0084722, -29.1366667, "41°00'30.5\"S 29°08'12\"W")
     }
 
+    /**
+     * Derece işareti olmadan da okunur. Cihazda denerken çıktı:
+     * `41 00 30 K 29 08 12 D` serbest sayı taramasına düşüp ilk iki sayıyı
+     * alıyor ve sessizce (41,0) veriyordu — Atlantik'te bir nokta.
+     */
+    @Test
+    fun `derece isareti olmadan da okunur`() {
+        assertPoint(41.0083333, 29.1366667, "41 00 30 K 29 08 12 D")
+        assertPoint(41.0083333, 29.1366667, "41 00 30 N 29 08 12 E")
+        assertPoint(41.0, 29.0, "41 K 29 D")
+    }
+
+    /** Saniyede ondalık ayraç virgül de olabilir (Türkçe yazım). */
+    @Test
+    fun `saniyede virgul kabul edilir`() {
+        assertPoint(41.0084722, 29.1366667, "41°00'30,5\"K 29°08'12\"D")
+    }
+
+    /**
+     * Gevşeyen kalıbın iki koruması. Derece bir sayının ortasından başlamamalı
+     * ve yarımküre harfi bir kelimenin başı olmamalı; ikisi de yanlış ama
+     * geçerli görünen koordinat üretirdi.
+     */
+    @Test
+    fun `gevsek kalip yanlis eslesme uretmez`() {
+        // Sayının ortasından: `40,98767° K` içinden `67° K` çıkmamalı.
+        assertPoint(40.98767, 29.13664, "40.98767, 29.13664")
+        // Kelimenin başı: `9,0 km` içindeki `k` yarımküre değil.
+        assertNull(Coordinates.parse("Kamp 275 · 9 km"))
+        // Ondalık çift hâlâ ondalık çift olarak okunmalı.
+        assertPoint(41.0, 29.0, "41.0, 29.0")
+    }
+
     /** Enlem önce yazılmak zorunda değil; harf hangisi olduğunu söyler. */
     @Test
     fun `derece dakika saniyede sira harften okunur`() {
@@ -97,6 +130,32 @@ class CoordinatesTest {
         assertNull(Coordinates.label("geo:41.0,29.0"))
         assertNull(Coordinates.label(null))
         assertNull(Coordinates.label(""))
+    }
+
+    /**
+     * Uygulamanın kendi paylaşımında ad ilk satırdadır. Cihazda denerken çıktı:
+     * koordinat geri okunuyordu ama ad kayboluyor ve nokta "Nokta 1" diye
+     * kaydediliyordu.
+     */
+    @Test
+    fun `ilk satirdaki ad okunur`() {
+        assertEquals(
+            "Kamp",
+            Coordinates.label(
+                "Kamp\n40.995000, 29.030000\n" +
+                    "https://www.openstreetmap.org/?mlat=40.995&mlon=29.03"
+            )
+        )
+    }
+
+    /** İlk satır ad değilse alınmaz: koordinatın kendisi, adres ya da uzun metin. */
+    @Test
+    fun `ad olamayacak ilk satir alinmaz`() {
+        assertNull(Coordinates.label("41.0, 29.0"))
+        assertNull(Coordinates.label("https://maps.google.com/?q=41.0,29.0"))
+        assertNull(Coordinates.label("geo:41.0,29.0\nbir şey"))
+        assertNull(Coordinates.label("41°00'30\"K 29°08'12\"D"))
+        assertNull(Coordinates.label("x".repeat(80) + "\n41.0, 29.0"))
     }
 
     /** Sıfır meridyeni ve ekvator geçerli koordinattır, "yok" değil. */
