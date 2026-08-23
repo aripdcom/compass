@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Manyetik sapmayı (gerçek kuzey) hesaplamak için; yaklaşık konum yeterli -->
+    <!--
+      Manyetik sapma (gerçek kuzey) ve kıble için yaklaşık konum yeterli; koordinat
+      paneli anlamlı olsun diye hassas konum da isteniyor. Kullanıcı "yaklaşık"ı
+      seçerse uygulama çalışmaya devam eder, panelde bunu açıkça yazar.
+    -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <!-- Pusula donanımı olmayan cihazlarda uygulama yine kurulabilsin diye required=false -->
     <uses-feature

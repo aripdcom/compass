@@ -9,8 +9,9 @@ göbeğinde su terazisi.
 - `minSdk 24` (Android 7.0) — **Android 13 dahil** tüm sürümlerde çalışır
 - `targetSdk 34`
 - Paket adı: `com.cem.pusula`
-- Tek izin: `ACCESS_COARSE_LOCATION` (yalnızca gerçek kuzey için; reddedilirse
-  uygulama manyetik kuzeyle çalışmaya devam eder).
+- İzinler: `ACCESS_COARSE_LOCATION` ve `ACCESS_FINE_LOCATION` (gerçek kuzey, kıble
+  ve koordinat paneli için; reddedilirse uygulama manyetik kuzeyle çalışmaya devam
+  eder, "yaklaşık" seçilirse koordinatlar o etiketle gösterilir).
 
 ## 0. Klasör düzeni
 
@@ -184,7 +185,7 @@ vaka %31,9 sapma yapıyordu ve %30 eşiği kıl payı geçiyordu, %25 daha emniy
 kaymaması için yerini her zaman ayırır (`minLines="2"`); aksi hâlde uyarı her
 çıkışında kadran zıplıyordu.
 
-## 5. Kıble, hedef kilidi ve su terazisi
+## 5. Kıble, hedef kilidi, su terazisi ve konum paneli
 
 **Kıble.** Konum bilinince kadranda yeşil **Kıble** işareti ve üst satırda yön
 derecesi çıkar. Hesap, bulunduğunuz noktadan Kâbe'ye (21,4225°K / 39,8252°D)
@@ -214,6 +215,27 @@ ve kabarcık beyaza döner. Eğim, remap edilmiş dönüş matrisinin `[8]` elem
 ark kosinüsüdür (ekran normalinin düşeyden açısı); 40°'yi geçince "telefonu
 yatay tutun" uyarısı çıkar, 30°'nin altına inince kaybolur — sınırda titremesin
 diye açma ve kapama eşikleri farklı.
+
+**Konum paneli.** Konum bulununca kadranın altında koordinatlar, rakım ve hata
+payı görünür:
+
+```
+40,98767° K  29,13664° D · 189 m · ±100 m
+```
+
+Satıra **dokunmak** biçimi derece-dakika-saniyeye çevirir
+(`40°59'15,6" K  29°08'11,9" D`), tekrar dokunmak ondalığa döndürür. **Uzun
+basmak** koordinatları panoya kopyalar; kopyalanan biçim haritalara yapıştırmaya
+uygun olsun diye nokta ayraçlı ve işaretlidir (`40.987670, 29.136640`), ekranda
+gösterilen biçimden bağımsızdır. Android 13'ten itibaren sistem kendi kopyalama
+onayını gösterdiği için uygulama kendi bildirimini o sürümlerde çıkarmaz.
+
+Koordinat paneli anlamlı olsun diye artık hassas konum da isteniyor. Kullanıcı
+"yaklaşık"ı seçerse uygulama çalışmaya devam eder ve satırın sonuna *yaklaşık*
+yazar — hata payı zaten kilometrelerce olur, bunu gizlemek yanıltıcı olurdu.
+Sapma için ağ konumu yeterdi; panel için GPS'in hassasiyeti de gerektiğinden
+artık iki sağlayıcı da dinlenir ve gelen fix'lerden en iyisi seçilir (bir
+dakikadan yeni olan koşulsuz kazanır, eşit yaştakilerde hata payı küçük olan).
 
 ## 6. Kodun yapısı
 
@@ -289,7 +311,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **787.965 bayt** (~770 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **790.807 bayt** (~772 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.

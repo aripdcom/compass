@@ -10,6 +10,8 @@
     <string name="need_location">Gerçek kuzey için konum izni gerekli — dokunun</string>
     <string name="waiting_location">Konum bekleniyor…</string>
     <string name="qibla_info">Kıble %1$d°</string>
+    <string name="approximate_location">yaklaşık</string>
+    <string name="location_copied">Kopyalandı: %1$s</string>
     <string name="target_hint">Kadrana dokunun — baktığınız yönü kilitler</string>
     <string name="target_plain">Hedef %1$d°</string>
     <string name="target_reached">Hedef %1$d° · yön tutuyor</string>

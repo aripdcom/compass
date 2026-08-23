@@ -3,6 +3,8 @@ package com.cem.pusula
 import android.Manifest
 import android.app.Activity
 import android.content.Context
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.hardware.GeomagneticField
@@ -22,9 +24,12 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.view.Surface
+import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
+import android.widget.Toast
 import kotlin.math.abs
+import kotlin.math.floor
 import kotlin.math.acos
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -43,6 +48,7 @@ class MainActivity : Activity(), SensorEventListener {
     private lateinit var degreeText: TextView
     private lateinit var directionText: TextView
     private lateinit var infoText: TextView
+    private lateinit var locationText: TextView
     private lateinit var targetText: TextView
     private lateinit var statusText: TextView
 
@@ -91,6 +97,12 @@ class MainActivity : Activity(), SensorEventListener {
 
     private var locationManager: LocationManager? = null
 
+    /** Panelde gösterilen son konum; sağlayıcılar arasından en iyisi seçilir. */
+    private var lastLocation: Location? = null
+
+    /** Konum satırı derece-dakika-saniye mi gösteriyor; dokununca değişir. */
+    private var showDms = false
+
     private val locationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) = applyLocation(location)
 
@@ -109,6 +121,7 @@ class MainActivity : Activity(), SensorEventListener {
         degreeText = findViewById(R.id.degreeText)
         directionText = findViewById(R.id.directionText)
         infoText = findViewById(R.id.infoText)
+        locationText = findViewById(R.id.locationText)
         targetText = findViewById(R.id.targetText)
         statusText = findViewById(R.id.statusText)
 
@@ -131,6 +144,14 @@ class MainActivity : Activity(), SensorEventListener {
         applyTarget()
 
         infoText.setOnClickListener { onInfoTapped() }
+        locationText.setOnClickListener {
+            showDms = !showDms
+            refreshLocationText()
+        }
+        locationText.setOnLongClickListener {
+            copyLocation()
+            true
+        }
         compassView.setOnClickListener { toggleTarget() }
     }
 
@@ -180,9 +201,19 @@ class MainActivity : Activity(), SensorEventListener {
         checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) ==
             PackageManager.PERMISSION_GRANTED
 
+    /** Kullanıcı "yaklaşık" konumu seçtiyse koordinatlar kilometrelerce şaşabilir. */
+    private fun hasPreciseLocation(): Boolean =
+        checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) ==
+            PackageManager.PERMISSION_GRANTED
+
+    private val locationPermissions = arrayOf(
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    )
+
     private fun ensureLocation() {
         if (!hasLocationPermission()) {
-            requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), REQ_LOCATION)
+            requestPermissions(locationPermissions, REQ_LOCATION)
             refreshInfoText(null)
             return
         }
@@ -200,15 +231,15 @@ class MainActivity : Activity(), SensorEventListener {
             }
             best?.let { applyLocation(it) }
 
-            val provider = when {
-                lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER) ->
-                    LocationManager.NETWORK_PROVIDER
-                lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ->
-                    LocationManager.GPS_PROVIDER
-                else -> null
-            }
-            if (provider != null) {
-                lm.requestLocationUpdates(provider, 60_000L, 1_000f, locationListener)
+            // Sapma için ağ konumu yeterdi; koordinat paneli için GPS'in hassasiyeti
+            // de gerekiyor, o yüzden ikisi de dinlenip en iyisi seçiliyor.
+            for (provider in arrayOf(
+                LocationManager.GPS_PROVIDER,
+                LocationManager.NETWORK_PROVIDER
+            )) {
+                if (lm.isProviderEnabled(provider)) {
+                    lm.requestLocationUpdates(provider, 10_000L, 10f, locationListener)
+                }
             }
         } catch (_: SecurityException) {
         }
@@ -216,11 +247,75 @@ class MainActivity : Activity(), SensorEventListener {
     }
 
     private fun applyLocation(location: Location) {
+        if (!isBetterFix(location, lastLocation)) return
+        lastLocation = location
+        refreshLocationText()
         prefs().edit()
             .putFloat(KEY_LATITUDE, location.latitude.toFloat())
             .putFloat(KEY_LONGITUDE, location.longitude.toFloat())
             .apply()
         applyCoordinates(location.latitude, location.longitude, location.altitude)
+    }
+
+    /**
+     * Bir dakikadan yeni bir fix her zaman kazanır (yer değiştirmiş olabiliriz),
+     * eşit yaşta olanlarda daha küçük hata payı olan seçilir.
+     */
+    private fun isBetterFix(candidate: Location, current: Location?): Boolean {
+        if (current == null) return true
+        val age = candidate.time - current.time
+        if (age > FIX_STALE_MS) return true
+        if (age < -FIX_STALE_MS) return false
+        return candidate.accuracy <= current.accuracy
+    }
+
+    /** Konum satırı: koordinatlar, rakım ve hata payı. Dokunuş biçim değiştirir. */
+    private fun refreshLocationText() {
+        val location = lastLocation
+        if (location == null) {
+            locationText.visibility = View.GONE
+            return
+        }
+        locationText.visibility = View.VISIBLE
+        val parts = StringBuilder()
+        if (showDms) {
+            parts.append(dms(location.latitude, "K", "G"))
+            parts.append("  ")
+            parts.append(dms(location.longitude, "D", "B"))
+        } else {
+            parts.append("%.5f° %s".format(abs(location.latitude), if (location.latitude >= 0) "K" else "G"))
+            parts.append("  ")
+            parts.append("%.5f° %s".format(abs(location.longitude), if (location.longitude >= 0) "D" else "B"))
+        }
+        if (location.hasAltitude()) parts.append(" · %d m".format(location.altitude.roundToInt()))
+        if (location.hasAccuracy()) parts.append(" · ±%d m".format(location.accuracy.roundToInt()))
+        if (!hasPreciseLocation()) parts.append(" · ").append(getString(R.string.approximate_location))
+        locationText.text = parts.toString()
+    }
+
+    /** Ondalık dereceyi derece-dakika-saniyeye çevirir. */
+    private fun dms(value: Double, positive: String, negative: String): String {
+        val magnitude = abs(value)
+        val degrees = floor(magnitude).toInt()
+        val minutesFull = (magnitude - degrees) * 60.0
+        val minutes = floor(minutesFull).toInt()
+        val seconds = (minutesFull - minutes) * 60.0
+        return "%d°%02d'%04.1f\" %s".format(
+            degrees, minutes, seconds, if (value >= 0) positive else negative
+        )
+    }
+
+    private fun copyLocation() {
+        val location = lastLocation ?: return
+        // Haritalara yapıştırılabilecek sade biçim; nokta ayraçlı, işaretli.
+        val plain = "%.6f, %.6f".format(java.util.Locale.US, location.latitude, location.longitude)
+        val clipboard = getSystemService(CLIPBOARD_SERVICE) as? ClipboardManager ?: return
+        clipboard.setPrimaryClip(ClipData.newPlainText(getString(R.string.app_name), plain))
+        // Android 13'ten itibaren sistem kendi kopyalama onayını gösteriyor;
+        // üstüne bir de kendi bildirimimizi çıkarmak tekrar olurdu.
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            Toast.makeText(this, getString(R.string.location_copied, plain), Toast.LENGTH_SHORT).show()
+        }
     }
 
     /** Konumdan türeyen her şey: manyetik sapma ve kıble yönü. */
@@ -281,7 +376,7 @@ class MainActivity : Activity(), SensorEventListener {
     private fun onInfoTapped() {
         if (hasLocationPermission()) return
         if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), REQ_LOCATION)
+            requestPermissions(locationPermissions, REQ_LOCATION)
         } else {
             startActivity(
                 Intent(
@@ -561,6 +656,9 @@ class MainActivity : Activity(), SensorEventListener {
         const val KEY_LATITUDE = "latitude"
         const val KEY_LONGITUDE = "longitude"
         const val KEY_TARGET = "target"
+
+        /** Bu yaştan büyük fark varsa yeni fix koşulsuz kazanır. */
+        const val FIX_STALE_MS = 60_000L
 
         /** Kâbe'nin koordinatları (Mescid-i Haram, Mekke). */
         const val KAABA_LATITUDE = 21.4224779
