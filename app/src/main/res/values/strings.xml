@@ -144,4 +144,7 @@
     <string name="waypoint_rename">Rename</string>
     <string name="waypoint_delete">Delete</string>
     <string name="waypoint_name_hint">Point name</string>
+    <string name="location_action_copy">Copy</string>
+    <string name="location_action_share">Share</string>
+    <string name="share_chooser">Share location</string>
 </resources>

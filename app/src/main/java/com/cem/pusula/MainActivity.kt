@@ -249,7 +249,7 @@ class MainActivity : Activity(), SensorEventListener {
             refreshLocationText()
         }
         locationText.setOnLongClickListener {
-            copyLocation()
+            showLocationActions()
             true
         }
         compassView.contentDescription = getString(R.string.a11y_dial)
@@ -614,6 +614,40 @@ class MainActivity : Activity(), SensorEventListener {
             getString(if (value >= 0) positiveRes else negativeRes)
         )
 
+    /** Konum satırına uzun basınca: kopyala ya da paylaş. */
+    private fun showLocationActions() {
+        val location = lastLocation ?: return
+        val actions = arrayOf(
+            getString(R.string.location_action_copy),
+            getString(R.string.location_action_share)
+        )
+        AlertDialog.Builder(this)
+            .setItems(actions) { _, which ->
+                if (which == 0) copyLocation()
+                else shareLocation(null, location.latitude, location.longitude)
+            }
+            .setNegativeButton(R.string.bearing_dialog_cancel, null)
+            .show()
+    }
+
+    /**
+     * Konumu metin olarak paylaşır. Yanına harita bağlantısı da konur: alıcı
+     * ondalık dereceyi bir uygulamaya yapıştırmak zorunda kalmasın. Bağlantı
+     * hesap istemeyen ve tarayıcıda da açılan OpenStreetMap'e verilir.
+     */
+    private fun shareLocation(name: String?, latitude: Double, longitude: Double) {
+        val locale = java.util.Locale.US
+        val coordinates = "%.6f, %.6f".format(locale, latitude, longitude)
+        val link = "https://www.openstreetmap.org/?mlat=%.6f&mlon=%.6f#map=17/%.6f/%.6f"
+            .format(locale, latitude, longitude, latitude, longitude)
+        val text = if (name.isNullOrBlank()) "$coordinates\n$link" else "$name\n$coordinates\n$link"
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, text)
+        }
+        startActivity(Intent.createChooser(intent, getString(R.string.share_chooser)))
+    }
+
     private fun copyLocation() {
         val location = lastLocation ?: return
         // Haritalara yapıştırılabilecek sade biçim; nokta ayraçlı, işaretli.
@@ -924,11 +958,19 @@ class MainActivity : Activity(), SensorEventListener {
     }
 
     private fun showWaypointActions(point: Waypoint) {
-        val actions = arrayOf(getString(R.string.waypoint_rename), getString(R.string.waypoint_delete))
+        val actions = arrayOf(
+            getString(R.string.waypoint_rename),
+            getString(R.string.location_action_share),
+            getString(R.string.waypoint_delete)
+        )
         AlertDialog.Builder(this)
             .setTitle(point.name)
             .setItems(actions) { _, which ->
-                if (which == 0) showWaypointRename(point) else deleteWaypoint(point)
+                when (which) {
+                    0 -> showWaypointRename(point)
+                    1 -> shareLocation(point.name, point.latitude, point.longitude)
+                    else -> deleteWaypoint(point)
+                }
             }
             .setNegativeButton(R.string.bearing_dialog_cancel, null)
             .show()

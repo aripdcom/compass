@@ -262,9 +262,21 @@ payı görünür:
 
 Satıra **dokunmak** biçimi derece-dakika-saniyeye çevirir
 (`40°59'15,6" K  29°08'11,9" D`), tekrar dokunmak ondalığa döndürür. **Uzun
-basmak** koordinatları panoya kopyalar; kopyalanan biçim haritalara yapıştırmaya
-uygun olsun diye nokta ayraçlı ve işaretlidir (`40.987670, 29.136640`), ekranda
-gösterilen biçimden bağımsızdır. Android 13'ten itibaren sistem kendi kopyalama
+basmak** iki seçenek sunar: kopyalamak ya da paylaşmak.
+
+Kopyalanan biçim haritalara yapıştırmaya uygun olsun diye nokta ayraçlı ve
+işaretlidir (`40.987670, 29.136640`), ekranda gösterilen biçimden bağımsızdır.
+Paylaşılan metne bir de harita bağlantısı eklenir, alıcı koordinatı elle bir
+uygulamaya yapıştırmak zorunda kalmasın diye:
+
+```
+40.987651, 29.136705
+https://www.openstreetmap.org/?mlat=40.987651&mlon=29.136705#map=17/40.987651/29.136705
+```
+
+Bağlantı OpenStreetMap'e verilir: hesap istemez, tarayıcıda da açılır. Kaydedilen
+noktalar da aynı biçimde paylaşılabilir — listeden noktaya dokunup **Paylaş**
+seçildiğinde metnin başına noktanın adı konur. Android 13'ten itibaren sistem kendi kopyalama
 onayını gösterdiği için uygulama kendi bildirimini o sürümlerde çıkarmaz.
 
 Koordinat paneli anlamlı olsun diye artık hassas konum da isteniyor. Kullanıcı
@@ -757,7 +769,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **119.445 bayt** (~116 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **120.617 bayt** (~117 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.
