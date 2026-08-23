@@ -580,13 +580,13 @@ class MainActivity : Activity(), SensorEventListener {
         locationText.visibility = View.VISIBLE
         val parts = StringBuilder()
         if (showDms) {
-            parts.append(dms(location.latitude, "K", "G"))
+            parts.append(dms(location.latitude, R.string.hemisphere_north, R.string.hemisphere_south))
             parts.append("  ")
-            parts.append(dms(location.longitude, "D", "B"))
+            parts.append(dms(location.longitude, R.string.hemisphere_east, R.string.hemisphere_west))
         } else {
-            parts.append("%.5f° %s".format(abs(location.latitude), if (location.latitude >= 0) "K" else "G"))
+            parts.append(decimalCoordinate(location.latitude, R.string.hemisphere_north, R.string.hemisphere_south))
             parts.append("  ")
-            parts.append("%.5f° %s".format(abs(location.longitude), if (location.longitude >= 0) "D" else "B"))
+            parts.append(decimalCoordinate(location.longitude, R.string.hemisphere_east, R.string.hemisphere_west))
         }
         if (location.hasAltitude()) parts.append(" · %d m".format(location.altitude.roundToInt()))
         if (location.hasAccuracy()) parts.append(" · ±%d m".format(location.accuracy.roundToInt()))
@@ -595,16 +595,27 @@ class MainActivity : Activity(), SensorEventListener {
     }
 
     /** Ondalık dereceyi derece-dakika-saniyeye çevirir. */
-    private fun dms(value: Double, positive: String, negative: String): String {
+    private fun dms(value: Double, positiveRes: Int, negativeRes: Int): String {
         val magnitude = abs(value)
         val degrees = floor(magnitude).toInt()
         val minutesFull = (magnitude - degrees) * 60.0
         val minutes = floor(minutesFull).toInt()
         val seconds = (minutesFull - minutes) * 60.0
-        return "%d°%02d'%04.1f\" %s".format(
-            degrees, minutes, seconds, if (value >= 0) positive else negative
+        return getString(
+            R.string.coordinate_dms,
+            degrees,
+            "%02d".format(minutes),
+            "%04.1f".format(seconds),
+            getString(if (value >= 0) positiveRes else negativeRes)
         )
     }
+
+    private fun decimalCoordinate(value: Double, positiveRes: Int, negativeRes: Int): String =
+        getString(
+            R.string.coordinate_decimal,
+            "%.5f".format(abs(value)),
+            getString(if (value >= 0) positiveRes else negativeRes)
+        )
 
     private fun copyLocation() {
         val location = lastLocation ?: return
@@ -849,8 +860,8 @@ class MainActivity : Activity(), SensorEventListener {
 
     /** Yakında metre, uzakta kilometre; ondalık ayraç cihazın diline uyar. */
     private fun formatDistance(meters: Float): String =
-        if (meters < 1000f) "%d m".format(meters.roundToInt())
-        else "%.1f km".format(meters / 1000f)
+        if (meters < 1000f) getString(R.string.distance_meters, meters.roundToInt())
+        else getString(R.string.distance_kilometers, "%.1f".format(meters / 1000f))
 
     /** Kadrana uzun basmak bulunduğun yeri kaydeder; kayıtlıyken siler. */
     private fun toggleWaypoint() {
@@ -1046,9 +1057,12 @@ class MainActivity : Activity(), SensorEventListener {
             decl == null && !hasLocationPermission() -> getString(R.string.need_location)
             decl == null -> getString(R.string.waiting_location)
             else -> {
-                val magneticPart = magnetic?.let { "Manyetik ${formatBearing(it)} · " } ?: ""
-                val yon = if (decl >= 0f) "D" else "B"
-                magneticPart + "Sapma %.1f°%s".format(abs(decl), yon)
+                val magneticPart =
+                    magnetic?.let { getString(R.string.magnetic_reading, formatBearing(it)) + " · " } ?: ""
+                val hemisphere = getString(
+                    if (decl >= 0f) R.string.hemisphere_east else R.string.hemisphere_west
+                )
+                magneticPart + getString(R.string.declination_reading, "%.1f".format(abs(decl)), hemisphere)
             }
         }
         infoText.text = base
@@ -1190,10 +1204,8 @@ class MainActivity : Activity(), SensorEventListener {
         resources.getStringArray(R.array.cardinal_names)[((degrees / 22.5f) + 0.5f).toInt() % 16]
 
     private fun cardinal(degrees: Float): String {
-        val names = arrayOf("K", "KKD", "KD", "DKD", "D", "DGD", "GD", "GGD",
-            "G", "GGB", "GB", "BGB", "B", "BKB", "KB", "KKB")
-        val index = ((degrees / 22.5f) + 0.5f).toInt() % 16
-        return names[index]
+        val names = resources.getStringArray(R.array.cardinal_abbreviations)
+        return names[((degrees / 22.5f) + 0.5f).toInt() % 16]
     }
 
     private fun prefs() = getSharedPreferences("pusula", Context.MODE_PRIVATE)

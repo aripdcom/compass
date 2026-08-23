@@ -223,7 +223,7 @@ class CompassView @JvmOverloads constructor(
             canvas.restore()
         }
 
-        val labels = arrayOf("K", "KD", "D", "GD", "G", "GB", "B", "KB")
+        val labels = resources.getStringArray(R.array.dial_labels)
         labels.forEachIndexed { index, label ->
             canvas.save()
             canvas.rotate(index * 45f, cx, cy)
@@ -249,7 +249,8 @@ class CompassView @JvmOverloads constructor(
 
         val marks = ArrayList<RimItem>()
         magneticOffset?.let {
-            marks.add(RimItem(it, halfWidth(magneticLabelPaint.measureText("M") / 2f, radius), KIND_MAGNETIC, "M"))
+            val label = context.getString(R.string.magnetic_label)
+            marks.add(RimItem(it, halfWidth(magneticLabelPaint.measureText(label) / 2f, radius), KIND_MAGNETIC, label))
         }
         placeMarks.forEach {
             marks.add(RimItem(it.bearing, halfWidth(qiblaLabelPaint.measureText(it.label) / 2f, radius), KIND_PLACE, it.label))

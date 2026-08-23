@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Español -->
+<resources>
+    <string name="app_name">Brújula</string>
+    <string name="no_sensor">No hay sensor de brújula en este dispositivo.</string>
+    <string name="calibrate">Precisión baja — mueve el teléfono dibujando un ocho.</string>
+    <string name="magnetic_disturbance">Interferencia magnética: campo %1$d µT, esperado %2$d µT — aleja el teléfono de metales o imanes.</string>
+    <string name="hold_flat">Mantén el teléfono nivelado — la inclinación desvía la lectura.</string>
+    <string name="true_north">Norte geográfico</string>
+    <string name="magnetic_north">Norte magnético</string>
+    <string name="need_location">Se necesita permiso de ubicación para el norte geográfico — toca aquí</string>
+    <string name="waiting_location">Esperando la ubicación…</string>
+    <string name="place_kaaba">Kaaba (alquibla)</string>
+    <string name="place_kaaba_label">Alquibla</string>
+    <string name="place_aqsa">Mezquita de Al-Aqsa</string>
+    <string name="place_aqsa_label">Aqsa</string>
+    <string name="place_vatican">Vaticano</string>
+    <string name="place_vatican_label">Vaticano</string>
+    <string name="place_info">%1$s %2$s</string>
+    <string name="sun_rise_set">salida %1$s · puesta %2$s</string>
+    <string name="moon_info">Luna %1$s · %2$d%%</string>
+    <string name="moon_info_below">Luna %1$s · %2$d%% · bajo el horizonte</string>
+    <string name="approximate_location">aproximada</string>
+    <string name="location_copied">Copiado: %1$s</string>
+    <string name="sun_info">Sol %1$s</string>
+    <string name="sun_info_below">Sol %1$s · bajo el horizonte</string>
+    <string name="target_hint">Toca la esfera: fijar rumbo · pulsación larga: punto · aquí: introducir rumbo</string>
+    <string name="waypoint_line">Punto %1$s · %2$s</string>
+    <string name="waypoint_here">Punto · estás aquí</string>
+    <string name="waypoint_saved">Punto guardado</string>
+    <string name="waypoint_cleared">Punto borrado</string>
+    <string name="waypoint_needs_location">Sin ubicación — no se pudo guardar el punto</string>
+    <string name="bearing_dialog_title">Introducir rumbo</string>
+    <string name="bearing_dialog_set">Fijar</string>
+    <string name="bearing_dialog_clear">Borrar</string>
+    <string name="bearing_dialog_cancel">Cancelar</string>
+    <string name="target_plain">Objetivo %1$s</string>
+    <string name="target_reached">Objetivo %1$s · en rumbo</string>
+    <string name="target_right">Objetivo %1$s · %2$s a la derecha</string>
+    <string name="target_left">Objetivo %1$s · %2$s a la izquierda</string>
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_open">Ajustes</string>
+    <string name="settings_section_display">PANTALLA</string>
+    <string name="settings_night">Modo nocturno</string>
+    <string name="settings_night_summary">Fondo negro, esfera roja — conserva la visión nocturna</string>
+    <string name="settings_unit">Unidad de ángulo</string>
+    <string name="settings_unit_degree">Grados (0-360)</string>
+    <string name="settings_unit_mil">Milésimas (0-6400)</string>
+    <string name="settings_keep_screen">Mantener pantalla encendida</string>
+    <string name="settings_keep_screen_summary">La pantalla sigue encendida con la app abierta</string>
+    <string name="settings_fullscreen">Pantalla completa</string>
+    <string name="settings_fullscreen_summary">Oculta las barras de estado y navegación; desliza desde el borde</string>
+    <string name="settings_section_compass">BRÚJULA</string>
+    <string name="settings_true_north">Usar el norte geográfico</string>
+    <string name="settings_true_north_summary">Añade la declinación magnética si se conoce la ubicación</string>
+    <string name="settings_smoothing">Suavizado</string>
+    <string name="settings_smoothing_calm">Suave</string>
+    <string name="settings_smoothing_balanced">Equilibrado</string>
+    <string name="settings_smoothing_quick">Rápido</string>
+    <string name="settings_vibrate">Vibrar en los puntos cardinales</string>
+    <string name="settings_vibrate_summary">Un toque breve al pasar N/E/S/O</string>
+    <string name="settings_section_marks">MARCAS DE LA ESFERA</string>
+    <string name="settings_show_magnetic">Norte magnético (M)</string>
+    <string name="settings_show_magnetic_summary">Visible solo con el norte geográfico</string>
+    <string name="settings_show_level">Nivel de burbuja</string>
+    <string name="settings_show_level_summary">La burbuja en el centro de la esfera</string>
+    <string name="settings_show_sun">Sol</string>
+    <string name="settings_show_sun_arc">Trayectoria del sol</string>
+    <string name="settings_show_sun_arc_summary">El arco de salida a puesta y sus rumbos extremos</string>
+    <string name="settings_show_moon">Luna</string>
+    <string name="settings_show_moon_summary">Su rumbo y fase; tenue bajo el horizonte</string>
+    <string name="settings_marks_note">Las marcas de objetivo y punto no están aquí: se activan tocando o manteniendo pulsada la esfera.</string>
+    <string name="mil_suffix">milésimas</string>
+    <string name="a11y_degrees">%1$d grados</string>
+    <string name="a11y_mils">%1$d milésimas</string>
+    <string name="a11y_heading">%1$s, %2$s, %3$s</string>
+    <string name="a11y_declination">Magnético %1$s, declinación %2$s grados %3$s</string>
+    <string name="a11y_declination_east">este</string>
+    <string name="a11y_declination_west">oeste</string>
+    <string name="a11y_dial">Esfera de la brújula</string>
+    <string name="a11y_lock_bearing">fijar rumbo</string>
+    <string name="a11y_save_point">guardar punto</string>
+    <string name="magnetic_reading">Magnético %1$s</string>
+    <string name="declination_reading">Declinación %1$s°%2$s</string>
+    <string name="hemisphere_north">N</string>
+    <string name="hemisphere_south">S</string>
+    <string name="hemisphere_east">E</string>
+    <string name="hemisphere_west">O</string>
+    <string name="magnetic_label">M</string>
+    <string name="distance_meters">%1$d m</string>
+    <string name="distance_kilometers">%1$s km</string>
+    <string name="coordinate_decimal">%1$s° %2$s</string>
+    <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
+    <string-array name="cardinal_names">
+        <item>norte</item>
+        <item>nornoreste</item>
+        <item>noreste</item>
+        <item>estenoreste</item>
+        <item>este</item>
+        <item>estesudeste</item>
+        <item>sudeste</item>
+        <item>sudsudeste</item>
+        <item>sur</item>
+        <item>sudsudoeste</item>
+        <item>sudoeste</item>
+        <item>oestesudoeste</item>
+        <item>oeste</item>
+        <item>oestenoroeste</item>
+        <item>noroeste</item>
+        <item>nornoroeste</item>
+    </string-array>
+    <string-array name="cardinal_abbreviations">
+        <item>N</item>
+        <item>NNE</item>
+        <item>NE</item>
+        <item>ENE</item>
+        <item>E</item>
+        <item>ESE</item>
+        <item>SE</item>
+        <item>SSE</item>
+        <item>S</item>
+        <item>SSO</item>
+        <item>SO</item>
+        <item>OSO</item>
+        <item>O</item>
+        <item>ONO</item>
+        <item>NO</item>
+        <item>NNO</item>
+    </string-array>
+    <string-array name="dial_labels">
+        <item>N</item>
+        <item>NE</item>
+        <item>E</item>
+        <item>SE</item>
+        <item>S</item>
+        <item>SO</item>
+        <item>O</item>
+        <item>NO</item>
+    </string-array>
+</resources>

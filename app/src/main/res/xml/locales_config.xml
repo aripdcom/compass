@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Desteklenen diller. Android 13'ten itibaren sistem bu listeyi okuyup
+  Ayarlar > Uygulamalar > Pusula > Dil altında uygulamaya özel bir dil
+  seçici gösterir. Uygulama içinde ayrı bir ayar yok: hangi dil sistemde
+  seçiliyse o kullanılır, listede olmayan bir dilde İngilizceye düşülür.
+-->
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="en" />
+    <locale android:name="tr" />
+    <locale android:name="fr" />
+    <locale android:name="de" />
+    <locale android:name="it" />
+    <locale android:name="es" />
+</locale-config>

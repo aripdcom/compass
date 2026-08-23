@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Deutsch -->
+<resources>
+    <string name="app_name">Kompass</string>
+    <string name="no_sensor">Kein Kompasssensor auf diesem Gerät.</string>
+    <string name="calibrate">Geringe Genauigkeit — bewegen Sie das Telefon in einer Acht.</string>
+    <string name="magnetic_disturbance">Magnetische Störung: Feld %1$d µT, erwartet %2$d µT — vom Metall oder Magneten entfernen.</string>
+    <string name="hold_flat">Telefon waagerecht halten — Neigung verfälscht die Anzeige.</string>
+    <string name="true_north">Geografisch Nord</string>
+    <string name="magnetic_north">Magnetisch Nord</string>
+    <string name="need_location">Standortberechtigung für geografisch Nord nötig — hier tippen</string>
+    <string name="waiting_location">Warte auf Standort…</string>
+    <string name="place_kaaba">Kaaba (Qibla)</string>
+    <string name="place_kaaba_label">Qibla</string>
+    <string name="place_aqsa">Al-Aqsa-Moschee</string>
+    <string name="place_aqsa_label">Aqsa</string>
+    <string name="place_vatican">Vatikan</string>
+    <string name="place_vatican_label">Vatikan</string>
+    <string name="place_info">%1$s %2$s</string>
+    <string name="sun_rise_set">Aufgang %1$s · Untergang %2$s</string>
+    <string name="moon_info">Mond %1$s · %2$d %%</string>
+    <string name="moon_info_below">Mond %1$s · %2$d %% · unter dem Horizont</string>
+    <string name="approximate_location">ungefähr</string>
+    <string name="location_copied">Kopiert: %1$s</string>
+    <string name="sun_info">Sonne %1$s</string>
+    <string name="sun_info_below">Sonne %1$s · unter dem Horizont</string>
+    <string name="target_hint">Zifferblatt tippen: Kurs sperren · lang drücken: Punkt · hier: Kurs eingeben</string>
+    <string name="waypoint_line">Punkt %1$s · %2$s</string>
+    <string name="waypoint_here">Punkt · Sie sind hier</string>
+    <string name="waypoint_saved">Punkt gespeichert</string>
+    <string name="waypoint_cleared">Punkt gelöscht</string>
+    <string name="waypoint_needs_location">Kein Standort — Punkt nicht gespeichert</string>
+    <string name="bearing_dialog_title">Kurs eingeben</string>
+    <string name="bearing_dialog_set">Setzen</string>
+    <string name="bearing_dialog_clear">Löschen</string>
+    <string name="bearing_dialog_cancel">Abbrechen</string>
+    <string name="target_plain">Ziel %1$s</string>
+    <string name="target_reached">Ziel %1$s · auf Kurs</string>
+    <string name="target_right">Ziel %1$s · %2$s nach rechts</string>
+    <string name="target_left">Ziel %1$s · %2$s nach links</string>
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_open">Einstellungen</string>
+    <string name="settings_section_display">ANZEIGE</string>
+    <string name="settings_night">Nachtmodus</string>
+    <string name="settings_night_summary">Schwarzer Hintergrund, rotes Zifferblatt — erhält die Nachtsicht</string>
+    <string name="settings_unit">Winkeleinheit</string>
+    <string name="settings_unit_degree">Grad (0-360)</string>
+    <string name="settings_unit_mil">Strich (0-6400)</string>
+    <string name="settings_keep_screen">Bildschirm anlassen</string>
+    <string name="settings_keep_screen_summary">Der Bildschirm bleibt an, solange die App offen ist</string>
+    <string name="settings_fullscreen">Vollbild</string>
+    <string name="settings_fullscreen_summary">Blendet Status- und Navigationsleiste aus; vom Rand wischen zeigt sie</string>
+    <string name="settings_section_compass">KOMPASS</string>
+    <string name="settings_true_north">Geografisch Nord verwenden</string>
+    <string name="settings_true_north_summary">Fügt die magnetische Deklination hinzu, wenn der Standort bekannt ist</string>
+    <string name="settings_smoothing">Glättung</string>
+    <string name="settings_smoothing_calm">Ruhig</string>
+    <string name="settings_smoothing_balanced">Ausgewogen</string>
+    <string name="settings_smoothing_quick">Schnell</string>
+    <string name="settings_vibrate">Vibration an Haupthimmelsrichtungen</string>
+    <string name="settings_vibrate_summary">Kurzer Impuls beim Passieren von N/O/S/W</string>
+    <string name="settings_section_marks">ZIFFERBLATT-MARKEN</string>
+    <string name="settings_show_magnetic">Magnetisch Nord (M)</string>
+    <string name="settings_show_magnetic_summary">Nur bei geografisch Nord sichtbar</string>
+    <string name="settings_show_level">Wasserwaage</string>
+    <string name="settings_show_level_summary">Die Blase in der Mitte des Zifferblatts</string>
+    <string name="settings_show_sun">Sonne</string>
+    <string name="settings_show_sun_arc">Sonnenbahn</string>
+    <string name="settings_show_sun_arc_summary">Der Bogen von Auf- bis Untergang samt Endkursen</string>
+    <string name="settings_show_moon">Mond</string>
+    <string name="settings_show_moon_summary">Kurs und Phase; blass, wenn unter dem Horizont</string>
+    <string name="settings_marks_note">Ziel- und Punktmarken fehlen hier: Sie werden durch Tippen bzw. langes Drücken auf das Zifferblatt ein- und ausgeschaltet.</string>
+    <string name="mil_suffix">Strich</string>
+    <string name="a11y_degrees">%1$d Grad</string>
+    <string name="a11y_mils">%1$d Strich</string>
+    <string name="a11y_heading">%1$s, %2$s, %3$s</string>
+    <string name="a11y_declination">Magnetisch %1$s, Deklination %2$s Grad %3$s</string>
+    <string name="a11y_declination_east">Ost</string>
+    <string name="a11y_declination_west">West</string>
+    <string name="a11y_dial">Kompass-Zifferblatt</string>
+    <string name="a11y_lock_bearing">Kurs sperren</string>
+    <string name="a11y_save_point">Punkt speichern</string>
+    <string name="magnetic_reading">Magnetisch %1$s</string>
+    <string name="declination_reading">Deklination %1$s°%2$s</string>
+    <string name="hemisphere_north">N</string>
+    <string name="hemisphere_south">S</string>
+    <string name="hemisphere_east">O</string>
+    <string name="hemisphere_west">W</string>
+    <string name="magnetic_label">M</string>
+    <string name="distance_meters">%1$d m</string>
+    <string name="distance_kilometers">%1$s km</string>
+    <string name="coordinate_decimal">%1$s° %2$s</string>
+    <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
+    <string-array name="cardinal_names">
+        <item>Nord</item>
+        <item>Nordnordost</item>
+        <item>Nordost</item>
+        <item>Ostnordost</item>
+        <item>Ost</item>
+        <item>Ostsüdost</item>
+        <item>Südost</item>
+        <item>Südsüdost</item>
+        <item>Süd</item>
+        <item>Südsüdwest</item>
+        <item>Südwest</item>
+        <item>Westsüdwest</item>
+        <item>West</item>
+        <item>Westnordwest</item>
+        <item>Nordwest</item>
+        <item>Nordnordwest</item>
+    </string-array>
+    <string-array name="cardinal_abbreviations">
+        <item>N</item>
+        <item>NNO</item>
+        <item>NO</item>
+        <item>ONO</item>
+        <item>O</item>
+        <item>OSO</item>
+        <item>SO</item>
+        <item>SSO</item>
+        <item>S</item>
+        <item>SSW</item>
+        <item>SW</item>
+        <item>WSW</item>
+        <item>W</item>
+        <item>WNW</item>
+        <item>NW</item>
+        <item>NNW</item>
+    </string-array>
+    <string-array name="dial_labels">
+        <item>N</item>
+        <item>NO</item>
+        <item>O</item>
+        <item>SO</item>
+        <item>S</item>
+        <item>SW</item>
+        <item>W</item>
+        <item>NW</item>
+    </string-array>
+</resources>

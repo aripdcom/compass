@@ -535,7 +535,39 @@ Kapalı."*
 **Dokunma hedefleri** en az 48dp: dişli düğmesi ve ayar satırları buna göre
 büyütüldü.
 
-## 9. Sorun giderme
+## 9. Diller
+
+Uygulama altı dilde: **İngilizce, Türkçe, Fransızca, Almanca, İtalyanca,
+İspanyolca**. Uygulama içinde dil ayarı yoktur — sistemde hangisi seçiliyse o
+kullanılır. Android 13'ten itibaren `locales_config.xml` sayesinde
+`Ayarlar → Uygulamalar → Pusula → Dil` altında uygulamaya özel bir seçici de
+çıkar.
+
+Varsayılan (`values/`) **İngilizce**, Türkçe ise `values-tr/` altındadır. Sebep:
+listede olmayan bir dil seçildiğinde (Japonca, Arapça…) uygulama varsayılana
+düşer; orada Türkçe olsaydı o kullanıcılar okuyamadıkları bir dille karşılaşırdı.
+
+Çeviri yalnızca cümleleri değil, **yön sisteminin kendisini** kapsar. Kısaltmalar
+dilden dile değişir ve bunlar kadranın üstünde de yazılıdır:
+
+| | K/N | Doğu | Batı | Kuzeydoğu |
+|---|---|---|---|---|
+| Türkçe | K | **D** | **B** | KD |
+| İngilizce | N | E | W | NE |
+| Fransızca | N | E | **O** (ouest) | NE |
+| Almanca | N | **O** (Ost) | W | **NO** |
+| İtalyanca / İspanyolca | N | E | **O** | NE |
+
+Almanca'da doğu **O**, Fransızca'da batı **O** — aynı harf iki dilde zıt yönü
+gösterir. Bu yüzden yön harfleri kodda gömülü olamazdı; hepsi (kadran harfleri,
+16 kısaltma, koordinatların yarım küre harfleri, sapmanın yön eki) kaynak
+dosyalara taşındı. Ondalık ayracı da dile uyar: aynı sapma İngilizce'de
+`6.4°E`, Almanca'da `6,4°O` yazar.
+
+Ekran okuyucu için kullanılan açık yön adları da her dilde ayrıdır
+(`kuzey kuzeydoğu` / `north-northeast` / `Nordnordost`).
+
+## 10. Sorun giderme
 
 ### "Kuruldu" dedi ama uygulama listede yok
 
@@ -575,7 +607,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **826.076 bayt** (~806 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **853.595 bayt** (~833 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.

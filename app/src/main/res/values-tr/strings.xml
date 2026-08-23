@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Türkçe -->
+<resources>
+    <string name="app_name">Pusula</string>
+    <string name="no_sensor">Bu cihazda pusula sensörü bulunamadı.</string>
+    <string name="calibrate">Hassasiyet düşük — telefonu havada 8 çizer gibi hareket ettirin.</string>
+    <string name="magnetic_disturbance">Manyetik bozulma: alan %1$d µT, beklenen %2$d µT — telefonu metal/mıknatıstan uzaklaştırın.</string>
+    <string name="hold_flat">Telefonu yatay tutun — eğimde okuma sapar.</string>
+    <string name="true_north">Gerçek kuzey</string>
+    <string name="magnetic_north">Manyetik kuzey</string>
+    <string name="need_location">Gerçek kuzey için konum izni gerekli — dokunun</string>
+    <string name="waiting_location">Konum bekleniyor…</string>
+    <string name="place_kaaba">Kâbe (kıble)</string>
+    <string name="place_kaaba_label">Kıble</string>
+    <string name="place_aqsa">Mescid-i Aksa</string>
+    <string name="place_aqsa_label">Aksa</string>
+    <string name="place_vatican">Vatikan</string>
+    <string name="place_vatican_label">Vatikan</string>
+    <string name="place_info">%1$s %2$s</string>
+    <string name="sun_rise_set">doğuş %1$s · batış %2$s</string>
+    <string name="moon_info">Ay %1$s · %%%2$d</string>
+    <string name="moon_info_below">Ay %1$s · %%%2$d · batmış</string>
+    <string name="approximate_location">yaklaşık</string>
+    <string name="location_copied">Kopyalandı: %1$s</string>
+    <string name="sun_info">Güneş %1$s</string>
+    <string name="sun_info_below">Güneş %1$s · batmış</string>
+    <string name="target_hint">Kadrana dokun: yön kilitle · uzun bas: nokta · buraya dokun: açı gir</string>
+    <string name="waypoint_line">Nokta %1$s · %2$s</string>
+    <string name="waypoint_here">Nokta · buradasınız</string>
+    <string name="waypoint_saved">Nokta kaydedildi</string>
+    <string name="waypoint_cleared">Nokta silindi</string>
+    <string name="waypoint_needs_location">Konum yok — nokta kaydedilemedi</string>
+    <string name="bearing_dialog_title">Kerteriz gir</string>
+    <string name="bearing_dialog_set">Ayarla</string>
+    <string name="bearing_dialog_clear">Sil</string>
+    <string name="bearing_dialog_cancel">Vazgeç</string>
+    <string name="target_plain">Hedef %1$s</string>
+    <string name="target_reached">Hedef %1$s · yön tutuyor</string>
+    <string name="target_right">Hedef %1$s · %2$s sağa</string>
+    <string name="target_left">Hedef %1$s · %2$s sola</string>
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_open">Ayarlar</string>
+    <string name="settings_section_display">GÖRÜNÜM</string>
+    <string name="settings_night">Gece modu</string>
+    <string name="settings_night_summary">Siyah zemin, kırmızı kadran — gece görüşünü korur</string>
+    <string name="settings_unit">Açı birimi</string>
+    <string name="settings_unit_degree">Derece (0-360)</string>
+    <string name="settings_unit_mil">Mil (0-6400)</string>
+    <string name="settings_keep_screen">Ekranı açık tut</string>
+    <string name="settings_keep_screen_summary">Uygulama açıkken ekran sönmez</string>
+    <string name="settings_fullscreen">Tam ekran</string>
+    <string name="settings_fullscreen_summary">Durum ve gezinme çubuklarını gizler; kenardan kaydırınca geri gelir</string>
+    <string name="settings_section_compass">PUSULA</string>
+    <string name="settings_true_north">Gerçek kuzeyi kullan</string>
+    <string name="settings_true_north_summary">Konum biliniyorsa manyetik sapma eklenir</string>
+    <string name="settings_smoothing">Yumuşatma</string>
+    <string name="settings_smoothing_calm">Sakin</string>
+    <string name="settings_smoothing_balanced">Dengeli</string>
+    <string name="settings_smoothing_quick">Çevik</string>
+    <string name="settings_vibrate">Ana yönlerde titreşim</string>
+    <string name="settings_vibrate_summary">K/D/G/B geçilirken kısa tık</string>
+    <string name="settings_section_marks">KADRAN İŞARETLERİ</string>
+    <string name="settings_show_magnetic">Manyetik kuzey (M)</string>
+    <string name="settings_show_magnetic_summary">Yalnızca gerçek kuzey kullanılırken görünür</string>
+    <string name="settings_show_level">Su terazisi</string>
+    <string name="settings_show_level_summary">Kadranın göbeğindeki kabarcık</string>
+    <string name="settings_show_sun">Güneş</string>
+    <string name="settings_show_sun_arc">Güneşin yolu</string>
+    <string name="settings_show_sun_arc_summary">Doğuştan batışa uzanan yay ve uç dereceleri</string>
+    <string name="settings_show_moon">Ay</string>
+    <string name="settings_show_moon_summary">Yönü ve evresi; batmışsa soluk çizilir</string>
+    <string name="settings_marks_note">Hedef ve nokta işaretleri burada yok: kadrana dokunarak ya da uzun basarak zaten açılıp kapanıyorlar.</string>
+    <string name="mil_suffix">mil</string>
+    <string name="a11y_degrees">%1$d derece</string>
+    <string name="a11y_mils">%1$d mil</string>
+    <string name="a11y_heading">%1$s, %2$s, %3$s</string>
+    <string name="a11y_declination">Manyetik %1$s, sapma %2$s derece %3$s</string>
+    <string name="a11y_declination_east">doğuya</string>
+    <string name="a11y_declination_west">batıya</string>
+    <string name="a11y_dial">Pusula kadranı</string>
+    <string name="a11y_lock_bearing">yönü kilitle</string>
+    <string name="a11y_save_point">nokta kaydet</string>
+    <string name="magnetic_reading">Manyetik %1$s</string>
+    <string name="declination_reading">Sapma %1$s°%2$s</string>
+    <string name="hemisphere_north">K</string>
+    <string name="hemisphere_south">G</string>
+    <string name="hemisphere_east">D</string>
+    <string name="hemisphere_west">B</string>
+    <string name="magnetic_label">M</string>
+    <string name="distance_meters">%1$d m</string>
+    <string name="distance_kilometers">%1$s km</string>
+    <string name="coordinate_decimal">%1$s° %2$s</string>
+    <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
+    <string-array name="cardinal_names">
+        <item>kuzey</item>
+        <item>kuzey kuzeydoğu</item>
+        <item>kuzeydoğu</item>
+        <item>doğu kuzeydoğu</item>
+        <item>doğu</item>
+        <item>doğu güneydoğu</item>
+        <item>güneydoğu</item>
+        <item>güney güneydoğu</item>
+        <item>güney</item>
+        <item>güney güneybatı</item>
+        <item>güneybatı</item>
+        <item>batı güneybatı</item>
+        <item>batı</item>
+        <item>batı kuzeybatı</item>
+        <item>kuzeybatı</item>
+        <item>kuzey kuzeybatı</item>
+    </string-array>
+    <string-array name="cardinal_abbreviations">
+        <item>K</item>
+        <item>KKD</item>
+        <item>KD</item>
+        <item>DKD</item>
+        <item>D</item>
+        <item>DGD</item>
+        <item>GD</item>
+        <item>GGD</item>
+        <item>G</item>
+        <item>GGB</item>
+        <item>GB</item>
+        <item>BGB</item>
+        <item>B</item>
+        <item>BKB</item>
+        <item>KB</item>
+        <item>KKB</item>
+    </string-array>
+    <string-array name="dial_labels">
+        <item>K</item>
+        <item>KD</item>
+        <item>D</item>
+        <item>GD</item>
+        <item>G</item>
+        <item>GB</item>
+        <item>B</item>
+        <item>KB</item>
+    </string-array>
+</resources>
