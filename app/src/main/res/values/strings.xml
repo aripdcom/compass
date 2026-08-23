@@ -3,8 +3,15 @@
     <string name="app_name">Pusula</string>
     <string name="no_sensor">Bu cihazda pusula sensörü bulunamadı.</string>
     <string name="calibrate">Hassasiyet düşük — telefonu havada 8 çizer gibi hareket ettirin.</string>
+    <string name="hold_flat">Telefonu yatay tutun — eğimde okuma sapar.</string>
     <string name="true_north">Gerçek kuzey</string>
     <string name="magnetic_north">Manyetik kuzey</string>
     <string name="need_location">Gerçek kuzey için konum izni gerekli — dokunun</string>
     <string name="waiting_location">Konum bekleniyor…</string>
+    <string name="qibla_info">Kıble %1$d°</string>
+    <string name="target_hint">Kadrana dokunun — baktığınız yönü kilitler</string>
+    <string name="target_plain">Hedef %1$d°</string>
+    <string name="target_reached">Hedef %1$d° · yön tutuyor</string>
+    <string name="target_right">Hedef %1$d° · %2$d° sağa</string>
+    <string name="target_left">Hedef %1$d° · %2$d° sola</string>
 </resources>

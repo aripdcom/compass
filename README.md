@@ -3,6 +3,9 @@
 Android için sade bir pusula uygulaması. Dış bağımlılığı yok — sadece Android SDK
 ve Kotlin standart kütüphanesi kullanılıyor, kadran `Canvas` ile elle çiziliyor.
 
+Gerçek kuzey, kıble yönü, dokununca yön kilitleyen hedef göstergesi ve kadranın
+göbeğinde su terazisi.
+
 - `minSdk 24` (Android 7.0) — **Android 13 dahil** tüm sürümlerde çalışır
 - `targetSdk 34`
 - Paket adı: `com.cem.pusula`
@@ -20,10 +23,10 @@ pusula/
 └── keystore.properties                     (gitignore'da)
 ```
 
-| Ekran | |
-|---|---|
-| ![Gerçek kuzey](docs/ekran-goruntusu-gercek-kuzey.png) | ![Manyetik kuzey](docs/ekran-goruntusu.png) |
-| Konum izni verilince: gerçek kuzey, altında manyetik yön ve sapma, kadranda mavi **M** işareti | İzin yokken: manyetik kuzeyle çalışmaya devam eder |
+| Ekran | | |
+|---|---|---|
+| ![Gerçek kuzey](docs/ekran-goruntusu-gercek-kuzey.png) | ![Hedef kilidi](docs/ekran-goruntusu-hedef.png) | ![Manyetik kuzey](docs/ekran-goruntusu.png) |
+| Konum izni verilince: gerçek kuzey, manyetik yön, sapma ve kıble; kadranda mavi **M** ile yeşil **Kıble** işaretleri | Kadrana dokununca yön kilitlenir: sarı hat ve "kaç derece sağa/sola" satırı | İzin yokken: manyetik kuzeyle çalışmaya devam eder |
 
 ## 1. Hazır APK'yı telefona kurmak
 
@@ -155,13 +158,44 @@ sonraki açılışlarda gerçek kuzey anında gösterilir. İzin verilmezse alt 
 kalıcı reddedilmişse uygulama ayarlarını açar. İzin olmadan da uygulama
 manyetik kuzeyle sorunsuz çalışır.
 
-## 5. Kodun yapısı
+## 5. Kıble, hedef kilidi ve su terazisi
+
+**Kıble.** Konum bilinince kadranda yeşil **Kıble** işareti ve üst satırda yön
+derecesi çıkar. Hesap, bulunduğunuz noktadan Kâbe'ye (21,4225°K / 39,8252°D)
+giden büyük daire yayının çıkış açısıdır — kıblenin tanımı budur, düz haritadaki
+"sağ alt köşe" yönü değil:
+
+```
+θ = atan2( sin Δλ · cos φ₂ ,  cos φ₁ · sin φ₂ − sin φ₁ · cos φ₂ · cos Δλ )
+```
+
+Açı gerçek kuzeye göredir, o yüzden kadranla aynı çerçevededir. İstanbul'dan
+yaklaşık 152°, Ankara'dan 158° civarı çıkar.
+
+**Hedef kilidi.** Kadrana dokunmak o an baktığınız yönü kilitler: sarı bir hat
+kadranda o yönü işaretler, alt satır `Hedef 81° · 12° sağa` diye ne kadar
+dönmeniz gerektiğini söyler, ±2° içinde `yön tutuyor` yazar. Tekrar dokunmak
+bırakır. Kilit `SharedPreferences`'a yazıldığı için uygulamayı kapatıp açsanız
+da durur.
+
+Hedef **manyetik** çerçevede saklanır. Sebebi: konum izni sonradan verilirse
+sapma devreye girer ve ekrandaki bütün açılar kayar; hedef manyetik olarak
+tutulunca kilitlediğiniz fiziksel yön aynı kalır.
+
+**Su terazisi.** Kadranın göbeğindeki kabarcık telefonun eğimini gösterir.
+Gerçek terazideki gibi yukarıda kalan tarafa kaçar, ortalanınca telefon düzdür
+ve kabarcık beyaza döner. Eğim, remap edilmiş dönüş matrisinin `[8]` elemanının
+ark kosinüsüdür (ekran normalinin düşeyden açısı); 40°'yi geçince "telefonu
+yatay tutun" uyarısı çıkar, 30°'nin altına inince kaybolur — sınırda titremesin
+diye açma ve kapama eşikleri farklı.
+
+## 6. Kodun yapısı
 
 | Dosya | İş |
 |---|---|
-| `app/src/main/java/com/cem/pusula/MainActivity.kt` | Sensör okuma, açı hesabı, yumuşatma |
-| `app/src/main/java/com/cem/pusula/CompassView.kt` | Kadranın `Canvas` ile çizimi |
-| `app/src/main/res/layout/activity_main.xml` | Derece yazısı + kadran + uyarı satırı |
+| `app/src/main/java/com/cem/pusula/MainActivity.kt` | Sensör okuma, açı hesabı, yumuşatma, konum/sapma/kıble, hedef kilidi |
+| `app/src/main/java/com/cem/pusula/CompassView.kt` | Kadranın `Canvas` ile çizimi: ibre, işaretler, su terazisi |
+| `app/src/main/res/layout/activity_main.xml` | Derece yazısı + kadran + hedef ve uyarı satırları |
 
 Nasıl çalışıyor:
 
@@ -171,14 +205,16 @@ Nasıl çalışıyor:
 - Açı doğrudan değil, `sin`/`cos` bileşenleri üzerinden yumuşatılır — aksi hâlde
   359° → 0° geçişinde ibre bir tam tur atardı. Yumuşatma katsayısı `alpha = 0.12f`;
   daha çevik istiyorsanız büyütün, daha sakin istiyorsanız küçültün.
+- Aynı `getOrientation` çağrısının `[1]` ve `[2]` değerleri (pitch/roll) su
+  terazisini besler; onlar da aynı katsayıyla yumuşatılır.
 - Sensör hassasiyeti düştüğünde ekranda kalibrasyon uyarısı çıkar (telefonu havada
-  8 çizer gibi hareket ettirmek düzeltir).
+  8 çizer gibi hareket ettirmek düzeltir). Kalibrasyon uyarısı, eğim uyarısından
+  önceliklidir.
+- Kadrandaki işaret renkleri tek yerde (`CompassView.Companion`) tanımlıdır;
+  ekrandaki yazılar da aynı renkleri kullanır, böylece hangi satırın hangi
+  işarete ait olduğu bakınca anlaşılır.
 
-Gösterilen yön **manyetik kuzey**dir. Gerçek (coğrafi) kuzey isterseniz konum izni
-alıp `GeomagneticField(lat, lon, alt, time).declination` değerini açıya eklemeniz
-gerekir; Türkiye'de sapma yaklaşık 5-7° doğudur.
-
-## 6. Sorun giderme
+## 7. Sorun giderme
 
 ### "Kuruldu" dedi ama uygulama listede yok
 
@@ -218,7 +254,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **784.660 bayt** (~766 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **787.451 bayt** (~769 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.
@@ -239,7 +275,7 @@ cihazlarda en güvenilir yol adb ile kurmaktır:
 
 ```bash
 export ANDROID_HOME=$HOME/Android/Sdk
-$ANDROID_HOME/platform-tools/adb install -r dist/pusula-1.2-release.apk
+$ANDROID_HOME/platform-tools/adb install -r dist/pusula-1.3-release.apk
 ```
 
 Kablosuz adb'de eşleştirme portu ile bağlantı portunun farklı olduğunu unutmayın;
