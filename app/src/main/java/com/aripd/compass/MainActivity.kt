@@ -42,11 +42,7 @@ import android.widget.Toast
 import kotlin.math.abs
 import kotlin.math.floor
 import kotlin.math.acos
-import kotlin.math.atan2
-import kotlin.math.cos
-import kotlin.math.exp
 import kotlin.math.roundToInt
-import kotlin.math.sin
 import kotlin.math.sqrt
 
 class MainActivity : Activity(), SensorEventListener {
@@ -77,12 +73,9 @@ class MainActivity : Activity(), SensorEventListener {
     private val remappedMatrix = FloatArray(9)
     private val orientation = FloatArray(3)
 
-    // Açıyı sin/cos üzerinden yumuşatıyoruz; 359° -> 0° geçişinde sıçrama olmasın diye.
-    private var smoothSin = 0f
-    private var smoothCos = 1f
-    private var smoothPitch = 0f
-    private var smoothRoll = 0f
-    private var initialized = false
+    /** İbrenin yumuşatılması; katsayı örnek aralığından türetilir. */
+    private val smoothing = Smoothing(Prefs.SMOOTHING_TIME_CONSTANTS[Prefs.DEFAULT_SMOOTHING])
+
     private var lastShownDegree = -1
 
     /** Manyetik sapma (doğuya doğru pozitif). null ise gerçek kuzey bilinmiyor. */
@@ -112,12 +105,9 @@ class MainActivity : Activity(), SensorEventListener {
 
     /** O konumda beklenen toplam alan şiddeti (µT); konum bilinmeden karşılaştırma yapılamaz. */
     private var expectedFieldStrength: Float? = null
-    private var measuredFieldStrength = 0f
-    private var disturbed = false
 
-    /** Sapmanın eşiği kesintisiz aştığı ilk an; 0 ise şu anda aşmıyor. */
-    private var disturbedSince = 0L
-    private var lastShownFieldStrength = -1
+    /** Manyetik anomali algılama; eşikleri ve bekleme süresi kendi içinde. */
+    private val disturbance = Disturbance()
 
     private var locationManager: LocationManager? = null
 
@@ -138,11 +128,6 @@ class MainActivity : Activity(), SensorEventListener {
     private var fullscreen = Prefs.DEFAULT_FULLSCREEN
     private var unit = Prefs.DEFAULT_UNIT
     private var useTrueNorth = Prefs.DEFAULT_TRUE_NORTH
-    private var smoothingTimeConstant = Prefs.SMOOTHING_TIME_CONSTANTS[Prefs.DEFAULT_SMOOTHING]
-
-    /** Bir önceki sensör olayının anı (ns); örnek aralığını ölçmek için. */
-    private var lastSensorTimestamp = 0L
-
     /** Son çizimin anı; kadran sensörden bağımsız bir hızda tazelenir. */
     private var lastRenderAt = 0L
     private var vibrateOnCardinals = Prefs.DEFAULT_VIBRATE
@@ -353,7 +338,7 @@ class MainActivity : Activity(), SensorEventListener {
         showSun = stored.getBoolean(Prefs.KEY_SHOW_SUN, Prefs.DEFAULT_SHOW_SUN)
         showSunArc = stored.getBoolean(Prefs.KEY_SHOW_SUN_ARC, Prefs.DEFAULT_SHOW_SUN_ARC)
         showMoon = stored.getBoolean(Prefs.KEY_SHOW_MOON, Prefs.DEFAULT_SHOW_MOON)
-        smoothingTimeConstant = Prefs.SMOOTHING_TIME_CONSTANTS[
+        smoothing.timeConstant = Prefs.SMOOTHING_TIME_CONSTANTS[
             stored.getInt(Prefs.KEY_SMOOTHING, Prefs.DEFAULT_SMOOTHING)
                 .coerceIn(0, Prefs.SMOOTHING_TIME_CONSTANTS.lastIndex)
         ]
@@ -414,12 +399,13 @@ class MainActivity : Activity(), SensorEventListener {
         // Manyetik çerçevedeyken "M" kadranın kuzeyiyle çakışır, gösterilmez.
         compassView.setMagneticNorthOffset(if (useTrueNorth && showMagnetic) declination else null)
         compassView.levelVisible = showLevel
-        compassView.setPlaceMarks(mergeNearbyMarks(
+        compassView.setPlaceMarks(Marks.mergeNearby(
             Places.ALL.filter { it.prefKey in visiblePlaces }.mapNotNull { place ->
                 placeBearings[place.prefKey]?.let {
                     PlaceMark(getString(place.labelRes), toDialFrame(it))
                 }
-            }
+            },
+            MERGE_DEGREES
         ))
         compassView.setSun(
             if (showSun) sun?.azimuth?.let(::toDialFrame) else null,
@@ -435,36 +421,6 @@ class MainActivity : Activity(), SensorEventListener {
         )
         applyTarget()
         applyWaypoint()
-    }
-
-    /**
-     * Birbirine çok yakın işaretleri tek etikette toplar. Türkiye'den bakınca
-     * kıble ile Mescid-i Aksa arasında ~2° var; kadranda iki ayrı etiket
-     * göstermek hem okunmaz oluyor hem de bir bilgi katmıyor, çünkü o
-     * çözünürlükte ikisi zaten aynı yön. Kesin dereceler alt satırda yazıyor.
-     */
-    private fun mergeNearbyMarks(marks: List<PlaceMark>): List<PlaceMark> {
-        // Sıra listedeki sırayla korunur (Kâbe, Aksa, Vatikan); birleşen etiket
-        // "Kıble·Aksa" diye okunsun diye, yönlerine göre değil.
-        val remaining = marks.toMutableList()
-        val merged = ArrayList<PlaceMark>()
-        while (remaining.isNotEmpty()) {
-            val first = remaining.removeAt(0)
-            val group = arrayListOf(first)
-            val iterator = remaining.iterator()
-            while (iterator.hasNext()) {
-                val candidate = iterator.next()
-                if (Geo.separation(candidate.bearing, first.bearing) < MERGE_DEGREES) {
-                    group.add(candidate)
-                    iterator.remove()
-                }
-            }
-            merged.add(
-                if (group.size == 1) first
-                else PlaceMark(group.joinToString("·") { it.label }, Geo.meanBearing(group.map { it.bearing }))
-            )
-        }
-        return merged
     }
 
     /** Gerçek kuzeye göre verilen açıyı kadranın çerçevesine çevirir. */
@@ -514,14 +470,11 @@ class MainActivity : Activity(), SensorEventListener {
         super.onResume()
         // Bozulma kararı kesintisiz gözleme dayanıyor; arka planda geçen süre
         // sayılmasın diye ölçüm ve sayaç sıfırdan başlatılır.
-        measuredFieldStrength = 0f
+        disturbance.reset()
         cardinalCrossing.reset()
         targetCrossing.reset()
-        lastSensorTimestamp = 0L
+        smoothing.reset()
         lastRenderAt = 0L
-        disturbedSince = 0L
-        disturbed = false
-        lastShownFieldStrength = -1
         systemHapticsEnabled = Settings.System.getInt(
             contentResolver,
             Settings.System.HAPTIC_FEEDBACK_ENABLED,
@@ -665,17 +618,11 @@ class MainActivity : Activity(), SensorEventListener {
             .apply()
     }
 
-    /**
-     * Bir dakikadan yeni bir fix her zaman kazanır (yer değiştirmiş olabiliriz),
-     * eşit yaşta olanlarda daha küçük hata payı olan seçilir.
-     */
-    private fun isBetterFix(candidate: Location, current: Location?): Boolean {
-        if (current == null) return true
-        val age = candidate.time - current.time
-        if (age > FIX_STALE_MS) return true
-        if (age < -FIX_STALE_MS) return false
-        return candidate.accuracy <= current.accuracy
-    }
+    /** Karar [Fixes]'te; burada yalnızca `Location`'dan sayılar okunuyor. */
+    private fun isBetterFix(candidate: Location, current: Location?): Boolean =
+        current == null || Fixes.isBetter(
+            candidate.time, candidate.accuracy, current.time, current.accuracy, FIX_STALE_MS
+        )
 
     /** Konum satırı: koordinatlar, rakım ve hata payı. Dokunuş biçim değiştirir. */
     private fun refreshLocationText() {
@@ -1023,8 +970,9 @@ class MainActivity : Activity(), SensorEventListener {
     private fun refreshWaypointFixes() {
         val here = lastLocation
         waypointFixes = if (here == null) emptyList() else {
-            val arrivedWithin = (if (here.hasAccuracy()) here.accuracy else ARRIVED_MIN_METERS)
-                .coerceIn(ARRIVED_MIN_METERS, ARRIVED_MAX_METERS)
+            val arrivedWithin = Fixes.arrivedWithin(
+                here.accuracy.takeIf { here.hasAccuracy() }, ARRIVED_MIN_METERS, ARRIVED_MAX_METERS
+            )
             val results = FloatArray(1)
             waypoints.map { point ->
                 Location.distanceBetween(
@@ -1277,9 +1225,10 @@ class MainActivity : Activity(), SensorEventListener {
     /** Noktaların kadrandaki yönleri; gerçek kuzeye göre, kadranla aynı çerçevede. */
     private fun applyWaypoint() {
         compassView.setWaypointMarks(
-            mergeNearbyMarks(
+            Marks.mergeNearby(
                 waypointFixes.filterNot { it.arrived }
-                    .map { PlaceMark(it.point.name, toDialFrame(it.bearing)) }
+                    .map { PlaceMark(it.point.name, toDialFrame(it.bearing)) },
+                MERGE_DEGREES
             )
         )
     }
@@ -1325,32 +1274,14 @@ class MainActivity : Activity(), SensorEventListener {
         SensorManager.remapCoordinateSystem(rotationMatrix, axisX, axisY, remappedMatrix)
         SensorManager.getOrientation(remappedMatrix, orientation)
 
-        val azimuthRad = orientation[0]
-        val s = sin(azimuthRad)
-        val c = cos(azimuthRad)
-        val pitchDegrees = Math.toDegrees(orientation[1].toDouble()).toFloat()
-        val rollDegrees = Math.toDegrees(orientation[2].toDouble()).toFloat()
-        if (!initialized) {
-            smoothSin = s
-            smoothCos = c
-            smoothPitch = pitchDegrees
-            smoothRoll = rollDegrees
-            initialized = true
-        } else {
-            // Katsayı örnek aralığından türetilir: hız değişse de yumuşatmanın
-            // süresi sabit kalır. Aralık sıçramalarına karşı sınırlandırılıyor.
-            val interval = ((timestamp - lastSensorTimestamp) / 1_000_000_000.0)
-                .coerceIn(0.002, 0.25)
-            val alpha = (1.0 - exp(-interval / smoothingTimeConstant)).toFloat()
-            smoothSin += alpha * (s - smoothSin)
-            smoothCos += alpha * (c - smoothCos)
-            smoothPitch += alpha * (pitchDegrees - smoothPitch)
-            smoothRoll += alpha * (rollDegrees - smoothRoll)
-        }
-        lastSensorTimestamp = timestamp
+        smoothing.update(
+            orientation[0],
+            Math.toDegrees(orientation[1].toDouble()).toFloat(),
+            Math.toDegrees(orientation[2].toDouble()).toFloat(),
+            timestamp
+        )
 
-        val magnetic =
-            ((Math.toDegrees(atan2(smoothSin, smoothCos).toDouble()) + 360.0) % 360.0).toFloat()
+        val magnetic = smoothing.bearing
         lastMagnetic = magnetic
         // Gerçek kuzey = manyetik kuzey + sapma (sapma doğuya doğru pozitif);
         // ayarlardan manyetik kuzey seçilmişse düzeltme uygulanmaz.
@@ -1371,7 +1302,7 @@ class MainActivity : Activity(), SensorEventListener {
         lastRenderAt = now
 
         compassView.setAzimuth(shown)
-        compassView.setTilt(smoothPitch, smoothRoll)
+        compassView.setTilt(smoothing.pitch, smoothing.roll)
 
         val rounded = shown.roundToInt() % 360
         if (rounded != lastShownDegree) {
@@ -1539,63 +1470,27 @@ class MainActivity : Activity(), SensorEventListener {
         marksText.text = marks
     }
 
-    /**
-     * Ölçülen alan, o konumda beklenenden belirgin sapıyorsa yakında mıknatıs ya
-     * da mıknatıslanmış metal var demektir: pusula sessizce yanlış yön gösterir.
-     * Cihazın kendi hassasiyet bayrağı bunu çoğu zaman fark etmez, çünkü sabit
-     * bir bozulma "kararlı" görünür.
-     */
+    /** Ham manyetometre okumasını anomali algılayıcıya verir. */
     private fun updateFieldStrength() {
         val magnitude = sqrt(
             geomagnetic[0] * geomagnetic[0] +
                 geomagnetic[1] * geomagnetic[1] +
                 geomagnetic[2] * geomagnetic[2]
         )
-        measuredFieldStrength =
-            if (measuredFieldStrength == 0f) magnitude
-            else measuredFieldStrength + 0.1f * (magnitude - measuredFieldStrength)
-
-        val expected = expectedFieldStrength ?: return
-        val deviation = abs(measuredFieldStrength - expected) / expected
-        val threshold = if (disturbed) DISTURBED_CLEAR else DISTURBED_WARN
-        val now = SystemClock.elapsedRealtime()
-
-        if (deviation <= threshold) {
-            disturbedSince = 0L
-            if (disturbed) {
-                disturbed = false
-                refreshStatusText()
-            }
-            return
-        }
-
-        // Eşiği aşmak tek başına yetmiyor: telefonu çevirirken kalibrasyon
-        // geçici olarak %20'ye varan sapma üretebiliyor. Uyarı ancak sapma
-        // kesintisiz sürerse çıkar, böylece geçici sıçramalar elenir.
-        if (disturbedSince == 0L) disturbedSince = now
-        if (!disturbed) {
-            if (now - disturbedSince < DISTURBED_HOLD_MS) return
-            disturbed = true
-            refreshStatusText()
-            return
-        }
-        // Uyarı çıktıktan sonra da yazıdaki sayı canlı kalsın, ama her örnekte
-        // tazelenmesin: 1 µT'lik oynamalar yazıyı saniyede birkaç kez değiştirip
-        // göz yorardı, o yüzden ancak 2 µT'yi aşan bir kayma yazıya yansır.
-        if (abs(measuredFieldStrength.roundToInt() - lastShownFieldStrength) >= 2) refreshStatusText()
+        val changed = disturbance.update(
+            magnitude, expectedFieldStrength, SystemClock.elapsedRealtime()
+        )
+        if (changed) refreshStatusText()
     }
 
     private fun refreshStatusText() {
         // Anomali en tehlikelisi: açı yanlış ama ekranda hiçbir şey belli olmuyor.
         statusText.text = when {
-            disturbed -> {
-                lastShownFieldStrength = measuredFieldStrength.roundToInt()
-                getString(
-                    R.string.magnetic_disturbance,
-                    lastShownFieldStrength,
-                    (expectedFieldStrength ?: 0f).roundToInt()
-                )
-            }
+            disturbance.disturbed -> getString(
+                R.string.magnetic_disturbance,
+                disturbance.shownStrength,
+                (expectedFieldStrength ?: 0f).roundToInt()
+            )
             needsCalibration -> getString(R.string.calibrate)
             tilted -> getString(R.string.hold_flat)
             else -> ""
@@ -1721,13 +1616,6 @@ class MainActivity : Activity(), SensorEventListener {
         // Uyarı bu eşiğin üstünde çıkar, altındakinde kaybolur.
         const val TILT_WARN_DEGREES = 40f
         const val TILT_CLEAR_DEGREES = 30f
-
-        // Beklenen alandan bu oranda sapma anomali sayılır (aç/kapa eşikleri farklı).
-        const val DISTURBED_WARN = 0.25f
-        const val DISTURBED_CLEAR = 0.15f
-
-        /** Sapmanın uyarı sayılması için kesintisiz sürmesi gereken süre. */
-        const val DISTURBED_HOLD_MS = 2_500L
 
     }
 }
