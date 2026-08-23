@@ -262,7 +262,12 @@ class CompassView @JvmOverloads constructor(
         // Tepedeki gösterge kadran çerçevesinde `azimuth` yönüne denk gelir:
         // kadran -azimuth kadar döndüğü için o yön ekranın tepesine çıkar.
         val topMarker = RimItem(azimuth, halfWidth(dp(7.2f), radius), KIND_MAGNETIC, null)
-        val fractions = assignRimRadii(marks, topMarker)
+        val fractions = RimLayout.assign(
+            marks.map { RimLayout.Mark(it.bearing, it.halfWidth) },
+            RimLayout.Mark(topMarker.bearing, topMarker.halfWidth),
+            RIM_RADII,
+            RIM_MARGIN
+        )
         moonFraction = null
         marks.forEachIndexed { index, item ->
             val fraction = fractions[index]
@@ -367,41 +372,6 @@ class CompassView @JvmOverloads constructor(
             canvas.drawCircle(cx, cy, dp(4f), levelFramePaint.apply { style = Paint.Style.FILL })
             levelFramePaint.style = Paint.Style.STROKE
         }
-    }
-
-    /**
-     * Kadran işaretlerine yarıçap dağıtır. Aynı yarıçapta, açısal genişlikleri
-     * toplamından yakın duran iki işaret üst üste biner; böyle bir durumda
-     * ikincisi bir alt yarıçapa iner. Genişler önce yerleşir, çünkü dar olanlar
-     * kalan boşluklara daha kolay sığar.
-     *
-     * Somut ihtiyaç: Türkiye'den bakınca kıble ile Mescid-i Aksa arasında ~2° var
-     * ve ay ile kaydedilen nokta da aynı yöne düşebiliyor.
-     */
-    private fun assignRimRadii(marks: List<RimItem>, fixed: RimItem?): FloatArray {
-        val fractions = FloatArray(marks.size)
-        val placed = Array(RIM_RADII.size) { ArrayList<RimItem>() }
-        // Ekranın tepesindeki sabit gösterge de yer kaplar ama yerinden
-        // oynatılamaz: dış halkaya önceden yerleştirilir, yakınına düşen
-        // işaretler onun için de bir alt kademeye iner.
-        fixed?.let { placed[0].add(it) }
-        marks.indices.sortedByDescending { marks[it].halfWidth }.forEach { index ->
-            val item = marks[index]
-            var level = RIM_RADII.lastIndex
-            for (candidate in RIM_RADII.indices) {
-                val clash = placed[candidate].any { other ->
-                    val gap = abs(((item.bearing - other.bearing + 540f) % 360f) - 180f)
-                    gap < item.halfWidth + other.halfWidth + RIM_MARGIN
-                }
-                if (!clash) {
-                    level = candidate
-                    break
-                }
-            }
-            placed[level].add(item)
-            fractions[index] = RIM_RADII[level]
-        }
-        return fractions
     }
 
     /** Bir işaretin kadran merkezinden görülen açısal yarı genişliği (derece). */

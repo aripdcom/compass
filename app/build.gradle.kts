@@ -13,8 +13,8 @@ android {
         applicationId = "com.cem.pusula"
         minSdk = 24          // Android 7.0
         targetSdk = 34       // Android 13/14 üzerinde sorunsuz çalışır
-        versionCode = 23
-        versionName = "3.2"
+        versionCode = 24
+        versionName = "3.3"
     }
 
 
@@ -59,4 +59,8 @@ android {
     }
 }
 
-// Bilinçli olarak hiçbir dış bağımlılık yok: sadece Android SDK + Kotlin stdlib.
+// Uygulama tarafında bilinçli olarak hiçbir dış bağımlılık yok: sadece Android
+// SDK + Kotlin stdlib. Aşağıdaki yalnızca testlerde kullanılır ve APK'ya girmez.
+dependencies {
+    testImplementation("junit:junit:4.13.2")
+}

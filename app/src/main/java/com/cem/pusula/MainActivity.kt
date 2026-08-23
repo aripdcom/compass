@@ -371,64 +371,39 @@ class MainActivity : Activity(), SensorEventListener {
             val iterator = remaining.iterator()
             while (iterator.hasNext()) {
                 val candidate = iterator.next()
-                if (angleBetween(candidate.bearing, first.bearing) < MERGE_DEGREES) {
+                if (Geo.separation(candidate.bearing, first.bearing) < MERGE_DEGREES) {
                     group.add(candidate)
                     iterator.remove()
                 }
             }
             merged.add(
                 if (group.size == 1) first
-                else PlaceMark(group.joinToString("·") { it.label }, meanBearing(group.map { it.bearing }))
+                else PlaceMark(group.joinToString("·") { it.label }, Geo.meanBearing(group.map { it.bearing }))
             )
         }
         return merged
     }
 
-    private fun angleBetween(a: Float, b: Float): Float = abs(((a - b + 540f) % 360f) - 180f)
-
-    /** Açı ortalaması vektörel alınır; 359° ile 2° arasında ortalama 0,5° olmalı. */
-    private fun meanBearing(bearings: List<Float>): Float {
-        var x = 0.0
-        var y = 0.0
-        bearings.forEach {
-            val radians = Math.toRadians(it.toDouble())
-            x += cos(radians)
-            y += sin(radians)
-        }
-        return ((Math.toDegrees(atan2(y, x)) + 360.0) % 360.0).toFloat()
-    }
-
-    /**
-     * Gerçek kuzeye göre verilmiş bir açıyı kadranın çerçevesine çevirir.
-     * Kadran manyetik kuzeye göreyse sapma kadar geri alınır.
-     */
+    /** Gerçek kuzeye göre verilen açıyı kadranın çerçevesine çevirir. */
     private fun toDialFrame(trueBearing: Float): Float =
-        if (useTrueNorth) trueBearing
-        else (trueBearing - (declination ?: 0f) + 360f) % 360f
+        Geo.toDialFrame(trueBearing, declination, useTrueNorth)
 
     /** Manyetik açıya eklenince kadran çerçevesini veren düzeltme. */
     private fun frameOffset(): Float = if (useTrueNorth) declination ?: 0f else 0f
 
     /** Açıyı seçili birimde yazar: derece ya da NATO mili (tam çember 6400). */
     private fun formatBearing(degrees: Float): String {
-        val normalized = (degrees % 360f + 360f) % 360f
         return if (unit == Prefs.UNIT_MIL) {
-            "%d %s".format(
-                (normalized * Prefs.MILS_PER_CIRCLE / 360f).roundToInt() % 6400,
-                getString(R.string.mil_suffix)
-            )
+            "%d %s".format(Geo.degreesToMils(degrees), getString(R.string.mil_suffix))
         } else {
-            "%d°".format(normalized.roundToInt() % 360)
+            "%d°".format(Geo.normalize(degrees).roundToInt() % 360)
         }
     }
 
     /** Fark açısı: yön değil miktar olduğu için 360'a sarılmaz. */
     private fun formatDelta(degrees: Int): String =
         if (unit == Prefs.UNIT_MIL) {
-            "%d %s".format(
-                (degrees * Prefs.MILS_PER_CIRCLE / 360f).roundToInt(),
-                getString(R.string.mil_suffix)
-            )
+            "%d %s".format((degrees * Geo.MILS_PER_CIRCLE / 360f).roundToInt(), getString(R.string.mil_suffix))
         } else {
             "%d°".format(degrees)
         }
@@ -642,7 +617,7 @@ class MainActivity : Activity(), SensorEventListener {
         declination = field.declination
         expectedFieldStrength = field.fieldStrength / 1000f   // nT -> µT
         placeBearings = Places.ALL.associate { place ->
-            place.prefKey to bearingTo(latitude, longitude, place.latitude, place.longitude)
+            place.prefKey to Geo.bearing(latitude, longitude, place.latitude, place.longitude)
         }
         applyMarks()
         updateSun()
@@ -659,24 +634,6 @@ class MainActivity : Activity(), SensorEventListener {
         moon = Moon.position(now, latitude, longitude)
         applyMarks()
         refreshInfoText(lastMagnetic)
-    }
-
-    /**
-     * İki nokta arasındaki başlangıç açısı (great-circle), gerçek kuzeye göre.
-     * Kıble tanımı da budur: Kâbe'ye giden en kısa yolun çıkış yönü.
-     */
-    private fun bearingTo(
-        latitude: Double,
-        longitude: Double,
-        destLatitude: Double,
-        destLongitude: Double
-    ): Float {
-        val lat1 = Math.toRadians(latitude)
-        val lat2 = Math.toRadians(destLatitude)
-        val deltaLon = Math.toRadians(destLongitude - longitude)
-        val y = sin(deltaLon) * cos(lat2)
-        val x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(deltaLon)
-        return ((Math.toDegrees(atan2(y, x)) + 360.0) % 360.0).toFloat()
     }
 
     override fun onRequestPermissionsResult(
@@ -755,17 +712,13 @@ class MainActivity : Activity(), SensorEventListener {
 
     /** Ekranda gösterilen açının seçili birimdeki sayısal karşılığı. */
     private fun bearingValue(degrees: Float): Int {
-        val normalized = (degrees % 360f + 360f) % 360f
-        return if (unit == Prefs.UNIT_MIL) {
-            (normalized * Prefs.MILS_PER_CIRCLE / 360f).roundToInt() % 6400
-        } else {
-            normalized.roundToInt() % 360
-        }
+        return if (unit == Prefs.UNIT_MIL) Geo.degreesToMils(degrees)
+        else Geo.normalize(degrees).roundToInt() % 360
     }
 
     /** Kullanıcının girdiği sayıyı dereceye çevirir. */
     private fun bearingDegrees(value: Float): Float =
-        if (unit == Prefs.UNIT_MIL) value * 360f / Prefs.MILS_PER_CIRCLE else value
+        if (unit == Prefs.UNIT_MIL) Geo.milsToDegrees(value) else value
 
     /** Kadran çerçevesinde verilen açıyı hedef olarak kilitler. */
     private fun setTargetFromDial(dialBearing: Float) {
@@ -828,7 +781,7 @@ class MainActivity : Activity(), SensorEventListener {
         val shown = lastShownDegree
         if (shown < 0) return getString(R.string.target_plain, targetLabel)
         // Hedefe kalan açı: pozitifse saat yönünde, yani sağa dönmek gerekir.
-        val diff = ((target - shown + 540f) % 360f) - 180f
+        val diff = Geo.difference(shown.toFloat(), target)
         val amount = abs(diff).roundToInt()
         return when {
             amount <= ON_TARGET_DEGREES -> getString(R.string.target_reached, targetLabel)
@@ -840,7 +793,7 @@ class MainActivity : Activity(), SensorEventListener {
     private fun waypointSegment(): String? {
         val (wpLat, wpLon) = waypoint ?: return null
         val here = lastLocation ?: return null
-        val bearing = bearingTo(here.latitude, here.longitude, wpLat, wpLon)
+        val bearing = Geo.bearing(here.latitude, here.longitude, wpLat, wpLon)
         val results = FloatArray(1)
         Location.distanceBetween(here.latitude, here.longitude, wpLat, wpLon, results)
         // Mesafe konum hatasının altına inince yön anlamını yitirir: hata çemberinin
@@ -892,7 +845,7 @@ class MainActivity : Activity(), SensorEventListener {
         val here = lastLocation
         compassView.setWaypointBearing(
             if (wp == null || here == null) null
-            else toDialFrame(bearingTo(here.latitude, here.longitude, wp.first, wp.second))
+            else toDialFrame(Geo.bearing(here.latitude, here.longitude, wp.first, wp.second))
         )
     }
 
@@ -1191,11 +1144,10 @@ class MainActivity : Activity(), SensorEventListener {
 
     /** Açının ekran okuyucuya söylenecek hâli: "284 derece" ya da "5049 mil". */
     private fun spokenBearing(degrees: Float): String {
-        val normalized = (degrees % 360f + 360f) % 360f
         return if (unit == Prefs.UNIT_MIL) {
-            getString(R.string.a11y_mils, (normalized * Prefs.MILS_PER_CIRCLE / 360f).roundToInt() % 6400)
+            getString(R.string.a11y_mils, Geo.degreesToMils(degrees))
         } else {
-            getString(R.string.a11y_degrees, normalized.roundToInt() % 360)
+            getString(R.string.a11y_degrees, Geo.normalize(degrees).roundToInt() % 360)
         }
     }
 

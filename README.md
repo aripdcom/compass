@@ -468,6 +468,8 @@ kimlikler aynı olduğu için kod değişmez.
 | `app/src/main/java/com/cem/pusula/Sun.kt` | Güneşin azimut, yükseklik, doğuş ve batış yönleri (NOAA) |
 | `app/src/main/java/com/cem/pusula/Moon.kt` | Ayın azimut, yükseklik ve evresi (Schlyter) |
 | `app/src/main/java/com/cem/pusula/Places.kt` | Kâbe, Mescid-i Aksa, Vatikan koordinatları |
+| `app/src/main/java/com/cem/pusula/Geo.kt` | Yön, açı ve birim dönüşümleri (Android'e dokunmaz) |
+| `app/src/main/java/com/cem/pusula/RimLayout.kt` | Kadran işaretlerinin yarıçap dağıtımı |
 | `app/src/main/java/com/cem/pusula/Palette.kt` | Gündüz ve gece renk düzenleri |
 | `app/src/main/java/com/cem/pusula/Prefs.kt` | Ayar anahtarları ve varsayılanları |
 | `app/src/main/java/com/cem/pusula/SettingsActivity.kt` | Ayarlar ekranı (kodla kurulan arayüz) |
@@ -567,7 +569,48 @@ dosyalara taşındı. Ondalık ayracı da dile uyar: aynı sapma İngilizce'de
 Ekran okuyucu için kullanılan açık yön adları da her dilde ayrıdır
 (`kuzey kuzeydoğu` / `north-northeast` / `Nordnordost`).
 
-## 10. Sorun giderme
+## 10. Testler
+
+```bash
+./gradlew test          # 28 test, saniyeler içinde, cihaz gerekmez
+```
+
+Testler JVM'de koşar; Android çalışma zamanı gerekmez. Bunun için uygulamanın
+saf matematiği ekran kodundan ayrıldı: `Geo.kt` (yön, açı ve birim dönüşümleri),
+`RimLayout.kt` (kadran işaretlerinin yarıçap dağıtımı), `Sun.kt` ve `Moon.kt`
+zaten Android'e dokunmuyordu.
+
+| Dosya | Neyi sınıyor |
+|---|---|
+| `GeoTest` | Kutsal yerlerin yönleri, sıfır geçişi, vektörel ortalama, mil ve çerçeve dönüşümleri |
+| `SunTest` | Bilinen an için konum, doğuş yönünün mevsimle 64° gezinmesi, kutup gündüzü |
+| `MoonTest` | Bilinen yeni ay, ay-güneş çapraz kontrolü, sinodik ay, evre sınırları |
+| `RimLayoutTest` | Çakışan işaretlerin alt yarıçapa inmesi, sabit göstergenin etkisi, kademelerin tükenmesi |
+
+Testlerin çoğu **fiziksel sabitlere** dayanır — uygulamadan bağımsız, ölçülmüş
+gerçeklere: sinodik ay 29,5 gün, ekinoksta doğuş 89,3°, yeni ayda ay ile güneşin
+aynı yönde olması. Böylece testler kendi kodumuzun bugünkü çıktısını değil,
+gökyüzünü doğrular.
+
+**Testler diş geçiriyor mu?** Kasten hata sokularak sınandı:
+
+| Sokulan hata | Sonuç |
+|---|---|
+| Ayın epoku eski hatalı değerine (1,5 gün kayma) döndürüldü | 3 test düştü |
+| Sabit gösterge yarıçap dağıtımından çıkarıldı | İlgili test düştü |
+
+Bunlar bu projede gerçekten yaşanmış iki hatadır; ikisi de o zaman ancak cihazda
+gözle fark edilmişti. İlk yazımda ay 18° şaşıyordu ve bunu yakalayan kontrol
+geçici bir betikteydi — artık projede duruyor.
+
+İlk koşuda testlerden biri belge ile kodun uyuşmadığını da yakaladı:
+`Geo.difference` tam yarım turda -180 döndürüyor, oysa KDoc aralığı `(-180, 180]`
+diye yazıyordu. Davranış yanlış değildi (yarım tur iki yönde de aynı), belge
+yanlıştı; düzeltildi.
+
+JUnit yalnızca `testImplementation` olarak eklidir, APK'ya girmez — doğrulandı.
+
+## 11. Sorun giderme
 
 ### "Kuruldu" dedi ama uygulama listede yok
 
@@ -607,7 +650,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **853.595 bayt** (~833 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **854.752 bayt** (~834 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.
