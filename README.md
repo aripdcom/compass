@@ -158,6 +158,23 @@ sonraki açılışlarda gerçek kuzey anında gösterilir. İzin verilmezse alt 
 kalıcı reddedilmişse uygulama ayarlarını açar. İzin olmadan da uygulama
 manyetik kuzeyle sorunsuz çalışır.
 
+**Manyetik bozulma uyarısı.** Sapma doğru hesaplansa bile, telefonun yakınındaki
+bir mıknatıs ya da mıknatıslanmış metal pusulayı sessizce yanıltır: açı yanlıştır
+ama ekranda hiçbir şey belli olmaz. Uygulama bunu yakalar — ölçülen toplam alan
+şiddetini o konumda beklenenle (`GeomagneticField.getFieldStrength()`) karşılaştırır,
+%30'u aşan sapmada uyarır, %20'nin altına inince uyarıyı kaldırır:
+
+```
+Manyetik bozulma: alan 63 µT, beklenen 49 µT — telefonu metal/mıknatıstan uzaklaştırın.
+```
+
+Cihazın kendi hassasiyet bayrağı bu durumu genelde fark etmez, çünkü sabit bir
+bozulma "kararlı" görünür. Gerçek bir örnek: bilgisayar masasında ölçülen alan
+63,3 µT ve manyetik eğim 9,2° idi — İstanbul'un değerleri 48,5 µT ve 58,7°, o eğim
+manyetik ekvatora karşılık gelir. Masadan iki metre uzaklaşınca alan 49,5 µT'ye
+oturdu ve yön düzeldi. Bu yüzden rotation-vector'e ek olarak ham manyetometre de
+dinlenir (`SENSOR_DELAY_UI`): füzyon yönü verir ama alanın büyüklüğünü vermez.
+
 ## 5. Kıble, hedef kilidi ve su terazisi
 
 **Kıble.** Konum bilinince kadranda yeşil **Kıble** işareti ve üst satırda yön
@@ -210,6 +227,8 @@ Nasıl çalışıyor:
 - Sensör hassasiyeti düştüğünde ekranda kalibrasyon uyarısı çıkar (telefonu havada
   8 çizer gibi hareket ettirmek düzeltir). Kalibrasyon uyarısı, eğim uyarısından
   önceliklidir.
+- Durum satırında öncelik sırası: manyetik bozulma > kalibrasyon > eğim. Bozulma
+  en tehlikelisidir, çünkü diğer ikisinin aksine hiçbir görsel ipucu vermez.
 - Kadrandaki işaret renkleri tek yerde (`CompassView.Companion`) tanımlıdır;
   ekrandaki yazılar da aynı renkleri kullanır, böylece hangi satırın hangi
   işarete ait olduğu bakınca anlaşılır.
@@ -254,7 +273,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **787.451 bayt** (~769 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **787.965 bayt** (~770 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.
@@ -275,7 +294,7 @@ cihazlarda en güvenilir yol adb ile kurmaktır:
 
 ```bash
 export ANDROID_HOME=$HOME/Android/Sdk
-$ANDROID_HOME/platform-tools/adb install -r dist/pusula-1.3-release.apk
+$ANDROID_HOME/platform-tools/adb install -r dist/pusula-1.4-release.apk
 ```
 
 Kablosuz adb'de eşleştirme portu ile bağlantı portunun farklı olduğunu unutmayın;

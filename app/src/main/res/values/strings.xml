@@ -3,6 +3,7 @@
     <string name="app_name">Pusula</string>
     <string name="no_sensor">Bu cihazda pusula sensörü bulunamadı.</string>
     <string name="calibrate">Hassasiyet düşük — telefonu havada 8 çizer gibi hareket ettirin.</string>
+    <string name="magnetic_disturbance">Manyetik bozulma: alan %1$d µT, beklenen %2$d µT — telefonu metal/mıknatıstan uzaklaştırın.</string>
     <string name="hold_flat">Telefonu yatay tutun — eğimde okuma sapar.</string>
     <string name="true_north">Gerçek kuzey</string>
     <string name="magnetic_north">Manyetik kuzey</string>

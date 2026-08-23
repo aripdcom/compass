@@ -29,6 +29,7 @@ import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
+import kotlin.math.sqrt
 
 class MainActivity : Activity(), SensorEventListener {
 
@@ -78,6 +79,11 @@ class MainActivity : Activity(), SensorEventListener {
     private var needsCalibration = false
     private var tilted = false
 
+    /** O konumda beklenen toplam alan şiddeti (µT); konum bilinmeden karşılaştırma yapılamaz. */
+    private var expectedFieldStrength: Float? = null
+    private var measuredFieldStrength = 0f
+    private var disturbed = false
+
     private var locationManager: LocationManager? = null
 
     private val locationListener = object : LocationListener {
@@ -103,9 +109,9 @@ class MainActivity : Activity(), SensorEventListener {
 
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         rotationVector = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
+        magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
         if (rotationVector == null) {
             accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-            magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
         }
         locationManager = getSystemService(LOCATION_SERVICE) as? LocationManager
 
@@ -140,12 +146,15 @@ class MainActivity : Activity(), SensorEventListener {
 
     private fun registerSensors() {
         val rv = rotationVector
+        val mag = magnetometer
         if (rv != null) {
             sensorManager.registerListener(this, rv, SensorManager.SENSOR_DELAY_GAME)
+            // Rotation vector yönü verir ama alanın büyüklüğünü vermez; anomali
+            // ancak ham manyetometreden görülür, o yüzden onu da dinliyoruz.
+            if (mag != null) sensorManager.registerListener(this, mag, SensorManager.SENSOR_DELAY_UI)
             return
         }
         val acc = accelerometer
-        val mag = magnetometer
         if (acc != null && mag != null) {
             sensorManager.registerListener(this, acc, SensorManager.SENSOR_DELAY_GAME)
             sensorManager.registerListener(this, mag, SensorManager.SENSOR_DELAY_GAME)
@@ -212,6 +221,7 @@ class MainActivity : Activity(), SensorEventListener {
             System.currentTimeMillis()
         )
         declination = field.declination
+        expectedFieldStrength = field.fieldStrength / 1000f   // nT -> µT
         compassView.setMagneticNorthOffset(field.declination)
 
         val qibla = bearingTo(latitude, longitude, KAABA_LATITUDE, KAABA_LONGITUDE)
@@ -339,6 +349,7 @@ class MainActivity : Activity(), SensorEventListener {
             Sensor.TYPE_MAGNETIC_FIELD -> {
                 System.arraycopy(event.values, 0, geomagnetic, 0, 3)
                 hasGeomagnetic = true
+                updateFieldStrength()
                 if (hasGravity &&
                     SensorManager.getRotationMatrix(rotationMatrix, null, gravity, geomagnetic)
                 ) {
@@ -445,8 +456,39 @@ class MainActivity : Activity(), SensorEventListener {
         infoText.text = text
     }
 
+    /**
+     * Ölçülen alan, o konumda beklenenden belirgin sapıyorsa yakında mıknatıs ya
+     * da mıknatıslanmış metal var demektir: pusula sessizce yanlış yön gösterir.
+     * Cihazın kendi hassasiyet bayrağı bunu çoğu zaman fark etmez, çünkü sabit
+     * bir bozulma "kararlı" görünür.
+     */
+    private fun updateFieldStrength() {
+        val magnitude = sqrt(
+            geomagnetic[0] * geomagnetic[0] +
+                geomagnetic[1] * geomagnetic[1] +
+                geomagnetic[2] * geomagnetic[2]
+        )
+        measuredFieldStrength =
+            if (measuredFieldStrength == 0f) magnitude
+            else measuredFieldStrength + 0.1f * (magnitude - measuredFieldStrength)
+
+        val expected = expectedFieldStrength ?: return
+        val deviation = abs(measuredFieldStrength - expected) / expected
+        val next = if (disturbed) deviation > DISTURBED_CLEAR else deviation > DISTURBED_WARN
+        if (next != disturbed) {
+            disturbed = next
+            refreshStatusText()
+        }
+    }
+
     private fun refreshStatusText() {
+        // Anomali en tehlikelisi: açı yanlış ama ekranda hiçbir şey belli olmuyor.
         statusText.text = when {
+            disturbed -> getString(
+                R.string.magnetic_disturbance,
+                measuredFieldStrength.roundToInt(),
+                (expectedFieldStrength ?: 0f).roundToInt()
+            )
             needsCalibration -> getString(R.string.calibrate)
             tilted -> getString(R.string.hold_flat)
             else -> ""
@@ -495,6 +537,10 @@ class MainActivity : Activity(), SensorEventListener {
         // Uyarı bu eşiğin üstünde çıkar, altındakinde kaybolur.
         const val TILT_WARN_DEGREES = 40f
         const val TILT_CLEAR_DEGREES = 30f
+
+        // Beklenen alandan bu oranda sapma anomali sayılır (aç/kapa eşikleri farklı).
+        const val DISTURBED_WARN = 0.30f
+        const val DISTURBED_CLEAR = 0.20f
 
         val COLOR_HINT = android.graphics.Color.parseColor("#FF6C7683")
     }
