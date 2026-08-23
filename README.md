@@ -572,26 +572,38 @@ Ekran okuyucu için kullanılan açık yön adları da her dilde ayrıdır
 
 ## 10. Boyut
 
-Release APK **238.872 bayt** (~233 KB). R8 açıktır: kullanılmayan kod ve kaynaklar
-atılır, kalan kod küçültülür ve karıştırılır. Kapalıyken APK 854.752 bayttı,
-yani boyutun **%72'si** buradan geldi.
+Release APK **112.089 bayt** (~109 KB). Başlangıç noktası 854.752 baytt: **%87 küçülme**.
+İki adımda geldi.
 
-Geriye kalanın dağılımı ilginç — kod artık en küçük parça:
+**R8** (kullanılmayan kodu ve kaynakları atar, kalanı küçültüp karıştırır):
+854.752 → 238.872 bayt. Uygulamada yansıma kullanılmadığı için
+`proguard-rules.pro` neredeyse boştur; manifest'teki activity'ler ve düzenlerde
+adıyla geçen `CompassView` için gereken kuralları AGP kendisi üretir.
 
-| Bölüm | Sıkıştırılmış | Pay |
-|---|---|---|
-| `res/` (ikonlar, beş yoğunlukta) | 144.290 B | %63 |
-| `resources.arsc` (metinler, altı dil) | 36.976 B | %16 |
-| `classes.dex` (bütün kod) | 32.911 B | %14 |
-| imza ve diğer | 16.322 B | %7 |
+**İkonlar**: 238.872 → 112.089 bayt. Ölçüm şunu göstermişti: R8'den sonra APK'nın
+%63'ü ikon PNG'leriydi, bütün kod ise %14. Yani boyutu belirleyen şey koda
+dokunmadan çözülebilirdi.
 
-Yani uygulamanın tamamı 33 KB kod; boyutu belirleyen şey ikon dosyaları.
-Küçültmek gerekirse sıradaki hedef orasıdır, kod değil.
+| Adım | Kazanç |
+|---|---|
+| Uyarlanabilir ikonun ön planı beş PNG yerine tek vektör | 61 KB |
+| Eski uyumluluk PNG'leri (API 24-25) palete indirildi | 61 KB |
 
-Uygulamada yansıma kullanılmadığı için `proguard-rules.pro` neredeyse boştur;
-manifest'teki activity'ler ve düzenlerde adıyla geçen `CompassView` için gereken
-kuralları AGP kendisi üretir. Karıştırma yığın izlerini okunmaz hâle getirdiğinden
-`app/build/outputs/mapping/release/mapping.txt` dosyası her yayında saklanmalıdır;
+İkon daire, üçgen ve noktadan ibaret olduğu için vektöre birebir çevrilebildi;
+ölçüler eski PNG'den alındı (432 birimlik tuvalde halka dış yarıçapı 104,
+kalınlık 12, ibrenin tepesi merkezden 88 yukarıda) ve 108 birimlik uyarlanabilir
+ikon tuvaline taşındı. PNG'ler ise RGBA olarak saklanıyordu; ikonda beş ana renk
+olduğu için 64 renklik palete indirmek %80 kazandırdı, görüntüde fark yok.
+
+Vektöre geçmek **temalı ikonu** da bedavaya getirdi: `<monochrome>` katmanı aynı
+şekli tek renkte gösterir, Android 13'te ana ekran temasına uyar. Tek renkte
+ibrenin iki yarısı ayrılamadığı için kuzey dolu, güney içi boş çizilir.
+
+Geriye kalan dağılım: `resources.arsc` (altı dilin metinleri) 37 KB, bütün kod
+33 KB, ikonlar 16 KB, imza ve diğer 16 KB. Artık en büyük parça metinler.
+
+Karıştırma yığın izlerini okunmaz hâle getirdiğinden
+`app/build/outputs/mapping/release/mapping.txt` her yayında saklanmalıdır;
 `dist/` altına da kopyalanır.
 
 ## 11. Pil
@@ -709,7 +721,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **238.872 bayt** (~233 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **112.089 bayt** (~109 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.

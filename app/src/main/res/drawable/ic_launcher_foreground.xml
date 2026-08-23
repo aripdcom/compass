@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Uyarlanabilir ikonun ön plan katmanı. Beş yoğunlukta PNG yerine tek vektör:
+  ikon daire, üçgen ve noktadan ibaret olduğu için vektöre birebir çevrilebiliyor
+  ve 61 KB yerine 1 KB tutuyor.
+
+  Ölçüler eski PNG'den alındı (432 birimlik tuvalde: halka dış yarıçap 104,
+  kalınlık 12, ibrenin tepesi merkezden 88 yukarıda, tabanı ±21,5, merkez
+  noktası 10) ve 108 birimlik uyarlanabilir ikon tuvaline dörde bölünerek
+  taşındı. Renkler uygulamanın kendi paletinden.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Kadran halkası -->
+    <path
+        android:strokeColor="#8A94A0"
+        android:strokeWidth="3"
+        android:pathData="M29.5,54 a24.5,24.5 0 1,0 49,0 a24.5,24.5 0 1,0 -49,0" />
+
+    <!-- İbrenin kuzey yarısı -->
+    <path
+        android:fillColor="#E5484D"
+        android:pathData="M54,32 L59.4,54 L48.6,54 Z" />
+
+    <!-- İbrenin güney yarısı -->
+    <path
+        android:fillColor="#F0F3F6"
+        android:pathData="M54,75.8 L59.4,54 L48.6,54 Z" />
+
+    <!-- Göbek -->
+    <path
+        android:fillColor="#8A94A0"
+        android:pathData="M51.5,54 a2.5,2.5 0 1,0 5,0 a2.5,2.5 0 1,0 -5,0" />
+</vector>
