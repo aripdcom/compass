@@ -376,6 +376,33 @@ disk, nokta baklava, manyetik kuzey ile kıble ise yazı. Renk düzeni tek yerde
 (`Palette.kt`) tanımlıdır ve iki hâli vardır; hem kadran hem yazılar aynı
 paletten beslenir, o yüzden geçiş tek satırdır.
 
+**Ay.** Kadranda yönü, evresi diskin doluluğuyla çizilir; ufkun altındaysa soluk
+kalır. Gece modunun tam tamamlayıcısıdır: ay çıkmışsa gece yön bulmanın en
+pratik referansıdır ve güneş gibi manyetik alandan bağımsızdır.
+
+Hesap güneşten belirgin biçimde zordur. Güneşin yörüngesi tek bir elipsle iyi
+yaklaşılırken ay, Dünya ile Güneş arasında sürekli çekiştiği için düzensiz
+hareket eder; bozulma (perturbation) terimleri olmadan hata 2°'ye kadar çıkar.
+En büyük ikisi evection (1,274°) ve variation (0,658°) terimleridir. Ayrıca ayın
+paralaksı ihmal edilemez (~1°), çünkü ay yakındır ve gözlemci Dünya'nın
+merkezinde değil yüzeyindedir — yükseklik buna göre düzeltilir, yoksa ufka yakın
+ayın "doğdu mu battı mı" kararı yanlış çıkar.
+
+Doğrulama fiziksel sabitlerle yapıldı: yıldızıl ay 27,33 gün (olması gereken
+27,32), ekliptik enlem en çok 5,29° (sınır 5,3), uzaklık 57,0-63,6 Dünya yarıçapı
+(55,9-63,8), deklinasyon en çok 28,4° (sınır 28,7). Bilinen bir yeni ay anında
+(JD 2451550,09766) uzanım 358,2°, aydınlık %0,02.
+
+İlk denemede epok yanlıştı: Schlyter'in gün sayısı 2000 Ocak 0,0'dan, yani
+31 Aralık 1999 00:00 UT'den (JD 2451543,5) başlar. JD 2451545,0 (1 Ocak öğlen)
+kullanmak 1,5 günlük kayma, o da ayın yerinde 18° hata demekti — yeni ay testi
+bunu ilk denemede yakaladı.
+
+Ay simgesi, kadranın diğer işaretlerinin aksine **kadranla birlikte
+döndürülmez**. Evre şekli yönlü bir simgedir; işaret kadranın dibine düştüğünde
+180° dönüp aynalanıyor ve büyüyen ay küçülen gibi görünüyordu. Konumu açıdan
+hesaplanıp simge ekrana dik çiziliyor.
+
 ## 6. Ayarlar
 
 Sağ üstteki dişliden açılır. Dış bağımlılık olmadığı için `PreferenceFragment`
@@ -390,7 +417,7 @@ yani gece modunda ayarlar ekranı da kırmızıya dönüyor.
 | **Gerçek kuzeyi kullan** | Kapatılırsa kadran manyetik kuzeye oturur. |
 | **Yumuşatma** | Sakin (0,06) / Dengeli (0,12) / Çevik (0,25). Ortadaki, uygulamanın başından beri kullandığı değer. |
 | **Ana yönlerde titreşim** | Tıkı tümüyle kapatır. |
-| **Kadran işaretleri** | Manyetik kuzey (M), su terazisi, güneş, güneşin yolu ve yön noktalarını (Kâbe, Mescid-i Aksa, Vatikan) ayrı ayrı açar/kapatır. |
+| **Kadran işaretleri** | Manyetik kuzey (M), su terazisi, güneş, güneşin yolu, ay ve yön noktalarını (Kâbe, Mescid-i Aksa, Vatikan) ayrı ayrı açar/kapatır. |
 
 Hedef ve nokta işaretleri o listede yok, çünkü zaten kadrana dokunarak ya da uzun
 basarak açılıp kapanıyorlar; ayrıca bir anahtar koymak "kilitli ama görünmez
@@ -418,7 +445,9 @@ kimlikler aynı olduğu için kod değişmez.
 |---|---|
 | `app/src/main/java/com/cem/pusula/MainActivity.kt` | Sensör okuma, açı hesabı, yumuşatma, konum/sapma/kıble, hedef kilidi |
 | `app/src/main/java/com/cem/pusula/CompassView.kt` | Kadranın `Canvas` ile çizimi: ibre, işaretler, su terazisi |
-| `app/src/main/java/com/cem/pusula/Sun.kt` | Güneşin azimut ve yüksekliği (NOAA algoritması) |
+| `app/src/main/java/com/cem/pusula/Sun.kt` | Güneşin azimut, yükseklik, doğuş ve batış yönleri (NOAA) |
+| `app/src/main/java/com/cem/pusula/Moon.kt` | Ayın azimut, yükseklik ve evresi (Schlyter) |
+| `app/src/main/java/com/cem/pusula/Places.kt` | Kâbe, Mescid-i Aksa, Vatikan koordinatları |
 | `app/src/main/java/com/cem/pusula/Palette.kt` | Gündüz ve gece renk düzenleri |
 | `app/src/main/java/com/cem/pusula/Prefs.kt` | Ayar anahtarları ve varsayılanları |
 | `app/src/main/java/com/cem/pusula/SettingsActivity.kt` | Ayarlar ekranı (kodla kurulan arayüz) |
@@ -484,7 +513,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **816.771 bayt** (~797 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **821.314 bayt** (~802 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.

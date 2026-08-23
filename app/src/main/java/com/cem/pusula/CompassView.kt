@@ -4,10 +4,13 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import kotlin.math.abs
+import kotlin.math.cos
 import kotlin.math.min
+import kotlin.math.sin
 
 /**
  * Kadranı çizen basit özel View. Kuzey ekranda sabit kalsın diye kadranın
@@ -45,6 +48,9 @@ class CompassView @JvmOverloads constructor(
     /** Güneşin bugün izleyeceği yol: doğuş ve batış yönleri. */
     private var sunArc: Pair<Float, Float>? = null
 
+    /** Ayın yönü, ufkun üstünde olup olmadığı ve evresi. */
+    private var moon: MoonMark? = null
+
     /** Güneşin yönü ve ufkun üstünde olup olmadığı. */
     private var sunBearing: Float? = null
     private var sunAboveHorizon = true
@@ -66,6 +72,7 @@ class CompassView @JvmOverloads constructor(
     private val qiblaLabelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { textAlign = Paint.Align.CENTER }
     private val sunPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val sunArcPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
+    private val moonPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val waypointPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val targetPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
     private val targetLinePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
@@ -94,6 +101,7 @@ class CompassView @JvmOverloads constructor(
         qiblaLabelPaint.color = palette.qibla
         sunPaint.color = palette.sun
         sunArcPaint.color = palette.sun
+        moonPaint.color = palette.moon
         waypointPaint.color = palette.waypoint
         targetPaint.color = palette.target
         targetLinePaint.color = palette.target
@@ -114,6 +122,12 @@ class CompassView @JvmOverloads constructor(
 
     fun setMagneticNorthOffset(degrees: Float?) {
         magneticOffset = degrees
+        invalidate()
+    }
+
+    /** Ay işareti; evresi diskin doluluğuyla çizilir. */
+    fun setMoon(mark: MoonMark?) {
+        moon = mark
         invalidate()
     }
 
@@ -290,6 +304,24 @@ class CompassView @JvmOverloads constructor(
 
         canvas.restore()
 
+        // Ay kadranla birlikte döndürülmez: evre şekli yönlü bir simge, kadranın
+        // dibine düştüğünde 180° dönüp aynalanır ve büyüyen ay küçülen gibi
+        // görünürdü. Konumu açıdan hesaplanır, simge ekrana dik çizilir.
+        moon?.let { mark ->
+            val angle = Math.toRadians((mark.bearing - azimuth).toDouble())
+            val distance = radius * SUN_ARC_RADIUS
+            val mx = cx + distance * sin(angle).toFloat()
+            val my = cy - distance * cos(angle).toFloat()
+            val discRadius = dp(7.5f)
+            moonPaint.alpha = if (mark.aboveHorizon) 255 else 110
+            moonPaint.style = Paint.Style.STROKE
+            moonPaint.strokeWidth = dp(1.5f)
+            canvas.drawCircle(mx, my, discRadius, moonPaint)
+            moonPaint.style = Paint.Style.FILL
+            canvas.drawPath(moonPath(mx, my, discRadius, mark.illumination, mark.waxing), moonPaint)
+            moonPaint.alpha = 255
+        }
+
         if (levelVisible) {
             drawLevel(canvas, cx, cy, radius)
         } else {
@@ -375,6 +407,27 @@ class CompassView @JvmOverloads constructor(
             if (abs(pitch) <= LEVEL_TOLERANCE && abs(roll) <= LEVEL_TOLERANCE) palette.level
             else palette.target
         canvas.drawCircle(cx + dx, cy + dy, bubbleRadius, bubblePaint)
+    }
+
+    /**
+     * Ayın aydınlık kısmı: bir yanda diskin kenarı (yarım çember), öbür yanda
+     * terminatör. Terminatör yarı ekseni `r(1-2f)`; f<0,5'te hilalin içine doğru,
+     * f>0,5'te karanlık tarafa doğru bombeleşir, f=0,5'te düz çizgi olur.
+     */
+    private fun moonPath(cx: Float, cy: Float, r: Float, illumination: Float, waxing: Boolean): Path {
+        val path = Path()
+        val terminator = r * (1f - 2f * illumination)
+        val limb = RectF(cx - r, cy - r, cx + r, cy + r)
+        val term = RectF(cx - abs(terminator), cy - r, cx + abs(terminator), cy + r)
+        if (waxing) {
+            path.arcTo(limb, -90f, 180f, true)
+            path.arcTo(term, 90f, if (terminator < 0f) 180f else -180f)
+        } else {
+            path.arcTo(limb, -90f, -180f, true)
+            path.arcTo(term, 90f, if (terminator < 0f) -180f else 180f)
+        }
+        path.close()
+        return path
     }
 
     private fun diamond(cx: Float, cy: Float, size: Float): Path {

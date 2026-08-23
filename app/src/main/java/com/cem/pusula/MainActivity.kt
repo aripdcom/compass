@@ -134,6 +134,7 @@ class MainActivity : Activity(), SensorEventListener {
     private var visiblePlaces: Set<String> = emptySet()
     private var showSun = Prefs.DEFAULT_SHOW_SUN
     private var showSunArc = Prefs.DEFAULT_SHOW_SUN_ARC
+    private var showMoon = Prefs.DEFAULT_SHOW_MOON
     private val palette: Palette get() = Palette.of(nightMode)
 
     /** Kaydedilen nokta (enlem, boylam); yoksa null. Kadrana uzun basınca konur. */
@@ -143,6 +144,7 @@ class MainActivity : Activity(), SensorEventListener {
     private var coordinates: Pair<Double, Double>? = null
     private var sun: Sun.Position? = null
     private var sunArc: Sun.RiseSet? = null
+    private var moon: Moon.Position? = null
 
     private val handler = Handler(Looper.getMainLooper())
 
@@ -261,6 +263,7 @@ class MainActivity : Activity(), SensorEventListener {
             .toSet()
         showSun = stored.getBoolean(Prefs.KEY_SHOW_SUN, Prefs.DEFAULT_SHOW_SUN)
         showSunArc = stored.getBoolean(Prefs.KEY_SHOW_SUN_ARC, Prefs.DEFAULT_SHOW_SUN_ARC)
+        showMoon = stored.getBoolean(Prefs.KEY_SHOW_MOON, Prefs.DEFAULT_SHOW_MOON)
         smoothingAlpha = Prefs.SMOOTHING_ALPHAS[
             stored.getInt(Prefs.KEY_SMOOTHING, Prefs.DEFAULT_SMOOTHING)
                 .coerceIn(0, Prefs.SMOOTHING_ALPHAS.lastIndex)
@@ -290,6 +293,11 @@ class MainActivity : Activity(), SensorEventListener {
         compassView.setSun(
             if (showSun) sun?.azimuth?.let(::toDialFrame) else null,
             (sun?.elevation ?: 0f) > 0f
+        )
+        compassView.setMoon(
+            moon?.takeIf { showMoon }?.let {
+                MoonMark(toDialFrame(it.azimuth), it.elevation > 0f, it.illumination, it.waxing)
+            }
         )
         compassView.setSunArc(
             if (showSunArc) sunArc?.let { toDialFrame(it.rise) to toDialFrame(it.set) } else null
@@ -588,6 +596,7 @@ class MainActivity : Activity(), SensorEventListener {
         val position = Sun.position(now, latitude, longitude)
         sun = position
         sunArc = Sun.riseSet(now, latitude)
+        moon = Moon.position(now, latitude, longitude)
         applyMarks()
         refreshInfoText(lastMagnetic)
     }
@@ -1006,6 +1015,15 @@ class MainActivity : Activity(), SensorEventListener {
                 if (it.elevation > 0f) getString(R.string.sun_info, formatBearing(toDialFrame(it.azimuth)))
                 else getString(R.string.sun_info_below, formatBearing(toDialFrame(it.azimuth)))
             appendColored(text, label, palette.sun)
+        }
+        moon?.takeIf { showMoon }?.let {
+            val percent = (it.illumination * 100).roundToInt()
+            appendColored(
+                text,
+                if (it.elevation > 0f) getString(R.string.moon_info, formatBearing(toDialFrame(it.azimuth)), percent)
+                else getString(R.string.moon_info_below, formatBearing(toDialFrame(it.azimuth)), percent),
+                palette.moon
+            )
         }
         sunArc?.takeIf { showSunArc }?.let {
             appendColored(

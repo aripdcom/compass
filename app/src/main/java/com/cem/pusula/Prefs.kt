@@ -17,6 +17,7 @@ object Prefs {
     const val KEY_SHOW_LEVEL = "showLevel"
     const val KEY_SHOW_SUN = "showSun"
     const val KEY_SHOW_SUN_ARC = "showSunArc"
+    const val KEY_SHOW_MOON = "showMoon"
 
     const val DEFAULT_NIGHT = false
     const val DEFAULT_KEEP_SCREEN = true
@@ -26,6 +27,7 @@ object Prefs {
     const val DEFAULT_SHOW_LEVEL = true
     const val DEFAULT_SHOW_SUN = true
     const val DEFAULT_SHOW_SUN_ARC = true
+    const val DEFAULT_SHOW_MOON = true
 
     const val UNIT_DEGREE = 0
     const val UNIT_MIL = 1

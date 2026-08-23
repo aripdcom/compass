@@ -93,6 +93,10 @@ class SettingsActivity : Activity() {
             R.string.settings_show_sun_arc, R.string.settings_show_sun_arc_summary,
             Prefs.KEY_SHOW_SUN_ARC, Prefs.DEFAULT_SHOW_SUN_ARC
         )
+        switchRow(
+            R.string.settings_show_moon, R.string.settings_show_moon_summary,
+            Prefs.KEY_SHOW_MOON, Prefs.DEFAULT_SHOW_MOON
+        )
         note(getString(R.string.settings_marks_note))
     }
 
