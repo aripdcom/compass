@@ -36,6 +36,10 @@ class CompassView @JvmOverloads constructor(
     /** Kaydedilen noktanın yönü; konum bilinmeden hesaplanamaz. */
     private var waypointBearing: Float? = null
 
+    /** Güneşin yönü ve ufkun üstünde olup olmadığı. */
+    private var sunBearing: Float? = null
+    private var sunAboveHorizon = true
+
     // Su terazisi için eğim (derece). Düz tutulan telefonda ikisi de 0'dır.
     private var pitch = 0f
     private var roll = 0f
@@ -84,13 +88,12 @@ class CompassView @JvmOverloads constructor(
         color = COLOR_QIBLA
         textAlign = Paint.Align.CENTER
     }
+    private val sunPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = COLOR_SUN
+    }
     private val waypointPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = COLOR_WAYPOINT
         style = Paint.Style.STROKE
-    }
-    private val waypointLabelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = COLOR_WAYPOINT
-        textAlign = Paint.Align.CENTER
     }
     private val targetPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = COLOR_TARGET
@@ -121,6 +124,13 @@ class CompassView @JvmOverloads constructor(
 
     fun setMagneticNorthOffset(degrees: Float?) {
         magneticOffset = degrees
+        invalidate()
+    }
+
+    /** Güneş batmışsa disk içi boş çizilir: yön hâlâ bilgi, ama bakacak güneş yok. */
+    fun setSun(degrees: Float?, aboveHorizon: Boolean) {
+        sunBearing = degrees
+        sunAboveHorizon = aboveHorizon
         invalidate()
     }
 
@@ -208,11 +218,26 @@ class CompassView @JvmOverloads constructor(
             drawRimLabel(canvas, cx, cy, radius, bearing, "Kıble", qiblaPaint, qiblaLabelPaint, 0.845f)
         }
 
-        // Kaydedilen nokta: geri dönülecek yer.
+        // Güneş: manyetik alandan bağımsız olduğu için kadranı çapraz kontrol
+        // etmeye yarar. Etiket yerine disk çizilir, hem şekli hem rengi ayırt eder.
+        sunBearing?.let { bearing ->
+            canvas.save()
+            canvas.rotate(bearing, cx, cy)
+            sunPaint.style = if (sunAboveHorizon) Paint.Style.FILL else Paint.Style.STROKE
+            sunPaint.strokeWidth = dp(2f)
+            canvas.drawCircle(cx, cy - radius * 0.955f, dp(6f), sunPaint)
+            canvas.restore()
+        }
+
+        // Kaydedilen nokta: geri dönülecek yer. Etiket yerine baklava dilimi,
+        // çünkü yön harfleri 0,62-0,785R bandını kaplıyor ve üçüncü bir rim
+        // etiketine yer kalmıyor; noktanın adı zaten alt satırda mor yazıyor.
         waypointBearing?.let { bearing ->
-            waypointPaint.strokeWidth = dp(2f)
-            waypointLabelPaint.textSize = radius * 0.10f
-            drawRimLabel(canvas, cx, cy, radius, bearing, "Nokta", waypointPaint, waypointLabelPaint, 0.79f)
+            canvas.save()
+            canvas.rotate(bearing, cx, cy)
+            waypointPaint.style = Paint.Style.FILL
+            canvas.drawPath(diamond(cx, cy - radius * 0.955f, dp(7f)), waypointPaint)
+            canvas.restore()
         }
 
         // Kilitli hedef: nişan alınacak yön. Kadranın içine uzanan çizgi,
@@ -301,6 +326,16 @@ class CompassView @JvmOverloads constructor(
         canvas.drawCircle(cx + dx, cy + dy, bubbleRadius, bubblePaint)
     }
 
+    private fun diamond(cx: Float, cy: Float, size: Float): Path {
+        val path = Path()
+        path.moveTo(cx, cy - size)
+        path.lineTo(cx + size * 0.72f, cy)
+        path.lineTo(cx, cy + size)
+        path.lineTo(cx - size * 0.72f, cy)
+        path.close()
+        return path
+    }
+
     private fun triangle(cx: Float, tipY: Float, size: Float): Path {
         val path = Path()
         path.moveTo(cx, tipY + size)
@@ -318,6 +353,7 @@ class CompassView @JvmOverloads constructor(
         val COLOR_QIBLA = Color.parseColor("#3DD68C")
         val COLOR_TARGET = Color.parseColor("#F5B841")
         val COLOR_WAYPOINT = Color.parseColor("#C77DFF")
+        val COLOR_SUN = Color.parseColor("#FFD84D")
 
         /** Kabarcık: ortalanınca nötr beyaz, kaçınca hedef sarısı. */
         private val COLOR_LEVEL = Color.parseColor("#F0F3F6")

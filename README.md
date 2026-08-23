@@ -260,10 +260,33 @@ Hedef ve nokta bilgisi tek satırda, kadrandaki işaretlerle aynı renklerde
 gösterilir; ikisi de yokken satır iki hareketi birden anlatır. Satır iki sıra yer
 kaplar (`minLines="2"`), yoksa nokta kaydedildiğinde ekran zıplardı.
 
-Kadran işaretlerinin etiketleri farklı yarıçaplara yazılır (`M` 0,90R, `Kıble`
-0,845R, `Nokta` 0,79R). Sebebi somut: nokta tam kuzeydeyken üç etiket de aynı
-noktaya düşüp okunmaz hâle geliyordu. Yarıçaplar yön harflerinin bandının
-(0,70R civarı) dışında kalacak şekilde seçildi.
+Kadranda dört işaret var ve hiçbiri diğerine karışmasın diye hem renk hem şekil
+ayrılmış: mavi **M** yazısı manyetik kuzey, yeşil **Kıble** yazısı Kâbe yönü,
+altın **disk** güneş, mor **baklava** kaydedilen nokta. İki yazı farklı
+yarıçaplara konur (`M` 0,90R, `Kıble` 0,845R). Üçüncü bir yazıya yer yok: yön
+harfleri 0,62-0,785R bandını kaplıyor, üstte kalan şerit iki satır ancak alıyor —
+bu yüzden güneş ve nokta yazı yerine şekille gösteriliyor, adları zaten
+kendi renklerinde alt satırlarda geçiyor.
+
+**Güneş azimutu.** Kadranda altın bir disk güneşin yönünü gösterir, üst satırda
+derecesi yazar. Disk doluysa güneş ufkun üstünde, içi boşsa batmıştır — yön yine
+bilgidir ama bakacak güneş yoktur.
+
+Bunun asıl değeri çapraz kontrol: **güneşin yönü manyetik alandan tamamen
+bağımsızdır.** Pusuladan şüphelenirseniz (yakında metal, kalibrasyon bozuk,
+bozulma uyarısı çıkmış) güneşe bakıp kadranı sınayabilirsiniz. Bugünkü masa
+vakasında olduğu gibi manyetik alan bozukken bu, yönü kurtaran tek referanstır.
+
+Hesap NOAA'nın güneş konumu algoritmasıdır (`Sun.kt`, saf Kotlin, ~70 satır) ve
+tamamen UTC üzerinden yürür: gerçek güneş saati, boylamın her derecesi 4 dakika
+sayılarak ve zaman denklemi eklenerek doğrudan UTC'den kurulur. Bu yüzden cihazın
+**saat dilimi ayarının yanlış olması sonucu etkilemez**; yalnızca saatin kendisi
+doğru olmalıdır. Güneş dakikada 0,25° yol aldığı için konum dakikada bir tazelenir.
+
+Doğrulama: uygulama 162° gösterirken bağımsız bir formülasyon (Astronomical
+Almanac, saat açısını zaman denklemi yerine GMST'den kuran yol) 162,0° verdi.
+Yan kontroller de tuttu — 23 Ağustos için deklinasyon 11,37° (beklenen ~11,5°),
+o gün İstanbul'da güneşin azami yüksekliği 60,4°.
 
 ## 6. Kodun yapısı
 
@@ -277,6 +300,7 @@ kimlikler aynı olduğu için kod değişmez.
 |---|---|
 | `app/src/main/java/com/cem/pusula/MainActivity.kt` | Sensör okuma, açı hesabı, yumuşatma, konum/sapma/kıble, hedef kilidi |
 | `app/src/main/java/com/cem/pusula/CompassView.kt` | Kadranın `Canvas` ile çizimi: ibre, işaretler, su terazisi |
+| `app/src/main/java/com/cem/pusula/Sun.kt` | Güneşin azimut ve yüksekliği (NOAA algoritması) |
 | `app/src/main/res/layout/activity_main.xml` | Dikey yerleşim: yazılar üstte, kadran altta |
 | `app/src/main/res/layout-land/activity_main.xml` | Yatay yerleşim: yazılar solda, kadran sağda |
 
@@ -339,7 +363,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **793.173 bayt** (~774 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **796.414 bayt** (~777 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.

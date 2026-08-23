@@ -12,6 +12,8 @@
     <string name="qibla_info">Kıble %1$d°</string>
     <string name="approximate_location">yaklaşık</string>
     <string name="location_copied">Kopyalandı: %1$s</string>
+    <string name="sun_info">Güneş %1$d°</string>
+    <string name="sun_info_below">Güneş %1$d° · batmış</string>
     <string name="target_hint">Kadrana dokunun: yönü kilitler · uzun basın: nokta kaydeder</string>
     <string name="waypoint_line">Nokta %1$d° · %2$s</string>
     <string name="waypoint_here">Nokta · buradasınız</string>

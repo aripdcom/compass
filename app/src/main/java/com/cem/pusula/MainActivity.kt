@@ -18,6 +18,8 @@ import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
 import android.provider.Settings
 import android.text.Spannable
@@ -106,6 +108,20 @@ class MainActivity : Activity(), SensorEventListener {
     /** Kaydedilen nokta (enlem, boylam); yoksa null. Kadrana uzun basınca konur. */
     private var waypoint: Pair<Double, Double>? = null
 
+    /** Sapma, kıble ve güneş için kullanılan konum; önbellekten de gelebilir. */
+    private var coordinates: Pair<Double, Double>? = null
+    private var sun: Sun.Position? = null
+
+    private val handler = Handler(Looper.getMainLooper())
+
+    /** Güneş dakikada 0,25° yol alır; dakikada bir tazelemek fazlasıyla yeter. */
+    private val sunTick = object : Runnable {
+        override fun run() {
+            updateSun()
+            handler.postDelayed(this, SUN_UPDATE_MS)
+        }
+    }
+
     private val locationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) = applyLocation(location)
 
@@ -176,10 +192,12 @@ class MainActivity : Activity(), SensorEventListener {
         lastShownFieldStrength = -1
         registerSensors()
         ensureLocation()
+        handler.post(sunTick)
     }
 
     override fun onPause() {
         super.onPause()
+        handler.removeCallbacks(sunTick)
         sensorManager.unregisterListener(this)
         try {
             locationManager?.removeUpdates(locationListener)
@@ -339,6 +357,7 @@ class MainActivity : Activity(), SensorEventListener {
             altitude.toFloat(),
             System.currentTimeMillis()
         )
+        coordinates = latitude to longitude
         declination = field.declination
         expectedFieldStrength = field.fieldStrength / 1000f   // nT -> µT
         compassView.setMagneticNorthOffset(field.declination)
@@ -348,7 +367,17 @@ class MainActivity : Activity(), SensorEventListener {
         compassView.setQiblaBearing(qibla)
 
         applyTarget()
+        updateSun()
         lastShownDegree = -1   // yazıların hemen tazelenmesi için
+    }
+
+    /** Güneşin yeri konum ve saatten hesaplanır; ikisi de bilinmeden çizilmez. */
+    private fun updateSun() {
+        val (latitude, longitude) = coordinates ?: return
+        val position = Sun.position(System.currentTimeMillis(), latitude, longitude)
+        sun = position
+        compassView.setSun(position.azimuth, position.elevation > 0f)
+        refreshInfoText(lastMagnetic)
     }
 
     /**
@@ -430,8 +459,8 @@ class MainActivity : Activity(), SensorEventListener {
      */
     private fun refreshTargetText() {
         val parts = SpannableStringBuilder()
-        targetSegment()?.let { appendColored(parts, it, CompassView.COLOR_TARGET) }
-        waypointSegment()?.let { appendColored(parts, it, CompassView.COLOR_WAYPOINT) }
+        targetSegment()?.let { appendColored(parts, it, CompassView.COLOR_TARGET, "   ") }
+        waypointSegment()?.let { appendColored(parts, it, CompassView.COLOR_WAYPOINT, "   ") }
         if (parts.isEmpty()) {
             targetText.setTextColor(COLOR_HINT)
             targetText.text = getString(R.string.target_hint)
@@ -440,8 +469,13 @@ class MainActivity : Activity(), SensorEventListener {
         }
     }
 
-    private fun appendColored(builder: SpannableStringBuilder, text: String, color: Int) {
-        if (builder.isNotEmpty()) builder.append("   ")
+    private fun appendColored(
+        builder: SpannableStringBuilder,
+        text: String,
+        color: Int,
+        separator: String = " · "
+    ) {
+        if (builder.isNotEmpty()) builder.append(separator)
         val start = builder.length
         builder.append(text)
         builder.setSpan(
@@ -631,21 +665,18 @@ class MainActivity : Activity(), SensorEventListener {
                 magneticPart + "Sapma %.1f°%s".format(abs(decl), yon)
             }
         }
-        val qibla = qiblaBearing
-        if (qibla == null) {
-            infoText.text = base
-            return
+        // Kıble ve güneş kadrandaki işaretlerle aynı renkte yazılır ki hangisinin
+        // hangisi olduğu bakınca anlaşılsın.
+        val text = SpannableStringBuilder(base)
+        qiblaBearing?.let {
+            appendColored(text, getString(R.string.qibla_info, it.roundToInt() % 360), CompassView.COLOR_QIBLA)
         }
-        // Kıble kısmı kadrandaki işaretle aynı renkte olsun ki hangisi olduğu belli olsun.
-        val text = SpannableStringBuilder(base).append(" · ")
-        val start = text.length
-        text.append(getString(R.string.qibla_info, qibla.roundToInt() % 360))
-        text.setSpan(
-            ForegroundColorSpan(CompassView.COLOR_QIBLA),
-            start,
-            text.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+        sun?.let {
+            val label =
+                if (it.elevation > 0f) getString(R.string.sun_info, it.azimuth.roundToInt() % 360)
+                else getString(R.string.sun_info_below, it.azimuth.roundToInt() % 360)
+            appendColored(text, label, CompassView.COLOR_SUN)
+        }
         infoText.text = text
     }
 
@@ -744,6 +775,8 @@ class MainActivity : Activity(), SensorEventListener {
         const val KEY_LONGITUDE = "longitude"
         const val KEY_TARGET = "target"
         /** "Buradasınız" eşiğinin alt ve üst sınırı (metre). */
+        const val SUN_UPDATE_MS = 60_000L
+
         const val ARRIVED_MIN_METERS = 10f
         const val ARRIVED_MAX_METERS = 25f
 
