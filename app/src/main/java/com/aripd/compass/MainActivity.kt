@@ -127,6 +127,9 @@ class MainActivity : Activity(), SensorEventListener {
     /** Konum satırı derece-dakika-saniye mi gösteriyor; dokununca değişir. */
     private var showDms = false
 
+    /** Dışarıdan gelen konum işlendi mi; döndürmede tekrarlanmasın diye. */
+    private var sharedLocationHandled = false
+
     // Ayarlardan okunan değerler; onResume'da tazelenir.
     private var nightMode = false
 
@@ -276,6 +279,52 @@ class MainActivity : Activity(), SensorEventListener {
         }
 
         loadWaypoints()
+
+        // Döndürmede aynı niyeti ikinci kez işlemeyelim: sistem yeniden kurulan
+        // etkinliğe özgün niyeti aynen veriyor.
+        sharedLocationHandled = savedInstanceState?.getBoolean(STATE_SHARED_HANDLED) == true
+        if (!sharedLocationHandled) {
+            sharedLocationHandled = true
+            handleSharedLocation(intent)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(STATE_SHARED_HANDLED, sharedLocationHandled)
+    }
+
+    /** Uygulama zaten açıkken gelen konum (singleTop) buraya düşer. */
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleSharedLocation(intent)
+    }
+
+    /**
+     * Dışarıdan gelen konumu nokta olarak kaydetmeyi önerir.
+     *
+     * Uygulama konum paylaşabiliyordu ama alamıyordu; paylaşmanın karşılığı
+     * almaktır. Artık bir haritanın "paylaş"ı ya da bir `geo:` bağlantısı
+     * doğrudan buraya düşüyor.
+     */
+    private fun handleSharedLocation(intent: Intent?) {
+        if (intent == null) return
+        val text = when (intent.action) {
+            Intent.ACTION_VIEW -> intent.dataString
+            Intent.ACTION_SEND -> intent.getStringExtra(Intent.EXTRA_TEXT)
+            else -> null
+        } ?: return
+        val point = Coordinates.parse(text)
+        if (point == null) {
+            Toast.makeText(this, R.string.waypoint_coordinates_unreadable, Toast.LENGTH_SHORT).show()
+            return
+        }
+        askToSaveWaypoint(
+            intent.getStringExtra(Intent.EXTRA_SUBJECT) ?: Coordinates.label(text),
+            point.latitude,
+            point.longitude
+        )
     }
 
     /**
@@ -1046,7 +1095,12 @@ class MainActivity : Activity(), SensorEventListener {
         refreshTargetText()
     }
 
-    /** Kadrana uzun basmak bulunduğun yeri yeni bir nokta olarak ekler. */
+    /**
+     * Kadrana uzun basmak bulunduğun yeri yeni bir nokta olarak ekler.
+     *
+     * Burada ad sorulmaz: hareket "şurayı işaretle" demek ve o anda telefonla
+     * uğraşacak vakit olmayabilir. Ad sonradan listeden değiştirilebiliyor.
+     */
     private fun addWaypoint() {
         val here = lastLocation
         if (here == null) {
@@ -1068,18 +1122,22 @@ class MainActivity : Activity(), SensorEventListener {
 
     /** Kayıtlı noktalar: yön ve mesafeleriyle listelenir, seçilince yönetilir. */
     private fun showWaypointList() {
-        if (waypoints.isEmpty()) {
-            Toast.makeText(this, getString(R.string.waypoints_empty), Toast.LENGTH_SHORT).show()
-            return
-        }
-        val labels = waypoints.map { point ->
-            waypointFixes.firstOrNull { it.point === point }?.let(::waypointSegment) ?: point.name
-        }.toTypedArray()
-        AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(this)
             .setTitle(R.string.waypoints_title)
-            .setItems(labels) { _, which -> showWaypointActions(waypoints[which]) }
+            // Elle koordinat girişinin tek görünür kapısı burası: kadrana uzun
+            // basmak yalnızca *bulunduğun* yeri kaydedebiliyor, haritadan okunan
+            // bir noktayı değil.
+            .setNeutralButton(R.string.waypoint_enter_coordinates) { _, _ -> askForCoordinates() }
             .setNegativeButton(R.string.bearing_dialog_cancel, null)
-            .show()
+        if (waypoints.isEmpty()) {
+            builder.setMessage(R.string.waypoints_empty)
+        } else {
+            val labels = waypoints.map { point ->
+                waypointFixes.firstOrNull { it.point === point }?.let(::waypointSegment) ?: point.name
+            }.toTypedArray()
+            builder.setItems(labels) { _, which -> showWaypointActions(waypoints[which]) }
+        }
+        builder.show()
     }
 
     private fun showWaypointActions(point: Waypoint) {
@@ -1102,26 +1160,89 @@ class MainActivity : Activity(), SensorEventListener {
     }
 
     private fun showWaypointRename(point: Waypoint) {
+        askForName(R.string.waypoint_rename, point.name, null) { name ->
+            saveWaypoints(waypoints.map { if (it === point) it.copy(name = name) else it })
+        }
+    }
+
+    /**
+     * Ad soran ortak diyalog. Yeniden adlandırma ile yeni nokta aynı biçimi
+     * kullanır; ikisi de tek fark olan başlığı ve varsa koordinat satırını verir.
+     */
+    private fun askForName(titleRes: Int, initial: String, message: String?, onName: (String) -> Unit) {
         val input = EditText(this).apply {
-            setText(point.name)
+            setText(initial)
             hint = getString(R.string.waypoint_name_hint)
             setSelectAllOnFocus(true)
         }
-        val padding = (20 * resources.displayMetrics.density).toInt()
-        val frame = FrameLayout(this).apply {
-            setPadding(padding, padding / 2, padding, 0)
-            addView(input)
-        }
         AlertDialog.Builder(this)
-            .setTitle(R.string.waypoint_rename)
-            .setView(frame)
+            .setTitle(titleRes)
+            .setMessage(message)
+            .setView(pad(input))
             .setPositiveButton(R.string.bearing_dialog_set) { _, _ ->
                 val name = Waypoints.sanitize(input.text.toString())
-                if (name.isEmpty()) return@setPositiveButton
-                saveWaypoints(waypoints.map { if (it === point) it.copy(name = name) else it })
+                if (name.isNotEmpty()) onName(name)
             }
             .setNegativeButton(R.string.bearing_dialog_cancel, null)
             .show()
+    }
+
+    /** Diyalog içindeki alanlar kenara yapışmasın diye. */
+    private fun pad(view: View): FrameLayout {
+        val padding = (20 * resources.displayMetrics.density).toInt()
+        return FrameLayout(this).apply {
+            setPadding(padding, padding / 2, padding, 0)
+            addView(view)
+        }
+    }
+
+    /**
+     * Elle koordinat girişi. Alan `Coordinates`'ın tanıdığı her şeyi kabul eder:
+     * ondalık çift, `geo:` adresi, harita bağlantısı ya da derece-dakika-saniye.
+     * Tek alan olması bilerek — kullanıcıya "hangi biçimde istiyorsun" diye
+     * sormak yerine eldekini yapıştırmasına izin veriyor.
+     */
+    private fun askForCoordinates() {
+        val input = EditText(this).apply {
+            hint = getString(R.string.waypoint_coordinates_hint)
+            setSelectAllOnFocus(true)
+        }
+        AlertDialog.Builder(this)
+            .setTitle(R.string.waypoint_enter_coordinates)
+            .setView(pad(input))
+            .setPositiveButton(R.string.bearing_dialog_set) { _, _ ->
+                val point = Coordinates.parse(input.text.toString())
+                if (point == null) {
+                    Toast.makeText(
+                        this, R.string.waypoint_coordinates_unreadable, Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    askToSaveWaypoint(null, point.latitude, point.longitude)
+                }
+            }
+            .setNegativeButton(R.string.bearing_dialog_cancel, null)
+            .show()
+    }
+
+    /**
+     * Yeni bir noktayı adıyla kaydeder. Koordinat diyalogun mesajında yazar:
+     * dışarıdan gelen bir konumu adlandırmadan önce nereye baktığını görmek
+     * gerekiyor.
+     */
+    private fun askToSaveWaypoint(suggestedName: String?, latitude: Double, longitude: Double) {
+        if (waypoints.size >= Waypoints.LIMIT) {
+            Toast.makeText(
+                this, getString(R.string.waypoint_limit, Waypoints.LIMIT), Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+        val fallback = Waypoints.nextName(waypoints) { getString(R.string.waypoint_default_name, it) }
+        val name = suggestedName?.let(Waypoints::sanitize)?.takeIf { it.isNotEmpty() } ?: fallback
+        val coordinates = "%.6f, %.6f".format(java.util.Locale.US, latitude, longitude)
+        askForName(R.string.waypoint_add, name, coordinates) { chosen ->
+            saveWaypoints(waypoints + Waypoint(chosen, latitude, longitude))
+            Toast.makeText(this, getString(R.string.waypoint_saved, chosen), Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun deleteWaypoint(point: Waypoint) {
@@ -1505,6 +1626,7 @@ class MainActivity : Activity(), SensorEventListener {
 
     private companion object {
         const val REQ_LOCATION = 1
+        const val STATE_SHARED_HANDLED = "sharedLocationHandled"
         const val KEY_LATITUDE = "latitude"
         const val KEY_LONGITUDE = "longitude"
         const val KEY_TARGET = "target"

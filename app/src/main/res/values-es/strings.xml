@@ -147,6 +147,10 @@
     <string name="waypoint_rename">Renombrar</string>
     <string name="waypoint_delete">Eliminar</string>
     <string name="waypoint_name_hint">Nombre del punto</string>
+    <string name="waypoint_add">Añadir punto</string>
+    <string name="waypoint_enter_coordinates">Introducir coordenadas…</string>
+    <string name="waypoint_coordinates_hint">41.0, 29.0 o un enlace compartido</string>
+    <string name="waypoint_coordinates_unreadable">No se encontraron coordenadas</string>
     <string name="location_action_copy">Copiar</string>
     <string name="location_action_share">Compartir</string>
     <string name="share_chooser">Compartir ubicación</string>

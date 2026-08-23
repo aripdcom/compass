@@ -147,6 +147,10 @@
     <string name="waypoint_rename">Yeniden adlandır</string>
     <string name="waypoint_delete">Sil</string>
     <string name="waypoint_name_hint">Nokta adı</string>
+    <string name="waypoint_add">Nokta ekle</string>
+    <string name="waypoint_enter_coordinates">Koordinat gir…</string>
+    <string name="waypoint_coordinates_hint">41.0, 29.0 ya da paylaşılan bağlantı</string>
+    <string name="waypoint_coordinates_unreadable">Metinde koordinat bulunamadı</string>
     <string name="location_action_copy">Kopyala</string>
     <string name="location_action_share">Paylaş</string>
     <string name="share_chooser">Konumu paylaş</string>
