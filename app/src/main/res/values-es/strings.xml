@@ -58,8 +58,8 @@
     <string name="settings_smoothing_calm">Suave</string>
     <string name="settings_smoothing_balanced">Equilibrado</string>
     <string name="settings_smoothing_quick">Rápido</string>
-    <string name="settings_vibrate">Vibrar en los puntos cardinales</string>
-    <string name="settings_vibrate_summary">Un toque breve al pasar N/E/S/O</string>
+    <string name="settings_vibrate">Vibrar al pasar rumbos</string>
+    <string name="settings_vibrate_summary">Un toque breve al pasar N/E/S/O, doble al entrar en el rumbo fijado</string>
     <string name="settings_section_marks">MARCAS DE LA ESFERA</string>
     <string name="settings_show_magnetic">Norte magnético (M)</string>
     <string name="settings_show_magnetic_summary">Visible solo con el norte geográfico</string>

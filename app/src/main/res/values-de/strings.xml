@@ -58,8 +58,8 @@
     <string name="settings_smoothing_calm">Ruhig</string>
     <string name="settings_smoothing_balanced">Ausgewogen</string>
     <string name="settings_smoothing_quick">Schnell</string>
-    <string name="settings_vibrate">Vibration an Haupthimmelsrichtungen</string>
-    <string name="settings_vibrate_summary">Kurzer Impuls beim Passieren von N/O/S/W</string>
+    <string name="settings_vibrate">Vibration bei Kursdurchgang</string>
+    <string name="settings_vibrate_summary">Kurzer Impuls bei N/O/S/W, doppelter beim Erreichen des gesperrten Kurses</string>
     <string name="settings_section_marks">ZIFFERBLATT-MARKEN</string>
     <string name="settings_show_magnetic">Magnetisch Nord (M)</string>
     <string name="settings_show_magnetic_summary">Nur bei geografisch Nord sichtbar</string>

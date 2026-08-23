@@ -58,8 +58,8 @@
     <string name="settings_smoothing_calm">Doux</string>
     <string name="settings_smoothing_balanced">Équilibré</string>
     <string name="settings_smoothing_quick">Réactif</string>
-    <string name="settings_vibrate">Vibrer aux points cardinaux</string>
-    <string name="settings_vibrate_summary">Un bref tic au passage N/E/S/O</string>
+    <string name="settings_vibrate">Vibrer aux passages de cap</string>
+    <string name="settings_vibrate_summary">Un bref tic aux N/E/S/O, un double au passage du cap verrouillé</string>
     <string name="settings_section_marks">REPÈRES DU CADRAN</string>
     <string name="settings_show_magnetic">Nord magnétique (M)</string>
     <string name="settings_show_magnetic_summary">Visible uniquement avec le nord géographique</string>

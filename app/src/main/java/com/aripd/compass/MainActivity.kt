@@ -101,17 +101,11 @@ class MainActivity : Activity(), SensorEventListener {
     private var needsCalibration = false
     private var tilted = false
 
-    /** En son hangi ana yöne yakındık (0=K, 1=D, 2=G, 3=B); -1 henüz bilinmiyor. */
-    private var hapticCardinal = -1
+    /** Ana yönlerin (K/D/G/B) üzerinden geçişi izler. */
+    private val cardinalCrossing = Crossing(CARDINAL_ARM_DEGREES)
 
-    /** Ana yöne göre işaretli fark; işaret değişimi geçiş demektir. */
-    private var lastCardinalOffset = 0f
-
-    /** Tık verildikten sonra yeterince uzaklaşılana kadar yeniden tetiklenmez. */
-    private var hapticArmed = false
-
-    /** Uygulama açılırken ana yöne bakıyorsanız titremesin diye ilk örnek sayılmaz. */
-    private var hapticPrimed = false
+    /** Kilitli hedefin üzerinden geçişi izler. */
+    private val targetCrossing = Crossing(CARDINAL_ARM_DEGREES)
 
     /** Son tıkın anı; art arda gelen tetiklemeleri seyreltir. */
     private var lastTickAt = 0L
@@ -456,7 +450,8 @@ class MainActivity : Activity(), SensorEventListener {
         // Bozulma kararı kesintisiz gözleme dayanıyor; arka planda geçen süre
         // sayılmasın diye ölçüm ve sayaç sıfırdan başlatılır.
         measuredFieldStrength = 0f
-        hapticPrimed = false
+        cardinalCrossing.reset()
+        targetCrossing.reset()
         lastSensorTimestamp = 0L
         lastRenderAt = 0L
         disturbedSince = 0L
@@ -1191,7 +1186,7 @@ class MainActivity : Activity(), SensorEventListener {
 
         // Titreşim ve eğim uyarısı her örnekte değerlendirilir: ikisi de ucuz ve
         // hızlı çevirmede örnek atlamak geçişi kaçırmak demektir.
-        updateCardinalHaptics(shown)
+        updateHaptics(shown)
         updateTiltWarning()
 
         // Çizim ise seyreltilir. Ölçüm şunu gösterdi: uygulamanın SENSOR_DELAY_UI
@@ -1221,44 +1216,47 @@ class MainActivity : Activity(), SensorEventListener {
     }
 
     /**
-     * Ana yön geçişinde kısa tık. Bölge değil **geçiş** algılanır: ana yöne göre
-     * işaretli fark iki örnek arasında işaret değiştirdiyse üzerinden geçilmiştir.
+     * Ana yön ve hedef geçişlerinde titreşim. Algılamanın kendisi [Crossing]'de,
+     * saf ve test edilebilir; burada yalnızca hangi yönlerin izlendiği ve hangi
+     * efektin verildiği duruyor.
      *
-     * Bunun sebebi örnekleme hızı: "2° yaklaşınca tık" kuralı 50 Hz'de çalışıyordu
-     * ama 16 Hz'de hızlı çevirmede örnekler 5-6° atlıyor ve 4°'lik pencere tümüyle
-     * ıskalanabiliyor. Geçiş algılama hızdan bağımsızdır.
-     *
-     * Tam ana yönde durulduğunda gürültü işareti sürekli değiştirebileceği için
-     * bir kez tıkladıktan sonra en az `CARDINAL_ARM_DEGREES` uzaklaşılmadan
-     * yeniden tıklanmaz.
+     * Hedef ayrı bir efekt alıyor: ikisi aynı tıksa "kuzeyden mi geçtim yoksa
+     * hedefe mi girdim" ayırt edilemez, oysa telefona bakmadan yön tutmanın
+     * bütün anlamı bu ayrımda.
      */
-    private fun updateCardinalHaptics(shown: Float) {
+    private fun updateHaptics(shown: Float) {
         val nearest = (shown / 90f).roundToInt() % 4
-        val offset = Geo.difference(nearest * 90f, shown)
+        if (cardinalCrossing.crossed(shown, nearest * 90f, nearest)) tick(cardinalEffect())
 
-        if (!hapticPrimed || nearest != hapticCardinal) {
-            hapticPrimed = true
-            hapticCardinal = nearest
-            hapticArmed = abs(offset) > CARDINAL_ARM_DEGREES
-            lastCardinalOffset = offset
-            return
+        // Hedef manyetik çerçevede saklandığı için kadran çerçevesine çevrilir;
+        // hedef değişince `zone` de değişir ve sayaç kendiliğinden sıfırlanır.
+        val target = shownTarget()
+        if (target != null && targetCrossing.crossed(shown, target, target.roundToInt())) {
+            tick(targetEffect())
         }
-        if (!hapticArmed) {
-            if (abs(offset) > CARDINAL_ARM_DEGREES) hapticArmed = true
-        } else if ((offset > 0f) != (lastCardinalOffset > 0f)) {
-            hapticArmed = false
-            tickForCardinal()
-        }
-        lastCardinalOffset = offset
     }
 
+    /** Ana yön tıkı: tek darbe. */
+    private fun cardinalEffect(): LongArray = longArrayOf(CARDINAL_TICK_MS)
+
     /**
-     * Kısa tık. Kullanıcı sistemde dokunsal geri bildirimi kapattıysa
+     * Hedef tıkı: iki darbe. Aradaki boşluk 60 ms, çünkü ERM motoru duruncaya
+     * kadar geçen süre bundan kısa olursa iki darbe tek uzun titreşime karışıp
+     * ana yön tıkından ayırt edilemez hâle geliyor.
+     */
+    private fun targetEffect(): LongArray =
+        longArrayOf(CARDINAL_TICK_MS, TARGET_TICK_GAP_MS, CARDINAL_TICK_MS)
+
+    /**
+     * Titreşim. Kullanıcı sistemde dokunsal geri bildirimi kapattıysa
      * titreşmez — kendi efektimizi verdiğimiz için bu tercihi elle gözetiyoruz.
      * Tercih `onResume`'da bir kez okunur: her tıkta sormak bir ContentResolver
      * sorgusu demekti ve ayar uygulama önplandayken değişmiyor.
+     *
+     * @param pattern süre dizisi: ilk değer titreşim, sonraki değerler sırayla
+     *                boşluk ve titreşim.
      */
-    private fun tickForCardinal() {
+    private fun tick(pattern: LongArray) {
         if (!systemHapticsEnabled || !vibrateOnCardinals) return
         // Açılışta yumuşatma otururken açı birkaç bölgeyi hızla kesebiliyor;
         // ölçümde 23 ms içinde üç tık görüldü. Asgari aralık bunu tek tıka indirir.
@@ -1268,10 +1266,18 @@ class MainActivity : Activity(), SensorEventListener {
         val device = vibrator ?: return
         if (!device.hasVibrator()) return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            device.vibrate(VibrationEffect.createOneShot(CARDINAL_TICK_MS, CARDINAL_TICK_AMPLITUDE))
+            // Genlik açık veriliyor: cihazın dokunsal şiddeti LOW olduğunda
+            // varsayılan genlik kısılıyor ve darbe elde hissedilmiyor.
+            val amplitudes = IntArray(pattern.size) { if (it % 2 == 0) CARDINAL_TICK_AMPLITUDE else 0 }
+            // Beklemeyle başlamayan desen: ilk değer doğrudan titreşim süresi.
+            device.vibrate(VibrationEffect.createWaveform(pattern, amplitudes, -1))
         } else {
+            // Eski API'de desenin ilk değeri bekleme süresidir, titreşim değil;
+            // başa sıfır konmazsa darbe hiç verilmiyor.
+            val legacy = LongArray(pattern.size + 1)
+            System.arraycopy(pattern, 0, legacy, 1, pattern.size)
             @Suppress("DEPRECATION")
-            device.vibrate(CARDINAL_TICK_MS)
+            device.vibrate(legacy, -1)
         }
     }
 
@@ -1506,6 +1512,9 @@ class MainActivity : Activity(), SensorEventListener {
         const val CARDINAL_TICK_MS = 45L
         const val CARDINAL_TICK_AMPLITUDE = 255
         const val CARDINAL_TICK_MIN_GAP_MS = 700L
+
+        /** Hedef tıkındaki iki darbenin arası; motorun durup yeniden kalkması için. */
+        const val TARGET_TICK_GAP_MS = 60L
 
         /**
          * Konum önbelleğini yenilemek ve sapma/kıble/güneşi baştan hesaplamak

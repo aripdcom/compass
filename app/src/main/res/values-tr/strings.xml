@@ -58,8 +58,8 @@
     <string name="settings_smoothing_calm">Sakin</string>
     <string name="settings_smoothing_balanced">Dengeli</string>
     <string name="settings_smoothing_quick">Çevik</string>
-    <string name="settings_vibrate">Ana yönlerde titreşim</string>
-    <string name="settings_vibrate_summary">K/D/G/B geçilirken kısa tık</string>
+    <string name="settings_vibrate">Yön geçişlerinde titreşim</string>
+    <string name="settings_vibrate_summary">K/D/G/B geçilirken kısa tık, kilitli hedefe girilince çift tık</string>
     <string name="settings_section_marks">KADRAN İŞARETLERİ</string>
     <string name="settings_show_magnetic">Manyetik kuzey (M)</string>
     <string name="settings_show_magnetic_summary">Yalnızca gerçek kuzey kullanılırken görünür</string>

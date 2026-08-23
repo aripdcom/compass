@@ -58,8 +58,8 @@
     <string name="settings_smoothing_calm">Calm</string>
     <string name="settings_smoothing_balanced">Balanced</string>
     <string name="settings_smoothing_quick">Quick</string>
-    <string name="settings_vibrate">Vibrate at cardinal points</string>
-    <string name="settings_vibrate_summary">A short tick when passing N/E/S/W</string>
+    <string name="settings_vibrate">Vibrate on bearings</string>
+    <string name="settings_vibrate_summary">A short tick passing N/E/S/W, a double tick entering the locked bearing</string>
     <string name="settings_section_marks">DIAL MARKS</string>
     <string name="settings_show_magnetic">Magnetic north (M)</string>
     <string name="settings_show_magnetic_summary">Shown only when true north is in use</string>

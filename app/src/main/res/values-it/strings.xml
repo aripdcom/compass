@@ -58,8 +58,8 @@
     <string name="settings_smoothing_calm">Calmo</string>
     <string name="settings_smoothing_balanced">Bilanciato</string>
     <string name="settings_smoothing_quick">Rapido</string>
-    <string name="settings_vibrate">Vibra ai punti cardinali</string>
-    <string name="settings_vibrate_summary">Un breve tocco passando per N/E/S/O</string>
+    <string name="settings_vibrate">Vibra al passaggio di rotta</string>
+    <string name="settings_vibrate_summary">Un tocco breve a N/E/S/O, doppio entrando nella rotta bloccata</string>
     <string name="settings_section_marks">SEGNI DEL QUADRANTE</string>
     <string name="settings_show_magnetic">Nord magnetico (M)</string>
     <string name="settings_show_magnetic_summary">Visibile solo con il nord geografico</string>
