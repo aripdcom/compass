@@ -30,13 +30,26 @@ object Places {
 /** Kadrana çizilecek tek bir yazılı işaret. */
 data class PlaceMark(val label: String, val bearing: Float)
 
-/** Kadranın kenarına yerleşecek bir işaret: yönü, açısal genişliği ve türü. */
-internal data class RimItem(
-    val bearing: Float,
-    val halfWidth: Float,
-    val kind: Int,
-    val label: String?
-)
+/**
+ * Kadranın kenarına yerleşecek bir işaret: yönü, açısal genişliği ve türü.
+ *
+ * Değişmez değil, çünkü kare başına yeniden kuruluyor: `CompassView` bir havuz
+ * tutup aynı nesneleri yeniden dolduruyor. Saniyede yirmi kez birkaç nesne
+ * ayırmak yerine alanları üzerine yazmak çöp üretmiyor.
+ */
+internal class RimItem : RimLayout.Placeable {
+    override var bearing = 0f
+    override var halfWidth = 0f
+    var kind = 0
+    var label: String? = null
+
+    fun set(bearing: Float, halfWidth: Float, kind: Int, label: String?) {
+        this.bearing = bearing
+        this.halfWidth = halfWidth
+        this.kind = kind
+        this.label = label
+    }
+}
 
 internal const val KIND_MAGNETIC = 0
 internal const val KIND_PLACE = 1

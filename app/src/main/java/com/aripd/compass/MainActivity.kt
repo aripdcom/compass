@@ -1347,14 +1347,23 @@ class MainActivity : Activity(), SensorEventListener {
         }
     }
 
-    /** Yön adının açık hâli: "BKB" değil "batı kuzeybatı". */
-    private fun cardinalName(degrees: Float): String =
-        resources.getStringArray(R.array.cardinal_names)[((degrees / 22.5f) + 0.5f).toInt() % 16]
-
-    private fun cardinal(degrees: Float): String {
-        val names = resources.getStringArray(R.array.cardinal_abbreviations)
-        return names[((degrees / 22.5f) + 0.5f).toInt() % 16]
+    /**
+     * Yön adları saniyede yirmi kez okunabiliyordu; `getStringArray` her seferinde
+     * kaynak tablosuna gidip yeni bir dizi üretiyor. Dil değişince etkinlik zaten
+     * yeniden kurulduğu için bir kez okumak yeter.
+     */
+    private val cardinalNames: Array<String> by lazy { resources.getStringArray(R.array.cardinal_names) }
+    private val cardinalAbbreviations: Array<String> by lazy {
+        resources.getStringArray(R.array.cardinal_abbreviations)
     }
+
+    /** Yön adının açık hâli: "BKB" değil "batı kuzeybatı". */
+    private fun cardinalName(degrees: Float): String = cardinalNames[cardinalIndex(degrees)]
+
+    private fun cardinal(degrees: Float): String = cardinalAbbreviations[cardinalIndex(degrees)]
+
+    /** On altı yönlü gülde açının düştüğü dilim. */
+    private fun cardinalIndex(degrees: Float): Int = ((degrees / 22.5f) + 0.5f).toInt() % 16
 
     private fun prefs() = getSharedPreferences("compass", Context.MODE_PRIVATE)
 

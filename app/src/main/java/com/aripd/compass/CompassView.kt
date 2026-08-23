@@ -122,6 +122,31 @@ class CompassView @JvmOverloads constructor(
 
     private val needle = Path()
 
+    // Kare başına yeniden ayrılmasın diye tutulan çizim nesneleri. onDraw
+    // saniyede yirmi kez koşuyor; her karede yeni Path/RectF ayırmak hem Java
+    // hem native tarafta çöp üretiyordu.
+    private val markerPath = Path()
+    private val moonDisc = Path()
+    private val moonLimb = RectF()
+    private val moonTerminator = RectF()
+
+    /** İşaret havuzu: dolan nesneler kare boyunca `rimMarks` içinde sıralanır. */
+    private val rimPool = ArrayList<RimItem>()
+    private val rimMarks = ArrayList<RimItem>()
+    private val topMarker = RimItem()
+    private var rimFractions = FloatArray(0)
+
+    /**
+     * Kadran harfleri ve "M" etiketi her karede `getStringArray`/`getString` ile
+     * okunuyordu; ikisi de kaynak tablosuna gidip yeni dizi ve dizgi üretiyor.
+     * Dil değişince görünüm zaten yeniden kurulduğu için bir kez okumak yeter.
+     */
+    private val dialLabels: Array<String> by lazy { resources.getStringArray(R.array.dial_labels) }
+    private val magneticLabel: String by lazy { context.getString(R.string.magnetic_label) }
+
+    /** Yoğunluk da her `dp()` çağrısında kaynaklardan sorulmasın diye tutuluyor. */
+    private val density = resources.displayMetrics.density
+
     fun setAzimuth(degrees: Float) {
         azimuth = degrees
         invalidate()
@@ -225,8 +250,7 @@ class CompassView @JvmOverloads constructor(
             canvas.restore()
         }
 
-        val labels = resources.getStringArray(R.array.dial_labels)
-        labels.forEachIndexed { index, label ->
+        dialLabels.forEachIndexed { index, label ->
             canvas.save()
             canvas.rotate(index * 45f, cx, cy)
             labelPaint.color = if (index == 0) palette.northLabel else palette.label
@@ -249,33 +273,28 @@ class CompassView @JvmOverloads constructor(
         magneticLabelPaint.textSize = radius * 0.095f
         qiblaLabelPaint.textSize = radius * 0.085f
 
-        val marks = ArrayList<RimItem>()
+        rimMarks.clear()
         magneticOffset?.let {
-            val label = context.getString(R.string.magnetic_label)
-            marks.add(RimItem(it, halfWidth(magneticLabelPaint.measureText(label) / 2f, radius), KIND_MAGNETIC, label))
+            addRim(it, halfWidth(magneticLabelPaint.measureText(magneticLabel) / 2f, radius), KIND_MAGNETIC, magneticLabel)
         }
         placeMarks.forEach {
-            marks.add(RimItem(it.bearing, halfWidth(qiblaLabelPaint.measureText(it.label) / 2f, radius), KIND_PLACE, it.label))
+            addRim(it.bearing, halfWidth(qiblaLabelPaint.measureText(it.label) / 2f, radius), KIND_PLACE, it.label)
         }
-        sunBearing?.let { marks.add(RimItem(it, halfWidth(dp(6f), radius), KIND_SUN, null)) }
-        moon?.let { marks.add(RimItem(it.bearing, halfWidth(dp(7.5f), radius), KIND_MOON, null)) }
+        sunBearing?.let { addRim(it, halfWidth(dp(6f), radius), KIND_SUN, null) }
+        moon?.let { addRim(it.bearing, halfWidth(dp(7.5f), radius), KIND_MOON, null) }
         waypointPaint.strokeWidth = dp(2f)
         waypointLabelPaint.textSize = radius * 0.085f
         waypointMarks.forEach {
-            marks.add(RimItem(it.bearing, halfWidth(waypointLabelPaint.measureText(it.label) / 2f, radius), KIND_WAYPOINT, it.label))
+            addRim(it.bearing, halfWidth(waypointLabelPaint.measureText(it.label) / 2f, radius), KIND_WAYPOINT, it.label)
         }
 
         // Tepedeki gösterge kadran çerçevesinde `azimuth` yönüne denk gelir:
         // kadran -azimuth kadar döndüğü için o yön ekranın tepesine çıkar.
-        val topMarker = RimItem(azimuth, halfWidth(dp(7.2f), radius), KIND_MAGNETIC, null)
-        val fractions = RimLayout.assign(
-            marks.map { RimLayout.Mark(it.bearing, it.halfWidth) },
-            RimLayout.Mark(topMarker.bearing, topMarker.halfWidth),
-            RIM_RADII,
-            RIM_MARGIN
-        )
+        topMarker.set(azimuth, halfWidth(dp(7.2f), radius), KIND_MAGNETIC, null)
+        if (rimFractions.size < rimMarks.size) rimFractions = FloatArray(rimMarks.size)
+        val fractions = RimLayout.assign(rimMarks, topMarker, RIM_RADII, RIM_MARGIN, rimFractions)
         moonFraction = null
-        marks.forEachIndexed { index, item ->
+        rimMarks.forEachIndexed { index, item ->
             val fraction = fractions[index]
             when (item.kind) {
                 KIND_MAGNETIC ->
@@ -440,31 +459,40 @@ class CompassView @JvmOverloads constructor(
      * f>0,5'te karanlık tarafa doğru bombeleşir, f=0,5'te düz çizgi olur.
      */
     private fun moonPath(cx: Float, cy: Float, r: Float, illumination: Float, waxing: Boolean): Path {
-        val path = Path()
         val terminator = r * (1f - 2f * illumination)
-        val limb = RectF(cx - r, cy - r, cx + r, cy + r)
-        val term = RectF(cx - abs(terminator), cy - r, cx + abs(terminator), cy + r)
+        moonDisc.reset()
+        moonLimb.set(cx - r, cy - r, cx + r, cy + r)
+        moonTerminator.set(cx - abs(terminator), cy - r, cx + abs(terminator), cy + r)
         if (waxing) {
-            path.arcTo(limb, -90f, 180f, true)
-            path.arcTo(term, 90f, if (terminator < 0f) 180f else -180f)
+            moonDisc.arcTo(moonLimb, -90f, 180f, true)
+            moonDisc.arcTo(moonTerminator, 90f, if (terminator < 0f) 180f else -180f)
         } else {
-            path.arcTo(limb, -90f, -180f, true)
-            path.arcTo(term, 90f, if (terminator < 0f) -180f else 180f)
+            moonDisc.arcTo(moonLimb, -90f, -180f, true)
+            moonDisc.arcTo(moonTerminator, 90f, if (terminator < 0f) -180f else 180f)
         }
-        path.close()
-        return path
+        moonDisc.close()
+        return moonDisc
     }
 
+    /** Havuzdan bir işaret alıp doldurur; havuz yetmiyorsa büyür. */
+    private fun addRim(bearing: Float, halfWidth: Float, kind: Int, label: String?) {
+        val index = rimMarks.size
+        val item = if (index < rimPool.size) rimPool[index] else RimItem().also { rimPool.add(it) }
+        item.set(bearing, halfWidth, kind, label)
+        rimMarks.add(item)
+    }
+
+    /** Aynı `Path` yeniden kullanılır; çizilir çizilmez işi biter. */
     private fun triangle(cx: Float, tipY: Float, size: Float): Path {
-        val path = Path()
-        path.moveTo(cx, tipY + size)
-        path.lineTo(cx - size * 0.8f, tipY - size * 0.4f)
-        path.lineTo(cx + size * 0.8f, tipY - size * 0.4f)
-        path.close()
-        return path
+        markerPath.reset()
+        markerPath.moveTo(cx, tipY + size)
+        markerPath.lineTo(cx - size * 0.8f, tipY - size * 0.4f)
+        markerPath.lineTo(cx + size * 0.8f, tipY - size * 0.4f)
+        markerPath.close()
+        return markerPath
     }
 
-    private fun dp(value: Float): Float = value * resources.displayMetrics.density
+    private fun dp(value: Float): Float = value * density
 
     companion object {
         /**
