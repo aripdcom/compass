@@ -13,6 +13,8 @@ object Prefs {
     const val KEY_TRUE_NORTH = "trueNorth"
     const val KEY_SMOOTHING = "smoothing"
     const val KEY_VIBRATE = "vibrate"
+    const val KEY_SHOW_MAGNETIC = "showMagnetic"
+    const val KEY_SHOW_LEVEL = "showLevel"
     const val KEY_SHOW_QIBLA = "showQibla"
     const val KEY_SHOW_SUN = "showSun"
 
@@ -20,6 +22,8 @@ object Prefs {
     const val DEFAULT_KEEP_SCREEN = true
     const val DEFAULT_TRUE_NORTH = true
     const val DEFAULT_VIBRATE = true
+    const val DEFAULT_SHOW_MAGNETIC = true
+    const val DEFAULT_SHOW_LEVEL = true
     const val DEFAULT_SHOW_QIBLA = true
     const val DEFAULT_SHOW_SUN = true
 

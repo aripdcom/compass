@@ -77,8 +77,27 @@ class SettingsActivity : Activity() {
         )
 
         header(getString(R.string.settings_section_marks))
+        switchRow(
+            R.string.settings_show_magnetic, R.string.settings_show_magnetic_summary,
+            Prefs.KEY_SHOW_MAGNETIC, Prefs.DEFAULT_SHOW_MAGNETIC
+        )
+        switchRow(
+            R.string.settings_show_level, R.string.settings_show_level_summary,
+            Prefs.KEY_SHOW_LEVEL, Prefs.DEFAULT_SHOW_LEVEL
+        )
         switchRow(R.string.settings_show_qibla, 0, Prefs.KEY_SHOW_QIBLA, Prefs.DEFAULT_SHOW_QIBLA)
         switchRow(R.string.settings_show_sun, 0, Prefs.KEY_SHOW_SUN, Prefs.DEFAULT_SHOW_SUN)
+        note(getString(R.string.settings_marks_note))
+    }
+
+    /** Bölümün altına açıklama satırı. */
+    private fun note(text: String) {
+        column.addView(TextView(this).apply {
+            this.text = text
+            setTextColor(palette.hint)
+            textSize = 13f
+            setPadding(0, dp(10), 0, 0)
+        })
     }
 
     private fun header(text: String) {

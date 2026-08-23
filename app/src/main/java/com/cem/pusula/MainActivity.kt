@@ -2,6 +2,7 @@ package com.cem.pusula
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -31,6 +32,9 @@ import android.text.style.ForegroundColorSpan
 import android.view.Surface
 import android.view.View
 import android.view.WindowManager
+import android.text.InputType
+import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import kotlin.math.abs
@@ -125,6 +129,8 @@ class MainActivity : Activity(), SensorEventListener {
     private var useTrueNorth = Prefs.DEFAULT_TRUE_NORTH
     private var smoothingAlpha = Prefs.SMOOTHING_ALPHAS[Prefs.DEFAULT_SMOOTHING]
     private var vibrateOnCardinals = Prefs.DEFAULT_VIBRATE
+    private var showMagnetic = Prefs.DEFAULT_SHOW_MAGNETIC
+    private var showLevel = Prefs.DEFAULT_SHOW_LEVEL
     private var showQibla = Prefs.DEFAULT_SHOW_QIBLA
     private var showSun = Prefs.DEFAULT_SHOW_SUN
     private val palette: Palette get() = Palette.of(nightMode)
@@ -211,6 +217,7 @@ class MainActivity : Activity(), SensorEventListener {
             prefs().edit().putBoolean(Prefs.KEY_NIGHT, !nightMode).apply()
             applySettings()
         }
+        targetText.setOnClickListener { askForBearing() }
         settingsButton.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
@@ -244,6 +251,8 @@ class MainActivity : Activity(), SensorEventListener {
         unit = stored.getInt(Prefs.KEY_UNIT, Prefs.DEFAULT_UNIT)
         useTrueNorth = stored.getBoolean(Prefs.KEY_TRUE_NORTH, Prefs.DEFAULT_TRUE_NORTH)
         vibrateOnCardinals = stored.getBoolean(Prefs.KEY_VIBRATE, Prefs.DEFAULT_VIBRATE)
+        showMagnetic = stored.getBoolean(Prefs.KEY_SHOW_MAGNETIC, Prefs.DEFAULT_SHOW_MAGNETIC)
+        showLevel = stored.getBoolean(Prefs.KEY_SHOW_LEVEL, Prefs.DEFAULT_SHOW_LEVEL)
         showQibla = stored.getBoolean(Prefs.KEY_SHOW_QIBLA, Prefs.DEFAULT_SHOW_QIBLA)
         showSun = stored.getBoolean(Prefs.KEY_SHOW_SUN, Prefs.DEFAULT_SHOW_SUN)
         smoothingAlpha = Prefs.SMOOTHING_ALPHAS[
@@ -263,7 +272,8 @@ class MainActivity : Activity(), SensorEventListener {
     /** Kadran işaretlerini kuzey çerçevesine ve görünürlük ayarlarına göre kurar. */
     private fun applyMarks() {
         // Manyetik çerçevedeyken "M" kadranın kuzeyiyle çakışır, gösterilmez.
-        compassView.setMagneticNorthOffset(if (useTrueNorth) declination else null)
+        compassView.setMagneticNorthOffset(if (useTrueNorth && showMagnetic) declination else null)
+        compassView.levelVisible = showLevel
         compassView.setQiblaBearing(if (showQibla) qiblaBearing?.let(::toDialFrame) else null)
         compassView.setSun(
             if (showSun) sun?.azimuth?.let(::toDialFrame) else null,
@@ -572,16 +582,71 @@ class MainActivity : Activity(), SensorEventListener {
 
     /** Kadrana dokunmak o anki yönü kilitler; kilitliyken dokunmak bırakır. */
     private fun toggleTarget() {
-        val editor = prefs().edit()
         if (targetMagnetic != null) {
-            targetMagnetic = null
-            editor.remove(KEY_TARGET)
-        } else {
-            val magnetic = lastMagnetic ?: return   // henüz sensör okuması yok
-            targetMagnetic = magnetic
-            editor.putFloat(KEY_TARGET, magnetic)
+            clearTarget()
+            return
         }
-        editor.apply()
+        val magnetic = lastMagnetic ?: return   // henüz sensör okuması yok
+        setTargetFromDial((magnetic + frameOffset()) % 360f)
+    }
+
+    /**
+     * Elle kerteriz girişi. Kadrana dokunmak yalnızca *baktığınız* yönü
+     * kilitleyebiliyor; haritadan okunan bir açıyı takip etmek için sayıyla
+     * girmek gerekiyor. Girilen değer ekrandaki çerçeve ve birimle aynıdır.
+     */
+    private fun askForBearing() {
+        val input = EditText(this).apply {
+            inputType = InputType.TYPE_CLASS_NUMBER
+            hint = if (unit == Prefs.UNIT_MIL) "0-6400" else "0-360"
+            shownTarget()?.let { setText(bearingValue(it).toString()) }
+            setSelectAllOnFocus(true)
+        }
+        val padding = (20 * resources.displayMetrics.density).toInt()
+        val frame = FrameLayout(this).apply {
+            setPadding(padding, padding / 2, padding, 0)
+            addView(input)
+        }
+        val builder = AlertDialog.Builder(this)
+            .setTitle(R.string.bearing_dialog_title)
+            .setView(frame)
+            .setPositiveButton(R.string.bearing_dialog_set) { _, _ ->
+                val entered = input.text.toString().trim().toFloatOrNull() ?: return@setPositiveButton
+                setTargetFromDial(bearingDegrees(entered))
+            }
+            .setNegativeButton(R.string.bearing_dialog_cancel, null)
+        if (targetMagnetic != null) {
+            builder.setNeutralButton(R.string.bearing_dialog_clear) { _, _ -> clearTarget() }
+        }
+        builder.show()
+    }
+
+    /** Ekranda gösterilen açının seçili birimdeki sayısal karşılığı. */
+    private fun bearingValue(degrees: Float): Int {
+        val normalized = (degrees % 360f + 360f) % 360f
+        return if (unit == Prefs.UNIT_MIL) {
+            (normalized * Prefs.MILS_PER_CIRCLE / 360f).roundToInt() % 6400
+        } else {
+            normalized.roundToInt() % 360
+        }
+    }
+
+    /** Kullanıcının girdiği sayıyı dereceye çevirir. */
+    private fun bearingDegrees(value: Float): Float =
+        if (unit == Prefs.UNIT_MIL) value * 360f / Prefs.MILS_PER_CIRCLE else value
+
+    /** Kadran çerçevesinde verilen açıyı hedef olarak kilitler. */
+    private fun setTargetFromDial(dialBearing: Float) {
+        val magnetic = (dialBearing - frameOffset() + 360f) % 360f
+        targetMagnetic = magnetic
+        prefs().edit().putFloat(KEY_TARGET, magnetic).apply()
+        applyTarget()
+        refreshTargetText()
+    }
+
+    private fun clearTarget() {
+        targetMagnetic = null
+        prefs().edit().remove(KEY_TARGET).apply()
         applyTarget()
         refreshTargetText()
     }

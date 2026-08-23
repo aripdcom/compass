@@ -199,7 +199,11 @@ giden büyük daire yayının çıkış açısıdır — kıblenin tanımı budu
 Açı gerçek kuzeye göredir, o yüzden kadranla aynı çerçevededir. İstanbul'dan
 yaklaşık 152°, Ankara'dan 158° civarı çıkar.
 
-**Hedef kilidi.** Kadrana dokunmak o an baktığınız yönü kilitler: sarı bir hat
+**Hedef kilidi.** İki yolu var. Kadrana dokunmak o an baktığınız yönü kilitler;
+alt satıra dokunmak ise açıyı **sayıyla girmenizi** sağlar — haritadan okunan bir
+kerterizi takip etmek için gereken budur, çünkü dokunarak yalnızca hâlihazırda
+baktığınız yön kilitlenebilir. Girilen değer ekrandaki çerçeve ve birimle aynıdır
+(manyetik moddayken manyetik, mil seçiliyse mil). Her iki durumda da: sarı bir hat
 kadranda o yönü işaretler, alt satır `Hedef 81° · 12° sağa` diye ne kadar
 dönmeniz gerektiğini söyler, ±2° içinde `yön tutuyor` yazar. Tekrar dokunmak
 bırakır. Kilit `SharedPreferences`'a yazıldığı için uygulamayı kapatıp açsanız
@@ -350,7 +354,11 @@ yani gece modunda ayarlar ekranı da kırmızıya dönüyor.
 | **Gerçek kuzeyi kullan** | Kapatılırsa kadran manyetik kuzeye oturur. |
 | **Yumuşatma** | Sakin (0,06) / Dengeli (0,12) / Çevik (0,25). Ortadaki, uygulamanın başından beri kullandığı değer. |
 | **Ana yönlerde titreşim** | Tıkı tümüyle kapatır. |
-| **Kadran işaretleri** | Kıble ve güneşi ayrı ayrı gizler. |
+| **Kadran işaretleri** | Manyetik kuzey (M), su terazisi, kıble ve güneşi ayrı ayrı gizler. |
+
+Hedef ve nokta işaretleri o listede yok, çünkü zaten kadrana dokunarak ya da uzun
+basarak açılıp kapanıyorlar; ayrıca bir anahtar koymak "kilitli ama görünmez
+hedef" gibi kafa karıştırıcı bir durum üretirdi.
 
 Kuzey türü ayarı göründüğünden daha derin: kıble, güneş ve nokta **gerçek kuzeye
 göre** hesaplanır, kadran ise manyetik kuzeye oturmuş olabilir. Bu yüzden her
@@ -440,7 +448,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **809.636 bayt** (~790 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **811.967 bayt** (~792 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.

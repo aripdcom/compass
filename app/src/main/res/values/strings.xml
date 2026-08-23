@@ -14,12 +14,16 @@
     <string name="location_copied">Kopyalandı: %1$s</string>
     <string name="sun_info">Güneş %1$s</string>
     <string name="sun_info_below">Güneş %1$s · batmış</string>
-    <string name="target_hint">Kadrana dokunun: yönü kilitler · uzun basın: nokta kaydeder</string>
+    <string name="target_hint">Kadrana dokun: yön kilitle · uzun bas: nokta · buraya dokun: açı gir</string>
     <string name="waypoint_line">Nokta %1$s · %2$s</string>
     <string name="waypoint_here">Nokta · buradasınız</string>
     <string name="waypoint_saved">Nokta kaydedildi</string>
     <string name="waypoint_cleared">Nokta silindi</string>
     <string name="waypoint_needs_location">Konum yok — nokta kaydedilemedi</string>
+    <string name="bearing_dialog_title">Kerteriz gir</string>
+    <string name="bearing_dialog_set">Ayarla</string>
+    <string name="bearing_dialog_clear">Sil</string>
+    <string name="bearing_dialog_cancel">Vazgeç</string>
     <string name="target_plain">Hedef %1$s</string>
     <string name="target_reached">Hedef %1$s · yön tutuyor</string>
     <string name="target_right">Hedef %1$s · %2$s sağa</string>
@@ -45,7 +49,12 @@
     <string name="settings_vibrate">Ana yönlerde titreşim</string>
     <string name="settings_vibrate_summary">K/D/G/B geçilirken kısa tık</string>
     <string name="settings_section_marks">KADRAN İŞARETLERİ</string>
+    <string name="settings_show_magnetic">Manyetik kuzey (M)</string>
+    <string name="settings_show_magnetic_summary">Yalnızca gerçek kuzey kullanılırken görünür</string>
+    <string name="settings_show_level">Su terazisi</string>
+    <string name="settings_show_level_summary">Kadranın göbeğindeki kabarcık</string>
     <string name="settings_show_qibla">Kıble</string>
     <string name="settings_show_sun">Güneş</string>
+    <string name="settings_marks_note">Hedef ve nokta işaretleri burada yok: kadrana dokunarak ya da uzun basarak zaten açılıp kapanıyorlar.</string>
     <string name="mil_suffix">mil</string>
 </resources>

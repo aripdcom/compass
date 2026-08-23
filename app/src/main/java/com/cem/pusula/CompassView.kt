@@ -35,6 +35,13 @@ class CompassView @JvmOverloads constructor(
     /** Kaydedilen noktanın yönü; konum bilinmeden hesaplanamaz. */
     private var waypointBearing: Float? = null
 
+    /** Su terazisi gösterilsin mi; kapalıyken göbekte yalnızca küçük bir nokta olur. */
+    var levelVisible: Boolean = true
+        set(value) {
+            field = value
+            invalidate()
+        }
+
     /** Güneşin yönü ve ufkun üstünde olup olmadığı. */
     private var sunBearing: Float? = null
     private var sunAboveHorizon = true
@@ -247,7 +254,13 @@ class CompassView @JvmOverloads constructor(
 
         canvas.restore()
 
-        drawLevel(canvas, cx, cy, radius)
+        if (levelVisible) {
+            drawLevel(canvas, cx, cy, radius)
+        } else {
+            // Terazi yokken ibrenin merkezi boş kalmasın.
+            canvas.drawCircle(cx, cy, dp(4f), levelFramePaint.apply { style = Paint.Style.FILL })
+            levelFramePaint.style = Paint.Style.STROKE
+        }
     }
 
     /**
