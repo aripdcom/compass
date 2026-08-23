@@ -25,10 +25,10 @@
     <string name="sun_info">Soleil %1$s</string>
     <string name="sun_info_below">Soleil %1$s · sous l’horizon</string>
     <string name="target_hint">Touchez le cadran : verrouiller · appui long : point · ici : saisir un cap</string>
-    <string name="waypoint_line">Point %1$s · %2$s</string>
-    <string name="waypoint_here">Point · vous y êtes</string>
-    <string name="waypoint_saved">Point enregistré</string>
-    <string name="waypoint_cleared">Point supprimé</string>
+    <string name="waypoint_line">%1$s %2$s · %3$s</string>
+    <string name="waypoint_here">%1$s · vous y êtes</string>
+    <string name="waypoint_saved">%1$s enregistré</string>
+    <string name="waypoint_cleared">%1$s supprimé</string>
     <string name="waypoint_needs_location">Pas de position — point non enregistré</string>
     <string name="bearing_dialog_title">Saisir un cap</string>
     <string name="bearing_dialog_set">Définir</string>
@@ -137,4 +137,11 @@
         <item>O</item>
         <item>NO</item>
     </string-array>
+    <string name="waypoint_default_name">Point %1$d</string>
+    <string name="waypoint_limit">Au plus %1$d points peuvent être enregistrés</string>
+    <string name="waypoints_title">Points enregistrés</string>
+    <string name="waypoints_empty">Aucun point — appui long sur le cadran pour en enregistrer un</string>
+    <string name="waypoint_rename">Renommer</string>
+    <string name="waypoint_delete">Supprimer</string>
+    <string name="waypoint_name_hint">Nom du point</string>
 </resources>

@@ -37,8 +37,8 @@ class CompassView @JvmOverloads constructor(
     /** Kadranda yazıyla gösterilen sabit nokta yönleri (kıble, Aksa, Vatikan…). */
     private var placeMarks: List<PlaceMark> = emptyList()
 
-    /** Kaydedilen noktanın yönü; konum bilinmeden hesaplanamaz. */
-    private var waypointBearing: Float? = null
+    /** Kaydedilen noktalar; her biri kadranda adıyla görünür. */
+    private var waypointMarks: List<PlaceMark> = emptyList()
 
     /** Ay döndürülmemiş katmanda çizildiği için yarıçapı buradan taşınır. */
     private var moonFraction: Float? = null
@@ -78,7 +78,8 @@ class CompassView @JvmOverloads constructor(
     private val sunPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val sunArcPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
     private val moonPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private val waypointPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val waypointPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
+    private val waypointLabelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { textAlign = Paint.Align.CENTER }
     private val targetPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
     private val targetLinePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
     private val levelFillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
@@ -108,6 +109,7 @@ class CompassView @JvmOverloads constructor(
         sunArcPaint.color = palette.sun
         moonPaint.color = palette.moon
         waypointPaint.color = palette.waypoint
+        waypointLabelPaint.color = palette.waypoint
         targetPaint.color = palette.target
         targetLinePaint.color = palette.target
         levelFillPaint.color = palette.levelFill
@@ -149,8 +151,8 @@ class CompassView @JvmOverloads constructor(
         invalidate()
     }
 
-    fun setWaypointBearing(degrees: Float?) {
-        waypointBearing = degrees
+    fun setWaypointMarks(marks: List<PlaceMark>) {
+        waypointMarks = marks
         invalidate()
     }
 
@@ -257,7 +259,11 @@ class CompassView @JvmOverloads constructor(
         }
         sunBearing?.let { marks.add(RimItem(it, halfWidth(dp(6f), radius), KIND_SUN, null)) }
         moon?.let { marks.add(RimItem(it.bearing, halfWidth(dp(7.5f), radius), KIND_MOON, null)) }
-        waypointBearing?.let { marks.add(RimItem(it, halfWidth(dp(7f), radius), KIND_WAYPOINT, null)) }
+        waypointPaint.strokeWidth = dp(2f)
+        waypointLabelPaint.textSize = radius * 0.085f
+        waypointMarks.forEach {
+            marks.add(RimItem(it.bearing, halfWidth(waypointLabelPaint.measureText(it.label) / 2f, radius), KIND_WAYPOINT, it.label))
+        }
 
         // Tepedeki gösterge kadran çerçevesinde `azimuth` yönüne denk gelir:
         // kadran -azimuth kadar döndüğü için o yön ekranın tepesine çıkar.
@@ -284,13 +290,8 @@ class CompassView @JvmOverloads constructor(
                     canvas.drawCircle(cx, cy - radius * fraction, dp(6f), sunPaint)
                     canvas.restore()
                 }
-                KIND_WAYPOINT -> {
-                    canvas.save()
-                    canvas.rotate(item.bearing, cx, cy)
-                    waypointPaint.style = Paint.Style.FILL
-                    canvas.drawPath(diamond(cx, cy - radius * fraction, dp(7f)), waypointPaint)
-                    canvas.restore()
-                }
+                KIND_WAYPOINT ->
+                    drawRimLabel(canvas, cx, cy, radius, item.bearing, item.label!!, waypointPaint, waypointLabelPaint, fraction)
                 // Ay döndürülmemiş katmanda çizildiği için yarıçapı saklanır.
                 else -> moonFraction = fraction
             }
@@ -450,16 +451,6 @@ class CompassView @JvmOverloads constructor(
             path.arcTo(limb, -90f, -180f, true)
             path.arcTo(term, 90f, if (terminator < 0f) -180f else 180f)
         }
-        path.close()
-        return path
-    }
-
-    private fun diamond(cx: Float, cy: Float, size: Float): Path {
-        val path = Path()
-        path.moveTo(cx, cy - size)
-        path.lineTo(cx + size * 0.72f, cy)
-        path.lineTo(cx, cy + size)
-        path.lineTo(cx - size * 0.72f, cy)
         path.close()
         return path
     }

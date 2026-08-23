@@ -25,10 +25,10 @@
     <string name="sun_info">Sonne %1$s</string>
     <string name="sun_info_below">Sonne %1$s · unter dem Horizont</string>
     <string name="target_hint">Zifferblatt tippen: Kurs sperren · lang drücken: Punkt · hier: Kurs eingeben</string>
-    <string name="waypoint_line">Punkt %1$s · %2$s</string>
-    <string name="waypoint_here">Punkt · Sie sind hier</string>
-    <string name="waypoint_saved">Punkt gespeichert</string>
-    <string name="waypoint_cleared">Punkt gelöscht</string>
+    <string name="waypoint_line">%1$s %2$s · %3$s</string>
+    <string name="waypoint_here">%1$s · Sie sind hier</string>
+    <string name="waypoint_saved">%1$s gespeichert</string>
+    <string name="waypoint_cleared">%1$s gelöscht</string>
     <string name="waypoint_needs_location">Kein Standort — Punkt nicht gespeichert</string>
     <string name="bearing_dialog_title">Kurs eingeben</string>
     <string name="bearing_dialog_set">Setzen</string>
@@ -137,4 +137,11 @@
         <item>W</item>
         <item>NW</item>
     </string-array>
+    <string name="waypoint_default_name">Punkt %1$d</string>
+    <string name="waypoint_limit">Höchstens %1$d Punkte können gespeichert werden</string>
+    <string name="waypoints_title">Gespeicherte Punkte</string>
+    <string name="waypoints_empty">Noch keine Punkte — lang auf das Zifferblatt drücken</string>
+    <string name="waypoint_rename">Umbenennen</string>
+    <string name="waypoint_delete">Löschen</string>
+    <string name="waypoint_name_hint">Punktname</string>
 </resources>

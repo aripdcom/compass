@@ -154,8 +154,8 @@ class MainActivity : Activity(), SensorEventListener {
     private var showMoon = Prefs.DEFAULT_SHOW_MOON
     private val palette: Palette get() = Palette.of(nightMode)
 
-    /** Kaydedilen nokta (enlem, boylam); yoksa null. Kadrana uzun basınca konur. */
-    private var waypoint: Pair<Double, Double>? = null
+    /** Kaydedilen noktalar. Kadrana uzun basmak yenisini ekler. */
+    private var waypoints: List<Waypoint> = emptyList()
 
     /** Sapma, kıble ve güneş için kullanılan konum; önbellekten de gelebilir. */
     private var coordinates: Pair<Double, Double>? = null
@@ -255,13 +255,15 @@ class MainActivity : Activity(), SensorEventListener {
         compassView.contentDescription = getString(R.string.a11y_dial)
         compassView.setOnClickListener { toggleTarget() }
         compassView.setOnLongClickListener {
-            toggleWaypoint()
+            addWaypoint()
+            true
+        }
+        targetText.setOnLongClickListener {
+            showWaypointList()
             true
         }
 
-        val wpLat = prefs().getFloat(KEY_WAYPOINT_LATITUDE, Float.NaN)
-        val wpLon = prefs().getFloat(KEY_WAYPOINT_LONGITUDE, Float.NaN)
-        if (!wpLat.isNaN() && !wpLon.isNaN()) waypoint = wpLat.toDouble() to wpLon.toDouble()
+        loadWaypoints()
     }
 
     /**
@@ -769,7 +771,9 @@ class MainActivity : Activity(), SensorEventListener {
     private fun refreshTargetText() {
         val parts = SpannableStringBuilder()
         targetSegment()?.let { appendColored(parts, it, palette.target, "   ") }
-        waypointSegment()?.let { appendColored(parts, it, palette.waypoint, "   ") }
+        waypoints.forEach { point ->
+            waypointSegment(point)?.let { appendColored(parts, it, palette.waypoint, "   ") }
+        }
         if (parts.isEmpty()) {
             targetText.setTextColor(palette.hint)
             targetText.text = getString(R.string.target_hint)
@@ -810,27 +814,35 @@ class MainActivity : Activity(), SensorEventListener {
         }
     }
 
-    private fun waypointSegment(): String? {
-        val (wpLat, wpLon) = waypoint ?: return null
-        val here = lastLocation ?: return null
-        val bearing = Geo.bearing(here.latitude, here.longitude, wpLat, wpLon)
+    /**
+     * Noktanın üstünde sayılıp sayılmadığımız. Mesafe konum hatasının altına
+     * inince yön anlamını yitirir: hata çemberinin içinde hangi yöne bakılacağını
+     * söylemek uydurma olur. Hem yazı hem kadran işareti buna bakar, yoksa yazı
+     * "buradasınız" derken kadranda rastgele bir yöne etiket çıkıyordu.
+     */
+    private fun isArrived(point: Waypoint, here: Location): Boolean {
         val results = FloatArray(1)
-        Location.distanceBetween(here.latitude, here.longitude, wpLat, wpLon, results)
-        // Mesafe konum hatasının altına inince yön anlamını yitirir: hata çemberinin
-        // içinde hangi yöne bakacağınızı söylemek uydurma olur. Eşik fix'in kendi
-        // hata payı, ama makul bir aralığa sıkıştırılmış — çok iyi bir fix'te bile
-        // birkaç metrede yön güvenilmez, çok kötü bir fix'te de yüz metre öteye
-        // "buradasınız" demek yanlış olurdu.
+        Location.distanceBetween(here.latitude, here.longitude, point.latitude, point.longitude, results)
         val arrivedWithin = (if (here.hasAccuracy()) here.accuracy else ARRIVED_MIN_METERS)
             .coerceIn(ARRIVED_MIN_METERS, ARRIVED_MAX_METERS)
-        if (results[0] <= arrivedWithin) return getString(R.string.waypoint_here)
+        return results[0] <= arrivedWithin
+    }
+
+    private fun waypointSegment(point: Waypoint): String? {
+        val here = lastLocation ?: return null
+        if (isArrived(point, here)) return getString(R.string.waypoint_here, point.name)
+        val bearing = Geo.bearing(here.latitude, here.longitude, point.latitude, point.longitude)
+        val results = FloatArray(1)
+        Location.distanceBetween(here.latitude, here.longitude, point.latitude, point.longitude, results)
         return getString(
             R.string.waypoint_line,
+            point.name,
             formatBearing(toDialFrame(bearing)),
             formatDistance(results[0])
         )
     }
 
+    /** Yakında metre, uzakta kilometre; ondalık ayraç cihazın diline uyar. */
     /**
      * Saati cihazın biçimiyle yazar: 12/24 saat tercihi ve dil sistemden gelir,
      * uygulamanın kendi biçimi yoktur.
@@ -843,36 +855,126 @@ class MainActivity : Activity(), SensorEventListener {
         if (meters < 1000f) getString(R.string.distance_meters, meters.roundToInt())
         else getString(R.string.distance_kilometers, "%.1f".format(meters / 1000f))
 
-    /** Kadrana uzun basmak bulunduğun yeri kaydeder; kayıtlıyken siler. */
-    private fun toggleWaypoint() {
-        val editor = prefs().edit()
-        if (waypoint != null) {
-            waypoint = null
-            editor.remove(KEY_WAYPOINT_LATITUDE).remove(KEY_WAYPOINT_LONGITUDE)
-            Toast.makeText(this, getString(R.string.waypoint_cleared), Toast.LENGTH_SHORT).show()
-        } else {
-            val here = lastLocation
-            if (here == null) {
-                Toast.makeText(this, getString(R.string.waypoint_needs_location), Toast.LENGTH_SHORT).show()
-                return
-            }
-            waypoint = here.latitude to here.longitude
-            editor.putFloat(KEY_WAYPOINT_LATITUDE, here.latitude.toFloat())
-                .putFloat(KEY_WAYPOINT_LONGITUDE, here.longitude.toFloat())
-            Toast.makeText(this, getString(R.string.waypoint_saved), Toast.LENGTH_SHORT).show()
+    /**
+     * Noktaları okur. Eski sürümlerde tek nokta iki ayrı anahtarda tutuluyordu;
+     * varsa listeye taşınır ve eski anahtarlar silinir, böylece kimse kaydını
+     * kaybetmez.
+     */
+    private fun loadWaypoints() {
+        val stored = prefs()
+        waypoints = Waypoints.decode(stored.getString(KEY_WAYPOINTS, null))
+        val legacyLat = stored.getFloat(KEY_WAYPOINT_LATITUDE, Float.NaN)
+        val legacyLon = stored.getFloat(KEY_WAYPOINT_LONGITUDE, Float.NaN)
+        if (!legacyLat.isNaN() && !legacyLon.isNaN()) {
+            waypoints = waypoints + Waypoint(
+                Waypoints.nextName(waypoints) { getString(R.string.waypoint_default_name, it) },
+                legacyLat.toDouble(),
+                legacyLon.toDouble()
+            )
+            stored.edit()
+                .remove(KEY_WAYPOINT_LATITUDE)
+                .remove(KEY_WAYPOINT_LONGITUDE)
+                .putString(KEY_WAYPOINTS, Waypoints.encode(waypoints))
+                .apply()
         }
-        editor.apply()
-        applyWaypoint()
+    }
+
+    private fun saveWaypoints(list: List<Waypoint>) {
+        waypoints = list
+        prefs().edit().putString(KEY_WAYPOINTS, Waypoints.encode(list)).apply()
+        applyMarks()
         refreshTargetText()
     }
 
-    /** Noktanın kadrandaki yönü; gerçek kuzeye göre, kadranla aynı çerçevede. */
-    private fun applyWaypoint() {
-        val wp = waypoint
+    /** Kadrana uzun basmak bulunduğun yeri yeni bir nokta olarak ekler. */
+    private fun addWaypoint() {
         val here = lastLocation
-        compassView.setWaypointBearing(
-            if (wp == null || here == null) null
-            else toDialFrame(Geo.bearing(here.latitude, here.longitude, wp.first, wp.second))
+        if (here == null) {
+            Toast.makeText(this, getString(R.string.waypoint_needs_location), Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (waypoints.size >= Waypoints.LIMIT) {
+            Toast.makeText(
+                this,
+                getString(R.string.waypoint_limit, Waypoints.LIMIT),
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+        val name = Waypoints.nextName(waypoints) { getString(R.string.waypoint_default_name, it) }
+        saveWaypoints(waypoints + Waypoint(name, here.latitude, here.longitude))
+        Toast.makeText(this, getString(R.string.waypoint_saved, name), Toast.LENGTH_SHORT).show()
+    }
+
+    /** Kayıtlı noktalar: yön ve mesafeleriyle listelenir, seçilince yönetilir. */
+    private fun showWaypointList() {
+        if (waypoints.isEmpty()) {
+            Toast.makeText(this, getString(R.string.waypoints_empty), Toast.LENGTH_SHORT).show()
+            return
+        }
+        val labels = waypoints.map { point ->
+            val segment = waypointSegment(point)
+            segment ?: point.name
+        }.toTypedArray()
+        AlertDialog.Builder(this)
+            .setTitle(R.string.waypoints_title)
+            .setItems(labels) { _, which -> showWaypointActions(waypoints[which]) }
+            .setNegativeButton(R.string.bearing_dialog_cancel, null)
+            .show()
+    }
+
+    private fun showWaypointActions(point: Waypoint) {
+        val actions = arrayOf(getString(R.string.waypoint_rename), getString(R.string.waypoint_delete))
+        AlertDialog.Builder(this)
+            .setTitle(point.name)
+            .setItems(actions) { _, which ->
+                if (which == 0) showWaypointRename(point) else deleteWaypoint(point)
+            }
+            .setNegativeButton(R.string.bearing_dialog_cancel, null)
+            .show()
+    }
+
+    private fun showWaypointRename(point: Waypoint) {
+        val input = EditText(this).apply {
+            setText(point.name)
+            hint = getString(R.string.waypoint_name_hint)
+            setSelectAllOnFocus(true)
+        }
+        val padding = (20 * resources.displayMetrics.density).toInt()
+        val frame = FrameLayout(this).apply {
+            setPadding(padding, padding / 2, padding, 0)
+            addView(input)
+        }
+        AlertDialog.Builder(this)
+            .setTitle(R.string.waypoint_rename)
+            .setView(frame)
+            .setPositiveButton(R.string.bearing_dialog_set) { _, _ ->
+                val name = Waypoints.sanitize(input.text.toString())
+                if (name.isEmpty()) return@setPositiveButton
+                saveWaypoints(waypoints.map { if (it === point) it.copy(name = name) else it })
+            }
+            .setNegativeButton(R.string.bearing_dialog_cancel, null)
+            .show()
+    }
+
+    private fun deleteWaypoint(point: Waypoint) {
+        saveWaypoints(waypoints.filterNot { it === point })
+        Toast.makeText(this, getString(R.string.waypoint_cleared, point.name), Toast.LENGTH_SHORT).show()
+    }
+
+    /** Noktaların kadrandaki yönleri; gerçek kuzeye göre, kadranla aynı çerçevede. */
+    private fun applyWaypoint() {
+        val here = lastLocation
+        compassView.setWaypointMarks(
+            if (here == null) emptyList()
+            else mergeNearbyMarks(
+                waypoints.filterNot { isArrived(it, here) }.map {
+                    PlaceMark(
+                        it.name,
+                        toDialFrame(Geo.bearing(here.latitude, here.longitude, it.latitude, it.longitude))
+                    )
+                }
+            )
         )
     }
 
@@ -1264,6 +1366,9 @@ class MainActivity : Activity(), SensorEventListener {
         const val ARRIVED_MIN_METERS = 10f
         const val ARRIVED_MAX_METERS = 25f
 
+        const val KEY_WAYPOINTS = "waypoints"
+
+        // Eski sürümlerin tek noktası; okunup listeye taşındıktan sonra silinir.
         const val KEY_WAYPOINT_LATITUDE = "waypointLatitude"
         const val KEY_WAYPOINT_LONGITUDE = "waypointLongitude"
 

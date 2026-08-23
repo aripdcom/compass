@@ -25,10 +25,10 @@
     <string name="sun_info">Sole %1$s</string>
     <string name="sun_info_below">Sole %1$s · sotto l’orizzonte</string>
     <string name="target_hint">Tocca il quadrante: blocca · pressione lunga: punto · qui: inserisci rilevamento</string>
-    <string name="waypoint_line">Punto %1$s · %2$s</string>
-    <string name="waypoint_here">Punto · sei qui</string>
-    <string name="waypoint_saved">Punto salvato</string>
-    <string name="waypoint_cleared">Punto eliminato</string>
+    <string name="waypoint_line">%1$s %2$s · %3$s</string>
+    <string name="waypoint_here">%1$s · sei qui</string>
+    <string name="waypoint_saved">%1$s salvato</string>
+    <string name="waypoint_cleared">%1$s eliminato</string>
     <string name="waypoint_needs_location">Nessuna posizione — punto non salvato</string>
     <string name="bearing_dialog_title">Inserisci rilevamento</string>
     <string name="bearing_dialog_set">Imposta</string>
@@ -137,4 +137,11 @@
         <item>O</item>
         <item>NO</item>
     </string-array>
+    <string name="waypoint_default_name">Punto %1$d</string>
+    <string name="waypoint_limit">Si possono salvare al massimo %1$d punti</string>
+    <string name="waypoints_title">Punti salvati</string>
+    <string name="waypoints_empty">Nessun punto — premi a lungo il quadrante per salvarne uno</string>
+    <string name="waypoint_rename">Rinomina</string>
+    <string name="waypoint_delete">Elimina</string>
+    <string name="waypoint_name_hint">Nome del punto</string>
 </resources>

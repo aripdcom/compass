@@ -275,13 +275,33 @@ artık iki sağlayıcı da dinlenir ve gelen fix'lerden en iyisi seçilir (bir
 dakikadan yeni olan koşulsuz kazanır, eşit yaştakilerde hata payı küçük olan).
 
 **Nokta kaydetme ve geri dönüş.** Kadrana **uzun basmak** bulunduğunuz yeri
-kaydeder; kadranda mor bir **Nokta** işareti ve alt satırda yön ile mesafe belirir:
+kaydeder. Birden çok nokta tutulabilir (en fazla 8): araba, kamp, patika başı
+ayrı ayrı. Her biri kadranda **adıyla** görünür ve alt satırda yönü ile mesafesi
+yazar:
 
 ```
-Nokta 265° · 17 m
+Araba 265° · 1,2 km   Kamp 12° · 340 m
 ```
 
-Noktanın üstündeyken yön yazılmaz, `Nokta · buradasınız` denir. Sebebi: mesafe
+Alt satıra **uzun basmak** listeyi açar; bir noktaya dokununca yeniden
+adlandırılabilir ya da silinebilir. Yeni noktalar "Nokta 1", "Nokta 2" diye
+adlandırılır — sıra numarası listede boş olan ilk numaradır, silinen numaralar
+yeniden kullanılır.
+
+Kayıt biçimi bilerek sade: her satır bir nokta, alanlar görünmez bir ayraçla
+(U+0001) bölünür. JSON kullanılmadı, çünkü `org.json` Android'in kendi sınıfıdır
+ve JVM testlerinde çalışmaz; bu mantığın sınanabilir kalması biçimin
+zarafetinden daha değerli. Ayraç ve satır sonu adlardan temizlenir, bozuk satır
+atlanır ve diğerleri korunur — yedi test bunu doğrular.
+
+Eski sürümlerde tek nokta iki ayrı anahtarda tutuluyordu; ilk açılışta listeye
+taşınır ve eski anahtarlar silinir.
+
+Yön kıbleyle aynı büyük daire formülünden, mesafe `Location.distanceBetween` ile.
+Bir kilometrenin altında metre, üstünde kilometre yazar.
+
+Noktanın üstündeyken yön ne yazılır ne de kadranda gösterilir; yalnızca
+`Araba · buradasınız` denir. Sebebi: mesafe
 konum hatasının altına inince yön anlamını yitirir — hata çemberinin içinde hangi
 yöne bakacağınızı söylemek uydurma olur. Eşik fix'in kendi hata payıdır, ama
 10-25 m aralığına sıkıştırılır: çok iyi bir fix'te bile birkaç metrede yön
@@ -483,6 +503,7 @@ kimlikler aynı olduğu için kod değişmez.
 | `app/src/main/java/com/cem/pusula/Sun.kt` | Güneşin azimut, yükseklik, doğuş ve batış yönleri (NOAA) |
 | `app/src/main/java/com/cem/pusula/Moon.kt` | Ayın azimut, yükseklik ve evresi (Schlyter) |
 | `app/src/main/java/com/cem/pusula/Places.kt` | Kâbe, Mescid-i Aksa, Vatikan koordinatları |
+| `app/src/main/java/com/cem/pusula/Waypoints.kt` | Kaydedilen noktaların saklanması |
 | `app/src/main/java/com/cem/pusula/Geo.kt` | Yön, açı ve birim dönüşümleri (Android'e dokunmaz) |
 | `app/src/main/java/com/cem/pusula/RimLayout.kt` | Kadran işaretlerinin yarıçap dağıtımı |
 | `app/src/main/java/com/cem/pusula/Palette.kt` | Gündüz ve gece renk düzenleri |
@@ -657,7 +678,7 @@ sıfırlandı; hassasiyet ±22 m'ye döndü.
 ## 12. Testler
 
 ```bash
-./gradlew test          # 30 test, saniyeler içinde, cihaz gerekmez
+./gradlew test          # 37 test, saniyeler içinde, cihaz gerekmez
 ```
 
 Testler JVM'de koşar; Android çalışma zamanı gerekmez. Bunun için uygulamanın
@@ -671,6 +692,7 @@ zaten Android'e dokunmuyordu.
 | `SunTest` | Bilinen an için konum, doğuş yönünün mevsimle 64° gezinmesi, kutup gündüzü |
 | `MoonTest` | Bilinen yeni ay, ay-güneş çapraz kontrolü, sinodik ay, evre sınırları |
 | `RimLayoutTest` | Çakışan işaretlerin alt yarıçapa inmesi, sabit göstergenin etkisi, kademelerin tükenmesi |
+| `WaypointsTest` | Nokta kaydının yazılıp okunması, bozuk girdi, ad temizleme, ad numaralandırma |
 
 Testlerin çoğu **fiziksel sabitlere** dayanır — uygulamadan bağımsız, ölçülmüş
 gerçeklere: sinodik ay 29,5 gün, ekinoksta doğuş 89,3°, yeni ayda ay ile güneşin
@@ -735,7 +757,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **113.221 bayt** (~110 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **119.445 bayt** (~116 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.

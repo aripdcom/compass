@@ -25,10 +25,10 @@
     <string name="sun_info">Sun %1$s</string>
     <string name="sun_info_below">Sun %1$s · below horizon</string>
     <string name="target_hint">Tap dial: lock bearing · long press: save point · tap here: enter bearing</string>
-    <string name="waypoint_line">Point %1$s · %2$s</string>
-    <string name="waypoint_here">Point · you are here</string>
-    <string name="waypoint_saved">Point saved</string>
-    <string name="waypoint_cleared">Point cleared</string>
+    <string name="waypoint_line">%1$s %2$s · %3$s</string>
+    <string name="waypoint_here">%1$s · you are here</string>
+    <string name="waypoint_saved">%1$s saved</string>
+    <string name="waypoint_cleared">%1$s deleted</string>
     <string name="waypoint_needs_location">No location — cannot save point</string>
     <string name="bearing_dialog_title">Enter bearing</string>
     <string name="bearing_dialog_set">Set</string>
@@ -137,4 +137,11 @@
         <item>W</item>
         <item>NW</item>
     </string-array>
+    <string name="waypoint_default_name">Point %1$d</string>
+    <string name="waypoint_limit">At most %1$d points can be saved</string>
+    <string name="waypoints_title">Saved points</string>
+    <string name="waypoints_empty">No points yet — long-press the dial to save one</string>
+    <string name="waypoint_rename">Rename</string>
+    <string name="waypoint_delete">Delete</string>
+    <string name="waypoint_name_hint">Point name</string>
 </resources>
