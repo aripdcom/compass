@@ -44,6 +44,8 @@
     <string name="settings_section_display">PANTALLA</string>
     <string name="settings_night">Modo nocturno</string>
     <string name="settings_night_summary">Fondo negro, esfera roja — conserva la visión nocturna</string>
+    <string name="settings_night_auto">Automático al anochecer</string>
+    <string name="settings_night_auto_summary">Cambia al final del crepúsculo civil, cuando se acaba la luz natural</string>
     <string name="settings_unit">Unidad de ángulo</string>
     <string name="settings_unit_degree">Grados (0-360)</string>
     <string name="settings_unit_mil">Milésimas (0-6400)</string>

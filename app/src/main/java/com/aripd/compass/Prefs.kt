@@ -8,6 +8,7 @@ package com.aripd.compass
 object Prefs {
 
     const val KEY_NIGHT = "night"
+    const val KEY_NIGHT_AUTO = "nightAuto"
     const val KEY_UNIT = "unit"
     const val KEY_KEEP_SCREEN = "keepScreen"
     const val KEY_FULLSCREEN = "fullscreen"
@@ -21,6 +22,20 @@ object Prefs {
     const val KEY_SHOW_MOON = "showMoon"
 
     const val DEFAULT_NIGHT = false
+
+    /**
+     * Varsayılan kapalı: ekranın kendiliğinden kırmızıya dönmesi, beklemeyen
+     * biri için bir arıza gibi görünür. İsteyen açar.
+     */
+    const val DEFAULT_NIGHT_AUTO = false
+
+    /**
+     * Gece modunun açıldığı güneş yüksekliği: sivil alacakaranlığın sonu.
+     * Güneşin batması tek başına karanlık demek değil — ondan sonra yirmi
+     * dakika kadar okumaya yetecek ışık kalır. -6°'de doğal ışık biter ve
+     * göz karanlığa uyum sağlamaya başlar; kırmızıya geçmenin anı budur.
+     */
+    const val NIGHT_SUN_ELEVATION = -6f
     const val DEFAULT_KEEP_SCREEN = true
     const val DEFAULT_FULLSCREEN = true
     const val DEFAULT_TRUE_NORTH = true

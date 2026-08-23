@@ -44,6 +44,8 @@
     <string name="settings_section_display">GÖRÜNÜM</string>
     <string name="settings_night">Gece modu</string>
     <string name="settings_night_summary">Siyah zemin, kırmızı kadran — gece görüşünü korur</string>
+    <string name="settings_night_auto">Alacakaranlıkta otomatik</string>
+    <string name="settings_night_auto_summary">Sivil alacakaranlığın sonunda, gün ışığı bitince geçer</string>
     <string name="settings_unit">Açı birimi</string>
     <string name="settings_unit_degree">Derece (0-360)</string>
     <string name="settings_unit_mil">Mil (0-6400)</string>

@@ -129,6 +129,9 @@ class MainActivity : Activity(), SensorEventListener {
 
     // Ayarlardan okunan değerler; onResume'da tazelenir.
     private var nightMode = false
+
+    /** Gece modu güneşin yüksekliğini izliyor mu. */
+    private var nightAuto = Prefs.DEFAULT_NIGHT_AUTO
     private var fullscreen = Prefs.DEFAULT_FULLSCREEN
     private var unit = Prefs.DEFAULT_UNIT
     private var useTrueNorth = Prefs.DEFAULT_TRUE_NORTH
@@ -239,7 +242,13 @@ class MainActivity : Activity(), SensorEventListener {
         // Büyük dereceye dokunmak gece moduna geçirir: en büyük hedef, ayarlara
         // girmeden gece görüşünü kurtarmak için kısayol.
         degreeText.setOnClickListener {
-            prefs().edit().putBoolean(Prefs.KEY_NIGHT, !nightMode).apply()
+            // Otomatikken elle dokunmak denetimi kullanıcıya geri verir: dokunuş
+            // gördüğü şeyi tersine çevirmeli, bir sonraki güneş hesabında sessizce
+            // geri alınmamalı.
+            prefs().edit()
+                .putBoolean(Prefs.KEY_NIGHT, !nightMode)
+                .putBoolean(Prefs.KEY_NIGHT_AUTO, false)
+                .apply()
             applySettings()
         }
         targetText.setOnClickListener { askForBearing() }
@@ -275,6 +284,10 @@ class MainActivity : Activity(), SensorEventListener {
      */
     private fun applySettings() {
         val stored = prefs()
+        nightAuto = stored.getBoolean(Prefs.KEY_NIGHT_AUTO, Prefs.DEFAULT_NIGHT_AUTO)
+        // Otomatikken karar `KEY_NIGHT`'a yazılır, oradan okunur: böylece ayarlar
+        // ekranı da dahil her yer tek bir "şu an gece mi" değerine bakar.
+        if (nightAuto) sunIsDown()?.let { stored.edit().putBoolean(Prefs.KEY_NIGHT, it).apply() }
         nightMode = stored.getBoolean(Prefs.KEY_NIGHT, Prefs.DEFAULT_NIGHT)
         unit = stored.getInt(Prefs.KEY_UNIT, Prefs.DEFAULT_UNIT)
         useTrueNorth = stored.getBoolean(Prefs.KEY_TRUE_NORTH, Prefs.DEFAULT_TRUE_NORTH)
@@ -729,9 +742,24 @@ class MainActivity : Activity(), SensorEventListener {
         sun = position
         sunArc = Sun.riseSet(now, latitude, longitude)
         moon = Moon.position(now, latitude, longitude)
+        // Güneş dakikada bir yeniden hesaplandığı için alacakaranlığın geçilmesi
+        // en geç bir dakika içinde fark edilir; ayrı bir zamanlayıcı gerekmiyor.
+        if (nightAuto && sunIsDown() != nightMode) {
+            applySettings()
+            return
+        }
         applyMarks()
         refreshInfoText(lastMagnetic)
     }
+
+    /**
+     * Ekranın kırmızıya dönme anı; güneşin yeri bilinmiyorsa null.
+     *
+     * Ölçüt batış değil sivil alacakaranlığın sonu: güneş battıktan sonra yirmi
+     * dakika kadar okumaya yetecek ışık kalır, kırmızıya o zaman geçmek erken
+     * olurdu. Eşiğin gerekçesi [Prefs.NIGHT_SUN_ELEVATION] yanında.
+     */
+    private fun sunIsDown(): Boolean? = sun?.let { it.elevation < Prefs.NIGHT_SUN_ELEVATION }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,

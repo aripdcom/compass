@@ -44,6 +44,8 @@
     <string name="settings_section_display">DISPLAY</string>
     <string name="settings_night">Night mode</string>
     <string name="settings_night_summary">Black background, red dial — preserves night vision</string>
+    <string name="settings_night_auto">Automatic at dusk</string>
+    <string name="settings_night_auto_summary">Switches at the end of civil twilight, when daylight runs out</string>
     <string name="settings_unit">Angle unit</string>
     <string name="settings_unit_degree">Degrees (0-360)</string>
     <string name="settings_unit_mil">Mils (0-6400)</string>

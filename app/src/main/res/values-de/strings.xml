@@ -44,6 +44,8 @@
     <string name="settings_section_display">ANZEIGE</string>
     <string name="settings_night">Nachtmodus</string>
     <string name="settings_night_summary">Schwarzer Hintergrund, rotes Zifferblatt — erhält die Nachtsicht</string>
+    <string name="settings_night_auto">Automatisch bei Dämmerung</string>
+    <string name="settings_night_auto_summary">Wechselt am Ende der bürgerlichen Dämmerung, wenn das Tageslicht endet</string>
     <string name="settings_unit">Winkeleinheit</string>
     <string name="settings_unit_degree">Grad (0-360)</string>
     <string name="settings_unit_mil">Strich (0-6400)</string>

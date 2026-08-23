@@ -52,7 +52,18 @@ class SettingsActivity : Activity() {
         switchRow(
             R.string.settings_night, R.string.settings_night_summary,
             Prefs.KEY_NIGHT, Prefs.DEFAULT_NIGHT
-        ) { recreate() }   // palet değişti, ekranı yeniden kur
+        ) {
+            // Elle seçim otomatiği kapatır: aksi hâlde anahtar bir sonraki güneş
+            // hesabında kendiliğinden geri dönüp arıza gibi görünürdü.
+            prefs().edit().putBoolean(Prefs.KEY_NIGHT_AUTO, false).apply()
+            recreate()   // palet değişti, ekranı yeniden kur
+        }
+        // Burada `recreate()` yok: karar güneşin yerine bağlı ve o bilgi pusula
+        // ekranında. Palet, oraya dönüldüğünde yerine oturur.
+        switchRow(
+            R.string.settings_night_auto, R.string.settings_night_auto_summary,
+            Prefs.KEY_NIGHT_AUTO, Prefs.DEFAULT_NIGHT_AUTO
+        )
         choiceRow(
             R.string.settings_unit, Prefs.KEY_UNIT, Prefs.DEFAULT_UNIT,
             intArrayOf(R.string.settings_unit_degree, R.string.settings_unit_mil)

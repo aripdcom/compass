@@ -44,6 +44,8 @@
     <string name="settings_section_display">SCHERMO</string>
     <string name="settings_night">Modalità notte</string>
     <string name="settings_night_summary">Sfondo nero, quadrante rosso — preserva la visione notturna</string>
+    <string name="settings_night_auto">Automatico al crepuscolo</string>
+    <string name="settings_night_auto_summary">Passa alla fine del crepuscolo civile, quando finisce la luce naturale</string>
     <string name="settings_unit">Unità angolare</string>
     <string name="settings_unit_degree">Gradi (0-360)</string>
     <string name="settings_unit_mil">Millesimi (0-6400)</string>

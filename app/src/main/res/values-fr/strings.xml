@@ -44,6 +44,8 @@
     <string name="settings_section_display">AFFICHAGE</string>
     <string name="settings_night">Mode nuit</string>
     <string name="settings_night_summary">Fond noir, cadran rouge — préserve la vision nocturne</string>
+    <string name="settings_night_auto">Automatique au crépuscule</string>
+    <string name="settings_night_auto_summary">Bascule à la fin du crépuscule civil, quand la lumière du jour s’éteint</string>
     <string name="settings_unit">Unité d’angle</string>
     <string name="settings_unit_degree">Degrés (0-360)</string>
     <string name="settings_unit_mil">Millièmes (0-6400)</string>
