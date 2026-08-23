@@ -321,6 +321,21 @@ Art arda tetiklemeye karşı 700 ms'lik asgari aralık var. Bu da ölçümden ge
 açılışta yumuşatma otururken açı birkaç bölgeyi hızla kesip 23 ms içinde üç tık
 üretmişti.
 
+**Gece modu.** Büyük derece yazısına dokunmak ekranı gece moduna alır: zemin tam
+siyah, her şey kırmızı. Tekrar dokunmak geri döndürür, seçim kalıcıdır.
+
+Sebebi göz fizyolojisi: karanlığa uyum sağlamış göz kırmızı ışıktan neredeyse hiç
+etkilenmez, ama mavi-yeşil ışık uyumu saniyeler içinde bozar ve yeniden karanlığa
+alışmak yarım saat sürer. Gece yön bulurken ekrana her bakışta gece görüşünü
+baştan kaybetmemek için kadran tümüyle kırmızıya çevrilir; zemin de tam siyah
+olur, ekran ne kadar az ışık verirse o kadar iyi.
+
+Bedeli şu: gece modunda işaretler **renkle ayırt edilemez**, çünkü hepsi aynı
+tonun farklı parlaklıklarıdır. Bu yüzden şekil ayrımı burada işe yarıyor — güneş
+disk, nokta baklava, manyetik kuzey ile kıble ise yazı. Renk düzeni tek yerde
+(`Palette.kt`) tanımlıdır ve iki hâli vardır; hem kadran hem yazılar aynı
+paletten beslenir, o yüzden geçiş tek satırdır.
+
 ## 6. Kodun yapısı
 
 Uygulama hem dikey hem yatay çalışır. `remapCoordinateSystem` zaten sensör
@@ -334,6 +349,7 @@ kimlikler aynı olduğu için kod değişmez.
 | `app/src/main/java/com/cem/pusula/MainActivity.kt` | Sensör okuma, açı hesabı, yumuşatma, konum/sapma/kıble, hedef kilidi |
 | `app/src/main/java/com/cem/pusula/CompassView.kt` | Kadranın `Canvas` ile çizimi: ibre, işaretler, su terazisi |
 | `app/src/main/java/com/cem/pusula/Sun.kt` | Güneşin azimut ve yüksekliği (NOAA algoritması) |
+| `app/src/main/java/com/cem/pusula/Palette.kt` | Gündüz ve gece renk düzenleri |
 | `app/src/main/res/layout/activity_main.xml` | Dikey yerleşim: yazılar üstte, kadran altta |
 | `app/src/main/res/layout-land/activity_main.xml` | Yatay yerleşim: yazılar solda, kadran sağda |
 
@@ -396,7 +412,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **797.719 bayt** (~779 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **801.951 bayt** (~783 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.

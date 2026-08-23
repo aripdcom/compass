@@ -2,7 +2,6 @@ package com.cem.pusula
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
@@ -44,75 +43,54 @@ class CompassView @JvmOverloads constructor(
     private var pitch = 0f
     private var roll = 0f
 
-    private val dialPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        style = Paint.Style.STROKE
-        color = Color.parseColor("#33FFFFFF")
+    private val dialPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
+    private val majorTickPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
+    private val minorTickPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
+    private val labelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { textAlign = Paint.Align.CENTER }
+    private val northPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
+    private val southPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
+    private val markerPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
+    private val magneticPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
+    private val magneticLabelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { textAlign = Paint.Align.CENTER }
+    private val qiblaPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
+    private val qiblaLabelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { textAlign = Paint.Align.CENTER }
+    private val sunPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val waypointPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val targetPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
+    private val targetLinePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
+    private val levelFillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
+    private val levelFramePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
+    private val bubblePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
+
+    /** Yürürlükteki renk düzeni; değişince bütün boyalar yeniden atanır. */
+    var palette: Palette = Palette.DAY
+        set(value) {
+            field = value
+            applyPalette()
+            invalidate()
+        }
+
+    private fun applyPalette() {
+        dialPaint.color = palette.dial
+        majorTickPaint.color = palette.majorTick
+        minorTickPaint.color = palette.minorTick
+        northPaint.color = palette.needleNorth
+        southPaint.color = palette.needleSouth
+        markerPaint.color = palette.needleNorth
+        magneticPaint.color = palette.magnetic
+        magneticLabelPaint.color = palette.magnetic
+        qiblaPaint.color = palette.qibla
+        qiblaLabelPaint.color = palette.qibla
+        sunPaint.color = palette.sun
+        waypointPaint.color = palette.waypoint
+        targetPaint.color = palette.target
+        targetLinePaint.color = palette.target
+        levelFillPaint.color = palette.levelFill
+        levelFramePaint.color = palette.levelFrame
     }
-    private val majorTickPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#CCFFFFFF")
-        style = Paint.Style.STROKE
-    }
-    private val minorTickPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#55FFFFFF")
-        style = Paint.Style.STROKE
-    }
-    private val labelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#F0F3F6")
-        textAlign = Paint.Align.CENTER
-    }
-    private val northPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#E5484D")
-        style = Paint.Style.FILL
-    }
-    private val southPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#F0F3F6")
-        style = Paint.Style.FILL
-    }
-    private val markerPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#E5484D")
-        style = Paint.Style.FILL
-    }
-    private val magneticPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = COLOR_MAGNETIC
-        style = Paint.Style.STROKE
-    }
-    private val magneticLabelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = COLOR_MAGNETIC
-        textAlign = Paint.Align.CENTER
-    }
-    private val qiblaPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = COLOR_QIBLA
-        style = Paint.Style.STROKE
-    }
-    private val qiblaLabelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = COLOR_QIBLA
-        textAlign = Paint.Align.CENTER
-    }
-    private val sunPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = COLOR_SUN
-    }
-    private val waypointPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = COLOR_WAYPOINT
-        style = Paint.Style.STROKE
-    }
-    private val targetPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = COLOR_TARGET
-        style = Paint.Style.FILL
-    }
-    private val targetLinePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = COLOR_TARGET
-        style = Paint.Style.STROKE
-    }
-    private val levelFillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#FF101418")
-        style = Paint.Style.FILL
-    }
-    private val levelFramePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#66FFFFFF")
-        style = Paint.Style.STROKE
-    }
-    private val bubblePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        style = Paint.Style.FILL
+
+    init {
+        applyPalette()
     }
 
     private val needle = Path()
@@ -191,8 +169,7 @@ class CompassView @JvmOverloads constructor(
         labels.forEachIndexed { index, label ->
             canvas.save()
             canvas.rotate(index * 45f, cx, cy)
-            labelPaint.color =
-                if (index == 0) Color.parseColor("#E5484D") else Color.parseColor("#F0F3F6")
+            labelPaint.color = if (index == 0) palette.northLabel else palette.label
             labelPaint.textSize = if (index % 2 == 0) radius * 0.17f else radius * 0.12f
             canvas.drawText(
                 label,
@@ -321,8 +298,8 @@ class CompassView @JvmOverloads constructor(
         val dx = -roll.coerceIn(-MAX_TILT, MAX_TILT) * scale
         val dy = pitch.coerceIn(-MAX_TILT, MAX_TILT) * scale
         bubblePaint.color =
-            if (abs(pitch) <= LEVEL_TOLERANCE && abs(roll) <= LEVEL_TOLERANCE) COLOR_LEVEL
-            else COLOR_TARGET
+            if (abs(pitch) <= LEVEL_TOLERANCE && abs(roll) <= LEVEL_TOLERANCE) palette.level
+            else palette.target
         canvas.drawCircle(cx + dx, cy + dy, bubbleRadius, bubblePaint)
     }
 
@@ -348,16 +325,6 @@ class CompassView @JvmOverloads constructor(
     private fun dp(value: Float): Float = value * resources.displayMetrics.density
 
     companion object {
-        /** Kadran işaretlerinin renkleri; ekrandaki yazılar da bunlarla eşleşir. */
-        val COLOR_MAGNETIC = Color.parseColor("#4C9AFF")
-        val COLOR_QIBLA = Color.parseColor("#3DD68C")
-        val COLOR_TARGET = Color.parseColor("#F5B841")
-        val COLOR_WAYPOINT = Color.parseColor("#C77DFF")
-        val COLOR_SUN = Color.parseColor("#FFD84D")
-
-        /** Kabarcık: ortalanınca nötr beyaz, kaçınca hedef sarısı. */
-        private val COLOR_LEVEL = Color.parseColor("#F0F3F6")
-
         /** İşaret çizgisinin dış çemberden içeri indiği nokta. */
         private const val RIM_TICK_INNER = 0.93f
 

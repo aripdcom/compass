@@ -13,8 +13,8 @@ android {
         applicationId = "com.cem.pusula"
         minSdk = 24          // Android 7.0
         targetSdk = 34       // Android 13/14 üzerinde sorunsuz çalışır
-        versionCode = 13
-        versionName = "2.2"
+        versionCode = 14
+        versionName = "2.3"
     }
 
 

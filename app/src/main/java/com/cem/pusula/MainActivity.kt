@@ -49,6 +49,7 @@ class MainActivity : Activity(), SensorEventListener {
     private var accelerometer: Sensor? = null
     private var magnetometer: Sensor? = null
 
+    private lateinit var root: View
     private lateinit var compassView: CompassView
     private lateinit var degreeText: TextView
     private lateinit var directionText: TextView
@@ -117,6 +118,10 @@ class MainActivity : Activity(), SensorEventListener {
     /** Konum satırı derece-dakika-saniye mi gösteriyor; dokununca değişir. */
     private var showDms = false
 
+    /** Gece modu: her şey kırmızıya çeker, gece görüşünü korur. */
+    private var nightMode = false
+    private val palette: Palette get() = Palette.of(nightMode)
+
     /** Kaydedilen nokta (enlem, boylam); yoksa null. Kadrana uzun basınca konur. */
     private var waypoint: Pair<Double, Double>? = null
 
@@ -164,6 +169,7 @@ class MainActivity : Activity(), SensorEventListener {
         setContentView(R.layout.activity_main)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
+        root = findViewById(R.id.root)
         compassView = findViewById(R.id.compassView)
         degreeText = findViewById(R.id.degreeText)
         directionText = findViewById(R.id.directionText)
@@ -190,6 +196,16 @@ class MainActivity : Activity(), SensorEventListener {
         if (!savedTarget.isNaN()) targetMagnetic = savedTarget
         applyTarget()
 
+        nightMode = prefs().getBoolean(KEY_NIGHT, false)
+        applyPalette()
+
+        // Büyük dereceye dokunmak gece moduna geçirir: en büyük hedef ve
+        // dokunulduğunda başka bir işi yok.
+        degreeText.setOnClickListener {
+            nightMode = !nightMode
+            prefs().edit().putBoolean(KEY_NIGHT, nightMode).apply()
+            applyPalette()
+        }
         infoText.setOnClickListener { onInfoTapped() }
         locationText.setOnClickListener {
             showDms = !showDms
@@ -208,6 +224,21 @@ class MainActivity : Activity(), SensorEventListener {
         val wpLat = prefs().getFloat(KEY_WAYPOINT_LATITUDE, Float.NaN)
         val wpLon = prefs().getFloat(KEY_WAYPOINT_LONGITUDE, Float.NaN)
         if (!wpLat.isNaN() && !wpLon.isNaN()) waypoint = wpLat.toDouble() to wpLon.toDouble()
+    }
+
+    /** Renk düzenini bütün görünümlere uygular; yazılar da yeniden kurulur. */
+    private fun applyPalette() {
+        val colors = palette
+        root.setBackgroundColor(colors.background)
+        compassView.palette = colors
+        degreeText.setTextColor(colors.text)
+        directionText.setTextColor(colors.textDim)
+        infoText.setTextColor(colors.textDim)
+        locationText.setTextColor(colors.textDim)
+        statusText.setTextColor(colors.warning)
+        // Bu ikisi renkli parça içerdiği için baştan kurulmalı.
+        refreshInfoText(lastMagnetic)
+        refreshTargetText()
     }
 
     override fun onResume() {
@@ -488,10 +519,10 @@ class MainActivity : Activity(), SensorEventListener {
      */
     private fun refreshTargetText() {
         val parts = SpannableStringBuilder()
-        targetSegment()?.let { appendColored(parts, it, CompassView.COLOR_TARGET, "   ") }
-        waypointSegment()?.let { appendColored(parts, it, CompassView.COLOR_WAYPOINT, "   ") }
+        targetSegment()?.let { appendColored(parts, it, palette.target, "   ") }
+        waypointSegment()?.let { appendColored(parts, it, palette.waypoint, "   ") }
         if (parts.isEmpty()) {
-            targetText.setTextColor(COLOR_HINT)
+            targetText.setTextColor(palette.hint)
             targetText.text = getString(R.string.target_hint)
         } else {
             targetText.text = parts
@@ -750,13 +781,13 @@ class MainActivity : Activity(), SensorEventListener {
         // hangisi olduğu bakınca anlaşılsın.
         val text = SpannableStringBuilder(base)
         qiblaBearing?.let {
-            appendColored(text, getString(R.string.qibla_info, it.roundToInt() % 360), CompassView.COLOR_QIBLA)
+            appendColored(text, getString(R.string.qibla_info, it.roundToInt() % 360), palette.qibla)
         }
         sun?.let {
             val label =
                 if (it.elevation > 0f) getString(R.string.sun_info, it.azimuth.roundToInt() % 360)
                 else getString(R.string.sun_info_below, it.azimuth.roundToInt() % 360)
-            appendColored(text, label, CompassView.COLOR_SUN)
+            appendColored(text, label, palette.sun)
         }
         infoText.text = text
     }
@@ -855,6 +886,7 @@ class MainActivity : Activity(), SensorEventListener {
         const val KEY_LATITUDE = "latitude"
         const val KEY_LONGITUDE = "longitude"
         const val KEY_TARGET = "target"
+        const val KEY_NIGHT = "night"
         /** "Buradasınız" eşiğinin alt ve üst sınırı (metre). */
         const val SUN_UPDATE_MS = 60_000L
 
@@ -900,6 +932,5 @@ class MainActivity : Activity(), SensorEventListener {
         /** Sapmanın uyarı sayılması için kesintisiz sürmesi gereken süre. */
         const val DISTURBED_HOLD_MS = 2_500L
 
-        val COLOR_HINT = android.graphics.Color.parseColor("#FF6C7683")
     }
 }
