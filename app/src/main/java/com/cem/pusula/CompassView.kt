@@ -42,6 +42,9 @@ class CompassView @JvmOverloads constructor(
             invalidate()
         }
 
+    /** Güneşin bugün izleyeceği yol: doğuş ve batış yönleri. */
+    private var sunArc: Pair<Float, Float>? = null
+
     /** Güneşin yönü ve ufkun üstünde olup olmadığı. */
     private var sunBearing: Float? = null
     private var sunAboveHorizon = true
@@ -62,6 +65,7 @@ class CompassView @JvmOverloads constructor(
     private val qiblaPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
     private val qiblaLabelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { textAlign = Paint.Align.CENTER }
     private val sunPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val sunArcPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
     private val waypointPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val targetPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
     private val targetLinePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
@@ -89,6 +93,7 @@ class CompassView @JvmOverloads constructor(
         qiblaPaint.color = palette.qibla
         qiblaLabelPaint.color = palette.qibla
         sunPaint.color = palette.sun
+        sunArcPaint.color = palette.sun
         waypointPaint.color = palette.waypoint
         targetPaint.color = palette.target
         targetLinePaint.color = palette.target
@@ -109,6 +114,12 @@ class CompassView @JvmOverloads constructor(
 
     fun setMagneticNorthOffset(degrees: Float?) {
         magneticOffset = degrees
+        invalidate()
+    }
+
+    /** Doğuş ve batış yönleri; kutup gündüzü/gecesinde null olur ve yay çizilmez. */
+    fun setSunArc(riseAndSet: Pair<Float, Float>?) {
+        sunArc = riseAndSet
         invalidate()
     }
 
@@ -206,6 +217,25 @@ class CompassView @JvmOverloads constructor(
                 if (magnetic) magneticLabelPaint else qiblaLabelPaint,
                 fraction
             )
+        }
+
+        // Güneşin gün boyu izleyeceği yol: doğuştan batışa, güneyin üzerinden.
+        // Yay tek başına hem iki uç noktayı hem de yolu anlatır ve etiket
+        // eklemediği için kadranın yazı bütçesini harcamaz.
+        sunArc?.let { (rise, set) ->
+            sunArcPaint.strokeWidth = dp(2.5f)
+            val inset = radius * SUN_ARC_RADIUS
+            // Canvas açıları saat 3 yönünden başlar; kadran açısı 90° geridedir.
+            canvas.drawArc(
+                cx - inset, cy - inset, cx + inset, cy + inset,
+                rise - 90f, (set - rise + 360f) % 360f, false, sunArcPaint
+            )
+            for (edge in floatArrayOf(rise, set)) {
+                canvas.save()
+                canvas.rotate(edge, cx, cy)
+                canvas.drawLine(cx, cy - radius, cx, cy - radius * 0.93f, sunArcPaint)
+                canvas.restore()
+            }
         }
 
         // Güneş: manyetik alandan bağımsız olduğu için kadranı çapraz kontrol
@@ -375,6 +405,9 @@ class CompassView @JvmOverloads constructor(
          */
         private val LABEL_RADII = floatArrayOf(0.93f, 0.84f)
         private const val LABEL_MIN_SEPARATION = 16f
+
+        /** Güneş yayının yarıçapı; dış çemberin hemen içinde. */
+        private const val SUN_ARC_RADIUS = 0.965f
 
         /** İşaret çizgisinin dış çemberden içeri indiği nokta. */
         private const val RIM_TICK_INNER = 0.93f

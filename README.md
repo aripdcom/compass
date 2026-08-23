@@ -300,6 +300,29 @@ sayılarak ve zaman denklemi eklenerek doğrudan UTC'den kurulur. Bu yüzden cih
 **saat dilimi ayarının yanlış olması sonucu etkilemez**; yalnızca saatin kendisi
 doğru olmalıdır. Güneş dakikada 0,25° yol aldığı için konum dakikada bir tazelenir.
 
+**Güneşin yolu.** Kadranın kenarındaki altın yay, güneşin bugün doğduğu yönden
+battığı yöne, güneyin üzerinden uzanır; uçlarındaki çentikler doğuş ve batış
+noktalarıdır ve dereceleri alt satırda yazar. Güneş diski bu yayın üzerinde
+ilerler.
+
+"Güneş doğudan doğar" yalnızca ekinokslarda doğrudur. İstanbul'da doğuş noktası
+yıl boyunca **64°'lik bir yay** tarar:
+
+| Tarih | Sapma | Doğuş | Batış |
+|---|---|---|---|
+| 21 Haziran | +23,4° | 57,3° | 302,7° |
+| 21 Mart / 23 Eylül | 0° | 89,3° | 270,7° |
+| 21 Aralık | −23,4° | 121,0° | 239,0° |
+
+Ekinoksta bile tam 90° değil 89,3°, çünkü güneş merkezi ufkun 0,833° altındayken
+görünür: atmosferik kırılma 34′ yukarı kaldırır, güneşin yarıçapı 16′ ekler. Bu
+yayın genişliği enlemle büyür — ekvatorda 47°, İstanbul'da 64°, 60°K'de 106°,
+kutup dairesinde 161°. Kutup gündüzü ya da gecesinde güneş ufku hiç kesmez;
+formülün kosinüsü ±1'i aştığı için yay o günlerde çizilmez.
+
+Yay bilinçli olarak **etiketsiz**: tek bir öğe hem iki uç noktayı hem de yolu
+anlatıyor ve kadranın yazı bütçesini harcamıyor.
+
 Doğrulama: uygulama 162° gösterirken bağımsız bir formülasyon (Astronomical
 Almanac, saat açısını zaman denklemi yerine GMST'den kuran yol) 162,0° verdi.
 Yan kontroller de tuttu — 23 Ağustos için deklinasyon 11,37° (beklenen ~11,5°),
@@ -367,7 +390,7 @@ yani gece modunda ayarlar ekranı da kırmızıya dönüyor.
 | **Gerçek kuzeyi kullan** | Kapatılırsa kadran manyetik kuzeye oturur. |
 | **Yumuşatma** | Sakin (0,06) / Dengeli (0,12) / Çevik (0,25). Ortadaki, uygulamanın başından beri kullandığı değer. |
 | **Ana yönlerde titreşim** | Tıkı tümüyle kapatır. |
-| **Kadran işaretleri** | Manyetik kuzey (M), su terazisi, güneş ve yön noktalarını (Kâbe, Mescid-i Aksa, Vatikan) ayrı ayrı açar/kapatır. |
+| **Kadran işaretleri** | Manyetik kuzey (M), su terazisi, güneş, güneşin yolu ve yön noktalarını (Kâbe, Mescid-i Aksa, Vatikan) ayrı ayrı açar/kapatır. |
 
 Hedef ve nokta işaretleri o listede yok, çünkü zaten kadrana dokunarak ya da uzun
 basarak açılıp kapanıyorlar; ayrıca bir anahtar koymak "kilitli ama görünmez
@@ -461,7 +484,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **815.077 bayt** (~795 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **816.771 bayt** (~797 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.

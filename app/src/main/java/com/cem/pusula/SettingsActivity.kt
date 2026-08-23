@@ -89,6 +89,10 @@ class SettingsActivity : Activity() {
             switchRow(place.nameRes, 0, place.prefKey, place.defaultVisible)
         }
         switchRow(R.string.settings_show_sun, 0, Prefs.KEY_SHOW_SUN, Prefs.DEFAULT_SHOW_SUN)
+        switchRow(
+            R.string.settings_show_sun_arc, R.string.settings_show_sun_arc_summary,
+            Prefs.KEY_SHOW_SUN_ARC, Prefs.DEFAULT_SHOW_SUN_ARC
+        )
         note(getString(R.string.settings_marks_note))
     }
 

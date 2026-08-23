@@ -1,5 +1,6 @@
 package com.cem.pusula
 
+import kotlin.math.acos
 import kotlin.math.asin
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -21,10 +22,56 @@ object Sun {
     /** Azimut gerçek kuzeye göre, yükseklik ufka göre (negatifse güneş batmıştır). */
     data class Position(val azimuth: Float, val elevation: Float)
 
+    /** Güneşin doğduğu ve battığı yönler, gerçek kuzeye göre. */
+    data class RiseSet(val rise: Float, val set: Float)
+
+    /**
+     * Güneşin merkezi ufkun 0,833° altındayken görünür: atmosferik kırılma 34′
+     * yukarı kaldırır, güneşin yarıçapı da 16′ ekler. Doğuş ve batış bu yüksekliğe
+     * göre tanımlıdır, tam ufka göre değil.
+     */
+    private const val HORIZON_DEGREES = -0.833
+
+    /**
+     * Bugün güneşin hangi yönden doğup hangi yönden batacağı.
+     *
+     * "Doğudan doğar" yalnızca ekinokslarda doğrudur: İstanbul'da doğuş noktası
+     * yıl boyunca 57° ile 121° arasında, 64°'lik bir yay tarar. Kutup gündüzü ya
+     * da gecesinde güneş ufku hiç kesmez, o zaman null döner.
+     */
+    fun riseSet(timeMillis: Long, latitude: Double): RiseSet? {
+        val declination = declination(timeMillis)
+        val latitudeRad = Math.toRadians(latitude)
+        val horizon = Math.toRadians(HORIZON_DEGREES)
+        val cosAzimuth = (sin(declination) - sin(latitudeRad) * sin(horizon)) /
+            (cos(latitudeRad) * cos(horizon))
+        if (cosAzimuth < -1.0 || cosAzimuth > 1.0) return null
+        val rise = Math.toDegrees(acos(cosAzimuth))
+        return RiseSet(rise.toFloat(), (360.0 - rise).toFloat())
+    }
+
+    /** Julian yüzyıl: algoritmanın bütün katsayıları buna göre yazılmıştır. */
+    private fun julianCentury(timeMillis: Long): Double =
+        ((timeMillis / 86_400_000.0 + 2_440_587.5) - 2_451_545.0) / 36_525.0
+
+    /** Güneşin o andaki deklinasyonu (radyan). */
+    private fun declination(timeMillis: Long): Double {
+        val t = julianCentury(timeMillis)
+        val meanLongitude = (280.46646 + t * (36_000.76983 + t * 0.0003032)) % 360.0
+        val meanAnomaly = Math.toRadians(357.52911 + t * (35_999.05029 - 0.0001537 * t))
+        val center = sin(meanAnomaly) * (1.914602 - t * (0.004817 + 0.000014 * t)) +
+            sin(2 * meanAnomaly) * (0.019993 - 0.000101 * t) +
+            sin(3 * meanAnomaly) * 0.000289
+        val omega = Math.toRadians(125.04 - 1934.136 * t)
+        val apparentLongitude = Math.toRadians(meanLongitude + center - 0.00569 - 0.00478 * sin(omega))
+        val meanObliquity =
+            23.0 + (26.0 + (21.448 - t * (46.815 + t * (0.00059 - t * 0.001813))) / 60.0) / 60.0
+        val obliquity = Math.toRadians(meanObliquity + 0.00256 * cos(omega))
+        return asin(sin(obliquity) * sin(apparentLongitude))
+    }
+
     fun position(timeMillis: Long, latitude: Double, longitude: Double): Position {
-        // Julian yüzyıl: algoritmanın bütün katsayıları buna göre yazılmıştır.
-        val julianDay = timeMillis / 86_400_000.0 + 2_440_587.5
-        val t = (julianDay - 2_451_545.0) / 36_525.0
+        val t = julianCentury(timeMillis)
 
         // Güneşin ortalama boylamı ve ortalama anomalisi (derece)
         val meanLongitude = (280.46646 + t * (36_000.76983 + t * 0.0003032)) % 360.0

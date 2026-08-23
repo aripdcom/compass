@@ -133,6 +133,7 @@ class MainActivity : Activity(), SensorEventListener {
     private var showLevel = Prefs.DEFAULT_SHOW_LEVEL
     private var visiblePlaces: Set<String> = emptySet()
     private var showSun = Prefs.DEFAULT_SHOW_SUN
+    private var showSunArc = Prefs.DEFAULT_SHOW_SUN_ARC
     private val palette: Palette get() = Palette.of(nightMode)
 
     /** Kaydedilen nokta (enlem, boylam); yoksa null. Kadrana uzun basınca konur. */
@@ -141,6 +142,7 @@ class MainActivity : Activity(), SensorEventListener {
     /** Sapma, kıble ve güneş için kullanılan konum; önbellekten de gelebilir. */
     private var coordinates: Pair<Double, Double>? = null
     private var sun: Sun.Position? = null
+    private var sunArc: Sun.RiseSet? = null
 
     private val handler = Handler(Looper.getMainLooper())
 
@@ -258,6 +260,7 @@ class MainActivity : Activity(), SensorEventListener {
             .map { it.prefKey }
             .toSet()
         showSun = stored.getBoolean(Prefs.KEY_SHOW_SUN, Prefs.DEFAULT_SHOW_SUN)
+        showSunArc = stored.getBoolean(Prefs.KEY_SHOW_SUN_ARC, Prefs.DEFAULT_SHOW_SUN_ARC)
         smoothingAlpha = Prefs.SMOOTHING_ALPHAS[
             stored.getInt(Prefs.KEY_SMOOTHING, Prefs.DEFAULT_SMOOTHING)
                 .coerceIn(0, Prefs.SMOOTHING_ALPHAS.lastIndex)
@@ -287,6 +290,9 @@ class MainActivity : Activity(), SensorEventListener {
         compassView.setSun(
             if (showSun) sun?.azimuth?.let(::toDialFrame) else null,
             (sun?.elevation ?: 0f) > 0f
+        )
+        compassView.setSunArc(
+            if (showSunArc) sunArc?.let { toDialFrame(it.rise) to toDialFrame(it.set) } else null
         )
         applyTarget()
         applyWaypoint()
@@ -578,8 +584,10 @@ class MainActivity : Activity(), SensorEventListener {
     /** Güneşin yeri konum ve saatten hesaplanır; ikisi de bilinmeden çizilmez. */
     private fun updateSun() {
         val (latitude, longitude) = coordinates ?: return
-        val position = Sun.position(System.currentTimeMillis(), latitude, longitude)
+        val now = System.currentTimeMillis()
+        val position = Sun.position(now, latitude, longitude)
         sun = position
+        sunArc = Sun.riseSet(now, latitude)
         applyMarks()
         refreshInfoText(lastMagnetic)
     }
@@ -998,6 +1006,17 @@ class MainActivity : Activity(), SensorEventListener {
                 if (it.elevation > 0f) getString(R.string.sun_info, formatBearing(toDialFrame(it.azimuth)))
                 else getString(R.string.sun_info_below, formatBearing(toDialFrame(it.azimuth)))
             appendColored(text, label, palette.sun)
+        }
+        sunArc?.takeIf { showSunArc }?.let {
+            appendColored(
+                text,
+                getString(
+                    R.string.sun_rise_set,
+                    formatBearing(toDialFrame(it.rise)),
+                    formatBearing(toDialFrame(it.set))
+                ),
+                palette.sun
+            )
         }
         infoText.text = text
     }
