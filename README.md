@@ -162,7 +162,8 @@ manyetik kuzeyle sorunsuz çalışır.
 bir mıknatıs ya da mıknatıslanmış metal pusulayı sessizce yanıltır: açı yanlıştır
 ama ekranda hiçbir şey belli olmaz. Uygulama bunu yakalar — ölçülen toplam alan
 şiddetini o konumda beklenenle (`GeomagneticField.getFieldStrength()`) karşılaştırır,
-%30'u aşan sapmada uyarır, %20'nin altına inince uyarıyı kaldırır:
+%30'u aşan sapma **kesintisiz 2,5 saniye** sürerse uyarır, %20'nin altına inince
+uyarıyı hemen kaldırır:
 
 ```
 Manyetik bozulma: alan 63 µT, beklenen 49 µT — telefonu metal/mıknatıstan uzaklaştırın.
@@ -174,6 +175,13 @@ bozulma "kararlı" görünür. Gerçek bir örnek: bilgisayar masasında ölçü
 manyetik ekvatora karşılık gelir. Masadan iki metre uzaklaşınca alan 49,5 µT'ye
 oturdu ve yön düzeldi. Bu yüzden rotation-vector'e ek olarak ham manyetometre de
 dinlenir (`SENSOR_DELAY_UI`): füzyon yönü verir ama alanın büyüklüğünü vermez.
+
+Süre şartının sebebi: telefonu elde çevirirken kalibrasyon geçici olarak %20'ye
+varan sapma üretebiliyor. Eşiği düşürmek yanlış alarma yol açardı, o yüzden eşik
+yerine sapmanın sürmesi şart koşuldu. Uyarıdaki sayı da her µT oynamasında değil,
+2 µT'yi aşan kaymalarda tazeleniyor. Durum satırı yazı gelip gidince ekranın
+kaymaması için yerini her zaman ayırır (`minLines="2"`); aksi hâlde uyarı her
+çıkışında kadran zıplıyordu.
 
 ## 5. Kıble, hedef kilidi ve su terazisi
 

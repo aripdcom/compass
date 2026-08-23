@@ -16,6 +16,7 @@ import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.provider.Settings
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -84,6 +85,10 @@ class MainActivity : Activity(), SensorEventListener {
     private var measuredFieldStrength = 0f
     private var disturbed = false
 
+    /** Sapmanın eşiği kesintisiz aştığı ilk an; 0 ise şu anda aşmıyor. */
+    private var disturbedSince = 0L
+    private var lastShownFieldStrength = -1
+
     private var locationManager: LocationManager? = null
 
     private val locationListener = object : LocationListener {
@@ -131,6 +136,12 @@ class MainActivity : Activity(), SensorEventListener {
 
     override fun onResume() {
         super.onResume()
+        // Bozulma kararı kesintisiz gözleme dayanıyor; arka planda geçen süre
+        // sayılmasın diye ölçüm ve sayaç sıfırdan başlatılır.
+        measuredFieldStrength = 0f
+        disturbedSince = 0L
+        disturbed = false
+        lastShownFieldStrength = -1
         registerSensors()
         ensureLocation()
     }
@@ -474,21 +485,45 @@ class MainActivity : Activity(), SensorEventListener {
 
         val expected = expectedFieldStrength ?: return
         val deviation = abs(measuredFieldStrength - expected) / expected
-        val next = if (disturbed) deviation > DISTURBED_CLEAR else deviation > DISTURBED_WARN
-        if (next != disturbed) {
-            disturbed = next
-            refreshStatusText()
+        val threshold = if (disturbed) DISTURBED_CLEAR else DISTURBED_WARN
+        val now = SystemClock.elapsedRealtime()
+
+        if (deviation <= threshold) {
+            disturbedSince = 0L
+            if (disturbed) {
+                disturbed = false
+                refreshStatusText()
+            }
+            return
         }
+
+        // Eşiği aşmak tek başına yetmiyor: telefonu çevirirken kalibrasyon
+        // geçici olarak %20'ye varan sapma üretebiliyor. Uyarı ancak sapma
+        // kesintisiz sürerse çıkar, böylece geçici sıçramalar elenir.
+        if (disturbedSince == 0L) disturbedSince = now
+        if (!disturbed) {
+            if (now - disturbedSince < DISTURBED_HOLD_MS) return
+            disturbed = true
+            refreshStatusText()
+            return
+        }
+        // Uyarı çıktıktan sonra da yazıdaki sayı canlı kalsın, ama her örnekte
+        // tazelenmesin: 1 µT'lik oynamalar yazıyı saniyede birkaç kez değiştirip
+        // göz yorardı, o yüzden ancak 2 µT'yi aşan bir kayma yazıya yansır.
+        if (abs(measuredFieldStrength.roundToInt() - lastShownFieldStrength) >= 2) refreshStatusText()
     }
 
     private fun refreshStatusText() {
         // Anomali en tehlikelisi: açı yanlış ama ekranda hiçbir şey belli olmuyor.
         statusText.text = when {
-            disturbed -> getString(
-                R.string.magnetic_disturbance,
-                measuredFieldStrength.roundToInt(),
-                (expectedFieldStrength ?: 0f).roundToInt()
-            )
+            disturbed -> {
+                lastShownFieldStrength = measuredFieldStrength.roundToInt()
+                getString(
+                    R.string.magnetic_disturbance,
+                    lastShownFieldStrength,
+                    (expectedFieldStrength ?: 0f).roundToInt()
+                )
+            }
             needsCalibration -> getString(R.string.calibrate)
             tilted -> getString(R.string.hold_flat)
             else -> ""
@@ -541,6 +576,9 @@ class MainActivity : Activity(), SensorEventListener {
         // Beklenen alandan bu oranda sapma anomali sayılır (aç/kapa eşikleri farklı).
         const val DISTURBED_WARN = 0.30f
         const val DISTURBED_CLEAR = 0.20f
+
+        /** Sapmanın uyarı sayılması için kesintisiz sürmesi gereken süre. */
+        const val DISTURBED_HOLD_MS = 2_500L
 
         val COLOR_HINT = android.graphics.Color.parseColor("#FF6C7683")
     }
