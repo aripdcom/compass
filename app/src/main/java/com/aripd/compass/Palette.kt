@@ -1,4 +1,4 @@
-package com.cem.pusula
+package com.aripd.compass
 
 import android.graphics.Color
 

@@ -1,4 +1,4 @@
-package com.cem.pusula
+package com.aripd.compass
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue

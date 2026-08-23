@@ -1,4 +1,4 @@
-package com.cem.pusula
+package com.aripd.compass
 
 /**
  * Kadranda yönü gösterilebilen sabit noktalar.

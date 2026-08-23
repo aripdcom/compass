@@ -1,4 +1,4 @@
-package com.cem.pusula
+package com.aripd.compass
 
 /**
  * Ayar anahtarları ve varsayılanları. Ana ekran ile ayarlar ekranı aynı

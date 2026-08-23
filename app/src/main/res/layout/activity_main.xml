@@ -42,7 +42,7 @@
         android:textColor="#FF8A94A0"
         android:textSize="14sp" />
 
-    <com.cem.pusula.CompassView
+    <com.aripd.compass.CompassView
         android:id="@+id/compassView"
         android:layout_width="match_parent"
         android:layout_height="0dp"

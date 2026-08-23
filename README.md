@@ -1,4 +1,4 @@
-# Pusula
+# Compass
 
 Android için sade bir pusula uygulaması. Dış bağımlılığı yok — sadece Android SDK
 ve Kotlin standart kütüphanesi kullanılıyor, kadran `Canvas` ile elle çiziliyor.
@@ -8,7 +8,7 @@ göbeğinde su terazisi.
 
 - `minSdk 24` (Android 7.0) — **Android 13 dahil** tüm sürümlerde çalışır
 - `targetSdk 34`
-- Paket adı: `com.cem.pusula`
+- Paket adı: `com.aripd.compass`
 - İzinler: `VIBRATE` (ana yön tıkı) ile `ACCESS_COARSE_LOCATION` ve `ACCESS_FINE_LOCATION` (gerçek kuzey, kıble
   ve koordinat paneli için; reddedilirse uygulama manyetik kuzeyle çalışmaya devam
   eder, "yaklaşık" seçilirse koordinatlar o etiketle gösterilir).
@@ -16,7 +16,7 @@ göbeğinde su terazisi.
 ## 0. Klasör düzeni
 
 ```
-pusula/
+compass/
 ├── app/          uygulama kaynağı
 ├── dist/         üretilen APK'lar          (gitignore'da)
 ├── docs/         ekran görüntüleri, ikon
@@ -510,17 +510,17 @@ kimlikler aynı olduğu için kod değişmez.
 
 | Dosya | İş |
 |---|---|
-| `app/src/main/java/com/cem/pusula/MainActivity.kt` | Sensör okuma, açı hesabı, yumuşatma, konum/sapma/kıble, hedef kilidi |
-| `app/src/main/java/com/cem/pusula/CompassView.kt` | Kadranın `Canvas` ile çizimi: ibre, işaretler, su terazisi |
-| `app/src/main/java/com/cem/pusula/Sun.kt` | Güneşin azimut, yükseklik, doğuş ve batış yönleri (NOAA) |
-| `app/src/main/java/com/cem/pusula/Moon.kt` | Ayın azimut, yükseklik ve evresi (Schlyter) |
-| `app/src/main/java/com/cem/pusula/Places.kt` | Kâbe, Mescid-i Aksa, Vatikan koordinatları |
-| `app/src/main/java/com/cem/pusula/Waypoints.kt` | Kaydedilen noktaların saklanması |
-| `app/src/main/java/com/cem/pusula/Geo.kt` | Yön, açı ve birim dönüşümleri (Android'e dokunmaz) |
-| `app/src/main/java/com/cem/pusula/RimLayout.kt` | Kadran işaretlerinin yarıçap dağıtımı |
-| `app/src/main/java/com/cem/pusula/Palette.kt` | Gündüz ve gece renk düzenleri |
-| `app/src/main/java/com/cem/pusula/Prefs.kt` | Ayar anahtarları ve varsayılanları |
-| `app/src/main/java/com/cem/pusula/SettingsActivity.kt` | Ayarlar ekranı (kodla kurulan arayüz) |
+| `app/src/main/java/com/aripd/compass/MainActivity.kt` | Sensör okuma, açı hesabı, yumuşatma, konum/sapma/kıble, hedef kilidi |
+| `app/src/main/java/com/aripd/compass/CompassView.kt` | Kadranın `Canvas` ile çizimi: ibre, işaretler, su terazisi |
+| `app/src/main/java/com/aripd/compass/Sun.kt` | Güneşin azimut, yükseklik, doğuş ve batış yönleri (NOAA) |
+| `app/src/main/java/com/aripd/compass/Moon.kt` | Ayın azimut, yükseklik ve evresi (Schlyter) |
+| `app/src/main/java/com/aripd/compass/Places.kt` | Kâbe, Mescid-i Aksa, Vatikan koordinatları |
+| `app/src/main/java/com/aripd/compass/Waypoints.kt` | Kaydedilen noktaların saklanması |
+| `app/src/main/java/com/aripd/compass/Geo.kt` | Yön, açı ve birim dönüşümleri (Android'e dokunmaz) |
+| `app/src/main/java/com/aripd/compass/RimLayout.kt` | Kadran işaretlerinin yarıçap dağıtımı |
+| `app/src/main/java/com/aripd/compass/Palette.kt` | Gündüz ve gece renk düzenleri |
+| `app/src/main/java/com/aripd/compass/Prefs.kt` | Ayar anahtarları ve varsayılanları |
+| `app/src/main/java/com/aripd/compass/SettingsActivity.kt` | Ayarlar ekranı (kodla kurulan arayüz) |
 | `app/src/main/res/layout/activity_main.xml` | Dikey yerleşim: yazılar üstte, kadran altta |
 | `app/src/main/res/layout-land/activity_main.xml` | Yatay yerleşim: yazılar solda, kadran sağda |
 
@@ -759,7 +759,7 @@ kendi `label`/`icon` değerleri var — v1.0'da launcher'ın ikonu çözemeyip u
 Sırasıyla şunlara bakın:
 
 1. **Önce eski sürümü kaldırın.** En sık sebep budur. `Ayarlar → Uygulamalar →
-   Tüm uygulamaları göster → Pusula → Kaldır`. Aynı paket adına (`com.cem.pusula`)
+   Tüm uygulamaları göster → Pusula → Kaldır`. Aynı paket adına (`com.aripd.compass`)
    sahip, farklı bir anahtarla imzalanmış bir kurulum varsa Android yeni APK'yı
    "Uygulama yüklenmedi" diyerek reddeder. **Debug APK ile release APK'nın
    imzaları farklıdır**, dolayısıyla debug'dan release'e geçerken kaldırma adımı
@@ -769,7 +769,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **120.617 bayt** (~117 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **120.609 bayt** (~117 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.
@@ -790,7 +790,7 @@ cihazlarda en güvenilir yol adb ile kurmaktır:
 
 ```bash
 export ANDROID_HOME=$HOME/Android/Sdk
-$ANDROID_HOME/platform-tools/adb install -r dist/pusula-1.4-release.apk
+$ANDROID_HOME/platform-tools/adb install -r dist/compass-4.0-release.apk
 ```
 
 Kablosuz adb'de eşleştirme portu ile bağlantı portunun farklı olduğunu unutmayın;

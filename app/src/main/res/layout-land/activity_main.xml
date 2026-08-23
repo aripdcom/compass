@@ -99,7 +99,7 @@
             android:textSize="14sp" />
     </LinearLayout>
 
-    <com.cem.pusula.CompassView
+    <com.aripd.compass.CompassView
         android:id="@+id/compassView"
         android:layout_width="0dp"
         android:layout_height="match_parent"

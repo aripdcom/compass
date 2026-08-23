@@ -1,4 +1,4 @@
-package com.cem.pusula
+package com.aripd.compass
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -204,5 +204,5 @@ class SettingsActivity : Activity() {
 
     private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
 
-    private fun prefs() = getSharedPreferences("pusula", Context.MODE_PRIVATE)
+    private fun prefs() = getSharedPreferences("compass", Context.MODE_PRIVATE)
 }

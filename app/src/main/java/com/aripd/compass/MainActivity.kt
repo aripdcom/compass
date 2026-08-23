@@ -1,4 +1,4 @@
-package com.cem.pusula
+package com.aripd.compass
 
 import android.Manifest
 import android.app.Activity
@@ -1356,7 +1356,7 @@ class MainActivity : Activity(), SensorEventListener {
         return names[((degrees / 22.5f) + 0.5f).toInt() % 16]
     }
 
-    private fun prefs() = getSharedPreferences("pusula", Context.MODE_PRIVATE)
+    private fun prefs() = getSharedPreferences("compass", Context.MODE_PRIVATE)
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         if (sensor?.type == Sensor.TYPE_MAGNETIC_FIELD ||

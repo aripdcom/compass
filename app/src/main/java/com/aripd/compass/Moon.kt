@@ -1,4 +1,4 @@
-package com.cem.pusula
+package com.aripd.compass
 
 import kotlin.math.asin
 import kotlin.math.atan2

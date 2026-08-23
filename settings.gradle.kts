@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Pusula"
+rootProject.name = "Compass"
 include(":app")

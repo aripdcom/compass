@@ -6,15 +6,15 @@ plugins {
 }
 
 android {
-    namespace = "com.cem.pusula"
+    namespace = "com.aripd.compass"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.cem.pusula"
+        applicationId = "com.aripd.compass"
         minSdk = 24          // Android 7.0
         targetSdk = 34       // Android 13/14 üzerinde sorunsuz çalışır
-        versionCode = 30
-        versionName = "3.9"
+        versionCode = 31
+        versionName = "4.0"
     }
 
 

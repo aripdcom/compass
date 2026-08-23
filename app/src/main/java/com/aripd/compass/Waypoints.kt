@@ -1,4 +1,4 @@
-package com.cem.pusula
+package com.aripd.compass
 
 /** Kaydedilmiş bir nokta: adı ve koordinatı. */
 data class Waypoint(val name: String, val latitude: Double, val longitude: Double)

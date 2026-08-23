@@ -1,4 +1,4 @@
-package com.cem.pusula
+package com.aripd.compass
 
 /**
  * Kadran kenarındaki işaretlere yarıçap dağıtır.
