@@ -162,7 +162,7 @@ manyetik kuzeyle sorunsuz çalışır.
 bir mıknatıs ya da mıknatıslanmış metal pusulayı sessizce yanıltır: açı yanlıştır
 ama ekranda hiçbir şey belli olmaz. Uygulama bunu yakalar — ölçülen toplam alan
 şiddetini o konumda beklenenle (`GeomagneticField.getFieldStrength()`) karşılaştırır,
-%30'u aşan sapma **kesintisiz 2,5 saniye** sürerse uyarır, %20'nin altına inince
+%25'i aşan sapma **kesintisiz 2,5 saniye** sürerse uyarır, %15'in altına inince
 uyarıyı hemen kaldırır:
 
 ```
@@ -177,8 +177,9 @@ oturdu ve yön düzeldi. Bu yüzden rotation-vector'e ek olarak ham manyetometre
 dinlenir (`SENSOR_DELAY_UI`): füzyon yönü verir ama alanın büyüklüğünü vermez.
 
 Süre şartının sebebi: telefonu elde çevirirken kalibrasyon geçici olarak %20'ye
-varan sapma üretebiliyor. Eşiği düşürmek yanlış alarma yol açardı, o yüzden eşik
-yerine sapmanın sürmesi şart koşuldu. Uyarıdaki sayı da her µT oynamasında değil,
+varan sapma üretebiliyor. Süre şartı olmadan eşiği düşürmek yanlış alarma yol
+açardı; süre şartı geldiği için eşik %30'dan %25'e çekilebildi — masadaki gerçek
+vaka %31,9 sapma yapıyordu ve %30 eşiği kıl payı geçiyordu, %25 daha emniyetli. Uyarıdaki sayı da her µT oynamasında değil,
 2 µT'yi aşan kaymalarda tazeleniyor. Durum satırı yazı gelip gidince ekranın
 kaymaması için yerini her zaman ayırır (`minLines="2"`); aksi hâlde uyarı her
 çıkışında kadran zıplıyordu.
@@ -216,11 +217,18 @@ diye açma ve kapama eşikleri farklı.
 
 ## 6. Kodun yapısı
 
+Uygulama hem dikey hem yatay çalışır. `remapCoordinateSystem` zaten sensör
+eksenlerini ekran yönüne göre eşlediği için okuma her iki yönde de **ekranın üst
+kenarının** baktığı yönü verir; telefonu yan çevirince açı 90° kayar, çünkü artık
+farklı bir kenar öne bakmaktadır. Yatay yerleşim ayrı bir dosyada (`layout-land/`),
+kimlikler aynı olduğu için kod değişmez.
+
 | Dosya | İş |
 |---|---|
 | `app/src/main/java/com/cem/pusula/MainActivity.kt` | Sensör okuma, açı hesabı, yumuşatma, konum/sapma/kıble, hedef kilidi |
 | `app/src/main/java/com/cem/pusula/CompassView.kt` | Kadranın `Canvas` ile çizimi: ibre, işaretler, su terazisi |
-| `app/src/main/res/layout/activity_main.xml` | Derece yazısı + kadran + hedef ve uyarı satırları |
+| `app/src/main/res/layout/activity_main.xml` | Dikey yerleşim: yazılar üstte, kadran altta |
+| `app/src/main/res/layout-land/activity_main.xml` | Yatay yerleşim: yazılar solda, kadran sağda |
 
 Nasıl çalışıyor:
 

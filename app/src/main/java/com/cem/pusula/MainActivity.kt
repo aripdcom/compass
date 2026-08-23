@@ -574,8 +574,8 @@ class MainActivity : Activity(), SensorEventListener {
         const val TILT_CLEAR_DEGREES = 30f
 
         // Beklenen alandan bu oranda sapma anomali sayılır (aç/kapa eşikleri farklı).
-        const val DISTURBED_WARN = 0.30f
-        const val DISTURBED_CLEAR = 0.20f
+        const val DISTURBED_WARN = 0.25f
+        const val DISTURBED_CLEAR = 0.15f
 
         /** Sapmanın uyarı sayılması için kesintisiz sürmesi gereken süre. */
         const val DISTURBED_HOLD_MS = 2_500L
