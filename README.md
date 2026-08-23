@@ -729,7 +729,30 @@ yanlıştı; düzeltildi.
 
 JUnit yalnızca `testImplementation` olarak eklidir, APK'ya girmez — doğrulandı.
 
-## 13. Sorun giderme
+## 13. Lisans ve gizlilik
+
+Kod **MIT** lisansıyla dağıtılır (`LICENSE`): isteyen kullanır, değiştirir,
+dağıtır; tek şart telif bildiriminin korunması.
+
+Uygulamanın **internet izni yoktur**. İstediği izinler bunlardan ibaret:
+
+```
+ACCESS_COARSE_LOCATION    sapma, kıble, güneş ve ay hesabı için
+ACCESS_FINE_LOCATION      koordinat paneli ve nokta mesafesi için
+VIBRATE                   ana yön geçişlerindeki tık için
+```
+
+Bu, "verileriniz gönderilmiyor" cümlesini bir söze değil, doğrulanabilir bir
+olguya dayandırır: internet izni olmayan bir uygulama hiçbir şey gönderemez,
+kullanıcı bunu telefonun izin listesinden kendisi görebilir. Ağ kullanan tek
+satır kod da yoktur. Paylaşma özelliğindeki harita bağlantısı yalnızca metindir;
+onu açan, paylaşımı alan taraftaki uygulamadır.
+
+Ayarların altındaki **Hakkında** bölümü sürümü, kaynak kod adresini, lisansı ve
+bu gizlilik notunu gösterir. Sürüm `PackageManager`'dan okunur, elle yazılmış bir
+sabitten değil.
+
+## 14. Sorun giderme
 
 ### "Kuruldu" dedi ama uygulama listede yok
 
@@ -769,7 +792,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **120.609 bayt** (~117 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **123.592 bayt** (~120 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.
@@ -790,7 +813,7 @@ cihazlarda en güvenilir yol adb ile kurmaktır:
 
 ```bash
 export ANDROID_HOME=$HOME/Android/Sdk
-$ANDROID_HOME/platform-tools/adb install -r dist/compass-4.0-release.apk
+$ANDROID_HOME/platform-tools/adb install -r dist/compass-4.1-release.apk
 ```
 
 Kablosuz adb'de eşleştirme portu ile bağlantı portunun farklı olduğunu unutmayın;

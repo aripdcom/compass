@@ -147,4 +147,11 @@
     <string name="location_action_copy">Kopieren</string>
     <string name="location_action_share">Teilen</string>
     <string name="share_chooser">Standort teilen</string>
+    <string name="settings_section_about">ÜBER</string>
+    <string name="settings_version">Version</string>
+    <string name="settings_version_format">%1$s (%2$d)</string>
+    <string name="settings_source">Quellcode</string>
+    <string name="settings_license">Lizenz</string>
+    <string name="settings_license_value">MIT</string>
+    <string name="settings_privacy_note">Die App hat keine Internetberechtigung. Der Standort wird nur auf dem Gerät verwendet — für Deklination, Qibla, Sonne und Mond — und nie übertragen.</string>
 </resources>

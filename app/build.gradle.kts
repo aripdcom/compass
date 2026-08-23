@@ -13,8 +13,8 @@ android {
         applicationId = "com.aripd.compass"
         minSdk = 24          // Android 7.0
         targetSdk = 34       // Android 13/14 üzerinde sorunsuz çalışır
-        versionCode = 31
-        versionName = "4.0"
+        versionCode = 32
+        versionName = "4.1"
     }
 
 

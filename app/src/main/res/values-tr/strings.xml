@@ -147,4 +147,11 @@
     <string name="location_action_copy">Kopyala</string>
     <string name="location_action_share">Paylaş</string>
     <string name="share_chooser">Konumu paylaş</string>
+    <string name="settings_section_about">HAKKINDA</string>
+    <string name="settings_version">Sürüm</string>
+    <string name="settings_version_format">%1$s (%2$d)</string>
+    <string name="settings_source">Kaynak kod</string>
+    <string name="settings_license">Lisans</string>
+    <string name="settings_license_value">MIT</string>
+    <string name="settings_privacy_note">Uygulamanın internet izni yok. Konum yalnızca sapma, kıble, güneş ve ay hesabı için cihazda kullanılır, hiçbir yere gönderilmez.</string>
 </resources>

@@ -147,4 +147,11 @@
     <string name="location_action_copy">Copiar</string>
     <string name="location_action_share">Compartir</string>
     <string name="share_chooser">Compartir ubicación</string>
+    <string name="settings_section_about">ACERCA DE</string>
+    <string name="settings_version">Versión</string>
+    <string name="settings_version_format">%1$s (%2$d)</string>
+    <string name="settings_source">Código fuente</string>
+    <string name="settings_license">Licencia</string>
+    <string name="settings_license_value">MIT</string>
+    <string name="settings_privacy_note">La aplicación no tiene permiso de internet. La ubicación se usa solo en el dispositivo para declinación, alquibla, sol y luna, y nunca se envía.</string>
 </resources>

@@ -3,6 +3,10 @@ package com.aripd.compass
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -102,6 +106,56 @@ class SettingsActivity : Activity() {
             Prefs.KEY_SHOW_MOON, Prefs.DEFAULT_SHOW_MOON
         )
         note(getString(R.string.settings_marks_note))
+
+        header(getString(R.string.settings_section_about))
+        infoRow(getString(R.string.settings_version), versionLabel())
+        linkRow(getString(R.string.settings_source), SOURCE_LABEL, SOURCE_URL)
+        infoRow(getString(R.string.settings_license), getString(R.string.settings_license_value))
+        note(getString(R.string.settings_privacy_note))
+    }
+
+    /**
+     * Sürüm paketten okunur, elle yazılmış bir sabitten değil: sürüm yükseltince
+     * burayı güncellemeyi unutmak diye bir şey olmasın.
+     */
+    private fun versionLabel(): String {
+        val info = packageManager.getPackageInfo(packageName, 0)
+        val code = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            info.longVersionCode
+        } else {
+            @Suppress("DEPRECATION")
+            info.versionCode.toLong()
+        }
+        return getString(R.string.settings_version_format, info.versionName ?: "", code)
+    }
+
+    /** Dokunulamayan bilgi satırı. */
+    private fun infoRow(title: String, value: String) {
+        val row = rowContainer()
+        val labels = labelColumn(title, value)
+        labels.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+        row.isFocusable = true
+        row.contentDescription = "$title. $value"
+        row.isClickable = false
+        row.addView(labels, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
+        column.addView(row)
+    }
+
+    /** Dokununca tarayıcıda açılan satır. Tarayıcı yoksa sessizce hiçbir şey olmaz. */
+    private fun linkRow(title: String, value: String, url: String) {
+        val row = rowContainer()
+        val labels = labelColumn(title, value)
+        labels.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+        row.isFocusable = true
+        row.contentDescription = "$title. $value"
+        row.addView(labels, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
+        row.setOnClickListener {
+            try {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            } catch (_: ActivityNotFoundException) {
+            }
+        }
+        column.addView(row)
     }
 
     /** Bölümün altına açıklama satırı. */
@@ -205,4 +259,9 @@ class SettingsActivity : Activity() {
     private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
 
     private fun prefs() = getSharedPreferences("compass", Context.MODE_PRIVATE)
+
+    private companion object {
+        const val SOURCE_URL = "https://gitlab.com/aripd/compass"
+        const val SOURCE_LABEL = "gitlab.com/aripd/compass"
+    }
 }
