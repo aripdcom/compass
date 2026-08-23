@@ -336,7 +336,33 @@ disk, nokta baklava, manyetik kuzey ile kıble ise yazı. Renk düzeni tek yerde
 (`Palette.kt`) tanımlıdır ve iki hâli vardır; hem kadran hem yazılar aynı
 paletten beslenir, o yüzden geçiş tek satırdır.
 
-## 6. Kodun yapısı
+## 6. Ayarlar
+
+Sağ üstteki dişliden açılır. Dış bağımlılık olmadığı için `PreferenceFragment`
+yok; arayüz `SettingsActivity` içinde kodla kuruluyor ve aynı paleti kullanıyor,
+yani gece modunda ayarlar ekranı da kırmızıya dönüyor.
+
+| Ayar | Ne yapar |
+|---|---|
+| **Gece modu** | Siyah zemin, kırmızı kadran. Büyük derece yazısına dokunmak da aynı işi yapar. |
+| **Açı birimi** | Derece (0-360) ya da NATO mili (0-6400). Bütün yön yazılarını etkiler; sapma derecede kalır, çünkü konumun fiziksel özelliğidir. |
+| **Ekranı açık tut** | `FLAG_KEEP_SCREEN_ON`. Kapatılabilir olması pil için önemli. |
+| **Gerçek kuzeyi kullan** | Kapatılırsa kadran manyetik kuzeye oturur. |
+| **Yumuşatma** | Sakin (0,06) / Dengeli (0,12) / Çevik (0,25). Ortadaki, uygulamanın başından beri kullandığı değer. |
+| **Ana yönlerde titreşim** | Tıkı tümüyle kapatır. |
+| **Kadran işaretleri** | Kıble ve güneşi ayrı ayrı gizler. |
+
+Kuzey türü ayarı göründüğünden daha derin: kıble, güneş ve nokta **gerçek kuzeye
+göre** hesaplanır, kadran ise manyetik kuzeye oturmuş olabilir. Bu yüzden her
+işaret çizilmeden önce `toDialFrame()` ile kadranın çerçevesine çevrilir — manyetik
+moddayken sapma kadar geri alınır. Manyetik moddayken kadranın "M" işareti de
+gizlenir, çünkü kuzeyle çakışır ve bilgi vermez.
+
+Ayarlar ile ana ekran aynı `SharedPreferences` dosyasını paylaşır; anahtarlar
+`Prefs.kt`'te toplanmıştır. Ana ekran `onResume`'da hepsini yeniden okuyup
+uyguladığı için ayrı bir "kaydet" adımı yoktur.
+
+## 7. Kodun yapısı
 
 Uygulama hem dikey hem yatay çalışır. `remapCoordinateSystem` zaten sensör
 eksenlerini ekran yönüne göre eşlediği için okuma her iki yönde de **ekranın üst
@@ -350,6 +376,8 @@ kimlikler aynı olduğu için kod değişmez.
 | `app/src/main/java/com/cem/pusula/CompassView.kt` | Kadranın `Canvas` ile çizimi: ibre, işaretler, su terazisi |
 | `app/src/main/java/com/cem/pusula/Sun.kt` | Güneşin azimut ve yüksekliği (NOAA algoritması) |
 | `app/src/main/java/com/cem/pusula/Palette.kt` | Gündüz ve gece renk düzenleri |
+| `app/src/main/java/com/cem/pusula/Prefs.kt` | Ayar anahtarları ve varsayılanları |
+| `app/src/main/java/com/cem/pusula/SettingsActivity.kt` | Ayarlar ekranı (kodla kurulan arayüz) |
 | `app/src/main/res/layout/activity_main.xml` | Dikey yerleşim: yazılar üstte, kadran altta |
 | `app/src/main/res/layout-land/activity_main.xml` | Yatay yerleşim: yazılar solda, kadran sağda |
 
@@ -372,7 +400,7 @@ Nasıl çalışıyor:
   ekrandaki yazılar da aynı renkleri kullanır, böylece hangi satırın hangi
   işarete ait olduğu bakınca anlaşılır.
 
-## 7. Sorun giderme
+## 8. Sorun giderme
 
 ### "Kuruldu" dedi ama uygulama listede yok
 
@@ -412,7 +440,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **801.951 bayt** (~783 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **809.636 bayt** (~790 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.

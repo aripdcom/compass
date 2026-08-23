@@ -50,6 +50,7 @@ class MainActivity : Activity(), SensorEventListener {
     private var magnetometer: Sensor? = null
 
     private lateinit var root: View
+    private lateinit var settingsButton: TextView
     private lateinit var compassView: CompassView
     private lateinit var degreeText: TextView
     private lateinit var directionText: TextView
@@ -118,8 +119,14 @@ class MainActivity : Activity(), SensorEventListener {
     /** Konum satırı derece-dakika-saniye mi gösteriyor; dokununca değişir. */
     private var showDms = false
 
-    /** Gece modu: her şey kırmızıya çeker, gece görüşünü korur. */
+    // Ayarlardan okunan değerler; onResume'da tazelenir.
     private var nightMode = false
+    private var unit = Prefs.DEFAULT_UNIT
+    private var useTrueNorth = Prefs.DEFAULT_TRUE_NORTH
+    private var smoothingAlpha = Prefs.SMOOTHING_ALPHAS[Prefs.DEFAULT_SMOOTHING]
+    private var vibrateOnCardinals = Prefs.DEFAULT_VIBRATE
+    private var showQibla = Prefs.DEFAULT_SHOW_QIBLA
+    private var showSun = Prefs.DEFAULT_SHOW_SUN
     private val palette: Palette get() = Palette.of(nightMode)
 
     /** Kaydedilen nokta (enlem, boylam); yoksa null. Kadrana uzun basınca konur. */
@@ -167,9 +174,9 @@ class MainActivity : Activity(), SensorEventListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         root = findViewById(R.id.root)
+        settingsButton = findViewById(R.id.settingsButton)
         compassView = findViewById(R.id.compassView)
         degreeText = findViewById(R.id.degreeText)
         directionText = findViewById(R.id.directionText)
@@ -196,15 +203,16 @@ class MainActivity : Activity(), SensorEventListener {
         if (!savedTarget.isNaN()) targetMagnetic = savedTarget
         applyTarget()
 
-        nightMode = prefs().getBoolean(KEY_NIGHT, false)
-        applyPalette()
+        applySettings()
 
-        // Büyük dereceye dokunmak gece moduna geçirir: en büyük hedef ve
-        // dokunulduğunda başka bir işi yok.
+        // Büyük dereceye dokunmak gece moduna geçirir: en büyük hedef, ayarlara
+        // girmeden gece görüşünü kurtarmak için kısayol.
         degreeText.setOnClickListener {
-            nightMode = !nightMode
-            prefs().edit().putBoolean(KEY_NIGHT, nightMode).apply()
-            applyPalette()
+            prefs().edit().putBoolean(Prefs.KEY_NIGHT, !nightMode).apply()
+            applySettings()
+        }
+        settingsButton.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
         infoText.setOnClickListener { onInfoTapped() }
         locationText.setOnClickListener {
@@ -226,6 +234,80 @@ class MainActivity : Activity(), SensorEventListener {
         if (!wpLat.isNaN() && !wpLon.isNaN()) waypoint = wpLat.toDouble() to wpLon.toDouble()
     }
 
+    /**
+     * Ayarları okuyup uygular. Ayarlar ekranından dönüldüğünde de çağrılır, o
+     * yüzden ayrı bir "kaydet/uygula" akışı yok.
+     */
+    private fun applySettings() {
+        val stored = prefs()
+        nightMode = stored.getBoolean(Prefs.KEY_NIGHT, Prefs.DEFAULT_NIGHT)
+        unit = stored.getInt(Prefs.KEY_UNIT, Prefs.DEFAULT_UNIT)
+        useTrueNorth = stored.getBoolean(Prefs.KEY_TRUE_NORTH, Prefs.DEFAULT_TRUE_NORTH)
+        vibrateOnCardinals = stored.getBoolean(Prefs.KEY_VIBRATE, Prefs.DEFAULT_VIBRATE)
+        showQibla = stored.getBoolean(Prefs.KEY_SHOW_QIBLA, Prefs.DEFAULT_SHOW_QIBLA)
+        showSun = stored.getBoolean(Prefs.KEY_SHOW_SUN, Prefs.DEFAULT_SHOW_SUN)
+        smoothingAlpha = Prefs.SMOOTHING_ALPHAS[
+            stored.getInt(Prefs.KEY_SMOOTHING, Prefs.DEFAULT_SMOOTHING)
+                .coerceIn(0, Prefs.SMOOTHING_ALPHAS.lastIndex)
+        ]
+        if (stored.getBoolean(Prefs.KEY_KEEP_SCREEN, Prefs.DEFAULT_KEEP_SCREEN)) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        } else {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        }
+        applyPalette()
+        applyMarks()
+        lastShownDegree = -1   // yazılar yeni birimle hemen kurulsun
+    }
+
+    /** Kadran işaretlerini kuzey çerçevesine ve görünürlük ayarlarına göre kurar. */
+    private fun applyMarks() {
+        // Manyetik çerçevedeyken "M" kadranın kuzeyiyle çakışır, gösterilmez.
+        compassView.setMagneticNorthOffset(if (useTrueNorth) declination else null)
+        compassView.setQiblaBearing(if (showQibla) qiblaBearing?.let(::toDialFrame) else null)
+        compassView.setSun(
+            if (showSun) sun?.azimuth?.let(::toDialFrame) else null,
+            (sun?.elevation ?: 0f) > 0f
+        )
+        applyTarget()
+        applyWaypoint()
+    }
+
+    /**
+     * Gerçek kuzeye göre verilmiş bir açıyı kadranın çerçevesine çevirir.
+     * Kadran manyetik kuzeye göreyse sapma kadar geri alınır.
+     */
+    private fun toDialFrame(trueBearing: Float): Float =
+        if (useTrueNorth) trueBearing
+        else (trueBearing - (declination ?: 0f) + 360f) % 360f
+
+    /** Manyetik açıya eklenince kadran çerçevesini veren düzeltme. */
+    private fun frameOffset(): Float = if (useTrueNorth) declination ?: 0f else 0f
+
+    /** Açıyı seçili birimde yazar: derece ya da NATO mili (tam çember 6400). */
+    private fun formatBearing(degrees: Float): String {
+        val normalized = (degrees % 360f + 360f) % 360f
+        return if (unit == Prefs.UNIT_MIL) {
+            "%d %s".format(
+                (normalized * Prefs.MILS_PER_CIRCLE / 360f).roundToInt() % 6400,
+                getString(R.string.mil_suffix)
+            )
+        } else {
+            "%d°".format(normalized.roundToInt() % 360)
+        }
+    }
+
+    /** Fark açısı: yön değil miktar olduğu için 360'a sarılmaz. */
+    private fun formatDelta(degrees: Int): String =
+        if (unit == Prefs.UNIT_MIL) {
+            "%d %s".format(
+                (degrees * Prefs.MILS_PER_CIRCLE / 360f).roundToInt(),
+                getString(R.string.mil_suffix)
+            )
+        } else {
+            "%d°".format(degrees)
+        }
+
     /** Renk düzenini bütün görünümlere uygular; yazılar da yeniden kurulur. */
     private fun applyPalette() {
         val colors = palette
@@ -236,6 +318,7 @@ class MainActivity : Activity(), SensorEventListener {
         infoText.setTextColor(colors.textDim)
         locationText.setTextColor(colors.textDim)
         statusText.setTextColor(colors.warning)
+        settingsButton.setTextColor(colors.textDim)
         // Bu ikisi renkli parça içerdiği için baştan kurulmalı.
         refreshInfoText(lastMagnetic)
         refreshTargetText()
@@ -250,6 +333,7 @@ class MainActivity : Activity(), SensorEventListener {
         disturbedSince = 0L
         disturbed = false
         lastShownFieldStrength = -1
+        applySettings()
         registerSensors()
         ensureLocation()
         handler.post(sunTick)
@@ -420,13 +504,8 @@ class MainActivity : Activity(), SensorEventListener {
         coordinates = latitude to longitude
         declination = field.declination
         expectedFieldStrength = field.fieldStrength / 1000f   // nT -> µT
-        compassView.setMagneticNorthOffset(field.declination)
-
-        val qibla = bearingTo(latitude, longitude, KAABA_LATITUDE, KAABA_LONGITUDE)
-        qiblaBearing = qibla
-        compassView.setQiblaBearing(qibla)
-
-        applyTarget()
+        qiblaBearing = bearingTo(latitude, longitude, KAABA_LATITUDE, KAABA_LONGITUDE)
+        applyMarks()
         updateSun()
         lastShownDegree = -1   // yazıların hemen tazelenmesi için
     }
@@ -436,7 +515,7 @@ class MainActivity : Activity(), SensorEventListener {
         val (latitude, longitude) = coordinates ?: return
         val position = Sun.position(System.currentTimeMillis(), latitude, longitude)
         sun = position
-        compassView.setSun(position.azimuth, position.elevation > 0f)
+        applyMarks()
         refreshInfoText(lastMagnetic)
     }
 
@@ -509,7 +588,7 @@ class MainActivity : Activity(), SensorEventListener {
 
     /** Kilitli hedefin ekranda gösterilen çerçevedeki (gerçek kuzey) karşılığı. */
     private fun shownTarget(): Float? =
-        targetMagnetic?.let { (it + (declination ?: 0f) + 360f) % 360f }
+        targetMagnetic?.let { (it + frameOffset() + 360f) % 360f }
 
     private fun applyTarget() = compassView.setTargetBearing(shownTarget())
 
@@ -548,16 +627,16 @@ class MainActivity : Activity(), SensorEventListener {
 
     private fun targetSegment(): String? {
         val target = shownTarget() ?: return null
-        val targetDegree = target.roundToInt() % 360
+        val targetLabel = formatBearing(target)
         val shown = lastShownDegree
-        if (shown < 0) return getString(R.string.target_plain, targetDegree)
+        if (shown < 0) return getString(R.string.target_plain, targetLabel)
         // Hedefe kalan açı: pozitifse saat yönünde, yani sağa dönmek gerekir.
         val diff = ((target - shown + 540f) % 360f) - 180f
         val amount = abs(diff).roundToInt()
         return when {
-            amount <= ON_TARGET_DEGREES -> getString(R.string.target_reached, targetDegree)
-            diff > 0f -> getString(R.string.target_right, targetDegree, amount)
-            else -> getString(R.string.target_left, targetDegree, amount)
+            amount <= ON_TARGET_DEGREES -> getString(R.string.target_reached, targetLabel)
+            diff > 0f -> getString(R.string.target_right, targetLabel, formatDelta(amount))
+            else -> getString(R.string.target_left, targetLabel, formatDelta(amount))
         }
     }
 
@@ -575,7 +654,11 @@ class MainActivity : Activity(), SensorEventListener {
         val arrivedWithin = (if (here.hasAccuracy()) here.accuracy else ARRIVED_MIN_METERS)
             .coerceIn(ARRIVED_MIN_METERS, ARRIVED_MAX_METERS)
         if (results[0] <= arrivedWithin) return getString(R.string.waypoint_here)
-        return getString(R.string.waypoint_line, bearing.roundToInt() % 360, formatDistance(results[0]))
+        return getString(
+            R.string.waypoint_line,
+            formatBearing(toDialFrame(bearing)),
+            formatDistance(results[0])
+        )
     }
 
     /** Yakında metre, uzakta kilometre; ondalık ayraç cihazın diline uyar. */
@@ -612,7 +695,7 @@ class MainActivity : Activity(), SensorEventListener {
         val here = lastLocation
         compassView.setWaypointBearing(
             if (wp == null || here == null) null
-            else bearingTo(here.latitude, here.longitude, wp.first, wp.second)
+            else toDialFrame(bearingTo(here.latitude, here.longitude, wp.first, wp.second))
         )
     }
 
@@ -669,7 +752,7 @@ class MainActivity : Activity(), SensorEventListener {
             smoothRoll = rollDegrees
             initialized = true
         } else {
-            val alpha = 0.12f
+            val alpha = smoothingAlpha
             smoothSin += alpha * (s - smoothSin)
             smoothCos += alpha * (c - smoothCos)
             smoothPitch += alpha * (pitchDegrees - smoothPitch)
@@ -679,9 +762,10 @@ class MainActivity : Activity(), SensorEventListener {
         val magnetic =
             ((Math.toDegrees(atan2(smoothSin, smoothCos).toDouble()) + 360.0) % 360.0).toFloat()
         lastMagnetic = magnetic
-        val decl = declination
-        // Gerçek kuzey = manyetik kuzey + sapma (sapma doğuya doğru pozitif)
-        val shown = if (decl != null) (magnetic + decl + 360f) % 360f else magnetic
+        // Gerçek kuzey = manyetik kuzey + sapma (sapma doğuya doğru pozitif);
+        // ayarlardan manyetik kuzey seçilmişse düzeltme uygulanmaz.
+        val trueFrame = useTrueNorth && declination != null
+        val shown = (magnetic + frameOffset() + 360f) % 360f
 
         compassView.setAzimuth(shown)
         compassView.setTilt(smoothPitch, smoothRoll)
@@ -691,9 +775,9 @@ class MainActivity : Activity(), SensorEventListener {
         val rounded = shown.roundToInt() % 360
         if (rounded != lastShownDegree) {
             lastShownDegree = rounded
-            degreeText.text = "$rounded°"
+            degreeText.text = formatBearing(shown)
             directionText.text = "${cardinal(shown)} · " +
-                getString(if (decl != null) R.string.true_north else R.string.magnetic_north)
+                getString(if (trueFrame) R.string.true_north else R.string.magnetic_north)
             refreshInfoText(magnetic)
             refreshTargetText()
         }
@@ -734,7 +818,7 @@ class MainActivity : Activity(), SensorEventListener {
             Settings.System.HAPTIC_FEEDBACK_ENABLED,
             1
         ) != 0
-        if (!enabled) return
+        if (!enabled || !vibrateOnCardinals) return
         // Açılışta yumuşatma otururken açı birkaç bölgeyi hızla kesebiliyor;
         // ölçümde 23 ms içinde üç tık görüldü. Asgari aralık bunu tek tıka indirir.
         val now = SystemClock.elapsedRealtime()
@@ -772,7 +856,7 @@ class MainActivity : Activity(), SensorEventListener {
             decl == null && !hasLocationPermission() -> getString(R.string.need_location)
             decl == null -> getString(R.string.waiting_location)
             else -> {
-                val magneticPart = magnetic?.let { "Manyetik ${it.roundToInt() % 360}° · " } ?: ""
+                val magneticPart = magnetic?.let { "Manyetik ${formatBearing(it)} · " } ?: ""
                 val yon = if (decl >= 0f) "D" else "B"
                 magneticPart + "Sapma %.1f°%s".format(abs(decl), yon)
             }
@@ -780,13 +864,13 @@ class MainActivity : Activity(), SensorEventListener {
         // Kıble ve güneş kadrandaki işaretlerle aynı renkte yazılır ki hangisinin
         // hangisi olduğu bakınca anlaşılsın.
         val text = SpannableStringBuilder(base)
-        qiblaBearing?.let {
-            appendColored(text, getString(R.string.qibla_info, it.roundToInt() % 360), palette.qibla)
+        qiblaBearing?.takeIf { showQibla }?.let {
+            appendColored(text, getString(R.string.qibla_info, formatBearing(toDialFrame(it))), palette.qibla)
         }
-        sun?.let {
+        sun?.takeIf { showSun }?.let {
             val label =
-                if (it.elevation > 0f) getString(R.string.sun_info, it.azimuth.roundToInt() % 360)
-                else getString(R.string.sun_info_below, it.azimuth.roundToInt() % 360)
+                if (it.elevation > 0f) getString(R.string.sun_info, formatBearing(toDialFrame(it.azimuth)))
+                else getString(R.string.sun_info_below, formatBearing(toDialFrame(it.azimuth)))
             appendColored(text, label, palette.sun)
         }
         infoText.text = text
@@ -886,7 +970,6 @@ class MainActivity : Activity(), SensorEventListener {
         const val KEY_LATITUDE = "latitude"
         const val KEY_LONGITUDE = "longitude"
         const val KEY_TARGET = "target"
-        const val KEY_NIGHT = "night"
         /** "Buradasınız" eşiğinin alt ve üst sınırı (metre). */
         const val SUN_UPDATE_MS = 60_000L
 
