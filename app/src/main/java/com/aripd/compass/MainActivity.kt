@@ -146,6 +146,9 @@ class MainActivity : Activity(), SensorEventListener {
     /** Son çizimin anı; kadran sensörden bağımsız bir hızda tazelenir. */
     private var lastRenderAt = 0L
     private var vibrateOnCardinals = Prefs.DEFAULT_VIBRATE
+
+    /** Sistemin dokunsal geri bildirim tercihi; `onResume`'da tazelenir. */
+    private var systemHapticsEnabled = true
     private var showMagnetic = Prefs.DEFAULT_SHOW_MAGNETIC
     private var showLevel = Prefs.DEFAULT_SHOW_LEVEL
     private var visiblePlaces: Set<String> = emptySet()
@@ -159,6 +162,9 @@ class MainActivity : Activity(), SensorEventListener {
 
     /** Sapma, kıble ve güneş için kullanılan konum; önbellekten de gelebilir. */
     private var coordinates: Pair<Double, Double>? = null
+
+    /** Ayarlara en son yazılan konum; gereksiz disk yazımını elemek için. */
+    private var cachedCoordinates: Pair<Double, Double>? = null
     private var sun: Sun.Position? = null
     private var sunArc: Sun.RiseSet? = null
     private var moon: Moon.Position? = null
@@ -225,7 +231,10 @@ class MainActivity : Activity(), SensorEventListener {
         // beklerken de gerçek kuzey ve kıble gösterilebilsin diye önbelleğe alınıyor.
         val lat = prefs().getFloat(KEY_LATITUDE, Float.NaN)
         val lon = prefs().getFloat(KEY_LONGITUDE, Float.NaN)
-        if (!lat.isNaN() && !lon.isNaN()) applyCoordinates(lat.toDouble(), lon.toDouble(), 0.0)
+        if (!lat.isNaN() && !lon.isNaN()) {
+            cachedCoordinates = lat.toDouble() to lon.toDouble()
+            applyCoordinates(lat.toDouble(), lon.toDouble(), 0.0)
+        }
 
         val savedTarget = prefs().getFloat(KEY_TARGET, Float.NaN)
         if (!savedTarget.isNaN()) targetMagnetic = savedTarget
@@ -435,8 +444,10 @@ class MainActivity : Activity(), SensorEventListener {
         locationText.setTextColor(colors.textDim)
         statusText.setTextColor(colors.warning)
         settingsButton.setTextColor(colors.textDim)
-        // Bu ikisi renkli parça içerdiği için baştan kurulmalı.
+        // Bunlar renkli parça içerdiği için baştan kurulmalı. Nokta satırı
+        // önbellekte durduğundan renk ya da birim değişince o da yenilenmeli.
         refreshInfoText(lastMagnetic)
+        refreshWaypointSpan()
         refreshTargetText()
     }
 
@@ -451,6 +462,11 @@ class MainActivity : Activity(), SensorEventListener {
         disturbedSince = 0L
         disturbed = false
         lastShownFieldStrength = -1
+        systemHapticsEnabled = Settings.System.getInt(
+            contentResolver,
+            Settings.System.HAPTIC_FEEDBACK_ENABLED,
+            1
+        ) != 0
         applySettings()
         registerSensors()
         ensureLocation()
@@ -546,13 +562,30 @@ class MainActivity : Activity(), SensorEventListener {
         if (!isBetterFix(location, lastLocation)) return
         lastLocation = location
         refreshLocationText()
+        refreshWaypointFixes()
         applyWaypoint()
         refreshTargetText()
+        saveCoordinateCache(location)
+        applyCoordinates(location.latitude, location.longitude, location.altitude)
+    }
+
+    /**
+     * Önbelleğe alınan konum yalnızca bir sonraki açılışta sapmayı ve kıbleyi
+     * beklemeden gösterebilmek için var; metre mertebesinde güncel olması
+     * gerekmiyor. Her fix'te yazmak GPS açıkken dakikada dört disk işlemi
+     * demekti, o yüzden ancak kayda değer bir yol alınınca yazılıyor.
+     */
+    private fun saveCoordinateCache(location: Location) {
+        cachedCoordinates?.let { (lat, lon) ->
+            val results = FloatArray(1)
+            Location.distanceBetween(lat, lon, location.latitude, location.longitude, results)
+            if (results[0] < COORDINATE_CACHE_DISTANCE_M) return
+        }
+        cachedCoordinates = location.latitude to location.longitude
         prefs().edit()
             .putFloat(KEY_LATITUDE, location.latitude.toFloat())
             .putFloat(KEY_LONGITUDE, location.longitude.toFloat())
             .apply()
-        applyCoordinates(location.latitude, location.longitude, location.altitude)
     }
 
     /**
@@ -661,8 +694,21 @@ class MainActivity : Activity(), SensorEventListener {
         }
     }
 
-    /** Konumdan türeyen her şey: manyetik sapma ve kıble yönü. */
+    /**
+     * Konumdan türeyen her şey: manyetik sapma ve kıble yönü.
+     *
+     * Sapma yüzlerce kilometrede bir derece, kıble binlerce kilometrede kayda
+     * değer biçimde oynar. GPS ise on beş saniyede bir fix gönderiyor; her
+     * fix'te WMM'nin küresel harmonik modelini yeniden çözüp bütün yer
+     * yönlerini, güneşi ve ayı baştan hesaplamanın karşılığı yok. Kayda değer
+     * bir yol alınmadıysa eldeki değerler aynen geçerli.
+     */
     private fun applyCoordinates(latitude: Double, longitude: Double, altitude: Double) {
+        coordinates?.let { (lat, lon) ->
+            val results = FloatArray(1)
+            Location.distanceBetween(lat, lon, latitude, longitude, results)
+            if (results[0] < COORDINATE_REFRESH_DISTANCE_M) return
+        }
         val field = GeomagneticField(
             latitude.toFloat(),
             longitude.toFloat(),
@@ -805,8 +851,11 @@ class MainActivity : Activity(), SensorEventListener {
     private fun refreshTargetText() {
         val parts = SpannableStringBuilder()
         targetSegment()?.let { appendColored(parts, it, palette.target, "   ") }
-        waypoints.forEach { point ->
-            waypointSegment(point)?.let { appendColored(parts, it, palette.waypoint, "   ") }
+        // Nokta satırı hazır geliyor: yalnızca hedefe kalan açı her derecede
+        // değişiyor, noktalar yer değiştirmedikçe aynı kalıyor.
+        if (waypointSpan.isNotEmpty()) {
+            if (parts.isNotEmpty()) parts.append("   ")
+            parts.append(waypointSpan)
         }
         if (parts.isEmpty()) {
             targetText.setTextColor(palette.hint)
@@ -849,32 +898,73 @@ class MainActivity : Activity(), SensorEventListener {
     }
 
     /**
-     * Noktanın üstünde sayılıp sayılmadığımız. Mesafe konum hatasının altına
-     * inince yön anlamını yitirir: hata çemberinin içinde hangi yöne bakılacağını
-     * söylemek uydurma olur. Hem yazı hem kadran işareti buna bakar, yoksa yazı
-     * "buradasınız" derken kadranda rastgele bir yöne etiket çıkıyordu.
+     * Bir noktanın bulunduğumuz yere göre çözümü. Konum değişmedikçe sabittir,
+     * o yüzden fix başına bir kez hesaplanıp saklanır.
+     *
+     * `arrived`: noktanın üstünde sayılıp sayılmadığımız. Mesafe konum hatasının
+     * altına inince yön anlamını yitirir — hata çemberinin içinde hangi yöne
+     * bakılacağını söylemek uydurma olur. Hem yazı hem kadran işareti buna bakar,
+     * yoksa yazı "buradasınız" derken kadranda rastgele bir yöne etiket çıkıyordu.
      */
-    private fun isArrived(point: Waypoint, here: Location): Boolean {
-        val results = FloatArray(1)
-        Location.distanceBetween(here.latitude, here.longitude, point.latitude, point.longitude, results)
-        val arrivedWithin = (if (here.hasAccuracy()) here.accuracy else ARRIVED_MIN_METERS)
-            .coerceIn(ARRIVED_MIN_METERS, ARRIVED_MAX_METERS)
-        return results[0] <= arrivedWithin
+    private class WaypointFix(
+        val point: Waypoint,
+        val bearing: Float,
+        val distance: Float,
+        val arrived: Boolean
+    )
+
+    /**
+     * Nokta çözümleri, konum ya da nokta listesi değiştikçe tazelenir.
+     *
+     * Önceden yön ve mesafe her derece değişiminde, her nokta için yeniden
+     * hesaplanıyordu: sekiz noktayla saniyede ~500 `distanceBetween` çağrısı
+     * ediyordu ve bunların yarısı zaten aynı hesabın tekrarıydı (`isArrived` ile
+     * `waypointSegment` mesafeyi ayrı ayrı ölçüyordu). Oysa açı ve mesafe
+     * yalnızca yer değiştirince değişir.
+     */
+    private var waypointFixes: List<WaypointFix> = emptyList()
+
+    /** Nokta yazılarının hazır hâli; ancak çözümler ya da biçim değişince kurulur. */
+    private var waypointSpan: CharSequence = ""
+
+    private fun refreshWaypointFixes() {
+        val here = lastLocation
+        waypointFixes = if (here == null) emptyList() else {
+            val arrivedWithin = (if (here.hasAccuracy()) here.accuracy else ARRIVED_MIN_METERS)
+                .coerceIn(ARRIVED_MIN_METERS, ARRIVED_MAX_METERS)
+            val results = FloatArray(1)
+            waypoints.map { point ->
+                Location.distanceBetween(
+                    here.latitude, here.longitude, point.latitude, point.longitude, results
+                )
+                WaypointFix(
+                    point,
+                    Geo.bearing(here.latitude, here.longitude, point.latitude, point.longitude),
+                    results[0],
+                    results[0] <= arrivedWithin
+                )
+            }
+        }
+        refreshWaypointSpan()
     }
 
-    private fun waypointSegment(point: Waypoint): String? {
-        val here = lastLocation ?: return null
-        if (isArrived(point, here)) return getString(R.string.waypoint_here, point.name)
-        val bearing = Geo.bearing(here.latitude, here.longitude, point.latitude, point.longitude)
-        val results = FloatArray(1)
-        Location.distanceBetween(here.latitude, here.longitude, point.latitude, point.longitude, results)
-        return getString(
-            R.string.waypoint_line,
-            point.name,
-            formatBearing(toDialFrame(bearing)),
-            formatDistance(results[0])
-        )
+    /** Çözümlerden nokta satırını kurar; renk ve birim buraya girer. */
+    private fun refreshWaypointSpan() {
+        val builder = SpannableStringBuilder()
+        waypointFixes.forEach { fix ->
+            appendColored(builder, waypointSegment(fix), palette.waypoint, "   ")
+        }
+        waypointSpan = builder
     }
+
+    private fun waypointSegment(fix: WaypointFix): String =
+        if (fix.arrived) getString(R.string.waypoint_here, fix.point.name)
+        else getString(
+            R.string.waypoint_line,
+            fix.point.name,
+            formatBearing(toDialFrame(fix.bearing)),
+            formatDistance(fix.distance)
+        )
 
     /** Yakında metre, uzakta kilometre; ondalık ayraç cihazın diline uyar. */
     /**
@@ -916,6 +1006,7 @@ class MainActivity : Activity(), SensorEventListener {
     private fun saveWaypoints(list: List<Waypoint>) {
         waypoints = list
         prefs().edit().putString(KEY_WAYPOINTS, Waypoints.encode(list)).apply()
+        refreshWaypointFixes()
         applyMarks()
         refreshTargetText()
     }
@@ -947,8 +1038,7 @@ class MainActivity : Activity(), SensorEventListener {
             return
         }
         val labels = waypoints.map { point ->
-            val segment = waypointSegment(point)
-            segment ?: point.name
+            waypointFixes.firstOrNull { it.point === point }?.let(::waypointSegment) ?: point.name
         }.toTypedArray()
         AlertDialog.Builder(this)
             .setTitle(R.string.waypoints_title)
@@ -1006,16 +1096,10 @@ class MainActivity : Activity(), SensorEventListener {
 
     /** Noktaların kadrandaki yönleri; gerçek kuzeye göre, kadranla aynı çerçevede. */
     private fun applyWaypoint() {
-        val here = lastLocation
         compassView.setWaypointMarks(
-            if (here == null) emptyList()
-            else mergeNearbyMarks(
-                waypoints.filterNot { isArrived(it, here) }.map {
-                    PlaceMark(
-                        it.name,
-                        toDialFrame(Geo.bearing(here.latitude, here.longitude, it.latitude, it.longitude))
-                    )
-                }
+            mergeNearbyMarks(
+                waypointFixes.filterNot { it.arrived }
+                    .map { PlaceMark(it.point.name, toDialFrame(it.bearing)) }
             )
         )
     }
@@ -1159,14 +1243,11 @@ class MainActivity : Activity(), SensorEventListener {
     /**
      * Kısa tık. Kullanıcı sistemde dokunsal geri bildirimi kapattıysa
      * titreşmez — kendi efektimizi verdiğimiz için bu tercihi elle gözetiyoruz.
+     * Tercih `onResume`'da bir kez okunur: her tıkta sormak bir ContentResolver
+     * sorgusu demekti ve ayar uygulama önplandayken değişmiyor.
      */
     private fun tickForCardinal() {
-        val enabled = Settings.System.getInt(
-            contentResolver,
-            Settings.System.HAPTIC_FEEDBACK_ENABLED,
-            1
-        ) != 0
-        if (!enabled || !vibrateOnCardinals) return
+        if (!systemHapticsEnabled || !vibrateOnCardinals) return
         // Açılışta yumuşatma otururken açı birkaç bölgeyi hızla kesebiliyor;
         // ölçümde 23 ms içinde üç tık görüldü. Asgari aralık bunu tek tıka indirir.
         val now = SystemClock.elapsedRealtime()
@@ -1413,6 +1494,13 @@ class MainActivity : Activity(), SensorEventListener {
         const val CARDINAL_TICK_MS = 45L
         const val CARDINAL_TICK_AMPLITUDE = 255
         const val CARDINAL_TICK_MIN_GAP_MS = 700L
+
+        /**
+         * Konum önbelleğini yenilemek ve sapma/kıble/güneşi baştan hesaplamak
+         * için gereken yer değiştirme. Sapma bu ölçekte binde bir derece oynar.
+         */
+        const val COORDINATE_CACHE_DISTANCE_M = 250f
+        const val COORDINATE_REFRESH_DISTANCE_M = 1_000f
 
         const val ARRIVED_MIN_METERS = 10f
         const val ARRIVED_MAX_METERS = 25f
