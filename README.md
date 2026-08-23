@@ -6,12 +6,15 @@ ve Kotlin standart kütüphanesi kullanılıyor, kadran `Canvas` ile elle çizil
 Gerçek kuzey, kıble yönü, dokununca yön kilitleyen hedef göstergesi ve kadranın
 göbeğinde su terazisi.
 
-- `minSdk 24` (Android 7.0) — **Android 13 dahil** tüm sürümlerde çalışır
-- `targetSdk 34`
+- `minSdk 24` (Android 7.0) — **Android 15 dahil** tüm sürümlerde çalışır
+- `targetSdk 35` (Android 15). Bu seviyeden itibaren kenardan kenara çizim
+  zorunlu ve `setDecorFitsSystemWindows(true)` yok sayılıyor; pencere
+  boşluklarını uygulama kendisi bırakıyor.
 - Paket adı: `com.aripd.compass`
-- İzinler: `VIBRATE` (ana yön tıkı) ile `ACCESS_COARSE_LOCATION` ve `ACCESS_FINE_LOCATION` (gerçek kuzey, kıble
+- İzinler: `VIBRATE` (yön geçişi tıkı) ile `ACCESS_COARSE_LOCATION` ve `ACCESS_FINE_LOCATION` (gerçek kuzey, kıble
   ve koordinat paneli için; reddedilirse uygulama manyetik kuzeyle çalışmaya devam
   eder, "yaklaşık" seçilirse koordinatlar o etiketle gösterilir).
+- Dışarıdan konum alır: `geo:` bağlantıları ve paylaşılan düz metin (bkz. 5. bölüm).
 
 ## 0. Klasör düzeni
 
@@ -32,7 +35,7 @@ compass/
 ## 1. Hazır APK'yı telefona kurmak
 
 Derlenmiş APK: `app/build/outputs/apk/debug/app-debug.apk`
-(release sürümü ~233 KB; debug sürümü küçültme yapılmadığı için daha büyüktür)
+(release sürümü ~130 KB; debug sürümü küçültme yapılmadığı için daha büyüktür)
 
 ### Yöntem A — Kabloyla, adb ile (en hızlı)
 
@@ -279,6 +282,32 @@ noktalar da aynı biçimde paylaşılabilir — listeden noktaya dokunup **Payla
 seçildiğinde metnin başına noktanın adı konur. Android 13'ten itibaren sistem kendi kopyalama
 onayını gösterdiği için uygulama kendi bildirimini o sürümlerde çıkarmaz.
 
+**Paylaşım çift yönlü.** Uygulama konum gönderebiliyordu ama alamıyordu; oysa
+paylaşmanın karşılığı almaktır. Artık bir haritanın "paylaş"ı, bir `geo:`
+bağlantısı ya da kopyalanmış bir koordinat doğrudan uygulamaya gönderilip nokta
+olarak kaydedilebiliyor. Tanınan biçimler `Coordinates.kt`'te ve hepsinin testi
+var:
+
+| Biçim | Örnek |
+|---|---|
+| Ondalık çift | `41.0, 29.0` |
+| `geo:` adresi | `geo:41.0,29.0` · `geo:0,0?q=41.0,29.0(Ev)` |
+| OpenStreetMap | `.../?mlat=41.0&mlon=29.0#map=17/41.0/29.0` |
+| Google Maps | `.../maps/@41.0,29.0,17z` · `?q=41.0,29.0` |
+| Derece-dakika-saniye | `41°00'30"K 29°08'12"D` |
+
+İki incelik ayrıştırmada. `geo:0,0?q=...` kalıbındaki baştaki sıfırlar "konum
+belirtilmedi" demektir ve gerçek koordinat sorgunun içindedir; elenmezse her
+paylaşım Gine Körfezi'ne düşerdi. Yarımküre harfi ise yalnızca İngilizce ve
+Türkçe için tanınır (N/S/E/W ve K/G/D/B): Almancada `O` doğu (Ost), İspanyolcada
+batı (Oeste) demek ve yanlış tahmin sessizce yanlış yarımküreye götürür —
+tanımamak yanlış tanımaktan iyidir.
+
+Aynı ayrıştırıcı elle giriş için de kullanılır: nokta listesindeki **Koordinat
+gir…** düğmesi tek bir alan açar ve yukarıdakilerin hepsini kabul eder.
+Kullanıcıya "hangi biçimde istiyorsun" diye sormak yerine eldekini
+yapıştırmasına izin veriyor.
+
 Koordinat paneli anlamlı olsun diye artık hassas konum da isteniyor. Kullanıcı
 "yaklaşık"ı seçerse uygulama çalışmaya devam eder ve satırın sonuna *yaklaşık*
 yazar — hata payı zaten kilometrelerce olur, bunu gizlemek yanıltıcı olurdu.
@@ -295,8 +324,14 @@ yazar:
 Araba 265° · 1,2 km   Kamp 12° · 340 m
 ```
 
+Alt satırda adıyla en yakın iki nokta yazar, gerisi `+3 nokta` diye sayılır:
+sekiz nokta kayıtlıyken satır beş-altı satıra taşıyor ve `layout_weight`'i 1 olan
+kadranın yerini yiyordu. Hiçbir şey kaybolmuyor — hepsi kadranda işaretli ve
+listede yön ve mesafesiyle duruyor.
+
 Alt satıra **uzun basmak** listeyi açar; bir noktaya dokununca yeniden
-adlandırılabilir ya da silinebilir. Yeni noktalar "Nokta 1", "Nokta 2" diye
+adlandırılabilir, paylaşılabilir ya da silinebilir. Liste boşken de açılır,
+çünkü **Koordinat gir…** düğmesinin tek görünür kapısı orası. Yeni noktalar "Nokta 1", "Nokta 2" diye
 adlandırılır — sıra numarası listede boş olan ilk numaradır, silinen numaralar
 yeniden kullanılır.
 
@@ -379,7 +414,17 @@ Saatler de bu tanıma göre hesaplanır.
 
 Yön ile saat ayrı formüllerden gelir — biri azimutu, diğeri saat açısını çözer —
 ve hesap bir kez yinelenir: deklinasyon gün içinde değiştiği için tek geçişte
-bulunan an yarım dakikaya varan hata veriyordu. Aynı sebeple doğuş ile batış
+bulunan an yarım dakikaya varan hata veriyordu.
+
+**Gün yerel güneş gününe demirlenir, UTC gününe değil.** Bu bir hatanın
+düzeltilmesiydi: gün UTC gece yarısından hesaplanıyordu ve boylam büyüdükçe iki
+gün ayrışıyordu. Auckland'da (UTC+13) yerel sabah saat 09:00 UTC'de bir önceki
+güne düştüğü için uygulama dünün doğuşunu ve çoktan geçmiş bir batış saatini
+gösteriyordu. Referans an artık boylam kadar (derece başına 4 dakika) kaydırılıp
+öyle tabana yuvarlanıyor; saat hesabındaki formül zaten `-4·boylam` içerdiği
+için kaydırma yalnızca gün seçimine giriyor. İki test bunu bekliyor: doğuş ile
+batışın orta noktası yerel öğledir ve referans an ondan en çok 12 saat uzakta
+olmalıdır. Aynı sebeple doğuş ile batış
 kuzey-güney eksenine göre **tam simetrik değildir**; sabah ile akşam arasında
 deklinasyon değiştiği için iki uç birkaç yüzde bir derece kayar. Bu
 yayın genişliği enlemle büyür — ekvatorda 47°, İstanbul'da 64°, 60°K'de 106°,
@@ -394,10 +439,18 @@ Almanac, saat açısını zaman denklemi yerine GMST'den kuran yol) 162,0° verd
 Yan kontroller de tuttu — 23 Ağustos için deklinasyon 11,37° (beklenen ~11,5°),
 o gün İstanbul'da güneşin azami yüksekliği 60,4°.
 
-**Ana yönlerde titreşim.** Gösterilen açı K/D/G/B'den birine 2° yaklaşınca kısa
-bir tık verilir; 5° uzaklaşana kadar yeniden tetiklenmez. Ekrana bakmadan yön
-tutmaya yarar. Uygulama açılırken ana yöne bakıyorsanız titremez — ilk okuma
-yalnızca başlangıç bölgesini kaydeder.
+**Yön geçişlerinde titreşim.** Ana yönlerden (K/D/G/B) geçerken kısa bir tık,
+kilitli hedeften geçerken **çift** tık verilir. Ekrana bakmadan yön tutmaya
+yarar — gece görüşünü koruyan asıl şey de bu, çünkü ekrana her bakış onu baştan
+bozuyor. Görme engelli kullanıcı için kadranın tek hissedilebilir karşılığı.
+
+İki efektin ayrı olması şart: aynı tık olsalardı "kuzeyden mi geçtim yoksa
+hedefe mi girdim" ayırt edilemezdi, oysa bakmadan yön tutmanın bütün anlamı o
+ayrımda. Çift tıkın iki darbesi arasında 60 ms var; daha kısası ERM motorunun
+duracak vakit bulamaması yüzünden tek uzun titreşime karışıyor.
+
+Uygulama açılırken bir yöne bakıyorsanız titremez — ilk okuma yalnızca başlangıç
+bölgesini kaydeder. Algılamanın kendisi `Crossing.kt`'te ve sekiz testi var.
 
 Titreşim `performHapticFeedback` ile değil, doğrudan `Vibrator` ile verilir
 (45 ms, tam genlik). Karşılığında `VIBRATE` izni gerekir (normal izin, çalışma
@@ -429,6 +482,17 @@ açılışta yumuşatma otururken açı birkaç bölgeyi hızla kesip 23 ms içi
 
 **Gece modu.** Büyük derece yazısına dokunmak ekranı gece moduna alır: zemin tam
 siyah, her şey kırmızı. Tekrar dokunmak geri döndürür, seçim kalıcıdır.
+
+Ayarlardan **alacakaranlıkta otomatik** açılabilir. Ölçüt batış değil sivil
+alacakaranlığın sonu (güneş yüksekliği -6°): güneş battıktan sonra yirmi dakika
+kadar okumaya yetecek ışık kalır, kırmızıya orada geçmek erken olurdu. -6°'de
+doğal ışık biter ve göz karanlığa uyum sağlamaya başlar — kırmızının bütün
+gerekçesi bu. Uygulama batışı zaten hesapladığı için ek bir maliyeti yok.
+
+Elle yapılan her seçim (dereceye dokunmak ya da ayarlardaki anahtar) otomatiği
+kapatır: aksi hâlde anahtar bir dakika sonra kendiliğinden geri döner ve arıza
+gibi görünürdü. Varsayılan kapalı, aynı sebeple — beklemeyen biri için ekranın
+kendiliğinden kırmızıya dönmesi bir arıza gibi okunur.
 
 Sebebi göz fizyolojisi: karanlığa uyum sağlamış göz kırmızı ışıktan neredeyse hiç
 etkilenmez, ama mavi-yeşil ışık uyumu saniyeler içinde bozar ve yeniden karanlığa
@@ -478,13 +542,15 @@ yani gece modunda ayarlar ekranı da kırmızıya dönüyor.
 | Ayar | Ne yapar |
 |---|---|
 | **Gece modu** | Siyah zemin, kırmızı kadran. Büyük derece yazısına dokunmak da aynı işi yapar. |
+| **Alacakaranlıkta otomatik** | Gece modunu güneşin yüksekliğine bağlar; sivil alacakaranlığın sonunda (-6°) geçer. Elle yapılan her seçim bunu kapatır. |
 | **Açı birimi** | Derece (0-360) ya da NATO mili (0-6400). Bütün yön yazılarını etkiler; sapma derecede kalır, çünkü konumun fiziksel özelliğidir. |
 | **Ekranı açık tut** | `FLAG_KEEP_SCREEN_ON`. Kapatılabilir olması pil için önemli. |
 | **Tam ekran** | Durum ve gezinme çubuklarını gizler; kenardan kaydırınca geçici olarak geri gelirler. Kazanılan yer doğrudan kadranın çapına gider. |
 | **Gerçek kuzeyi kullan** | Kapatılırsa kadran manyetik kuzeye oturur. |
-| **Yumuşatma** | Sakin (0,06) / Dengeli (0,12) / Çevik (0,25). Ortadaki, uygulamanın başından beri kullandığı değer. |
-| **Ana yönlerde titreşim** | Tıkı tümüyle kapatır. |
+| **Yumuşatma** | Sakin (0,35 sn) / Dengeli (0,17 sn) / Çevik (0,08 sn). Saklanan şey katsayı değil **zaman sabiti**; gerekçesi 11. bölümde. Ortadaki, uygulamanın başından beri kullandığı 0,12 katsayısının 50 Hz'deki karşılığıdır. |
+| **Yön geçişlerinde titreşim** | Hem ana yön tıkını hem hedef çift tıkını kapatır. |
 | **Kadran işaretleri** | Manyetik kuzey (M), su terazisi, güneş, güneşin yolu, ay ve yön noktalarını (Kâbe, Mescid-i Aksa, Vatikan) ayrı ayrı açar/kapatır. |
+| **Hareketler** | Hakkında bölümünde; her dokunuş ve uzun basışın ne yaptığını tek diyalogda sayar. Yedi gizli hareket yalnızca bu belgede yazıyordu, uygulamanın içinde hiçbir yerde. |
 
 Hedef ve nokta işaretleri o listede yok, çünkü zaten kadrana dokunarak ya da uzun
 basarak açılıp kapanıyorlar; ayrıca bir anahtar koymak "kilitli ama görünmez
@@ -518,6 +584,12 @@ kimlikler aynı olduğu için kod değişmez.
 | `app/src/main/java/com/aripd/compass/Waypoints.kt` | Kaydedilen noktaların saklanması |
 | `app/src/main/java/com/aripd/compass/Geo.kt` | Yön, açı ve birim dönüşümleri (Android'e dokunmaz) |
 | `app/src/main/java/com/aripd/compass/RimLayout.kt` | Kadran işaretlerinin yarıçap dağıtımı |
+| `app/src/main/java/com/aripd/compass/Marks.kt` | Yakın işaretlerin tek etikette birleştirilmesi |
+| `app/src/main/java/com/aripd/compass/Smoothing.kt` | İbrenin alçak geçiren süzgeci |
+| `app/src/main/java/com/aripd/compass/Crossing.kt` | Bir yönün üzerinden geçişin algılanması (titreşim) |
+| `app/src/main/java/com/aripd/compass/Disturbance.kt` | Manyetik anomali algılama ve histerezisi |
+| `app/src/main/java/com/aripd/compass/Fixes.kt` | Hangi konum düzeltmesinin kazandığı, "buradasınız" eşiği |
+| `app/src/main/java/com/aripd/compass/Coordinates.kt` | Paylaşılan metinden koordinat okuma |
 | `app/src/main/java/com/aripd/compass/Palette.kt` | Gündüz ve gece renk düzenleri |
 | `app/src/main/java/com/aripd/compass/Prefs.kt` | Ayar anahtarları ve varsayılanları |
 | `app/src/main/java/com/aripd/compass/SettingsActivity.kt` | Ayarlar ekranı (kodla kurulan arayüz) |
@@ -530,18 +602,24 @@ Nasıl çalışıyor:
   ikilisine düşülür (`getRotationMatrix`).
 - `remapCoordinateSystem` ile sensör eksenleri ekran yönüne göre eşlenir.
 - Açı doğrudan değil, `sin`/`cos` bileşenleri üzerinden yumuşatılır — aksi hâlde
-  359° → 0° geçişinde ibre bir tam tur atardı. Yumuşatma katsayısı `alpha = 0.12f`;
-  daha çevik istiyorsanız büyütün, daha sakin istiyorsanız küçültün.
+  359° → 0° geçişinde ibre bir tam tur atardı. Süzgeç `Smoothing.kt`'te; saklanan
+  şey katsayı değil zaman sabitidir ve katsayı her örnekte gerçek aralıktan
+  hesaplanır, böylece örnekleme hızı değişse de ibrenin hissi sabit kalır
+  (gerekçesi 11. bölümde).
 - Aynı `getOrientation` çağrısının `[1]` ve `[2]` değerleri (pitch/roll) su
-  terazisini besler; onlar da aynı katsayıyla yumuşatılır.
+  terazisini besler; onlar da aynı süzgeçten geçer.
 - Sensör hassasiyeti düştüğünde ekranda kalibrasyon uyarısı çıkar (telefonu havada
   8 çizer gibi hareket ettirmek düzeltir). Kalibrasyon uyarısı, eğim uyarısından
   önceliklidir.
 - Durum satırında öncelik sırası: manyetik bozulma > kalibrasyon > eğim. Bozulma
   en tehlikelisidir, çünkü diğer ikisinin aksine hiçbir görsel ipucu vermez.
-- Kadrandaki işaret renkleri tek yerde (`CompassView.Companion`) tanımlıdır;
-  ekrandaki yazılar da aynı renkleri kullanır, böylece hangi satırın hangi
-  işarete ait olduğu bakınca anlaşılır.
+- Kadrandaki işaret renkleri tek yerde (`Palette.kt`) tanımlıdır; ekrandaki
+  yazılar da aynı renkleri kullanır, böylece hangi satırın hangi işarete ait
+  olduğu bakınca anlaşılır.
+- `onDraw` kare başına tahsis yapmaz: kadran harfleri, "M" etiketi ve yoğunluk
+  bir kez okunur, `Path`/`RectF` yeniden kullanılır, kenar işaretleri bir
+  havuzdan doldurulur ve yarıçap dizisi üst sınırdan ayrılır. Lint'in
+  `DrawAllocation` denetimi bunu doğruluyor.
 
 ## 8. Erişilebilirlik
 
@@ -681,22 +759,40 @@ hız değişse de ibrenin hissi sabit kalıyor.
 4°'lik pencere tümüyle ıskalanabilir. Artık ana yöne göre işaretli farkın işaret
 değiştirmesi aranıyor; bu, örnekleme hızından bağımsızdır.
 
+**Yazılar ve çizim de seyreltildi.** Nokta yönü ve mesafesi açı her derece
+değiştiğinde, her nokta için yeniden hesaplanıyordu — sekiz noktayla saniyede
+~500 `distanceBetween` çağrısı, üstelik yarısı aynı hesabın tekrarı. Oysa bunlar
+yalnızca yer değiştirince değişir; artık fix başına bir kez hesaplanıyor ve
+nokta satırı hazır bir `Spannable` olarak saklanıyor. `onDraw` da kare başına
+tahsis yapmıyor (7. bölüm).
+
 Konum güncellemeleri de seyreltildi (GPS 15 sn, ağ 60 sn). Burada bir tuzak
 vardı: mesafe süzgeci konulunca Android güncellemeyi ancak hem süre dolduğunda
 hem de o kadar yol alındığında gönderiyor, dolayısıyla **sabit duran telefona
 GPS hiç fix göndermiyor** ve panel ağ konumunun ±100 m'sine düşüyordu. Süzgeç
 sıfırlandı; hassasiyet ±22 m'ye döndü.
 
+Gelen fix'in kendisi de ucuzladı. Her fix'te konum önbelleği diske yazılıyordu
+(GPS açıkken dakikada dört yazma) ve WMM'nin küresel harmonik modeli yeniden
+çözülüp bütün yer yönleri, güneş ve ay baştan hesaplanıyordu. Sapma yüzlerce
+kilometrede bir derece oynar; artık önbellek 250 m, tam hesap 1 km yol
+alınmadan yenilenmiyor. Sistemin dokunsal geri bildirim tercihi de her tıkta
+`ContentResolver`'a sorulmak yerine `onResume`'da bir kez okunuyor.
+
 ## 12. Testler
 
 ```bash
-./gradlew test          # 37 test, saniyeler içinde, cihaz gerekmez
+./gradlew test          # 84 test, saniyeler içinde, cihaz gerekmez
 ```
 
 Testler JVM'de koşar; Android çalışma zamanı gerekmez. Bunun için uygulamanın
-saf matematiği ekran kodundan ayrıldı: `Geo.kt` (yön, açı ve birim dönüşümleri),
-`RimLayout.kt` (kadran işaretlerinin yarıçap dağıtımı), `Sun.kt` ve `Moon.kt`
-zaten Android'e dokunmuyordu.
+saf mantığı ekran kodundan ayrıldı. `Sun.kt` ve `Moon.kt` zaten Android'e
+dokunmuyordu; `Geo.kt` ve `RimLayout.kt` erken ayrıldı. Geri kalanı
+`MainActivity` içinde duruyor ve sınanamıyordu — en incelikli parçalar da
+oradaydı: yumuşatma süzgeci, titreşimin geçiş algılaması, manyetik anomalinin
+histerezisi. Hepsi çıkarıldı.
+
+Her koşuda ayrıca `./gradlew lintDebug` koşulur (CI'da da); şu an 0 hata.
 
 | Dosya | Neyi sınıyor |
 |---|---|
@@ -705,6 +801,12 @@ zaten Android'e dokunmuyordu.
 | `MoonTest` | Bilinen yeni ay, ay-güneş çapraz kontrolü, sinodik ay, evre sınırları |
 | `RimLayoutTest` | Çakışan işaretlerin alt yarıçapa inmesi, sabit göstergenin etkisi, kademelerin tükenmesi |
 | `WaypointsTest` | Nokta kaydının yazılıp okunması, bozuk girdi, ad temizleme, ad numaralandırma |
+| `SmoothingTest` | 50 Hz ile 16 Hz'in aynı sonuca varması, sıfır geçişinde kadranı dolaşmama, zaman sabitlerinin sıralanması |
+| `CrossingTest` | Atlanan örneğin geçişi kaçırmaması, yönde dururken gürültünün tekrar tetiklememesi, bölge sıfırlaması |
+| `DisturbanceTest` | Kısa sıçramanın uyarı çıkarmaması, histerezis bandında uyarının açık kalması |
+| `CoordinatesTest` | Uygulamanın kendi paylaşımının geri okunması, `geo:0,0?q=` tuzağı, harita bağlantıları, DMS |
+| `MarksTest` | Yakın işaretlerin birleşmesi, zincirleme birleşmenin olmaması, sıfır geçişinde ortalama |
+| `FixesTest` | Yeni fix ile hassas fix arasındaki tercih, "buradasınız" eşiğinin sınırlanması |
 
 Testlerin çoğu **fiziksel sabitlere** dayanır — uygulamadan bağımsız, ölçülmüş
 gerçeklere: sinodik ay 29,5 gün, ekinoksta doğuş 89,3°, yeni ayda ay ile güneşin
@@ -813,7 +915,7 @@ cihazlarda en güvenilir yol adb ile kurmaktır:
 
 ```bash
 export ANDROID_HOME=$HOME/Android/Sdk
-$ANDROID_HOME/platform-tools/adb install -r dist/compass-4.1-release.apk
+$ANDROID_HOME/platform-tools/adb install -r dist/compass-4.2-release.apk
 ```
 
 Kablosuz adb'de eşleştirme portu ile bağlantı portunun farklı olduğunu unutmayın;
