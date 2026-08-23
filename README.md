@@ -244,6 +244,13 @@ kaydeder; kadranda mor bir **Nokta** işareti ve alt satırda yön ile mesafe be
 Nokta 265° · 17 m
 ```
 
+Noktanın üstündeyken yön yazılmaz, `Nokta · buradasınız` denir. Sebebi: mesafe
+konum hatasının altına inince yön anlamını yitirir — hata çemberinin içinde hangi
+yöne bakacağınızı söylemek uydurma olur. Eşik fix'in kendi hata payıdır, ama
+10-25 m aralığına sıkıştırılır: çok iyi bir fix'te bile birkaç metrede yön
+güvenilmez, çok kötü bir fix'te de yüz metre öteye "buradasınız" demek yanlış
+olurdu.
+
 Tekrar uzun basmak siler. Nokta `SharedPreferences`'a yazıldığı için uygulamayı
 kapatsanız da durur. Yön, kıbleyle aynı büyük daire formülünden; mesafe
 `Location.distanceBetween` ile (WGS84 elipsoidi). Bir kilometrenin altında metre,
@@ -332,7 +339,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **792.987 bayt** (~774 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **793.173 bayt** (~774 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.

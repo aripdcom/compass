@@ -14,6 +14,7 @@
     <string name="location_copied">Kopyalandı: %1$s</string>
     <string name="target_hint">Kadrana dokunun: yönü kilitler · uzun basın: nokta kaydeder</string>
     <string name="waypoint_line">Nokta %1$d° · %2$s</string>
+    <string name="waypoint_here">Nokta · buradasınız</string>
     <string name="waypoint_saved">Nokta kaydedildi</string>
     <string name="waypoint_cleared">Nokta silindi</string>
     <string name="waypoint_needs_location">Konum yok — nokta kaydedilemedi</string>

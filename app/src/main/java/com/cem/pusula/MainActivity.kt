@@ -473,6 +473,14 @@ class MainActivity : Activity(), SensorEventListener {
         val bearing = bearingTo(here.latitude, here.longitude, wpLat, wpLon)
         val results = FloatArray(1)
         Location.distanceBetween(here.latitude, here.longitude, wpLat, wpLon, results)
+        // Mesafe konum hatasının altına inince yön anlamını yitirir: hata çemberinin
+        // içinde hangi yöne bakacağınızı söylemek uydurma olur. Eşik fix'in kendi
+        // hata payı, ama makul bir aralığa sıkıştırılmış — çok iyi bir fix'te bile
+        // birkaç metrede yön güvenilmez, çok kötü bir fix'te de yüz metre öteye
+        // "buradasınız" demek yanlış olurdu.
+        val arrivedWithin = (if (here.hasAccuracy()) here.accuracy else ARRIVED_MIN_METERS)
+            .coerceIn(ARRIVED_MIN_METERS, ARRIVED_MAX_METERS)
+        if (results[0] <= arrivedWithin) return getString(R.string.waypoint_here)
         return getString(R.string.waypoint_line, bearing.roundToInt() % 360, formatDistance(results[0]))
     }
 
@@ -735,6 +743,10 @@ class MainActivity : Activity(), SensorEventListener {
         const val KEY_LATITUDE = "latitude"
         const val KEY_LONGITUDE = "longitude"
         const val KEY_TARGET = "target"
+        /** "Buradasınız" eşiğinin alt ve üst sınırı (metre). */
+        const val ARRIVED_MIN_METERS = 10f
+        const val ARRIVED_MAX_METERS = 25f
+
         const val KEY_WAYPOINT_LATITUDE = "waypointLatitude"
         const val KEY_WAYPOINT_LONGITUDE = "waypointLongitude"
 
