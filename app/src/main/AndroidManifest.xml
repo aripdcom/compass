@@ -9,6 +9,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <!-- Ana yön geçişlerinde kısa tık; normal izin, çalışma anında sorulmaz -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <!-- Pusula donanımı olmayan cihazlarda uygulama yine kurulabilsin diye required=false -->
     <uses-feature
         android:name="android.hardware.sensor.compass"

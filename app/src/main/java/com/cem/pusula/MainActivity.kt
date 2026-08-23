@@ -19,6 +19,9 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import android.os.Looper
 import android.os.SystemClock
 import android.provider.Settings
@@ -88,6 +91,15 @@ class MainActivity : Activity(), SensorEventListener {
     private var needsCalibration = false
     private var tilted = false
 
+    /** Şu an hangi ana yönün yakınındayız (0=K, 1=D, 2=G, 3=B); -1 hiçbiri. */
+    private var hapticCardinal = -1
+
+    /** Uygulama açılırken ana yöne bakıyorsanız titremesin diye ilk örnek sayılmaz. */
+    private var hapticPrimed = false
+
+    /** Son tıkın anı; art arda gelen tetiklemeleri seyreltir. */
+    private var lastTickAt = 0L
+
     /** O konumda beklenen toplam alan şiddeti (µT); konum bilinmeden karşılaştırma yapılamaz. */
     private var expectedFieldStrength: Float? = null
     private var measuredFieldStrength = 0f
@@ -113,6 +125,22 @@ class MainActivity : Activity(), SensorEventListener {
     private var sun: Sun.Position? = null
 
     private val handler = Handler(Looper.getMainLooper())
+
+    /**
+     * Titreşim için `performHapticFeedback` yerine doğrudan `Vibrator`:
+     * Galaxy A51 / Android 13'te sabitlerin çoğu (CLOCK_TICK, KEYBOARD_TAP,
+     * VIRTUAL_KEY, CONFIRM, CONTEXT_CLICK) `true` dönüyor ama hiç titremiyor;
+     * yalnızca LONG_PRESS çalışıyor ve o da 48 ms'lik sert bir vuruş. Ana yön
+     * geçişi için kısa bir tık gerektiğinden efekti kendimiz veriyoruz.
+     */
+    private val vibrator: Vibrator? by lazy {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            (getSystemService(VIBRATOR_MANAGER_SERVICE) as? VibratorManager)?.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            getSystemService(VIBRATOR_SERVICE) as? Vibrator
+        }
+    }
 
     /** Güneş dakikada 0,25° yol alır; dakikada bir tazelemek fazlasıyla yeter. */
     private val sunTick = object : Runnable {
@@ -187,6 +215,7 @@ class MainActivity : Activity(), SensorEventListener {
         // Bozulma kararı kesintisiz gözleme dayanıyor; arka planda geçen süre
         // sayılmasın diye ölçüm ve sayaç sıfırdan başlatılır.
         measuredFieldStrength = 0f
+        hapticPrimed = false
         disturbedSince = 0L
         disturbed = false
         lastShownFieldStrength = -1
@@ -625,6 +654,7 @@ class MainActivity : Activity(), SensorEventListener {
 
         compassView.setAzimuth(shown)
         compassView.setTilt(smoothPitch, smoothRoll)
+        updateCardinalHaptics(shown)
         updateTiltWarning()
 
         val rounded = shown.roundToInt() % 360
@@ -635,6 +665,59 @@ class MainActivity : Activity(), SensorEventListener {
                 getString(if (decl != null) R.string.true_north else R.string.magnetic_north)
             refreshInfoText(magnetic)
             refreshTargetText()
+        }
+    }
+
+    /**
+     * Ana yönlerden birine girince kısa bir tık verir: ekrana bakmadan yön
+     * tutmayı sağlar. Girme ve çıkma eşikleri farklı, yoksa sınırda titreşim
+     * sayısını sayamazdınız. Sistem dokunsal geri bildirimi kapalıysa
+     * `performHapticFeedback` sessizce hiçbir şey yapmaz — kullanıcının tercihi.
+     */
+    private fun updateCardinalHaptics(shown: Float) {
+        val nearest = (shown / 90f).roundToInt() % 4
+        val delta = abs(((shown - nearest * 90f + 540f) % 360f) - 180f)
+
+        if (!hapticPrimed) {
+            hapticCardinal = if (delta <= CARDINAL_ENTER_DEGREES) nearest else -1
+            hapticPrimed = true
+            return
+        }
+        if (hapticCardinal == nearest) {
+            if (delta > CARDINAL_EXIT_DEGREES) hapticCardinal = -1
+            return
+        }
+        if (delta <= CARDINAL_ENTER_DEGREES) {
+            hapticCardinal = nearest
+            tickForCardinal()
+        }
+    }
+
+    /**
+     * Kısa tık. Kullanıcı sistemde dokunsal geri bildirimi kapattıysa
+     * titreşmez — kendi efektimizi verdiğimiz için bu tercihi elle gözetiyoruz.
+     */
+    private fun tickForCardinal() {
+        val enabled = Settings.System.getInt(
+            contentResolver,
+            Settings.System.HAPTIC_FEEDBACK_ENABLED,
+            1
+        ) != 0
+        if (!enabled) return
+        // Açılışta yumuşatma otururken açı birkaç bölgeyi hızla kesebiliyor;
+        // ölçümde 23 ms içinde üç tık görüldü. Asgari aralık bunu tek tıka indirir.
+        val now = SystemClock.elapsedRealtime()
+        if (now - lastTickAt < CARDINAL_TICK_MIN_GAP_MS) return
+        lastTickAt = now
+        val device = vibrator ?: return
+        if (!device.hasVibrator()) return
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            device.vibrate(
+                VibrationEffect.createOneShot(CARDINAL_TICK_MS, VibrationEffect.DEFAULT_AMPLITUDE)
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            device.vibrate(CARDINAL_TICK_MS)
         }
     }
 
@@ -776,6 +859,12 @@ class MainActivity : Activity(), SensorEventListener {
         const val KEY_TARGET = "target"
         /** "Buradasınız" eşiğinin alt ve üst sınırı (metre). */
         const val SUN_UPDATE_MS = 60_000L
+
+        // Ana yöne bu kadar yaklaşınca tık verilir, bu kadar uzaklaşınca sıfırlanır.
+        const val CARDINAL_ENTER_DEGREES = 2f
+        const val CARDINAL_EXIT_DEGREES = 5f
+        const val CARDINAL_TICK_MS = 20L
+        const val CARDINAL_TICK_MIN_GAP_MS = 700L
 
         const val ARRIVED_MIN_METERS = 10f
         const val ARRIVED_MAX_METERS = 25f

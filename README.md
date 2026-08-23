@@ -9,7 +9,7 @@ göbeğinde su terazisi.
 - `minSdk 24` (Android 7.0) — **Android 13 dahil** tüm sürümlerde çalışır
 - `targetSdk 34`
 - Paket adı: `com.cem.pusula`
-- İzinler: `ACCESS_COARSE_LOCATION` ve `ACCESS_FINE_LOCATION` (gerçek kuzey, kıble
+- İzinler: `VIBRATE` (ana yön tıkı) ile `ACCESS_COARSE_LOCATION` ve `ACCESS_FINE_LOCATION` (gerçek kuzey, kıble
   ve koordinat paneli için; reddedilirse uygulama manyetik kuzeyle çalışmaya devam
   eder, "yaklaşık" seçilirse koordinatlar o etiketle gösterilir).
 
@@ -288,6 +288,24 @@ Almanac, saat açısını zaman denklemi yerine GMST'den kuran yol) 162,0° verd
 Yan kontroller de tuttu — 23 Ağustos için deklinasyon 11,37° (beklenen ~11,5°),
 o gün İstanbul'da güneşin azami yüksekliği 60,4°.
 
+**Ana yönlerde titreşim.** Gösterilen açı K/D/G/B'den birine 2° yaklaşınca kısa
+bir tık verilir; 5° uzaklaşana kadar yeniden tetiklenmez. Ekrana bakmadan yön
+tutmaya yarar. Uygulama açılırken ana yöne bakıyorsanız titremez — ilk okuma
+yalnızca başlangıç bölgesini kaydeder.
+
+Titreşim `performHapticFeedback` ile değil, doğrudan `Vibrator` ile verilir.
+Sebebi ölçüm: Galaxy A51 / Android 13'te `CLOCK_TICK`, `KEYBOARD_TAP`,
+`VIRTUAL_KEY`, `CONFIRM` ve `CONTEXT_CLICK` sabitlerinin **hepsi `true` dönüyor
+ama hiçbiri titremiyor**; yalnızca `LONG_PRESS` çalışıyor, o da 48 ms'lik sert
+bir vuruş. Yani dönüş değeri bu cihazda hiçbir şey ifade etmiyor ve ana yön
+geçişi için gereken kısa tık ancak efekti kendimiz vererek elde ediliyor (20 ms).
+Karşılığında `VIBRATE` izni gerekiyor (normal izin, çalışma anında sorulmaz) ve
+kullanıcının sistem dokunsal ayarına elle bakılıyor: kapalıysa titremez.
+
+Art arda tetiklemeye karşı 700 ms'lik asgari aralık var. Bu da ölçümden geldi:
+açılışta yumuşatma otururken açı birkaç bölgeyi hızla kesip 23 ms içinde üç tık
+üretmişti.
+
 ## 6. Kodun yapısı
 
 Uygulama hem dikey hem yatay çalışır. `remapCoordinateSystem` zaten sensör
@@ -363,7 +381,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **796.414 bayt** (~777 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **797.646 bayt** (~778 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.
