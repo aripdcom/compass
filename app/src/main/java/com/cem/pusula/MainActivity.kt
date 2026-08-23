@@ -712,9 +712,7 @@ class MainActivity : Activity(), SensorEventListener {
         val device = vibrator ?: return
         if (!device.hasVibrator()) return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            device.vibrate(
-                VibrationEffect.createOneShot(CARDINAL_TICK_MS, VibrationEffect.DEFAULT_AMPLITUDE)
-            )
+            device.vibrate(VibrationEffect.createOneShot(CARDINAL_TICK_MS, CARDINAL_TICK_AMPLITUDE))
         } else {
             @Suppress("DEPRECATION")
             device.vibrate(CARDINAL_TICK_MS)
@@ -863,7 +861,16 @@ class MainActivity : Activity(), SensorEventListener {
         // Ana yöne bu kadar yaklaşınca tık verilir, bu kadar uzaklaşınca sıfırlanır.
         const val CARDINAL_ENTER_DEGREES = 2f
         const val CARDINAL_EXIT_DEGREES = 5f
-        const val CARDINAL_TICK_MS = 20L
+        /**
+         * 45 ms ve tam genlik. Ölçümden çıktı: Galaxy A51'in titreşim motoru ERM
+         * (dönen ağırlık) ve dönmeye başlaması ~30-50 ms alıyor; 20 ms'lik darbe
+         * kayda düşüyor ama elde hiç hissedilmiyordu. Cihazın dokunsal şiddeti de
+         * LOW olduğu için varsayılan genlik ayrıca kısılıyor, o yüzden genlik açık
+         * veriliyor. Aynı sebeple performHapticFeedback'te çalışan tek sabit
+         * 48 ms'lik LONG_PRESS'ti.
+         */
+        const val CARDINAL_TICK_MS = 45L
+        const val CARDINAL_TICK_AMPLITUDE = 255
         const val CARDINAL_TICK_MIN_GAP_MS = 700L
 
         const val ARRIVED_MIN_METERS = 10f

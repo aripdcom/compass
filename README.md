@@ -293,14 +293,29 @@ bir tık verilir; 5° uzaklaşana kadar yeniden tetiklenmez. Ekrana bakmadan yö
 tutmaya yarar. Uygulama açılırken ana yöne bakıyorsanız titremez — ilk okuma
 yalnızca başlangıç bölgesini kaydeder.
 
-Titreşim `performHapticFeedback` ile değil, doğrudan `Vibrator` ile verilir.
-Sebebi ölçüm: Galaxy A51 / Android 13'te `CLOCK_TICK`, `KEYBOARD_TAP`,
-`VIRTUAL_KEY`, `CONFIRM` ve `CONTEXT_CLICK` sabitlerinin **hepsi `true` dönüyor
-ama hiçbiri titremiyor**; yalnızca `LONG_PRESS` çalışıyor, o da 48 ms'lik sert
-bir vuruş. Yani dönüş değeri bu cihazda hiçbir şey ifade etmiyor ve ana yön
-geçişi için gereken kısa tık ancak efekti kendimiz vererek elde ediliyor (20 ms).
-Karşılığında `VIBRATE` izni gerekiyor (normal izin, çalışma anında sorulmaz) ve
-kullanıcının sistem dokunsal ayarına elle bakılıyor: kapalıysa titremez.
+Titreşim `performHapticFeedback` ile değil, doğrudan `Vibrator` ile verilir
+(45 ms, tam genlik). Karşılığında `VIBRATE` izni gerekir (normal izin, çalışma
+anında sorulmaz) ve kullanıcının sistem dokunsal ayarına elle bakılır: kapalıysa
+titremez.
+
+Bu iki sayı deneyle bulundu ve ikisi de aynı fiziksel sebebe çıkıyor. Önce
+`performHapticFeedback` sabitleri denendi: Galaxy A51 / Android 13'te
+`CLOCK_TICK`, `KEYBOARD_TAP`, `VIRTUAL_KEY`, `CONFIRM` ve `CONTEXT_CLICK`
+**hepsi `true` dönüyor ama hiçbiri titremiyor**; çalışan tek sabit 48 ms'lik
+`LONG_PRESS`. Yani dönüş değeri bu cihazda hiçbir şey ifade etmiyor.
+
+"48 ms fazla sert" diye kendi efektimiz 20 ms verildiğinde `dumpsys
+vibrator_manager` kaydı düzgün düşüyordu ama elde hiçbir şey hissedilmiyordu.
+Sebep: A51'in motoru **ERM** (dönen ağırlık) ve dönmeye başlaması 30-50 ms
+alıyor — 20 ms'lik darbe motoru hızlandırmaya yetmiyor. `LONG_PRESS`'in tek
+çalışan sabit olması da tesadüf değilmiş, eşik tam orada. Cihazın dokunsal
+şiddeti `TOUCH=(LOW)` olduğu için varsayılan genlik ayrıca kısılıyordu, o yüzden
+genlik açıkça 255 veriliyor.
+
+Buradan çıkan genel ders: titreşim kaydının `dumpsys`'te görünmesi hissedildiği
+anlamına gelmiyor, `performHapticFeedback`'in `true` dönmesi de öyle. İkisi de
+bu cihazda sessizce yalan söyledi; tek geçerli doğrulama telefonu eline alıp
+denemek oldu.
 
 Art arda tetiklemeye karşı 700 ms'lik asgari aralık var. Bu da ölçümden geldi:
 açılışta yumuşatma otururken açı birkaç bölgeyi hızla kesip 23 ms içinde üç tık
@@ -381,7 +396,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **797.646 bayt** (~778 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **797.719 bayt** (~779 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.
