@@ -650,7 +650,7 @@ class MainActivity : Activity(), SensorEventListener {
         val now = System.currentTimeMillis()
         val position = Sun.position(now, latitude, longitude)
         sun = position
-        sunArc = Sun.riseSet(now, latitude)
+        sunArc = Sun.riseSet(now, latitude, longitude)
         moon = Moon.position(now, latitude, longitude)
         applyMarks()
         refreshInfoText(lastMagnetic)
@@ -830,6 +830,13 @@ class MainActivity : Activity(), SensorEventListener {
             formatDistance(results[0])
         )
     }
+
+    /**
+     * Saati cihazın biçimiyle yazar: 12/24 saat tercihi ve dil sistemden gelir,
+     * uygulamanın kendi biçimi yoktur.
+     */
+    private fun formatTime(timeMillis: Long): String =
+        android.text.format.DateFormat.getTimeFormat(this).format(java.util.Date(timeMillis))
 
     /** Yakında metre, uzakta kilometre; ondalık ayraç cihazın diline uyar. */
     private fun formatDistance(meters: Float): String =
@@ -1096,7 +1103,9 @@ class MainActivity : Activity(), SensorEventListener {
                 marks,
                 getString(
                     R.string.sun_rise_set,
+                    formatTime(it.riseAt),
                     formatBearing(toDialFrame(it.rise)),
+                    formatTime(it.setAt),
                     formatBearing(toDialFrame(it.set))
                 ),
                 palette.sun

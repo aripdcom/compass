@@ -17,7 +17,7 @@
     <string name="place_vatican">Vaticano</string>
     <string name="place_vatican_label">Vaticano</string>
     <string name="place_info">%1$s %2$s</string>
-    <string name="sun_rise_set">alba %1$s · tramonto %2$s</string>
+    <string name="sun_rise_set">alba %1$s (%2$s) · tramonto %3$s (%4$s)</string>
     <string name="moon_info">Luna %1$s · %2$d%%</string>
     <string name="moon_info_below">Luna %1$s · %2$d%% · sotto l’orizzonte</string>
     <string name="approximate_location">approssimativa</string>

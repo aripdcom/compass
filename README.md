@@ -322,7 +322,14 @@ doğru olmalıdır. Güneş dakikada 0,25° yol aldığı için konum dakikada b
 
 **Güneşin yolu.** Kadranın kenarındaki altın yay, güneşin bugün doğduğu yönden
 battığı yöne, güneyin üzerinden uzanır; uçlarındaki çentikler doğuş ve batış
-noktalarıdır ve dereceleri alt satırda yazar. Güneş diski bu yayın üzerinde
+noktalarıdır. Alt satırda **hem saatleri hem yönleri** yazar:
+
+```
+doğuş 06:21 (74°) · batış 19:50 (286°)
+```
+
+Saat biçimi cihazdan gelir (12/24 saat tercihi ve dil sistemin), uygulamanın
+kendi biçimi yoktur. Güneş diski bu yayın üzerinde
 ilerler.
 
 "Güneş doğudan doğar" yalnızca ekinokslarda doğrudur. İstanbul'da doğuş noktası
@@ -335,7 +342,14 @@ yıl boyunca **64°'lik bir yay** tarar:
 | 21 Aralık | −23,4° | 121,0° | 239,0° |
 
 Ekinoksta bile tam 90° değil 89,3°, çünkü güneş merkezi ufkun 0,833° altındayken
-görünür: atmosferik kırılma 34′ yukarı kaldırır, güneşin yarıçapı 16′ ekler. Bu
+görünür: atmosferik kırılma 34′ yukarı kaldırır, güneşin yarıçapı 16′ ekler.
+Saatler de bu tanıma göre hesaplanır.
+
+Yön ile saat ayrı formüllerden gelir — biri azimutu, diğeri saat açısını çözer —
+ve hesap bir kez yinelenir: deklinasyon gün içinde değiştiği için tek geçişte
+bulunan an yarım dakikaya varan hata veriyordu. Aynı sebeple doğuş ile batış
+kuzey-güney eksenine göre **tam simetrik değildir**; sabah ile akşam arasında
+deklinasyon değiştiği için iki uç birkaç yüzde bir derece kayar. Bu
 yayın genişliği enlemle büyür — ekvatorda 47°, İstanbul'da 64°, 60°K'de 106°,
 kutup dairesinde 161°. Kutup gündüzü ya da gecesinde güneş ufku hiç kesmez;
 formülün kosinüsü ±1'i aştığı için yay o günlerde çizilmez.
@@ -643,7 +657,7 @@ sıfırlandı; hassasiyet ±22 m'ye döndü.
 ## 12. Testler
 
 ```bash
-./gradlew test          # 28 test, saniyeler içinde, cihaz gerekmez
+./gradlew test          # 30 test, saniyeler içinde, cihaz gerekmez
 ```
 
 Testler JVM'de koşar; Android çalışma zamanı gerekmez. Bunun için uygulamanın
@@ -721,7 +735,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **112.089 bayt** (~109 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **113.221 bayt** (~110 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.

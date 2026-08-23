@@ -30,29 +30,34 @@ class SunTest {
      */
     @Test
     fun `dogus yonu mevsimle 64 derece geziniyor`() {
-        val yaz = Sun.riseSet(1_782_043_200_000L, istanbulLat)!!     // 21 Haziran
-        val ekinoks = Sun.riseSet(1_774_008_000_000L, istanbulLat)!! // 20 Mart
-        val kis = Sun.riseSet(1_797_854_400_000L, istanbulLat)!!     // 21 Aralık
+        val yaz = Sun.riseSet(1_782_043_200_000L, istanbulLat, istanbulLon)!!     // 21 Haziran
+        val ekinoks = Sun.riseSet(1_774_008_000_000L, istanbulLat, istanbulLon)!! // 20 Mart
+        val kis = Sun.riseSet(1_797_854_400_000L, istanbulLat, istanbulLon)!!     // 21 Aralık
         assertEquals(57.3f, yaz.rise, 0.6f)
         assertEquals(89.3f, ekinoks.rise, 0.6f)
         assertEquals(121.0f, kis.rise, 0.6f)
         assertEquals(63.7f, kis.rise - yaz.rise, 1.0f)
     }
 
+    /**
+     * Doğuş ve batış kuzey-güney eksenine göre neredeyse simetriktir ama tam
+     * değil: deklinasyon sabah ile akşam arasında değişir, dolayısıyla iki uç
+     * birkaç yüzde bir derece kayar. Bu fiziksel bir gerçek, hesap hatası değil.
+     */
     @Test
-    fun `dogus ve batis kuzey-guney eksenine gore simetrik`() {
+    fun `dogus ve batis kuzey-guney eksenine gore neredeyse simetrik`() {
         listOf(1_782_043_200_000L, 1_774_008_000_000L, 1_797_854_400_000L).forEach { t ->
-            val riseSet = Sun.riseSet(t, istanbulLat)!!
-            assertEquals(360f, riseSet.rise + riseSet.set, 0.01f)
+            val riseSet = Sun.riseSet(t, istanbulLat, istanbulLon)!!
+            assertEquals(360f, riseSet.rise + riseSet.set, 0.4f)
         }
     }
 
     /** Kutup gündüzünde güneş ufku hiç kesmez; yay çizilemez. */
     @Test
     fun `kutupta yaz ve kis icin dogus yok`() {
-        assertNull(Sun.riseSet(1_782_043_200_000L, 85.0))
-        assertNull(Sun.riseSet(1_797_854_400_000L, 85.0))
-        assertNotNull(Sun.riseSet(1_774_008_000_000L, 85.0))
+        assertNull(Sun.riseSet(1_782_043_200_000L, 85.0, istanbulLon))
+        assertNull(Sun.riseSet(1_797_854_400_000L, 85.0, istanbulLon))
+        assertNotNull(Sun.riseSet(1_774_008_000_000L, 85.0, istanbulLon))
     }
 
     /** Güneş en yüksek noktasına güneyde ulaşır (kuzey yarımkürede). */
@@ -72,6 +77,39 @@ class SunTest {
         // 23 Ağustos'ta güneşin sapması ~+11,4°, azami yükseklik 90-|41-11,4|
         assertEquals(60.4f, best.elevation, 1.0f)
         assertTrue(bestTime > 0L)
+    }
+
+    /**
+     * En güçlü kontrol: doğuş ve batış saatleri ile konum hesabı birbirini
+     * tutmalı. İkisi ayrı formüllerden gelir — biri saat açısını, diğeri azimutu
+     * çözer. Hesaplanan doğuş anında güneşin yüksekliği ufuk tanımına
+     * (-0,833°) eşit, azimutu da hesaplanan doğuş yönüne eşit olmalıdır.
+     */
+    @Test
+    fun `dogus ve batis anlari konum hesabiyla tutarli`() {
+        listOf(1_782_043_200_000L, 1_774_008_000_000L, 1_797_854_400_000L, 1_787_477_349_000L).forEach { t ->
+            val riseSet = Sun.riseSet(t, istanbulLat, istanbulLon)!!
+            val atRise = Sun.position(riseSet.riseAt, istanbulLat, istanbulLon)
+            val atSet = Sun.position(riseSet.setAt, istanbulLat, istanbulLon)
+            assertEquals(-0.833f, atRise.elevation, 0.02f)
+            assertEquals(-0.833f, atSet.elevation, 0.02f)
+            assertEquals(riseSet.rise, atRise.azimuth, 0.1f)
+            assertEquals(riseSet.set, atSet.azimuth, 0.1f)
+        }
+    }
+
+    /** Gün uzunluğu mevsimle değişir: İstanbul'da yazın ~15, kışın ~9 saat. */
+    @Test
+    fun `gun uzunlugu mevsimle degisir`() {
+        val yaz = Sun.riseSet(1_782_043_200_000L, istanbulLat, istanbulLon)!!
+        val kis = Sun.riseSet(1_797_854_400_000L, istanbulLat, istanbulLon)!!
+        val yazSaat = (yaz.setAt - yaz.riseAt) / 3_600_000.0
+        val kisSaat = (kis.setAt - kis.riseAt) / 3_600_000.0
+        assertEquals(15.1, yazSaat, 0.3)
+        assertEquals(9.3, kisSaat, 0.3)
+        // Ekinoksta gündüz ile gece kabaca eşittir; kırılma yüzünden gündüz biraz uzun.
+        val ekinoks = Sun.riseSet(1_774_008_000_000L, istanbulLat, istanbulLon)!!
+        assertTrue((ekinoks.setAt - ekinoks.riseAt) / 3_600_000.0 in 12.0..12.3)
     }
 
     /** Gün boyunca yükseklik hem pozitif hem negatif olmalı: gece ve gündüz var. */

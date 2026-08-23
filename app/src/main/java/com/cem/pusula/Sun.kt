@@ -22,8 +22,11 @@ object Sun {
     /** Azimut gerçek kuzeye göre, yükseklik ufka göre (negatifse güneş batmıştır). */
     data class Position(val azimuth: Float, val elevation: Float)
 
-    /** Güneşin doğduğu ve battığı yönler, gerçek kuzeye göre. */
-    data class RiseSet(val rise: Float, val set: Float)
+    /**
+     * Güneşin doğduğu ve battığı yönler (gerçek kuzeye göre) ile anları
+     * (epok milisaniyesi, UTC).
+     */
+    data class RiseSet(val rise: Float, val set: Float, val riseAt: Long, val setAt: Long)
 
     /**
      * Güneşin merkezi ufkun 0,833° altındayken görünür: atmosferik kırılma 34′
@@ -39,20 +42,83 @@ object Sun {
      * yıl boyunca 57° ile 121° arasında, 64°'lik bir yay tarar. Kutup gündüzü ya
      * da gecesinde güneş ufku hiç kesmez, o zaman null döner.
      */
-    fun riseSet(timeMillis: Long, latitude: Double): RiseSet? {
-        val declination = declination(timeMillis)
+    fun riseSet(timeMillis: Long, latitude: Double, longitude: Double): RiseSet? {
         val latitudeRad = Math.toRadians(latitude)
+        val riseAt = horizonMoment(timeMillis, latitudeRad, longitude, sunrise = true) ?: return null
+        val setAt = horizonMoment(timeMillis, latitudeRad, longitude, sunrise = false) ?: return null
+        val rise = horizonAzimuth(declination(riseAt), latitudeRad) ?: return null
+        val set = horizonAzimuth(declination(setAt), latitudeRad) ?: return null
+        return RiseSet(rise.toFloat(), (360.0 - set).toFloat(), riseAt, setAt)
+    }
+
+    /** Güneşin ufka değdiği andaki azimut (kuzeyden doğuya doğru ölçülür). */
+    private fun horizonAzimuth(declination: Double, latitudeRad: Double): Double? {
         val horizon = Math.toRadians(HORIZON_DEGREES)
         val cosAzimuth = (sin(declination) - sin(latitudeRad) * sin(horizon)) /
             (cos(latitudeRad) * cos(horizon))
         if (cosAzimuth < -1.0 || cosAzimuth > 1.0) return null
-        val rise = Math.toDegrees(acos(cosAzimuth))
-        return RiseSet(rise.toFloat(), (360.0 - rise).toFloat())
+        return Math.toDegrees(acos(cosAzimuth))
+    }
+
+    /**
+     * Güneşin ufku kestiği an. Saat açısı formülü deklinasyona bağlı,
+     * deklinasyon ise gün içinde değişiyor; tek geçişte hesaplanan an yarım
+     * dakikaya varan hata veriyordu. Bulunan an için deklinasyon ve zaman
+     * denklemi yeniden hesaplanıp bir kez yineleniyor — kalan hata saniyeler
+     * mertebesinde.
+     */
+    private fun horizonMoment(
+        reference: Long,
+        latitudeRad: Double,
+        longitude: Double,
+        sunrise: Boolean
+    ): Long? {
+        val horizon = Math.toRadians(HORIZON_DEGREES)
+        val dayStart = reference - Math.floorMod(reference, 86_400_000L)
+        var moment = reference
+        repeat(2) {
+            val declination = declination(moment)
+            val cosHourAngle = (sin(horizon) - sin(latitudeRad) * sin(declination)) /
+                (cos(latitudeRad) * cos(declination))
+            if (cosHourAngle < -1.0 || cosHourAngle > 1.0) return null
+            val hourAngle = Math.toDegrees(acos(cosHourAngle))
+            // Gerçek güneş saatinden UTC'ye: boylamın her derecesi 4 dakika,
+            // üstüne zaman denklemi. Öğlen 720. dakikadır.
+            val minutes = 720.0 + (if (sunrise) -4.0 * hourAngle else 4.0 * hourAngle) -
+                equationOfTime(moment) - 4.0 * longitude
+            moment = dayStart + (minutes * 60_000.0).toLong()
+        }
+        return moment
     }
 
     /** Julian yüzyıl: algoritmanın bütün katsayıları buna göre yazılmıştır. */
     private fun julianCentury(timeMillis: Long): Double =
         ((timeMillis / 86_400_000.0 + 2_440_587.5) - 2_451_545.0) / 36_525.0
+
+    /**
+     * Zaman denklemi (dakika): gerçek güneş saati ile ortalama saat arasındaki
+     * fark. Dünya'nın yörüngesi dairesel olmadığı ve ekseni eğik olduğu için
+     * güneş öğlesi yıl boyunca ±16 dakikaya varan biçimde kayar.
+     */
+    private fun equationOfTime(timeMillis: Long): Double {
+        val t = julianCentury(timeMillis)
+        val meanLongitude = (280.46646 + t * (36_000.76983 + t * 0.0003032)) % 360.0
+        val meanAnomaly = Math.toRadians(357.52911 + t * (35_999.05029 - 0.0001537 * t))
+        val eccentricity = 0.016708634 - t * (0.000042037 + 0.0000001267 * t)
+        val omega = Math.toRadians(125.04 - 1934.136 * t)
+        val meanObliquity =
+            23.0 + (26.0 + (21.448 - t * (46.815 + t * (0.00059 - t * 0.001813))) / 60.0) / 60.0
+        val obliquity = Math.toRadians(meanObliquity + 0.00256 * cos(omega))
+        val y = tan(obliquity / 2).let { it * it }
+        val meanLongitudeRad = Math.toRadians(meanLongitude)
+        return 4.0 * Math.toDegrees(
+            y * sin(2 * meanLongitudeRad) -
+                2 * eccentricity * sin(meanAnomaly) +
+                4 * eccentricity * y * sin(meanAnomaly) * cos(2 * meanLongitudeRad) -
+                0.5 * y * y * sin(4 * meanLongitudeRad) -
+                1.25 * eccentricity * eccentricity * sin(2 * meanAnomaly)
+        )
+    }
 
     /** Güneşin o andaki deklinasyonu (radyan). */
     private fun declination(timeMillis: Long): Double {
