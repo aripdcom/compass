@@ -44,6 +44,7 @@ import kotlin.math.floor
 import kotlin.math.acos
 import kotlin.math.atan2
 import kotlin.math.cos
+import kotlin.math.exp
 import kotlin.math.roundToInt
 import kotlin.math.sin
 import kotlin.math.sqrt
@@ -100,8 +101,14 @@ class MainActivity : Activity(), SensorEventListener {
     private var needsCalibration = false
     private var tilted = false
 
-    /** Şu an hangi ana yönün yakınındayız (0=K, 1=D, 2=G, 3=B); -1 hiçbiri. */
+    /** En son hangi ana yöne yakındık (0=K, 1=D, 2=G, 3=B); -1 henüz bilinmiyor. */
     private var hapticCardinal = -1
+
+    /** Ana yöne göre işaretli fark; işaret değişimi geçiş demektir. */
+    private var lastCardinalOffset = 0f
+
+    /** Tık verildikten sonra yeterince uzaklaşılana kadar yeniden tetiklenmez. */
+    private var hapticArmed = false
 
     /** Uygulama açılırken ana yöne bakıyorsanız titremesin diye ilk örnek sayılmaz. */
     private var hapticPrimed = false
@@ -131,7 +138,13 @@ class MainActivity : Activity(), SensorEventListener {
     private var fullscreen = Prefs.DEFAULT_FULLSCREEN
     private var unit = Prefs.DEFAULT_UNIT
     private var useTrueNorth = Prefs.DEFAULT_TRUE_NORTH
-    private var smoothingAlpha = Prefs.SMOOTHING_ALPHAS[Prefs.DEFAULT_SMOOTHING]
+    private var smoothingTimeConstant = Prefs.SMOOTHING_TIME_CONSTANTS[Prefs.DEFAULT_SMOOTHING]
+
+    /** Bir önceki sensör olayının anı (ns); örnek aralığını ölçmek için. */
+    private var lastSensorTimestamp = 0L
+
+    /** Son çizimin anı; kadran sensörden bağımsız bir hızda tazelenir. */
+    private var lastRenderAt = 0L
     private var vibrateOnCardinals = Prefs.DEFAULT_VIBRATE
     private var showMagnetic = Prefs.DEFAULT_SHOW_MAGNETIC
     private var showLevel = Prefs.DEFAULT_SHOW_LEVEL
@@ -270,9 +283,9 @@ class MainActivity : Activity(), SensorEventListener {
         showSun = stored.getBoolean(Prefs.KEY_SHOW_SUN, Prefs.DEFAULT_SHOW_SUN)
         showSunArc = stored.getBoolean(Prefs.KEY_SHOW_SUN_ARC, Prefs.DEFAULT_SHOW_SUN_ARC)
         showMoon = stored.getBoolean(Prefs.KEY_SHOW_MOON, Prefs.DEFAULT_SHOW_MOON)
-        smoothingAlpha = Prefs.SMOOTHING_ALPHAS[
+        smoothingTimeConstant = Prefs.SMOOTHING_TIME_CONSTANTS[
             stored.getInt(Prefs.KEY_SMOOTHING, Prefs.DEFAULT_SMOOTHING)
-                .coerceIn(0, Prefs.SMOOTHING_ALPHAS.lastIndex)
+                .coerceIn(0, Prefs.SMOOTHING_TIME_CONSTANTS.lastIndex)
         ]
         fullscreen = stored.getBoolean(Prefs.KEY_FULLSCREEN, Prefs.DEFAULT_FULLSCREEN)
         applyFullscreen()
@@ -431,6 +444,8 @@ class MainActivity : Activity(), SensorEventListener {
         // sayılmasın diye ölçüm ve sayaç sıfırdan başlatılır.
         measuredFieldStrength = 0f
         hapticPrimed = false
+        lastSensorTimestamp = 0L
+        lastRenderAt = 0L
         disturbedSince = 0L
         disturbed = false
         lastShownFieldStrength = -1
@@ -454,7 +469,7 @@ class MainActivity : Activity(), SensorEventListener {
         val rv = rotationVector
         val mag = magnetometer
         if (rv != null) {
-            sensorManager.registerListener(this, rv, SensorManager.SENSOR_DELAY_GAME)
+            sensorManager.registerListener(this, rv, SensorManager.SENSOR_DELAY_UI)
             // Rotation vector yönü verir ama alanın büyüklüğünü vermez; anomali
             // ancak ham manyetometreden görülür, o yüzden onu da dinliyoruz.
             if (mag != null) sensorManager.registerListener(this, mag, SensorManager.SENSOR_DELAY_UI)
@@ -462,8 +477,8 @@ class MainActivity : Activity(), SensorEventListener {
         }
         val acc = accelerometer
         if (acc != null && mag != null) {
-            sensorManager.registerListener(this, acc, SensorManager.SENSOR_DELAY_GAME)
-            sensorManager.registerListener(this, mag, SensorManager.SENSOR_DELAY_GAME)
+            sensorManager.registerListener(this, acc, SensorManager.SENSOR_DELAY_UI)
+            sensorManager.registerListener(this, mag, SensorManager.SENSOR_DELAY_UI)
         } else {
             statusText.text = getString(R.string.no_sensor)
         }
@@ -505,15 +520,20 @@ class MainActivity : Activity(), SensorEventListener {
             }
             best?.let { applyLocation(it) }
 
-            // Sapma için ağ konumu yeterdi; koordinat paneli için GPS'in hassasiyeti
-            // de gerekiyor, o yüzden ikisi de dinlenip en iyisi seçiliyor.
-            for (provider in arrayOf(
-                LocationManager.GPS_PROVIDER,
-                LocationManager.NETWORK_PROVIDER
-            )) {
-                if (lm.isProviderEnabled(provider)) {
-                    lm.requestLocationUpdates(provider, 10_000L, 10f, locationListener)
-                }
+            // İki sağlayıcı da dinlenir ama farklı sıklıkta. Sapma, kıble, güneş
+            // ve ay kilometreler mertebesinde değişir; onlar için ağ konumu bol
+            // bol yeter ve neredeyse bedavadır. GPS yalnızca koordinat paneli ve
+            // nokta mesafesi için gerekli, o da saniyede bir tazelenmek zorunda
+            // değil — aralıklar buna göre seyreltildi.
+            if (lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                lm.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER, NETWORK_INTERVAL_MS, NETWORK_DISTANCE_M, locationListener
+                )
+            }
+            if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                lm.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER, GPS_INTERVAL_MS, GPS_DISTANCE_M, locationListener
+                )
             }
         } catch (_: SecurityException) {
         }
@@ -855,7 +875,7 @@ class MainActivity : Activity(), SensorEventListener {
         when (event.sensor.type) {
             Sensor.TYPE_ROTATION_VECTOR -> {
                 SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
-                updateFromRotationMatrix()
+                updateFromRotationMatrix(event.timestamp)
             }
             Sensor.TYPE_ACCELEROMETER -> {
                 System.arraycopy(event.values, 0, gravity, 0, 3)
@@ -863,7 +883,7 @@ class MainActivity : Activity(), SensorEventListener {
                 if (hasGeomagnetic &&
                     SensorManager.getRotationMatrix(rotationMatrix, null, gravity, geomagnetic)
                 ) {
-                    updateFromRotationMatrix()
+                    updateFromRotationMatrix(event.timestamp)
                 }
             }
             Sensor.TYPE_MAGNETIC_FIELD -> {
@@ -873,13 +893,13 @@ class MainActivity : Activity(), SensorEventListener {
                 if (hasGravity &&
                     SensorManager.getRotationMatrix(rotationMatrix, null, gravity, geomagnetic)
                 ) {
-                    updateFromRotationMatrix()
+                    updateFromRotationMatrix(event.timestamp)
                 }
             }
         }
     }
 
-    private fun updateFromRotationMatrix() {
+    private fun updateFromRotationMatrix(timestamp: Long) {
         // Ekran döndüğünde sensör eksenlerini ekrana göre yeniden eşle.
         val (axisX, axisY) = when (currentDisplayRotation()) {
             Surface.ROTATION_90 -> SensorManager.AXIS_Y to SensorManager.AXIS_MINUS_X
@@ -902,12 +922,17 @@ class MainActivity : Activity(), SensorEventListener {
             smoothRoll = rollDegrees
             initialized = true
         } else {
-            val alpha = smoothingAlpha
+            // Katsayı örnek aralığından türetilir: hız değişse de yumuşatmanın
+            // süresi sabit kalır. Aralık sıçramalarına karşı sınırlandırılıyor.
+            val interval = ((timestamp - lastSensorTimestamp) / 1_000_000_000.0)
+                .coerceIn(0.002, 0.25)
+            val alpha = (1.0 - exp(-interval / smoothingTimeConstant)).toFloat()
             smoothSin += alpha * (s - smoothSin)
             smoothCos += alpha * (c - smoothCos)
             smoothPitch += alpha * (pitchDegrees - smoothPitch)
             smoothRoll += alpha * (rollDegrees - smoothRoll)
         }
+        lastSensorTimestamp = timestamp
 
         val magnetic =
             ((Math.toDegrees(atan2(smoothSin, smoothCos).toDouble()) + 360.0) % 360.0).toFloat()
@@ -917,10 +942,21 @@ class MainActivity : Activity(), SensorEventListener {
         val trueFrame = useTrueNorth && declination != null
         val shown = (magnetic + frameOffset() + 360f) % 360f
 
-        compassView.setAzimuth(shown)
-        compassView.setTilt(smoothPitch, smoothRoll)
+        // Titreşim ve eğim uyarısı her örnekte değerlendirilir: ikisi de ucuz ve
+        // hızlı çevirmede örnek atlamak geçişi kaçırmak demektir.
         updateCardinalHaptics(shown)
         updateTiltWarning()
+
+        // Çizim ise seyreltilir. Ölçüm şunu gösterdi: uygulamanın SENSOR_DELAY_UI
+        // istemesi bu cihazda işe yaramıyor, çünkü Android bağlantı başına
+        // seyreltme yapmıyor — sensörü 50 Hz'de sürdüren başka bir abone varsa
+        // olaylar bize de 50 Hz geliyor. O yüzden hızı burada sınırlıyoruz.
+        val now = SystemClock.elapsedRealtime()
+        if (now - lastRenderAt < RENDER_MIN_INTERVAL_MS) return
+        lastRenderAt = now
+
+        compassView.setAzimuth(shown)
+        compassView.setTilt(smoothPitch, smoothRoll)
 
         val rounded = shown.roundToInt() % 360
         if (rounded != lastShownDegree) {
@@ -938,28 +974,35 @@ class MainActivity : Activity(), SensorEventListener {
     }
 
     /**
-     * Ana yönlerden birine girince kısa bir tık verir: ekrana bakmadan yön
-     * tutmayı sağlar. Girme ve çıkma eşikleri farklı, yoksa sınırda titreşim
-     * sayısını sayamazdınız. Sistem dokunsal geri bildirimi kapalıysa
-     * `performHapticFeedback` sessizce hiçbir şey yapmaz — kullanıcının tercihi.
+     * Ana yön geçişinde kısa tık. Bölge değil **geçiş** algılanır: ana yöne göre
+     * işaretli fark iki örnek arasında işaret değiştirdiyse üzerinden geçilmiştir.
+     *
+     * Bunun sebebi örnekleme hızı: "2° yaklaşınca tık" kuralı 50 Hz'de çalışıyordu
+     * ama 16 Hz'de hızlı çevirmede örnekler 5-6° atlıyor ve 4°'lik pencere tümüyle
+     * ıskalanabiliyor. Geçiş algılama hızdan bağımsızdır.
+     *
+     * Tam ana yönde durulduğunda gürültü işareti sürekli değiştirebileceği için
+     * bir kez tıkladıktan sonra en az `CARDINAL_ARM_DEGREES` uzaklaşılmadan
+     * yeniden tıklanmaz.
      */
     private fun updateCardinalHaptics(shown: Float) {
         val nearest = (shown / 90f).roundToInt() % 4
-        val delta = abs(((shown - nearest * 90f + 540f) % 360f) - 180f)
+        val offset = Geo.difference(nearest * 90f, shown)
 
-        if (!hapticPrimed) {
-            hapticCardinal = if (delta <= CARDINAL_ENTER_DEGREES) nearest else -1
+        if (!hapticPrimed || nearest != hapticCardinal) {
             hapticPrimed = true
-            return
-        }
-        if (hapticCardinal == nearest) {
-            if (delta > CARDINAL_EXIT_DEGREES) hapticCardinal = -1
-            return
-        }
-        if (delta <= CARDINAL_ENTER_DEGREES) {
             hapticCardinal = nearest
+            hapticArmed = abs(offset) > CARDINAL_ARM_DEGREES
+            lastCardinalOffset = offset
+            return
+        }
+        if (!hapticArmed) {
+            if (abs(offset) > CARDINAL_ARM_DEGREES) hapticArmed = true
+        } else if ((offset > 0f) != (lastCardinalOffset > 0f)) {
+            hapticArmed = false
             tickForCardinal()
         }
+        lastCardinalOffset = offset
     }
 
     /**
@@ -1179,12 +1222,24 @@ class MainActivity : Activity(), SensorEventListener {
         /** "Buradasınız" eşiğinin alt ve üst sınırı (metre). */
         const val SUN_UPDATE_MS = 60_000L
 
+        /** İki çizim arasındaki asgari süre; 50 ms yaklaşık 20 kare/saniye eder. */
+        const val RENDER_MIN_INTERVAL_MS = 50L
+
+        // Konum güncelleme sıklıkları. Mesafe süzgeci bilerek sıfır: Android
+        // güncellemeyi ancak hem süre dolduğunda hem de o kadar yol alındığında
+        // gönderiyor, dolayısıyla süzgeç konulunca sabit duran telefona GPS hiç
+        // fix göndermiyor ve panel ağ konumunun ±100 m'sine düşüyordu. Sıklığı
+        // yalnızca süre belirliyor.
+        const val NETWORK_INTERVAL_MS = 60_000L
+        const val NETWORK_DISTANCE_M = 0f
+        const val GPS_INTERVAL_MS = 15_000L
+        const val GPS_DISTANCE_M = 0f
+
         /** Bu açıdan yakın kadran işaretleri tek etikette birleşir. */
         const val MERGE_DEGREES = 6f
 
-        // Ana yöne bu kadar yaklaşınca tık verilir, bu kadar uzaklaşınca sıfırlanır.
-        const val CARDINAL_ENTER_DEGREES = 2f
-        const val CARDINAL_EXIT_DEGREES = 5f
+        /** Tıktan sonra yeniden tetiklenmek için gereken uzaklaşma (derece). */
+        const val CARDINAL_ARM_DEGREES = 3f
         /**
          * 45 ms ve tam genlik. Ölçümden çıktı: Galaxy A51'in titreşim motoru ERM
          * (dönen ağırlık) ve dönmeye başlaması ~30-50 ms alıyor; 20 ms'lik darbe
@@ -1203,8 +1258,11 @@ class MainActivity : Activity(), SensorEventListener {
         const val KEY_WAYPOINT_LATITUDE = "waypointLatitude"
         const val KEY_WAYPOINT_LONGITUDE = "waypointLongitude"
 
-        /** Bu yaştan büyük fark varsa yeni fix koşulsuz kazanır. */
-        const val FIX_STALE_MS = 60_000L
+        /**
+         * Bu yaştan büyük fark varsa yeni fix koşulsuz kazanır. Ağ konumu GPS'ten
+         * seyrek geldiği için kısa tutulursa kaba fix hassas olanı devirir.
+         */
+        const val FIX_STALE_MS = 120_000L
 
         /** Bu kadar yaklaşınca "hedeftesiniz" denir. */
         const val ON_TARGET_DEGREES = 2

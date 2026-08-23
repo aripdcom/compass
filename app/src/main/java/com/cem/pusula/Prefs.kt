@@ -36,10 +36,15 @@ object Prefs {
     const val DEFAULT_UNIT = UNIT_DEGREE
 
     /**
-     * Yumuşatma katsayıları: küçük değer sakin ama geç, büyük değer çevik ama
-     * oynak. Ortadaki, uygulamanın başından beri kullandığı değerdir.
+     * Yumuşatmanın zaman sabitleri (saniye). Katsayı yerine süre tutuluyor,
+     * çünkü katsayı örnekleme hızına bağlıdır: aynı 0,12 değeri 50 Hz'de 0,17
+     * saniyelik, 16 Hz'de 0,5 saniyelik gecikme demektir. Süreyle ifade edilince
+     * hız değişse de ibrenin hissi aynı kalır.
+     *
+     * Ortadaki, uygulamanın başından beri kullandığı 0,12 katsayısının 50 Hz'deki
+     * karşılığıdır.
      */
-    val SMOOTHING_ALPHAS = floatArrayOf(0.06f, 0.12f, 0.25f)
+    val SMOOTHING_TIME_CONSTANTS = floatArrayOf(0.35f, 0.17f, 0.08f)
     const val DEFAULT_SMOOTHING = 1
 
     /** NATO mili: tam çember 6400 mil. Topçuluk ve harita işlerinde kullanılır. */

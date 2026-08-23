@@ -569,7 +569,41 @@ dosyalara taşındı. Ondalık ayracı da dile uyar: aynı sapma İngilizce'de
 Ekran okuyucu için kullanılan açık yön adları da her dilde ayrıdır
 (`kuzey kuzeydoğu` / `north-northeast` / `Nordnordost`).
 
-## 10. Testler
+## 10. Pil
+
+Kadran, sensör olaylarının hızında değil **kendi hızında** çizilir: iki çizim
+arasında en az 50 ms bırakılır (~20 kare/saniye). Bunun ölçülen karşılığı 20
+saniyede **985 kareden 323 kareye** düşmektir — üçte bir.
+
+Buna giden yol dolambaçlıydı. Önce sensör `SENSOR_DELAY_GAME` yerine
+`SENSOR_DELAY_UI` ile istendi; `dumpsys` isteğin 20000 µs'ten 66667 µs'e
+düştüğünü doğruladı ama kare sayısı değişmedi. Ölçüm sebebini gösterdi:
+uygulamaya **saniyede hâlâ 50 olay** geliyordu. Android bu cihazda bağlantı
+başına seyreltme yapmıyor; sensörü 50 Hz'de sürdüren başka bir abone varsa
+olaylar herkese o hızda gidiyor. Yani istenen hız bir üst sınır değil, yalnızca
+bir dilek. Çizim hızını uygulamanın kendisi sınırlamak zorunda.
+
+Sensörden gelen her örnek yine de işlenir — yumuşatma, titreşim ve eğim uyarısı
+örnek atlamaya duyarlıdır. Yalnızca çizim seyreltilir.
+
+**Yumuşatma artık katsayı değil süre.** Önceden 0,12 gibi bir katsayı vardı ama
+katsayının anlamı örnekleme hızına bağlı: aynı değer 50 Hz'de 0,17 saniyelik,
+16 Hz'de 0,5 saniyelik gecikme demek. Artık zaman sabitleri (0,35 / 0,17 / 0,08
+saniye) saklanıyor ve katsayı her örnekte gerçek aralıktan hesaplanıyor, böylece
+hız değişse de ibrenin hissi sabit kalıyor.
+
+**Titreşim bölge değil geçiş algılıyor.** "Ana yöne 2° yaklaşınca tık" kuralı
+50 Hz'de çalışıyordu ama düşük hızda hızlı çevirmede örnekler 5-6° atlar ve
+4°'lik pencere tümüyle ıskalanabilir. Artık ana yöne göre işaretli farkın işaret
+değiştirmesi aranıyor; bu, örnekleme hızından bağımsızdır.
+
+Konum güncellemeleri de seyreltildi (GPS 15 sn, ağ 60 sn). Burada bir tuzak
+vardı: mesafe süzgeci konulunca Android güncellemeyi ancak hem süre dolduğunda
+hem de o kadar yol alındığında gönderiyor, dolayısıyla **sabit duran telefona
+GPS hiç fix göndermiyor** ve panel ağ konumunun ±100 m'sine düşüyordu. Süzgeç
+sıfırlandı; hassasiyet ±22 m'ye döndü.
+
+## 11. Testler
 
 ```bash
 ./gradlew test          # 28 test, saniyeler içinde, cihaz gerekmez
@@ -610,7 +644,7 @@ yanlıştı; düzeltildi.
 
 JUnit yalnızca `testImplementation` olarak eklidir, APK'ya girmez — doğrulandı.
 
-## 11. Sorun giderme
+## 12. Sorun giderme
 
 ### "Kuruldu" dedi ama uygulama listede yok
 
@@ -650,7 +684,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **854.752 bayt** (~834 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **855.300 bayt** (~835 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.
