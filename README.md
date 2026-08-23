@@ -24,10 +24,10 @@ pusula/
 └── keystore.properties                     (gitignore'da)
 ```
 
-| Ekran | | |
+| | | |
 |---|---|---|
-| ![Gerçek kuzey](docs/ekran-goruntusu-gercek-kuzey.png) | ![Hedef kilidi](docs/ekran-goruntusu-hedef.png) | ![Manyetik kuzey](docs/ekran-goruntusu.png) |
-| Konum izni verilince: gerçek kuzey, manyetik yön, sapma ve kıble; kadranda mavi **M** ile yeşil **Kıble** işaretleri | Kadrana dokununca yön kilitlenir: sarı hat ve "kaç derece sağa/sola" satırı | İzin yokken: manyetik kuzeyle çalışmaya devam eder |
+| ![Gündüz](docs/ekran-gunduz.png) | ![Gece modu](docs/ekran-gece.png) | ![Ayarlar](docs/ekran-ayarlar.png) |
+| Kadranda altı işaret: mavi **M** manyetik kuzey, yeşil **Kıble**, altın disk güneş ve yayı, mor baklava kaydedilen nokta, gri disk ay. Altta yönler, koordinat ve hedef satırı. | Gece modu: siyah zemin, kırmızı kadran. Ayrım parlaklıkla değil tonla kurulur, gece görüşü korunur. | Ayarlar: görünüm, pusula davranışı ve hangi işaretlerin görüneceği. Uygulama içinde dil ayarı yoktur, sistem dili kullanılır. |
 
 ## 1. Hazır APK'yı telefona kurmak
 
