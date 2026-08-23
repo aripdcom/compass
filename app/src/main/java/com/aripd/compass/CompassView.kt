@@ -134,7 +134,14 @@ class CompassView @JvmOverloads constructor(
     private val rimPool = ArrayList<RimItem>()
     private val rimMarks = ArrayList<RimItem>()
     private val topMarker = RimItem()
-    private var rimFractions = FloatArray(0)
+
+    /**
+     * Yarıçap sonuçları. Boyutu üst sınırdan türetiliyor, çizim sırasında
+     * büyümüyor: kadranda en çok manyetik kuzey + sabit noktalar + güneş + ay +
+     * kaydedilen noktalar bulunabilir. Birleştirme bu sayıyı yalnızca
+     * azaltabilir, artıramaz.
+     */
+    private val rimFractions = FloatArray(2 + Places.ALL.size + Waypoints.LIMIT)
 
     /**
      * Kadran harfleri ve "M" etiketi her karede `getStringArray`/`getString` ile
@@ -291,7 +298,6 @@ class CompassView @JvmOverloads constructor(
         // Tepedeki gösterge kadran çerçevesinde `azimuth` yönüne denk gelir:
         // kadran -azimuth kadar döndüğü için o yön ekranın tepesine çıkar.
         topMarker.set(azimuth, halfWidth(dp(7.2f), radius), KIND_MAGNETIC, null)
-        if (rimFractions.size < rimMarks.size) rimFractions = FloatArray(rimMarks.size)
         val fractions = RimLayout.assign(rimMarks, topMarker, RIM_RADII, RIM_MARGIN, rimFractions)
         moonFraction = null
         rimMarks.forEachIndexed { index, item ->
@@ -496,10 +502,6 @@ class CompassView @JvmOverloads constructor(
 
     companion object {
         /**
-         * Yazılı işaretlerin yerleşebileceği yarıçaplar. Yön harfleri 0,62-0,785R
-         * bandını kapladığı için en içteki bile onların dışında kalır.
-         */
-        /**
          * İşaretlerin yerleşebileceği yarıçaplar. En içteki bile yön harflerinin
          * bandının (0,62-0,785R) dışında kalır.
          */
@@ -510,9 +512,6 @@ class CompassView @JvmOverloads constructor(
 
         /** Güneş yayının yarıçapı; dış çemberin hemen içinde. */
         private const val SUN_ARC_RADIUS = 0.965f
-
-        /** İşaret çizgisinin dış çemberden içeri indiği nokta. */
-        private const val RIM_TICK_INNER = 0.93f
 
         /** Kabarcığın kenara dayandığı eğim ve "düz sayılır" eşiği (derece). */
         private const val MAX_TILT = 25f

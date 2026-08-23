@@ -27,8 +27,9 @@ object RimLayout {
     /**
      * @param fixed yerinden oynatılamayan işaret (ekranın tepesindeki gösterge);
      *              en dış yarıçapa önceden yerleştirilir.
-     * @param out sonucun yazılacağı dizi; en az işaret sayısı kadar olmalı.
-     *            Verilmezse yenisi ayrılır.
+     * @param out sonucun yazılacağı dizi; en az işaret sayısı kadar olmalı ve
+     *            daha uzun olabilir (çağıran üst sınırdan ayırıp yeniden
+     *            kullanır). Verilmezse yenisi ayrılır.
      * @return her işaret için yarıçap oranı, giriş sırasıyla (`out`'un kendisi).
      */
     fun assign(

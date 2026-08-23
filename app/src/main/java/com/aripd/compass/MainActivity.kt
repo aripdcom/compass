@@ -255,6 +255,7 @@ class MainActivity : Activity(), SensorEventListener {
             showLocationActions()
             true
         }
+        applyInsets()
         compassView.contentDescription = getString(R.string.a11y_dial)
         compassView.setOnClickListener { toggleTarget() }
         compassView.setOnLongClickListener {
@@ -361,7 +362,11 @@ class MainActivity : Activity(), SensorEventListener {
      */
     private fun applyFullscreen() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.setDecorFitsSystemWindows(!fullscreen)
+            // Android 15'ten (targetSdk 35) itibaren pencere her hâlükârda
+            // sistem çubuklarının altına çiziliyor ve setDecorFitsSystemWindows(true)
+            // yok sayılıyor. Bu yüzden boşluğu her sürümde kendimiz bırakıyoruz:
+            // davranış API'ler arasında ayrışmasın diye tek yol var.
+            window.setDecorFitsSystemWindows(false)
             val controller = window.insetsController
             if (fullscreen) {
                 controller?.hide(WindowInsets.Type.systemBars())
@@ -370,6 +375,7 @@ class MainActivity : Activity(), SensorEventListener {
             } else {
                 controller?.show(WindowInsets.Type.systemBars())
             }
+            root.requestApplyInsets()
         } else {
             @Suppress("DEPRECATION")
             window.decorView.systemUiVisibility = if (fullscreen) {
@@ -382,6 +388,33 @@ class MainActivity : Activity(), SensorEventListener {
             } else {
                 View.SYSTEM_UI_FLAG_VISIBLE
             }
+        }
+    }
+
+    /**
+     * Pencere boşluklarını kökün dolgusuna çevirir.
+     *
+     * Tam ekranda hiç boşluk bırakılmaz — çubuklar zaten gizli ve kaydırmayla
+     * geldiklerinde içeriğin üstüne binmeleri istenen davranış. Kapalıyken hem
+     * sistem çubukları hem de ekran çentiği hesaba katılır: kadran ortalı
+     * olduğu için çentikten etkilenmez ama üstteki derece yazısı ve dişli
+     * düğmesi etkilenirdi.
+     *
+     * R öncesinde pencere zaten çubuklara yer bırakıyor ve içeriğe sıfır boşluk
+     * bildiriliyor, o yüzden bu yol yalnızca R ve üstünde kuruluyor.
+     */
+    private fun applyInsets() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return
+        root.setOnApplyWindowInsetsListener { view, insets ->
+            if (fullscreen) {
+                view.setPadding(0, 0, 0, 0)
+            } else {
+                val bars = insets.getInsets(
+                    WindowInsets.Type.systemBars() or WindowInsets.Type.displayCutout()
+                )
+                view.setPadding(bars.left, bars.top, bars.right, bars.bottom)
+            }
+            insets
         }
     }
 
@@ -1019,7 +1052,6 @@ class MainActivity : Activity(), SensorEventListener {
             formatDistance(fix.distance)
         )
 
-    /** Yakında metre, uzakta kilometre; ondalık ayraç cihazın diline uyar. */
     /**
      * Saati cihazın biçimiyle yazar: 12/24 saat tercihi ve dil sistemden gelir,
      * uygulamanın kendi biçimi yoktur.
@@ -1549,7 +1581,7 @@ class MainActivity : Activity(), SensorEventListener {
         const val KEY_LATITUDE = "latitude"
         const val KEY_LONGITUDE = "longitude"
         const val KEY_TARGET = "target"
-        /** "Buradasınız" eşiğinin alt ve üst sınırı (metre). */
+        /** Güneş dakikada 0,25° yol alır; dakikada bir tazelemek fazlasıyla yeter. */
         const val SUN_UPDATE_MS = 60_000L
 
         /** İki çizim arasındaki asgari süre; 50 ms yaklaşık 20 kare/saniye eder. */
@@ -1592,6 +1624,7 @@ class MainActivity : Activity(), SensorEventListener {
         const val COORDINATE_CACHE_DISTANCE_M = 250f
         const val COORDINATE_REFRESH_DISTANCE_M = 1_000f
 
+        /** "Buradasınız" eşiğinin alt ve üst sınırı (metre). */
         const val ARRIVED_MIN_METERS = 10f
         const val ARRIVED_MAX_METERS = 25f
 

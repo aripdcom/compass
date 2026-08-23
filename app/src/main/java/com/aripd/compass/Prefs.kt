@@ -61,7 +61,4 @@ object Prefs {
      */
     val SMOOTHING_TIME_CONSTANTS = floatArrayOf(0.35f, 0.17f, 0.08f)
     const val DEFAULT_SMOOTHING = 1
-
-    /** NATO mili: tam çember 6400 mil. Topçuluk ve harita işlerinde kullanılır. */
-    const val MILS_PER_CIRCLE = 6400f
 }

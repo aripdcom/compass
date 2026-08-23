@@ -7,14 +7,18 @@ plugins {
 
 android {
     namespace = "com.aripd.compass"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.aripd.compass"
         minSdk = 24          // Android 7.0
-        targetSdk = 34       // Android 13/14 üzerinde sorunsuz çalışır
-        versionCode = 32
-        versionName = "4.1"
+        // Android 15. Play Store yeni sürümler için 35 istiyor; ayrıca bu
+        // seviyeden itibaren kenardan kenara çizim zorunlu ve
+        // setDecorFitsSystemWindows(true) yok sayılıyor — pencere boşluklarını
+        // uygulama kendisi bırakmak zorunda (bkz. MainActivity.applyInsets).
+        targetSdk = 35
+        versionCode = 33
+        versionName = "4.2"
     }
 
 

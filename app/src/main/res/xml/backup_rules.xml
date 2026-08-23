@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Yedeklenen tek şey ayarlar dosyası: gece modu, birim, görünür işaretler,
+  kilitli hedef, kaydedilen noktalar ve son bilinen konum. Cihaz değiştirenin
+  noktalarını kaybetmemesi için yedekleme açık; başka bir veri zaten yok.
+  Android 12 öncesi bu dosyaya bakar.
+-->
+<full-backup-content>
+    <include domain="sharedpref" path="compass.xml" />
+</full-backup-content>

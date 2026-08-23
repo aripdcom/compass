@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android 12 ve sonrasının karşılığı. Kapsam bilerek açıkça yazılıyor: kural
+  dosyası olmadan sistem uygulamanın bütün özel dizinini alır, biz ise yalnızca
+  ayarların taşınmasını istiyoruz.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <include domain="sharedpref" path="compass.xml" />
+    </cloud-backup>
+    <device-transfer>
+        <include domain="sharedpref" path="compass.xml" />
+    </device-transfer>
+</data-extraction-rules>

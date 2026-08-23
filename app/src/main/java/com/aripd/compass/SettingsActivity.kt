@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
+import android.view.WindowInsets
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -50,6 +51,19 @@ class SettingsActivity : Activity() {
             )
         )
         setContentView(scroll)
+
+        // Android 15'ten itibaren pencere sistem çubuklarının altına çiziliyor;
+        // boşluğu kendimiz bırakmazsak ilk satır durum çubuğunun altında kalır.
+        // R öncesinde içeriğe sıfır boşluk bildirildiği için bu yol zararsız.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            scroll.setOnApplyWindowInsetsListener { view, insets ->
+                val bars = insets.getInsets(
+                    WindowInsets.Type.systemBars() or WindowInsets.Type.displayCutout()
+                )
+                view.setPadding(bars.left, bars.top, bars.right, bars.bottom)
+                insets
+            }
+        }
 
         backRow()
         header(getString(R.string.settings_section_display))
