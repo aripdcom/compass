@@ -5,6 +5,9 @@ import android.graphics.Color
 /**
  * Ekranın renk düzeni. İki hâli var: gündüz ve gece.
  *
+ * Bütün yazı renkleri kendi zeminlerine karşı en az 4,5:1 kontrast verir (WCAG AA);
+ * büyük derece yazısı için eşik 3:1'dir ve o da fazlasıyla aşılır.
+ *
  * Gece modunda her şey kırmızıya çekilir. Sebebi göz fizyolojisi: karanlığa
  * uyum sağlamış göz (rodopsin) kırmızı ışıktan neredeyse hiç etkilenmez, ama
  * mavi-yeşil ışık uyumu saniyeler içinde bozar ve yeniden karanlığa alışmak
@@ -59,7 +62,7 @@ data class Palette(
             moon = Color.parseColor("#D6DEE8"),
             text = Color.parseColor("#FFFFFFFF"),
             textDim = Color.parseColor("#FF8A94A0"),
-            hint = Color.parseColor("#FF6C7683"),
+            hint = Color.parseColor("#FF75808D"),
             warning = Color.parseColor("#FFE0A030")
         )
 
@@ -75,19 +78,19 @@ data class Palette(
             label = Color.parseColor("#FFCF4632"),
             northLabel = Color.parseColor("#FFFF6A50"),
             needleNorth = Color.parseColor("#FFFF3B2F"),
-            needleSouth = Color.parseColor("#FF6E2418"),
+            needleSouth = Color.parseColor("#FF95483B"),
             levelFill = Color.parseColor("#FF000000"),
             levelFrame = Color.parseColor("#66FF4A38"),
             level = Color.parseColor("#FFFF9A80"),
-            magnetic = Color.parseColor("#FF8A2E22"),
-            qibla = Color.parseColor("#FFB03828"),
+            magnetic = Color.parseColor("#FFC97B45"),
+            qibla = Color.parseColor("#FFC45720"),
             target = Color.parseColor("#FFFF6A50"),
-            waypoint = Color.parseColor("#FF9A3325"),
+            waypoint = Color.parseColor("#FFDC384D"),
             sun = Color.parseColor("#FFFF8A70"),
             moon = Color.parseColor("#FFC65A46"),
             text = Color.parseColor("#FFFF5B45"),
-            textDim = Color.parseColor("#FFB84A3A"),
-            hint = Color.parseColor("#FF8A3A2E"),
+            textDim = Color.parseColor("#FFC25649"),
+            hint = Color.parseColor("#FFB85D52"),
             warning = Color.parseColor("#FFFF7A50")
         )
 

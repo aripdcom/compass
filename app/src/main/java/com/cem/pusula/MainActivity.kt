@@ -239,6 +239,7 @@ class MainActivity : Activity(), SensorEventListener {
             copyLocation()
             true
         }
+        compassView.contentDescription = getString(R.string.a11y_dial)
         compassView.setOnClickListener { toggleTarget() }
         compassView.setOnLongClickListener {
             toggleWaypoint()
@@ -961,8 +962,12 @@ class MainActivity : Activity(), SensorEventListener {
         if (rounded != lastShownDegree) {
             lastShownDegree = rounded
             degreeText.text = formatBearing(shown)
-            directionText.text = "${cardinal(shown)} · " +
-                getString(if (trueFrame) R.string.true_north else R.string.magnetic_north)
+            val frameName = getString(if (trueFrame) R.string.true_north else R.string.magnetic_north)
+            directionText.text = "${cardinal(shown)} · $frameName"
+            // Ekran okuyucu "284°" ve "BKB" yerine açık ifadeyi okusun: kısaltma
+            // harf harf okunuyor, derece işareti de her okuyucuda tutmuyor.
+            degreeText.contentDescription =
+                getString(R.string.a11y_heading, spokenBearing(shown), cardinalName(shown), frameName)
             refreshInfoText(magnetic)
             refreshTargetText()
         }
@@ -1047,6 +1052,14 @@ class MainActivity : Activity(), SensorEventListener {
             }
         }
         infoText.text = base
+        infoText.contentDescription = decl?.let { d ->
+            getString(
+                R.string.a11y_declination,
+                magnetic?.let { spokenBearing(it) } ?: "",
+                "%.1f".format(abs(d)),
+                getString(if (d >= 0f) R.string.a11y_declination_east else R.string.a11y_declination_west)
+            )
+        } ?: base
 
         // İşaret yönleri ayrı satırda: pusulanın kendi durumu (manyetik açı ve
         // sapma) ile "neyin nerede olduğu" farklı sorular, hepsi tek satıra
@@ -1161,6 +1174,20 @@ class MainActivity : Activity(), SensorEventListener {
         } else {
             (getSystemService(WINDOW_SERVICE) as WindowManager).defaultDisplay.rotation
         }
+
+    /** Açının ekran okuyucuya söylenecek hâli: "284 derece" ya da "5049 mil". */
+    private fun spokenBearing(degrees: Float): String {
+        val normalized = (degrees % 360f + 360f) % 360f
+        return if (unit == Prefs.UNIT_MIL) {
+            getString(R.string.a11y_mils, (normalized * Prefs.MILS_PER_CIRCLE / 360f).roundToInt() % 6400)
+        } else {
+            getString(R.string.a11y_degrees, normalized.roundToInt() % 360)
+        }
+    }
+
+    /** Yön adının açık hâli: "BKB" değil "batı kuzeybatı". */
+    private fun cardinalName(degrees: Float): String =
+        resources.getStringArray(R.array.cardinal_names)[((degrees / 22.5f) + 0.5f).toInt() % 16]
 
     private fun cardinal(degrees: Float): String {
         val names = arrayOf("K", "KKD", "KD", "DKD", "D", "DGD", "GD", "GGD",

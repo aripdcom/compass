@@ -132,14 +132,21 @@ class SettingsActivity : Activity() {
         onChange: (Boolean) -> Unit = {}
     ) {
         val row = rowContainer()
-        val labels = labelColumn(getString(titleRes), if (summaryRes == 0) null else getString(summaryRes))
+        val title = getString(titleRes)
+        val summary = if (summaryRes == 0) null else getString(summaryRes)
+        val labels = labelColumn(title, summary)
         val toggle = Switch(this).apply {
             isChecked = prefs().getBoolean(key, default)
+            // Ekran okuyucu satırı tek durakta okusun: yazılar anahtarın
+            // açıklamasına taşınır, kendileri erişilebilirlik ağacından çıkar.
+            // Aksi hâlde her satır üç ayrı durak oluyordu.
+            contentDescription = if (summary == null) title else "$title. $summary"
             setOnCheckedChangeListener { _, checked ->
                 prefs().edit().putBoolean(key, checked).apply()
                 onChange(checked)
             }
         }
+        labels.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
         row.addView(labels, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
         row.addView(toggle)
         row.setOnClickListener { toggle.toggle() }
@@ -150,6 +157,10 @@ class SettingsActivity : Activity() {
         val options = optionRes.map { getString(it) }.toTypedArray()
         val row = rowContainer()
         val labels = labelColumn(getString(titleRes), options[prefs().getInt(key, default)])
+        labels.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+        // Seçim satırında anahtar yok; okunacak düğüm satırın kendisi olur.
+        row.isFocusable = true
+        row.contentDescription = "${getString(titleRes)}. ${options[prefs().getInt(key, default)]}"
         row.addView(labels, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
         row.setOnClickListener {
             AlertDialog.Builder(this)
@@ -157,6 +168,7 @@ class SettingsActivity : Activity() {
                 .setSingleChoiceItems(options, prefs().getInt(key, default)) { dialog, which ->
                     prefs().edit().putInt(key, which).apply()
                     (labels.getChildAt(1) as TextView).text = options[which]
+                    row.contentDescription = "${getString(titleRes)}. ${options[which]}"
                     dialog.dismiss()
                 }
                 .show()
@@ -167,6 +179,8 @@ class SettingsActivity : Activity() {
     private fun rowContainer(): LinearLayout = LinearLayout(this).apply {
         orientation = LinearLayout.HORIZONTAL
         gravity = Gravity.CENTER_VERTICAL
+        // Dokunma alanı en az 48dp: küçük hedefler el titremesinde ıskalanıyor.
+        minimumHeight = dp(48)
         setPadding(0, dp(12), 0, dp(12))
         isClickable = true
     }

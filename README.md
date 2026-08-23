@@ -493,7 +493,49 @@ Nasıl çalışıyor:
   ekrandaki yazılar da aynı renkleri kullanır, böylece hangi satırın hangi
   işarete ait olduğu bakınca anlaşılır.
 
-## 8. Sorun giderme
+## 8. Erişilebilirlik
+
+**Kontrast.** Bütün yazı renkleri kendi zeminine karşı en az **4,5:1** verir (WCAG
+AA); 52sp'lik derece yazısı için eşik 3:1'dir ve 18,5:1 ile fazlasıyla aşar.
+Grafik öğeler (ibrenin güney yarısı gibi) 3:1 eşiğine tabidir.
+
+Ölçüm beş eksik buldu: gündüz paletinde ipucu yazısı 4,0:1, gece paletinde ise
+soluk yazı 4,1, ipucu 2,7, kıble 3,4 ve nokta 2,9. Gece paletini düzeltmek
+tasarımı değiştirmeyi gerektirdi: renkleri eşiğe kadar aydınlatınca **parlaklık
+kademeleriyle kurulan ayrım kayboluyordu**, hepsi aynı kırmızıya yapışıyordu.
+Çözüm ayrımı parlaklıktan **tona** taşımak oldu — kıble turuncuya (20°), nokta
+mora (352°), manyetik kuzey kehribara kaydı. Hepsi hâlâ kırmızı ailesinde, yani
+gece görüşü korunuyor, ama artık hem okunuyorlar hem birbirinden ayrılıyorlar.
+
+**Ekran okuyucu.** TalkBack ham metni yanlış okuyordu: "284°" derece işaretini her
+zaman söylemiyor, "BKB" ise harf harf okunuyordu. Artık açıklamalar açık yazılıyor:
+
+```
+285°                          -> "285 derece, batı kuzeybatı, Gerçek kuzey"
+Manyetik 278° · Sapma 6,4°D   -> "Manyetik 278 derece, sapma 6,4 derece doğuya"
+```
+
+Yön kısaltması satırı erişilebilirlik ağacından çıkarıldı, çünkü aynı bilgi
+derece yazısının açıklamasında zaten var; iki kez okunması gereksiz gürültüydü.
+
+Kadranın iki hareketi de adıyla bildiriliyor: varsayılan "etkinleştir" ve "uzun
+bas" etiketleri ne yaptıklarını söylemediği için `onInitializeAccessibilityNodeInfo`
+ile "yönü kilitle" ve "nokta kaydet" olarak adlandırıldılar.
+
+Uyarı satırı **canlı bölge** (`accessibilityLiveRegion="polite"`): manyetik
+bozulma, kalibrasyon ve eğim uyarıları belirdiklerinde kendiliğinden okunur.
+Uyarılar seyrek olduğu için bu gürültü yaratmaz — ama açı için aynısını yapmak
+saniyede birkaç kez konuşmak olurdu, o yüzden açı yalnızca odaklanınca okunur.
+
+Ayarlarda her satır tek odak durağıdır. Önce üç duraktı (başlık, açıklama,
+anahtar); artık yazılar anahtarın açıklamasına taşınıyor ve satır durumuyla
+birlikte okunuyor: *"Gece modu. Siyah zemin, kırmızı kadran — gece görüşünü korur.
+Kapalı."*
+
+**Dokunma hedefleri** en az 48dp: dişli düğmesi ve ayar satırları buna göre
+büyütüldü.
+
+## 9. Sorun giderme
 
 ### "Kuruldu" dedi ama uygulama listede yok
 
@@ -533,7 +575,7 @@ Sırasıyla şunlara bakın:
    taşımaz ve v1+v2+v3 şemalarının üçüyle de imzalıdır. Bazı OEM ROM'ları
    (özellikle MIUI/EMUI) `debuggable=true` işaretli APK'ları kurmayı reddeder.
 3. **Dosya bozulmuş olabilir.** Telefondaki APK'nın boyutunu kontrol edin;
-   release APK tam olarak **823.406 bayt** (~804 KB) olmalı. WhatsApp/Telegram
+   release APK tam olarak **826.076 bayt** (~806 KB) olmalı. WhatsApp/Telegram
    gibi kanallar dosyayı bozabilir — Drive, e-posta eki veya USB tercih edin.
 4. **Play Protect.** `Play Store → profil → Play Protect → Ayarlar` altından
    taramayı geçici kapatın, kurun, sonra geri açın.

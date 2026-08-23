@@ -7,6 +7,7 @@ import android.graphics.Path
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
+import android.view.accessibility.AccessibilityNodeInfo
 import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -167,6 +168,27 @@ class CompassView @JvmOverloads constructor(
         pitch = pitchDegrees
         roll = rollDegrees
         invalidate()
+    }
+
+    /**
+     * Ekran okuyucuya kadranın iki hareketini adıyla bildirir. Varsayılan
+     * "etkinleştir" / "uzun bas" etiketleri ne yaptıklarını söylemiyor; TalkBack
+     * kullanıcısı kadrana dokunmanın yönü kilitlediğini bilemezdi.
+     */
+    override fun onInitializeAccessibilityNodeInfo(info: AccessibilityNodeInfo) {
+        super.onInitializeAccessibilityNodeInfo(info)
+        info.addAction(
+            AccessibilityNodeInfo.AccessibilityAction(
+                AccessibilityNodeInfo.ACTION_CLICK,
+                context.getString(R.string.a11y_lock_bearing)
+            )
+        )
+        info.addAction(
+            AccessibilityNodeInfo.AccessibilityAction(
+                AccessibilityNodeInfo.ACTION_LONG_CLICK,
+                context.getString(R.string.a11y_save_point)
+            )
+        )
     }
 
     override fun onDraw(canvas: Canvas) {

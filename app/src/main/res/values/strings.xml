@@ -71,4 +71,33 @@
     <string name="settings_show_moon_summary">Yönü ve evresi; batmışsa soluk çizilir</string>
     <string name="settings_marks_note">Hedef ve nokta işaretleri burada yok: kadrana dokunarak ya da uzun basarak zaten açılıp kapanıyorlar.</string>
     <string name="mil_suffix">mil</string>
+
+    <!-- Ekran okuyucu için: kısaltmalar harf harf okunmasın diye açık yazılır -->
+    <string-array name="cardinal_names">
+        <item>kuzey</item>
+        <item>kuzey kuzeydoğu</item>
+        <item>kuzeydoğu</item>
+        <item>doğu kuzeydoğu</item>
+        <item>doğu</item>
+        <item>doğu güneydoğu</item>
+        <item>güneydoğu</item>
+        <item>güney güneydoğu</item>
+        <item>güney</item>
+        <item>güney güneybatı</item>
+        <item>güneybatı</item>
+        <item>batı güneybatı</item>
+        <item>batı</item>
+        <item>batı kuzeybatı</item>
+        <item>kuzeybatı</item>
+        <item>kuzey kuzeybatı</item>
+    </string-array>
+    <string name="a11y_degrees">%1$d derece</string>
+    <string name="a11y_mils">%1$d mil</string>
+    <string name="a11y_heading">%1$s, %2$s, %3$s</string>
+    <string name="a11y_declination">Manyetik %1$s, sapma %2$s derece %3$s</string>
+    <string name="a11y_declination_east">doğuya</string>
+    <string name="a11y_declination_west">batıya</string>
+    <string name="a11y_dial">Pusula kadranı</string>
+    <string name="a11y_lock_bearing">yönü kilitle</string>
+    <string name="a11y_save_point">nokta kaydet</string>
 </resources>
