@@ -296,18 +296,23 @@ class SettingsActivity : Activity() {
 
     private fun choiceRow(titleRes: Int, key: String, default: Int, optionRes: IntArray) {
         val options = optionRes.map { getString(it) }.toTypedArray()
+        // Kayıtlı değer sınırlanarak okunur: daha yeni bir sürümden geri
+        // yüklenen yedek listede olmayan bir seçenek taşıyabilir ve korumasız
+        // indeks ayarlar ekranını daha açılışta çökertirdi. Ana ekran aynı
+        // değeri zaten sınırlayarak okuyor (bkz. applySettings'teki smoothing).
+        fun selected() = prefs().getInt(key, default).coerceIn(0, options.lastIndex)
         val row = rowContainer()
-        val labels = labelColumn(getString(titleRes), options[prefs().getInt(key, default)])
+        val labels = labelColumn(getString(titleRes), options[selected()])
         labels.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
         // Seçim satırında anahtar yok; okunacak düğüm satırın kendisi olur.
         row.isFocusable = true
-        row.contentDescription = "${getString(titleRes)}. ${options[prefs().getInt(key, default)]}"
+        row.contentDescription = "${getString(titleRes)}. ${options[selected()]}"
         row.addView(labels, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
         row.setOnClickListener {
             show(
                 AlertDialog.Builder(this)
                     .setTitle(getString(titleRes))
-                    .setSingleChoiceItems(options, prefs().getInt(key, default)) { shown, which ->
+                    .setSingleChoiceItems(options, selected()) { shown, which ->
                         prefs().edit().putInt(key, which).apply()
                         (labels.getChildAt(1) as TextView).text = options[which]
                         row.contentDescription = "${getString(titleRes)}. ${options[which]}"
