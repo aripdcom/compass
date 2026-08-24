@@ -454,6 +454,7 @@ class MainActivity : Activity(), SensorEventListener {
         )
         applyTarget()
         applyWaypoint()
+        refreshMarksText()
     }
 
     /** Gerçek kuzeye göre verilen açıyı kadranın çerçevesine çevirir. */
@@ -494,6 +495,8 @@ class MainActivity : Activity(), SensorEventListener {
         settingsButton.setTextColor(colors.textDim)
         // Bunlar renkli parça içerdiği için baştan kurulmalı. Nokta satırı
         // önbellekte durduğundan renk ya da birim değişince o da yenilenmeli.
+        // İşaret satırını applySettings'in hemen ardından çağırdığı applyMarks
+        // kurar; buradan ayrıca kurulursa aynı iş iki kez yapılmış olur.
         refreshInfoText(lastMagnetic)
         refreshWaypointSpan()
         refreshTargetText()
@@ -1466,11 +1469,21 @@ class MainActivity : Activity(), SensorEventListener {
                 getString(if (d >= 0f) R.string.a11y_declination_east else R.string.a11y_declination_west)
             )
         } ?: base
+    }
 
-        // İşaret yönleri ayrı satırda: pusulanın kendi durumu (manyetik açı ve
-        // sapma) ile "neyin nerede olduğu" farklı sorular, hepsi tek satıra
-        // dizilince üç sıraya taşıp okunmaz oluyordu. Renkler kadrandaki
-        // işaretlerle eşleşir.
+    /**
+     * İşaret yönleri ayrı satırda: pusulanın kendi durumu (manyetik açı ve
+     * sapma) ile "neyin nerede olduğu" farklı sorular, hepsi tek satıra
+     * dizilince üç sıraya taşıp okunmaz oluyordu. Renkler kadrandaki
+     * işaretlerle eşleşir.
+     *
+     * Satır açıdan bağımsızdır ve yalnızca girdileri değişince kurulur —
+     * [applyMarks] içinden, kadran işaretleriyle birlikte. Önceden
+     * [refreshInfoText]'te kuruluyordu, o da her derece değişiminde çağrılıyor:
+     * içerik aynıyken saniyede yirmiye varan kez span'ler, biçimlemeler ve
+     * `formatTime` başına yeni bir `DateFormat` üretiliyordu.
+     */
+    private fun refreshMarksText() {
         val marks = SpannableStringBuilder()
         Places.ALL.filter { it.prefKey in visiblePlaces }.forEach { place ->
             placeBearings[place.prefKey]?.let {
