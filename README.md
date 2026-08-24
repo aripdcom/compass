@@ -796,12 +796,15 @@ Gelen fix'in kendisi de ucuzladı. Her fix'te konum önbelleği diske yazılıyo
 çözülüp bütün yer yönleri, güneş ve ay baştan hesaplanıyordu. Sapma yüzlerce
 kilometrede bir derece oynar; artık önbellek 250 m, tam hesap 1 km yol
 alınmadan yenilenmiyor. Sistemin dokunsal geri bildirim tercihi de her tıkta
-`ContentResolver`'a sorulmak yerine `onResume`'da bir kez okunuyor.
+`ContentResolver`'a sorulmak yerine `onResume`'da bir kez okunuyor. İşaret
+satırı (kıble, güneş, ay yazıları) da nokta satırı gibi ancak girdileri
+değişince kuruluyor; önceden içerik aynıyken her derece değişiminde baştan
+üretiliyordu.
 
 ## 12. Testler
 
 ```bash
-./gradlew test          # 84 test, saniyeler içinde, cihaz gerekmez
+./gradlew test          # 93 test, saniyeler içinde, cihaz gerekmez
 ```
 
 Testler JVM'de koşar; Android çalışma zamanı gerekmez. Bunun için uygulamanın
@@ -825,7 +828,7 @@ Her koşuda ayrıca `./gradlew lintDebug` koşulur (CI'da da); şu an 0 hata.
 | `DisturbanceTest` | Kısa sıçramanın uyarı çıkarmaması, histerezis bandında uyarının açık kalması |
 | `CoordinatesTest` | Uygulamanın kendi paylaşımının geri okunması, `geo:0,0?q=` tuzağı, harita bağlantıları, DMS |
 | `MarksTest` | Yakın işaretlerin birleşmesi, zincirleme birleşmenin olmaması, sıfır geçişinde ortalama |
-| `FixesTest` | Yeni fix ile hassas fix arasındaki tercih, "buradasınız" eşiğinin sınırlanması |
+| `FixesTest` | Yeni fix ile hassas fix arasındaki tercih, hata payı bilinmeyen fix'in kusursuz sayılmaması, "buradasınız" eşiğinin sınırlanması |
 
 Testlerin çoğu **fiziksel sabitlere** dayanır — uygulamadan bağımsız, ölçülmüş
 gerçeklere: sinodik ay 29,5 gün, ekinoksta doğuş 89,3°, yeni ayda ay ile güneşin
