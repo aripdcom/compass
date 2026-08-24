@@ -821,9 +821,10 @@ class MainActivity : Activity(), SensorEventListener {
         grantResults: IntArray
     ) {
         if (requestCode == REQ_LOCATION) {
-            if (grantResults.isNotEmpty() &&
-                grantResults[0] == PackageManager.PERMISSION_GRANTED
-            ) {
+            // Dizide hassas konum önde. Kullanıcı "yaklaşık"ı seçtiğinde hassas
+            // reddedilir ama kaba izin verilir; yalnızca ilk elemana bakmak bu
+            // durumda izni yok sayıp konum dinlemeyi hiç başlatmıyordu.
+            if (grantResults.any { it == PackageManager.PERMISSION_GRANTED }) {
                 startLocationUpdates()
             } else {
                 refreshInfoText(null)
