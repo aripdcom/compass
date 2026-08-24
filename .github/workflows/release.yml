@@ -1,0 +1,147 @@
+# Sürüm yayımı: `v` ile başlayan bir etiket itildiğinde imzalı release APK
+# üretilir ve GitHub sürümüne (Releases) eklenir.
+#
+#   git tag v4.3 && git push origin v4.3
+#
+# İmzalama anahtarı depoya girmez; depo ayarlarındaki secret'lardan gelir
+# (Settings -> Secrets and variables -> Actions):
+#
+#   KEYSTORE_BASE64      anahtar deposunun base64 hâli:  base64 -w0 keys/compass.jks
+#   KEYSTORE_PASSWORD    depo parolası
+#   KEY_ALIAS            anahtar takma adı
+#   KEY_PASSWORD         anahtar parolası
+#
+# Secret'lar tanımlı değilse koşu kırılmaz: APK imzasız üretilir, adında
+# "imzasiz" geçer ve uyarı düşer. İmzasız APK telefona kurulamaz — kalıcı
+# kurulum için secret'ları tanımlamak gerekir.
+
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write   # sürüm oluşturmak ve APK eklemek için
+
+env:
+  GRADLE_OPTS: -Dorg.gradle.daemon=false
+
+jobs:
+  release:
+    name: İmzalı release APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Kaynağı al
+        uses: actions/checkout@v4
+        with:
+          # Sürüm notları önceki etiketten beri gelen commit'lerden üretiliyor;
+          # sığ kopyada o geçmiş bulunmaz.
+          fetch-depth: 0
+
+      # Etiket adı kabuğa doğrudan gömülmüyor, ortam değişkeninden geçiyor:
+      # git etiket adlarında `;`, `&`, `$` gibi karakterlere izin veriyor ve
+      # gömülen bir ad koşucuda komut çalıştırabilirdi.
+      - name: Etiket sürümle tutuyor mu
+        if: github.ref_type == 'tag'
+        env:
+          TAG: ${{ github.ref_name }}
+        run: bash .github/scripts/check-tag.sh "$TAG"
+
+      - name: JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          validate-wrappers: true
+
+      - name: Android SDK bileşenleri
+        run: bash .github/scripts/android-sdk.sh
+
+      # Anahtar deposu diske yalnızca koşunun geçici dizinine yazılır; parolalar
+      # hiç diske düşmez, doğrudan Gradle'ın ortamına verilir (bkz.
+      # app/build.gradle.kts içindeki signingValues).
+      - name: İmzalama anahtarını çöz
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          if [ -z "${KEYSTORE_BASE64:-}" ]; then
+            echo "::warning::KEYSTORE_BASE64 secret'ı tanımlı değil; APK imzasız üretilecek ve telefona kurulamaz."
+            exit 0
+          fi
+          printf '%s' "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
+          echo "COMPASS_KEYSTORE_FILE=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+
+      # Yayımlanan APK'nın testten geçmiş olması şart: sürüm geri alınamaz.
+      - name: Testler ve lint
+        run: ./gradlew test lintDebug
+
+      - name: Release APK
+        env:
+          COMPASS_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          COMPASS_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          COMPASS_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: ./gradlew assembleRelease
+
+      - name: Anahtarı sil
+        if: always()
+        run: rm -f "$RUNNER_TEMP/release.jks"
+
+      - name: APK'yı adlandır
+        id: apk
+        run: bash .github/scripts/collect-apk.sh release
+
+      - name: APK'yı çıktıya as
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.apk.outputs.name }}
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Sürüm notlarını hazırla
+        if: github.ref_type == 'tag'
+        env:
+          VERSION: ${{ steps.apk.outputs.version }}
+          CODE: ${{ steps.apk.outputs.code }}
+          APK_NAME: ${{ steps.apk.outputs.name }}
+          SIGNED: ${{ steps.apk.outputs.signed }}
+        run: |
+          {
+            echo "Sürüm **$VERSION ($CODE)**."
+            echo
+            if [ "$SIGNED" = 'true' ]; then
+              echo "APK imzalıdır; telefona doğrudan kurulabilir."
+            else
+              echo "> **Uyarı:** bu APK imzasızdır ve telefona kurulamaz."
+              echo "> Depoda imzalama secret'ları tanımlı değil (bkz. README, 15. bölüm)."
+            fi
+            echo
+            echo "İndirdikten sonra dosyayı doğrulamak için:"
+            echo
+            echo '```'
+            echo "sha256sum -c $APK_NAME.apk.sha256"
+            echo '```'
+            echo
+            echo "Kurulum adımları README'nin 1. bölümünde."
+          } > "$RUNNER_TEMP/notes.md"
+
+      # `--generate-notes` önceki etiketten beri gelen commit listesini üretir;
+      # GitHub API'si onu verilen gövdenin *ardına* ekler, üzerine yazmaz.
+      - name: GitHub sürümünü yayımla
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+          VERSION: ${{ steps.apk.outputs.version }}
+        run: |
+          gh release create "$TAG" dist/* \
+            --title "Pusula $VERSION" \
+            --notes-file "$RUNNER_TEMP/notes.md" \
+            --generate-notes

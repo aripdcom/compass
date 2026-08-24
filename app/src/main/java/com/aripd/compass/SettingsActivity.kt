@@ -349,7 +349,7 @@ class SettingsActivity : Activity() {
     private fun prefs() = getSharedPreferences("compass", Context.MODE_PRIVATE)
 
     private companion object {
-        const val SOURCE_URL = "https://gitlab.com/aripd/compass"
-        const val SOURCE_LABEL = "gitlab.com/aripd/compass"
+        const val SOURCE_URL = "https://github.com/aripdcem/compass"
+        const val SOURCE_LABEL = "github.com/aripdcem/compass"
     }
 }

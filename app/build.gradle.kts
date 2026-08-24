@@ -22,19 +22,51 @@ android {
     }
 
 
-    // İsteğe bağlı: kendi anahtarınızla imzalı release APK.
-    // keystore.properties dosyası yoksa bu blok sessizce atlanır, debug APK yine üretilir.
-    val keystorePropsFile = rootProject.file("keystore.properties")
-    if (keystorePropsFile.exists()) {
-        val keystoreProps = Properties().apply {
-            keystorePropsFile.inputStream().use { load(it) }
+    /**
+     * İsteğe bağlı: kendi anahtarınızla imzalı release APK.
+     *
+     * Bilgiler iki yerden gelebilir. Yerelde kök dizindeki `keystore.properties`
+     * okunur. CI'da o dosya yoktur (anahtar da parola da depoya girmez), orada
+     * ortam değişkenleri kullanılır. İkisi de yoksa blok sessizce atlanır:
+     * release APK imzasız çıkar, debug APK yine üretilir.
+     *
+     * CI'da dosya yerine ortam değişkeni okunmasının sebebi `.properties`
+     * biçiminin kendisi: ters bölü orada kaçış karakteridir ve iki nokta ile
+     * eşittir anahtarı bitirir. İçinde bunlardan biri geçen bir parola dosyaya
+     * yazıldığında sessizce başka bir parolaya dönüşür ve imzalama "parola
+     * yanlış" diyerek kırılır. Ortam değişkeninde böyle bir yorumlama yok.
+     */
+    val signingValues: Map<String, String>? = run {
+        val propsFile = rootProject.file("keystore.properties")
+        if (propsFile.exists()) {
+            val props = Properties().apply { propsFile.inputStream().use { load(it) } }
+            props.getProperty("storeFile")?.let { store ->
+                mapOf(
+                    "storeFile" to store,
+                    "storePassword" to props.getProperty("storePassword").orEmpty(),
+                    "keyAlias" to props.getProperty("keyAlias").orEmpty(),
+                    "keyPassword" to props.getProperty("keyPassword").orEmpty()
+                )
+            }
+        } else {
+            System.getenv("COMPASS_KEYSTORE_FILE")?.let { store ->
+                mapOf(
+                    "storeFile" to store,
+                    "storePassword" to System.getenv("COMPASS_KEYSTORE_PASSWORD").orEmpty(),
+                    "keyAlias" to System.getenv("COMPASS_KEY_ALIAS").orEmpty(),
+                    "keyPassword" to System.getenv("COMPASS_KEY_PASSWORD").orEmpty()
+                )
+            }
         }
+    }
+
+    if (signingValues != null) {
         signingConfigs {
             create("release") {
-                storeFile = rootProject.file(keystoreProps.getProperty("storeFile"))
-                storePassword = keystoreProps.getProperty("storePassword")
-                keyAlias = keystoreProps.getProperty("keyAlias")
-                keyPassword = keystoreProps.getProperty("keyPassword")
+                storeFile = rootProject.file(signingValues["storeFile"]!!)
+                storePassword = signingValues["storePassword"]
+                keyAlias = signingValues["keyAlias"]
+                keyPassword = signingValues["keyPassword"]
                 // Üç şemayla da imzala: bazı OEM ROM'ları yalnızca v2 ile
                 // imzalı APK'ları "Uygulama yüklenmedi" diyerek reddedebiliyor.
                 enableV1Signing = true
@@ -53,7 +85,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            if (keystorePropsFile.exists()) {
+            if (signingValues != null) {
                 signingConfig = signingConfigs.getByName("release")
             }
         }

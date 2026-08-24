@@ -1,5 +1,7 @@
 # Compass
 
+[![CI](https://github.com/aripdcem/compass/actions/workflows/ci.yml/badge.svg)](https://github.com/aripdcem/compass/actions/workflows/ci.yml)
+
 Android için sade bir pusula uygulaması. Dış bağımlılığı yok — sadece Android SDK
 ve Kotlin standart kütüphanesi kullanılıyor, kadran `Canvas` ile elle çiziliyor.
 
@@ -21,6 +23,7 @@ göbeğinde su terazisi.
 ```
 compass/
 ├── app/          uygulama kaynağı
+├── .github/      iş akışları ve yardımcı betikler (bkz. 15. bölüm)
 ├── dist/         üretilen APK'lar          (gitignore'da)
 ├── docs/         ekran görüntüleri, ikon
 ├── keys/         imzalama anahtarı         (gitignore'da)
@@ -36,6 +39,11 @@ compass/
 
 Derlenmiş APK: `app/build/outputs/apk/debug/app-debug.apk`
 (release sürümü ~130 KB; debug sürümü küçültme yapılmadığı için daha büyüktür)
+
+APK'yı kendiniz derlemek zorunda değilsiniz. Her itişte GitHub Actions bir debug
+APK üretip koşunun çıktısına asıyor; `v` ile başlayan her etikette de imzalı bir
+release APK'sı deponun **Releases** sayfasına düşüyor. İkisinin de nasıl
+indirileceği 15. bölümde.
 
 ### Yöntem A — Kabloyla, adb ile (en hızlı)
 
@@ -138,6 +146,13 @@ ayarı bozmaz.
 **ve `.jks` dosyasını kaybetmeyin**: uygulamayı güncelleyebilmenin tek yolu odur.
 `keystore.properties` yoksa build dosyası bu bloğu sessizce atlar, `assembleDebug`
 her koşulda çalışır.
+
+CI'da aynı anahtar kullanılır ama dosya değil **ortam değişkenleri** okunur
+(`COMPASS_KEYSTORE_FILE`, `COMPASS_KEYSTORE_PASSWORD`, `COMPASS_KEY_ALIAS`,
+`COMPASS_KEY_PASSWORD`). Sebebi `.properties` biçimi: ters bölü orada kaçış
+karakteridir, içinde ters bölü geçen bir parola dosyaya yazıldığında sessizce
+başka bir parolaya dönüşür ve imzalama "parola yanlış" diyerek kırılır. Kurulumu
+15. bölümde.
 
 ## 4. Gerçek kuzey ve manyetik kuzey
 
@@ -947,3 +962,94 @@ Geliştirici seçenekleri`). USB hata ayıklamayı oradan açarsınız.
 
 adb'yi hiç kullanmak istemiyorsanız gerek de yok — 1. yöntem (dosyaya dokunup
 kurmak) tek başına yeterlidir.
+
+## 15. Sürekli tümleştirme ve sürüm yayımı (GitHub Actions)
+
+Proje GitLab'dan GitHub'a taşındı. `.gitlab-ci.yml` yerini `.github/workflows/`
+altındaki iki iş akışına bıraktı; GitLab yalnızca test koşuyordu, artık APK da
+üretiliyor.
+
+| İş akışı | Ne zaman koşar | Ne üretir |
+|---|---|---|
+| `ci.yml` | her dala her itişte, her PR'da, elle tetiklenince | testler, lint, **debug APK** |
+| `release.yml` | `v` ile başlayan etiket itildiğinde | testler, lint, **imzalı release APK** + GitHub sürümü |
+
+Yardımcı betikler `.github/scripts/` altında ve elle de koşturulabilir — iş akışı
+mantığının YAML'ın içine gömülmemesinin sebebi bu: bozulduğunda koşuyu tetikleyip
+beklemeden yerelde denenebiliyor.
+
+| Betik | İş |
+|---|---|
+| `android-sdk.sh` | `compileSdk`'yı `app/build.gradle.kts`'den okuyup o platformun koşucuda bulunmasını sağlar |
+| `collect-apk.sh` | APK'yı `dist/` altına sürüm ve commit'le adlandırıp SHA-256'sını yazar |
+| `check-tag.sh` | Etiketin `versionName` ile tuttuğunu doğrular |
+
+### Her değişiklikte APK
+
+İtişten sonra: **Actions** sekmesi → ilgili koşu → sayfanın altındaki
+**Artifacts** → `compass-4.2-33-debug-1a2b3c4.apk`.
+
+Ad tesadüf değil: indirilen dosya `app-debug.apk` diye durunca hangi sürüm olduğu
+ancak kurup Ayarlar'a bakınca anlaşılıyordu. Şimdi sürüm, sürüm kodu, tür ve
+commit doğrudan adda yazıyor. Koşu özetinde ayrıca boyut ve SHA-256 özeti de
+görünür.
+
+Debug APK'sı ortak debug anahtarıyla imzalıdır: hemen kurulur ama kalıcı kurulum
+için release sürümü tercih edilmeli (3. bölüm).
+
+Testler ya da lint düşerse APK üretilmez. Düşen testin raporu yine de
+`raporlar-<koşu numarası>` çıktısında durur: koşu günlüğü özeti verir, HTML rapor
+ayrıntıyı.
+
+### Etiketle sürüm yayımlamak
+
+```bash
+# 1. app/build.gradle.kts içinde versionCode ve versionName'i yükseltin
+# 2. commit'leyip itin
+git tag v4.3
+git push origin v4.3
+```
+
+Gerisi kendiliğinden olur: etiket sürümle tutuyor mu diye bakılır, testler ve lint
+koşar, imzalı release APK üretilir ve **Releases** sayfasında APK'sı, SHA-256
+özeti ve önceki etiketten beri gelen commit listesiyle birlikte bir sürüm açılır.
+
+İlk adım kasıtlı. Sürüm numarası iki yerde duruyor — derleme dosyasında ve
+etikette — ve ayrı düştüklerinde ortaya `v4.3` diye yayımlanmış ama içinde 4.2
+yazan bir APK çıkar. Bu, ancak telefona kurup Ayarlar'a bakınca fark edilen
+türden bir hatadır; `check-tag.sh` yayını daha ilk adımda durdurur.
+
+### İmzalama anahtarını CI'ya vermek
+
+Anahtar da parolalar da depoya girmez; **Settings → Secrets and variables →
+Actions** altında tanımlanır:
+
+| Secret | Değeri |
+|---|---|
+| `KEYSTORE_BASE64` | `base64 -w0 keys/pusula-release.jks` çıktısı |
+| `KEYSTORE_PASSWORD` | anahtar deposunun parolası |
+| `KEY_ALIAS` | anahtar takma adı (örn. `pusula`) |
+| `KEY_PASSWORD` | anahtarın parolası |
+
+Anahtar deposu koşu sırasında yalnızca `RUNNER_TEMP` altına çözülür ve iş bitince
+silinir; parolalar hiç diske düşmez, doğrudan Gradle'ın ortamına verilir.
+
+Secret'lar tanımlı değilse koşu kırılmaz: APK **imzasız** üretilir, adında
+`imzasiz` geçer ve sürüm notuna uyarı düşer. İmzasız APK telefona kurulamaz —
+bunu dosya adından görmek, indirip kurmayı deneyip "Uygulama yüklenmedi"
+hatasıyla karşılaşmaktan iyidir.
+
+### Android SDK sürümü iş akışında neden yazmıyor
+
+GitLab yapılandırmasında imaj etiketi (`android-sdk:35`) elle sabitlenmişti ve
+`compileSdk` yükseldiğinde onunla birlikte güncellenmesi gerekiyordu; unutulduğunda
+derleme sebepsiz kırılıyordu. `android-sdk.sh` sürümü `app/build.gradle.kts`'den
+okur — tek doğru kaynak orasıdır, iş akışının ayrıca bilmesine gerek yok.
+
+### Neler koşuluyor
+
+- `./gradlew test` — 84 test, JVM'de, cihaz gerekmez (12. bölüm)
+- `./gradlew lintDebug` — Android lint; uyarılar koşuyu kırmaz, rapor saklanır
+- `./gradlew assembleDebug` / `assembleRelease`
+- Gradle wrapper doğrulaması — `gradle-wrapper.jar` depoda duruyor, bilinen bir
+  Gradle sürümüne ait olduğu her koşuda sınanır
