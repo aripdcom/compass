@@ -17,17 +17,25 @@ object Fixes {
      *
      * Eşik kısa tutulamaz: ağ konumu GPS'ten seyrek geldiği için kısa bir
      * eşikte kaba fix hassas olanı sürekli devirirdi.
+     *
+     * Hata payı bilinmiyorsa null geçilir. Android'in `getAccuracy`'si
+     * bildirilmemiş hata payı için 0 döndürür ve 0 burada "kusursuz" okunurdu:
+     * hata payını hiç söylemeyen bir fix, ±5 m'lik GPS fix'ini devirirdi.
+     * Bilinmeyen, bilinene karşı kaybeder; iki bilinmeyen arasında yeni olan
+     * geçer — eşit hassasiyetteki karar da böyle.
      */
     fun isBetter(
         candidateTime: Long,
-        candidateAccuracy: Float,
+        candidateAccuracy: Float?,
         currentTime: Long,
-        currentAccuracy: Float,
+        currentAccuracy: Float?,
         staleMillis: Long
     ): Boolean {
         val age = candidateTime - currentTime
         if (age > staleMillis) return true
         if (age < -staleMillis) return false
+        if (candidateAccuracy == null) return currentAccuracy == null
+        if (currentAccuracy == null) return true
         return candidateAccuracy <= currentAccuracy
     }
 

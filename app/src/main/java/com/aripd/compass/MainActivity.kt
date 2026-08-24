@@ -654,7 +654,11 @@ class MainActivity : Activity(), SensorEventListener {
     /** Karar [Fixes]'te; burada yalnızca `Location`'dan sayılar okunuyor. */
     private fun isBetterFix(candidate: Location, current: Location?): Boolean =
         current == null || Fixes.isBetter(
-            candidate.time, candidate.accuracy, current.time, current.accuracy, FIX_STALE_MS
+            candidate.time,
+            candidate.accuracy.takeIf { candidate.hasAccuracy() },
+            current.time,
+            current.accuracy.takeIf { current.hasAccuracy() },
+            FIX_STALE_MS
         )
 
     /** Konum satırı: koordinatlar, rakım ve hata payı. Dokunuş biçim değiştirir. */

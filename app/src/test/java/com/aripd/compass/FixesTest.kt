@@ -45,6 +45,34 @@ class FixesTest {
         assertTrue(Fixes.isBetter(121_000L, 500f, 0L, 5f, stale))
     }
 
+    /**
+     * Hata payı bildirmeyen fix "kusursuz" sayılmamalı: `getAccuracy` yokken 0
+     * döndürür ve 0 doğrudan geçirilseydi böyle bir fix ±5 m'lik GPS fix'ini
+     * devirirdi. Çağıran bilinmeyeni null geçer.
+     */
+    @Test
+    fun `hata payi bilinmeyen fix bilineni deviremez`() {
+        assertFalse(Fixes.isBetter(1_000L, null, 0L, 50f, stale))
+    }
+
+    /** Bilinen hata payı bilinmeyene karşı kazanır. */
+    @Test
+    fun `bilinen hata payi bilinmeyene karsi gecer`() {
+        assertTrue(Fixes.isBetter(1_000L, 50f, 0L, null, stale))
+    }
+
+    /** İki bilinmeyen eşit hassasiyet sayılır; eşitlikte olduğu gibi taze fix geçer. */
+    @Test
+    fun `iki bilinmeyende taze fix gecer`() {
+        assertTrue(Fixes.isBetter(1_000L, null, 0L, null, stale))
+    }
+
+    /** Belirgin yaş farkı hata payı bilinmese de karar verir. */
+    @Test
+    fun `belirgin yeni fix hata payi bilinmese de kazanir`() {
+        assertTrue(Fixes.isBetter(300_000L, null, 0L, 5f, stale))
+    }
+
     /** "Buradasınız" eşiği hata payını izler ama iki yandan da sınırlanır. */
     @Test
     fun `varis esigi hata payini izler`() {
