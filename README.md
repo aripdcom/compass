@@ -8,6 +8,8 @@ ve Kotlin standart kütüphanesi kullanılıyor, kadran `Canvas` ile elle çizil
 Gerçek kuzey, kıble yönü, dokununca yön kilitleyen hedef göstergesi ve kadranın
 göbeğinde su terazisi.
 
+**Tanıtım sayfası: https://aripdcom.github.io/compass/** (16. bölüm)
+
 - `minSdk 24` (Android 7.0) — **Android 15 dahil** tüm sürümlerde çalışır
 - `targetSdk 35` (Android 15). Bu seviyeden itibaren kenardan kenara çizim
   zorunlu ve `setDecorFitsSystemWindows(true)` yok sayılıyor; pencere
@@ -28,8 +30,8 @@ compass/
 ├── app/          uygulama kaynağı
 ├── .github/      iş akışları ve yardımcı betikler (bkz. 15. bölüm)
 ├── dist/         üretilen APK'lar          (gitignore'da)
-├── docs/         ekran görüntüleri, ikon
-├── tools/        depo denetimleri: çeviri tutarlılığı (bkz. 9. bölüm)
+├── docs/         tanıtım sayfası + ekran görüntüleri (bkz. 16. bölüm)
+├── tools/        depo denetimleri: çeviri tutarlılığı (9. ve 16. bölüm)
 ├── keys/         imzalama anahtarı         (gitignore'da)
 └── keystore.properties                     (gitignore'da)
 ```
@@ -1110,8 +1112,69 @@ okur — tek doğru kaynak orasıdır, iş akışının ayrıca bilmesine gerek 
 
 - `python3 tools/check-translations.py` — yirmi sekiz dilin anahtarları,
   biçim belirteçleri ve dizi uzunlukları (9. bölüm)
+- `node tools/check-site.js` — tanıtım sayfasının çevirileri (16. bölüm)
 - `./gradlew test` — 84 test, JVM'de, cihaz gerekmez (12. bölüm)
 - `./gradlew lintDebug` — Android lint; uyarılar koşuyu kırmaz, rapor saklanır
 - `./gradlew assembleDebug` / `assembleRelease`
 - Gradle wrapper doğrulaması — `gradle-wrapper.jar` depoda duruyor, bilinen bir
   Gradle sürümüne ait olduğu her koşuda sınanır
+
+## 16. Tanıtım sayfası (GitHub Pages)
+
+Deponun `docs/` klasörü aynı zamanda uygulamanın tanıtım sayfasıdır:
+
+**https://aripdcom.github.io/compass/**
+
+Sayfanın da uygulama gibi hiçbir bağımlılığı yok: çerçeve, paket yöneticisi ve
+derleme adımı olmadan, dört dosya.
+
+```
+docs/
+├── index.html          sayfanın kendisi; İngilizce metinler burada duruyor
+├── assets/style.css    renkler uygulamanın paletinden (Palette.kt) alındı
+├── assets/i18n.js      diğer yirmi yedi dilin çevirileri
+├── assets/site.js      dil seçimi
+├── .nojekyll           GitHub sayfayı Jekyll'e sokmasın diye
+└── ekran-*.png         README'nin de kullandığı ekran görüntüleri
+```
+
+**Dil seçimi uygulamadakiyle aynı mantıkta**: sayfa tarayıcının — yani sistemin
+— diliyle açılır, listede olmayan bir dilde İngilizceye döner. Sıra şu:
+
+1. adresteki `?lang=xx` (paylaşılan bağlantı; her şeyi ezer)
+2. daha önce yapılmış seçim (`localStorage`)
+3. `navigator.languages`
+4. İngilizce
+
+Başlıktaki seçiciden ya da sayfanın altındaki dil listesinden değiştirilebilir;
+seçim adrese de yazılır, böylece `?lang=fi` bağlantısını alan sayfayı Fince
+açar. `de-AT` gibi ülke ekli kodlar ile Norveççenin eski `no` kodu da
+karşılıklarına düşürülür.
+
+İngilizce metinler ayrı bir tabloda tekrarlanmıyor, `index.html`'in içinde
+duruyor; `site.js` ilk yüklemede onların anlık görüntüsünü alıyor. İki faydası
+var: aynı cümle iki dosyada birden tutulmuyor, ve bir dilde eksik kalan anahtar
+boş kutu yerine İngilizce görünüyor. JavaScript kapalıysa sayfa tümüyle
+İngilizce kalır ve baştan sona okunur — dil seçici o durumda gizlenir, çünkü
+çalışmayan bir kutu göstermenin anlamı yok.
+
+`tools/check-site.js` sayfadaki `data-i18n` anahtarlarıyla çeviri tablosunu
+karşılaştırır: eksik anahtar, sayfanın artık kullanmadığı anahtar ve
+`hreflang` listesiyle tablonun ayrışması. CI'da ve yayımdan önce koşar:
+
+```bash
+node tools/check-site.js
+# 28 dil, 43 metin — site çevirileri tutuyor.
+```
+
+### Yayımı açmak
+
+Bir kereye mahsus ayar: `Settings → Pages → Build and deployment → Source`
+altında **GitHub Actions** seçilir. Bundan sonra `main` dalına `docs/` altını
+değiştiren her itiş `pages.yml` iş akışını tetikler, çeviri denetimi koşar ve
+sayfa güncellenir.
+
+Aynı yerde **Deploy from a branch** → `main` / `/docs` da seçilebilir: klasör
+hazır olduğu için o yol da çalışır, ama yayımdan önce denetim koşmaz ve
+`pages.yml` "Pages is not enabled" diyerek kırılır — o seçenek tercih edilirse
+iş akışı silinmeli.

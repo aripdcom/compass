@@ -1,0 +1,250 @@
+/*
+  Sayfanın tamamı bu dosyada; çerçeve yok, derleme yok.
+
+  Renkler uygulamadan alındı: zemin #101418, yazı #F0F3F6, kuzey kırmızısı
+  #E5484D, kadran işaretlerinin renkleri de kartların kenarında geçiyor
+  (manyetik mavi, kıble yeşil, güneş sarı, nokta mor). Böylece siteye bakan
+  biri ekran görüntüsündeki renkleri tanıyor.
+
+  Varsayılan koyu, çünkü uygulamanın kendisi koyu. Sistemi açık temaya
+  ayarlı olanda açık sürüm devreye girer; iki hâlde de yazı/zemin kontrastı
+  WCAG AA eşiğinin (4,5:1) üstünde.
+*/
+
+:root {
+  color-scheme: dark light;
+
+  --bg: #101418;
+  --surface: #171c22;
+  --line: #262d35;
+  --text: #f0f3f6;
+  --dim: #9aa4b0;
+  --accent: #e5484d;
+  --accent-ink: #ffffff;
+
+  /* Girişteki kadranın ibresi: kuzey kırmızı, güney açık — uygulamadaki gibi.
+     Açık temada güneyin beyazı zemine karışırdı, orada koyu griye döner. */
+  --needle-north: #e5484d;
+  --needle-south: #f0f3f6;
+
+  --radius: 14px;
+  --gap: 24px;
+  --measure: 62ch;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+          "Noto Sans", "Liberation Sans", sans-serif;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --line: #dfe3e8;
+    --text: #131920;
+    --dim: #56606c;
+    --accent: #c0342f;
+    --needle-north: #cf3b40;
+    --needle-south: #6f7885;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.6;
+  /* Yunanca, Bulgarca ve Baltık dillerinde sözcükler uzun; kesme serbest. */
+  overflow-wrap: break-word;
+}
+
+h1, h2, h3 { line-height: 1.2; text-wrap: balance; }
+h1 { font-size: clamp(2.4rem, 7vw, 3.4rem); margin: 0 0 .4em; letter-spacing: -.02em; }
+h2 { font-size: clamp(1.4rem, 3.4vw, 1.9rem); margin: 0 0 .8em; }
+h3 { font-size: 1.05rem; margin: 0 0 .4em; }
+p  { margin: 0 0 1em; max-width: var(--measure); }
+
+a { color: inherit; text-underline-offset: 3px; }
+a:focus-visible, select:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+img { max-width: 100%; height: auto; }
+
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--surface);
+  padding: 10px 16px;
+  border-radius: 0 0 var(--radius) 0;
+}
+.skip:focus { left: 0; z-index: 10; }
+
+/* ---------------------------------------------------------------- başlık */
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 18px 16px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-decoration: none;
+}
+
+.picker { display: flex; align-items: center; gap: 8px; }
+.picker label { color: var(--dim); font-size: .9rem; }
+
+.picker select {
+  font: inherit;
+  font-size: .95rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 10px;
+  max-width: 60vw;
+}
+
+/* ------------------------------------------------------------------ giriş */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: clamp(24px, 5vw, 56px);
+  align-items: center;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: clamp(24px, 6vw, 72px) 16px clamp(32px, 6vw, 72px);
+}
+
+.tagline { font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--dim); }
+
+.rose { width: 100%; max-width: 320px; justify-self: center; color: var(--text); }
+
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 1.4em 0 .8em; }
+
+.button {
+  display: inline-block;
+  padding: 11px 20px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  font-weight: 600;
+  text-decoration: none;
+}
+.button:hover { border-color: var(--dim); }
+
+.button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+.button.primary:hover { filter: brightness(1.08); }
+
+.note { color: var(--dim); font-size: .92rem; }
+
+/* ---------------------------------------------------------------- bölümler */
+
+.band {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: clamp(28px, 5vw, 52px) 16px;
+  border-top: 1px solid var(--line);
+}
+
+.band.narrow p, .band.narrow ol { max-width: var(--measure); }
+
+.cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--gap);
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--mark, var(--accent));
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+.card p { margin: 0; color: var(--dim); font-size: .95rem; }
+
+.shots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--gap);
+}
+.shots figure { margin: 0; }
+.shots img {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #000;
+}
+.shots figcaption { margin-top: 10px; color: var(--dim); font-size: .92rem; }
+
+.steps { padding-left: 1.2em; }
+.steps li { margin-bottom: .5em; }
+
+.langs {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 1.2em 0 0;
+  padding: 0;
+}
+.langs li { margin: 0; }
+.langs a {
+  display: inline-block;
+  padding: 5px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: .9rem;
+  text-decoration: none;
+  color: var(--dim);
+}
+.langs a:hover { color: var(--text); border-color: var(--dim); }
+.langs a[aria-current="true"] {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+/* --------------------------------------------------------------------- alt */
+
+.foot {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 32px 16px 56px;
+  border-top: 1px solid var(--line);
+  color: var(--dim);
+  font-size: .92rem;
+}
+.foot p { margin: 0 0 .4em; }
+
+@media (max-width: 720px) {
+  .hero { grid-template-columns: 1fr; }
+  .rose { max-width: 220px; order: -1; }
+}

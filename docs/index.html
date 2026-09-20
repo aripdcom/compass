@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<!--
+  Compass'ın tanıtım sayfası. GitHub Pages bu klasörü (`docs/`) olduğu gibi
+  yayımlıyor; derleme adımı yok, çünkü sayfanın kendisinin de uygulama gibi
+  bağımlılığı yok: tek HTML, tek CSS, iki küçük JS dosyası.
+
+  Sayfadaki İngilizce metin doğrudan bu dosyada duruyor. Diğer yirmi yedi dil
+  `assets/i18n.js` içinde; `assets/site.js` açılışta tarayıcının dilini okuyup
+  metinleri değiştiriyor. İngilizce ayrı bir tabloda tekrarlanmıyor: site.js
+  ilk yüklemede buradaki metinleri anlık görüntü olarak alıyor, İngilizceye
+  dönüş o görüntüden yapılıyor.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compass — a plain compass for Android</title>
+<meta name="description" content="A plain Android compass: true north, the qibla, the sun and the moon, saved points and a night mode. No internet permission, no ads, no tracking, about 109 KB.">
+<meta name="theme-color" content="#101418">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="ikon.png" sizes="192x192">
+<link rel="apple-touch-icon" href="ikon.png">
+<link rel="canonical" href="https://aripdcom.github.io/compass/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Compass — a plain compass for Android">
+<meta property="og:description" content="True north, the qibla, the sun and the moon. No internet permission, no ads, no tracking, about 109 KB.">
+<meta property="og:url" content="https://aripdcom.github.io/compass/">
+<meta property="og:image" content="https://aripdcom.github.io/compass/ekran-gunduz.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<!--
+  Her dil için ayrı bir adres: ?lang=de, ?lang=tr … Arama motorları çevirileri
+  böyle ayırt eder, bağlantı paylaşan da seçtiği dili paylaşmış olur.
+-->
+<link rel="alternate" hreflang="x-default" href="https://aripdcom.github.io/compass/">
+<link rel="alternate" hreflang="en" href="https://aripdcom.github.io/compass/?lang=en">
+<link rel="alternate" hreflang="bg" href="https://aripdcom.github.io/compass/?lang=bg">
+<link rel="alternate" hreflang="cs" href="https://aripdcom.github.io/compass/?lang=cs">
+<link rel="alternate" hreflang="da" href="https://aripdcom.github.io/compass/?lang=da">
+<link rel="alternate" hreflang="de" href="https://aripdcom.github.io/compass/?lang=de">
+<link rel="alternate" hreflang="el" href="https://aripdcom.github.io/compass/?lang=el">
+<link rel="alternate" hreflang="es" href="https://aripdcom.github.io/compass/?lang=es">
+<link rel="alternate" hreflang="et" href="https://aripdcom.github.io/compass/?lang=et">
+<link rel="alternate" hreflang="fi" href="https://aripdcom.github.io/compass/?lang=fi">
+<link rel="alternate" hreflang="fr" href="https://aripdcom.github.io/compass/?lang=fr">
+<link rel="alternate" hreflang="ga" href="https://aripdcom.github.io/compass/?lang=ga">
+<link rel="alternate" hreflang="hr" href="https://aripdcom.github.io/compass/?lang=hr">
+<link rel="alternate" hreflang="hu" href="https://aripdcom.github.io/compass/?lang=hu">
+<link rel="alternate" hreflang="is" href="https://aripdcom.github.io/compass/?lang=is">
+<link rel="alternate" hreflang="it" href="https://aripdcom.github.io/compass/?lang=it">
+<link rel="alternate" hreflang="lt" href="https://aripdcom.github.io/compass/?lang=lt">
+<link rel="alternate" hreflang="lv" href="https://aripdcom.github.io/compass/?lang=lv">
+<link rel="alternate" hreflang="mt" href="https://aripdcom.github.io/compass/?lang=mt">
+<link rel="alternate" hreflang="nb" href="https://aripdcom.github.io/compass/?lang=nb">
+<link rel="alternate" hreflang="nl" href="https://aripdcom.github.io/compass/?lang=nl">
+<link rel="alternate" hreflang="nn" href="https://aripdcom.github.io/compass/?lang=nn">
+<link rel="alternate" hreflang="pl" href="https://aripdcom.github.io/compass/?lang=pl">
+<link rel="alternate" hreflang="pt" href="https://aripdcom.github.io/compass/?lang=pt">
+<link rel="alternate" hreflang="ro" href="https://aripdcom.github.io/compass/?lang=ro">
+<link rel="alternate" hreflang="sk" href="https://aripdcom.github.io/compass/?lang=sk">
+<link rel="alternate" hreflang="sl" href="https://aripdcom.github.io/compass/?lang=sl">
+<link rel="alternate" hreflang="sv" href="https://aripdcom.github.io/compass/?lang=sv">
+<link rel="alternate" hreflang="tr" href="https://aripdcom.github.io/compass/?lang=tr">
+
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+<header class="top">
+  <a class="brand" href="./">
+    <img src="ikon.png" width="36" height="36" alt="" decoding="async">
+    <span>Compass</span>
+  </a>
+
+  <!--
+    Dil seçici. JavaScript kapalıysa görünmez: seçim de dil değişimi de ona
+    bağlı, çalışmayan bir kutu göstermenin anlamı yok. Sayfanın kendisi o
+    durumda İngilizce kalır ve tamamı okunur.
+  -->
+  <form class="picker" id="picker" hidden>
+    <label for="lang" data-i18n="langLabel">Language</label>
+    <select id="lang" name="lang"></select>
+    <noscript><button type="submit">OK</button></noscript>
+  </form>
+</header>
+
+<main id="main">
+
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Compass</h1>
+      <p class="tagline" data-i18n="tagline">A plain compass for Android. True north, the qibla, the sun and the moon — drawn by hand on a dial, with nothing else in the way.</p>
+      <p class="actions">
+        <a class="button primary" href="https://github.com/aripdcom/compass/releases/latest" data-i18n="btnDownload">Download the APK</a>
+        <a class="button" href="https://github.com/aripdcom/compass" data-i18n="btnSource">Source on GitHub</a>
+      </p>
+      <p class="note" data-i18n="heroNote">MIT licensed · no ads · no tracking · no internet permission</p>
+    </div>
+
+    <!--
+      Kadranın sadeleştirilmiş hâli: kuzey kırmızı, güney beyaz, dışta ana
+      yönlerin çentikleri. Uygulamadaki ibrenin aynısı, ekran görüntüsü değil
+      çizim olduğu için her ölçekte net.
+    -->
+    <svg class="rose" viewBox="0 0 200 200" role="img" aria-labelledby="roseTitle">
+      <title id="roseTitle" data-i18n="roseAlt">A compass dial with the needle pointing north</title>
+      <circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" stroke-opacity=".18" stroke-width="2"/>
+      <circle cx="100" cy="100" r="76" fill="none" stroke="currentColor" stroke-opacity=".10" stroke-width="1"/>
+      <g stroke="currentColor" stroke-opacity=".55" stroke-width="2">
+        <line x1="100" y1="12" x2="100" y2="26"/>
+        <line x1="188" y1="100" x2="174" y2="100"/>
+        <line x1="100" y1="188" x2="100" y2="174"/>
+        <line x1="12" y1="100" x2="26" y2="100"/>
+      </g>
+      <g stroke="currentColor" stroke-opacity=".28" stroke-width="1.5">
+        <line x1="162" y1="38" x2="153" y2="47"/>
+        <line x1="162" y1="162" x2="153" y2="153"/>
+        <line x1="38" y1="162" x2="47" y2="153"/>
+        <line x1="38" y1="38" x2="47" y2="47"/>
+      </g>
+      <polygon points="100,28 112,104 100,96 88,104" fill="var(--needle-north)"/>
+      <polygon points="100,172 112,96 100,104 88,96" fill="var(--needle-south)"/>
+      <circle cx="100" cy="100" r="5" fill="currentColor" fill-opacity=".8"/>
+    </svg>
+  </section>
+
+  <section class="band" id="features">
+    <h2 data-i18n="secFeatures">What it does</h2>
+    <ul class="cards">
+      <li class="card" style="--mark:#e5484d">
+        <h3 data-i18n="f1t">True north</h3>
+        <p data-i18n="f1b">Once the location is known the magnetic declination is added, so north on the dial is the geographic pole and not the magnetic one. Magnetic north stays on the rim as a blue M.</p>
+      </li>
+      <li class="card" style="--mark:#3dd68c">
+        <h3 data-i18n="f2t">Qibla, Al-Aqsa, the Vatican</h3>
+        <p data-i18n="f2b">Great-circle bearings to fixed places, marked on the rim with the distance. Worked out on the device: nothing is looked up, nothing is fetched.</p>
+      </li>
+      <li class="card" style="--mark:#f5b841">
+        <h3 data-i18n="f3t">Lock a bearing</h3>
+        <p data-i18n="f3b">Tap the dial to lock the direction you are facing. The bottom line then says how far you have drifted, left or right, and a double tick tells you when you are back on it.</p>
+      </li>
+      <li class="card" style="--mark:#d6dee8">
+        <h3 data-i18n="f4t">Spirit level</h3>
+        <p data-i18n="f4b">A bubble in the middle of the dial. A tilted phone reads wrong — this is the thing that tells you it is tilted.</p>
+      </li>
+      <li class="card" style="--mark:#ffd84d">
+        <h3 data-i18n="f5t">Sun and moon</h3>
+        <p data-i18n="f5b">Their bearings on the rim, the arc from sunrise to sunset, and the moon drawn with its phase — faint while it is below the horizon.</p>
+      </li>
+      <li class="card" style="--mark:#c77dff">
+        <h3 data-i18n="f6t">Saved points</h3>
+        <p data-i18n="f6b">Long-press the dial to save where you are, or paste coordinates or a shared map link. The rim then carries the bearing and the distance back.</p>
+      </li>
+      <li class="card" style="--mark:#ff5b45">
+        <h3 data-i18n="f7t">Night mode</h3>
+        <p data-i18n="f7b">Black background, red dial. Marks are told apart by hue rather than brightness, so night vision survives a glance at the screen. It can switch by itself at the end of civil twilight.</p>
+      </li>
+      <li class="card" style="--mark:#4c9aff">
+        <h3 data-i18n="f8t">Says it out loud</h3>
+        <p data-i18n="f8b">Every reading is announced to screen readers in the language of the phone, and a short tick passes north, east, south and west — so a bearing can be held without looking.</p>
+      </li>
+      <li class="card" style="--mark:#8a94a0">
+        <h3 data-i18n="f9t">Small, and offline by design</h3>
+        <p data-i18n="f9b">About 109 KB. No frameworks, no dependencies, no analytics. The app holds no internet permission at all, so it cannot send your location anywhere.</p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="band" id="screens">
+    <h2 data-i18n="secScreens">On the phone</h2>
+    <div class="shots">
+      <figure>
+        <img src="ekran-gunduz.png" width="1080" height="2400" loading="lazy" decoding="async" alt="" data-i18n-alt="s1c">
+        <figcaption data-i18n="s1c">Daylight: six marks on the dial — magnetic north, the qibla, the sun and its arc, a saved point, the moon.</figcaption>
+      </figure>
+      <figure>
+        <img src="ekran-gece.png" width="1080" height="2400" loading="lazy" decoding="async" alt="" data-i18n-alt="s2c">
+        <figcaption data-i18n="s2c">Night mode: black background, red dial, marks told apart by shape.</figcaption>
+      </figure>
+      <figure>
+        <img src="ekran-ayarlar.png" width="1080" height="2400" loading="lazy" decoding="async" alt="" data-i18n-alt="s3c">
+        <figcaption data-i18n="s3c">Settings: the display, how the compass behaves, and which marks are drawn.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="band narrow" id="install">
+    <h2 data-i18n="secInstall">Install it</h2>
+    <ol class="steps">
+      <li data-i18n="i1">Download the APK from the releases page.</li>
+      <li data-i18n="i2">Open the file on the phone and allow installing from this source when Android asks.</li>
+      <li data-i18n="i3">That is all. There is no account, no sign-in and nothing to set up.</li>
+    </ol>
+    <p class="note" data-i18n="iNote">Would rather build it yourself? The README has the Gradle and adb steps, and every push produces a debug APK.</p>
+  </section>
+
+  <section class="band narrow" id="privacy">
+    <h2 data-i18n="secPrivacy">Privacy</h2>
+    <p data-i18n="privacy">The app declares no internet permission, so it cannot send anything anywhere — that is enforced by Android, not promised in a policy. Location is read on the device only, for the declination, the qibla, the sun and the moon, and nothing is kept beyond the points you save yourself.</p>
+  </section>
+
+  <section class="band narrow" id="languages">
+    <h2 data-i18n="secLangs">Twenty-eight languages</h2>
+    <p data-i18n="langsBody">English is the default. Every official language of the European Union is there, together with Icelandic and both written standards of Norwegian, and Turkish. The app opens in whatever language the phone is set to and falls back to English for anything else; from Android 13 on, the system settings can also give the app a language of its own.</p>
+    <p data-i18n="langsBody2">The translation covers the directions themselves, not only the sentences: the letters on the dial, the sixteen abbreviations, the hemisphere letters in the coordinates. East is O in German and O is west in French — which is why not one of those letters is hard-coded.</p>
+    <ul class="langs" id="langList"></ul>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <p data-i18n="footNote">MIT licensed. Built with the Android SDK and the Kotlin standard library, and nothing else.</p>
+  <p><a href="https://github.com/aripdcom/compass" data-i18n="btnSource">Source on GitHub</a></p>
+</footer>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>
