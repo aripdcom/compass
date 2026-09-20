@@ -1103,7 +1103,7 @@ git push origin v4.3
 ```
 
 **Ya da iş akışını elle tetikleyerek:** `Actions → Release → Run workflow`,
-açılan kutuya `v4.3` yazılır. Etiketi de sürümü de iş akışı kendisi oluşturur
+açılan `tag` kutusuna `v4.3` yazılır. Etiketi de sürümü de iş akışı kendisi oluşturur
 (`gh release create --target`), yani git'e dokunmaya gerek kalmaz — tarayıcıdan,
 telefondan ya da etiket itme yetkisi olmayan bir ortamdan sürüm çıkarmanın yolu
 budur.

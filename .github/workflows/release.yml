@@ -30,12 +30,14 @@ name: Release
 on:
   push:
     tags: ['v*']
+  # Etiket itemeyen bir ortamdan yayımlamak: elle tetiklenir ve etiket girdi
+  # olarak verilir — `gh release create --target` etiketi burada oluşturur.
   workflow_dispatch:
     inputs:
-      tag_name:
-        description: "Sürüm etiketi (örn. v4.4). Boş bırakılırsa sürüm yayımlanmaz, yalnızca APK üretilir."
+      tag:
+        description: 'Yayımlanacak etiket (vX.Y); boş bırakılırsa yalnızca APK üretilir'
         required: false
-        default: ''
+        type: string
 
 permissions:
   contents: write   # sürüm oluşturmak ve APK eklemek için
@@ -57,36 +59,22 @@ jobs:
           fetch-depth: 0
 
       # Etiket iki yerden gelebilir: itilen etiketin kendisinden ya da elle
-      # tetiklemedeki kutudan. Aşağıdaki adımlar ikisini ayrı ayrı bilmek
-      # zorunda kalmasın diye burada tek bir değere indirgeniyor.
+      # tetiklemedeki `tag` girdisinden. Sonraki adımlar tek bir RELEASE_TAG
+      # değişkenine bakar; boşsa sürüm yayımlanmaz, yalnızca APK üretilir.
       - name: Sürüm etiketini belirle
-        id: tag
         env:
-          INPUT_TAG: ${{ inputs.tag_name }}
-        run: |
-          if [ "$GITHUB_REF_TYPE" = 'tag' ]; then
-            tag="$GITHUB_REF_NAME"
-          else
-            tag="${INPUT_TAG:-}"
-          fi
-          {
-            echo "name=$tag"
-            echo "publish=$([ -n "$tag" ] && echo true || echo false)"
-          } >> "$GITHUB_OUTPUT"
-          if [ -n "$tag" ]; then
-            echo "Sürüm yayımlanacak: $tag"
-          else
-            echo "Etiket verilmedi; yalnızca APK üretilecek."
-          fi
+          PUSHED_TAG: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
+          INPUT_TAG: ${{ inputs.tag || '' }}
+        run: echo "RELEASE_TAG=${PUSHED_TAG:-$INPUT_TAG}" >> "$GITHUB_ENV"
 
       # Etiket adı kabuğa doğrudan gömülmüyor, ortam değişkeninden geçiyor:
       # git etiket adlarında `;`, `&`, `$` gibi karakterlere izin veriyor ve
       # gömülen bir ad koşucuda komut çalıştırabilirdi. Elle tetiklemede ad
       # doğrudan kullanıcıdan geldiği için bu daha da önemli.
       - name: Etiket sürümle tutuyor mu
-        if: steps.tag.outputs.publish == 'true'
+        if: env.RELEASE_TAG != ''
         env:
-          TAG: ${{ steps.tag.outputs.name }}
+          TAG: ${{ env.RELEASE_TAG }}
         run: bash .github/scripts/check-tag.sh "$TAG"
 
       - name: JDK 17
@@ -145,7 +133,7 @@ jobs:
           retention-days: 90
 
       - name: Sürüm notlarını hazırla
-        if: steps.tag.outputs.publish == 'true'
+        if: env.RELEASE_TAG != ''
         env:
           VERSION: ${{ steps.apk.outputs.version }}
           CODE: ${{ steps.apk.outputs.code }}
@@ -178,10 +166,10 @@ jobs:
       # itilerek gelindiğinde zaten vardır ve bayrak yok sayılır; elle
       # tetiklemede ise sürümü var eden şey budur.
       - name: GitHub sürümünü yayımla
-        if: steps.tag.outputs.publish == 'true'
+        if: env.RELEASE_TAG != ''
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ steps.tag.outputs.name }}
+          TAG: ${{ env.RELEASE_TAG }}
           VERSION: ${{ steps.apk.outputs.version }}
         run: |
           gh release create "$TAG" dist/* \
