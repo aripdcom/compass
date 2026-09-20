@@ -8,7 +8,7 @@ ve Kotlin standart kütüphanesi kullanılıyor, kadran `Canvas` ile elle çizil
 Gerçek kuzey, kıble yönü, dokununca yön kilitleyen hedef göstergesi ve kadranın
 göbeğinde su terazisi.
 
-**Tanıtım sayfası: https://aripdcom.github.io/compass/** (16. bölüm)
+**Tanıtım sayfası: https://compass.aripd.com/** (16. bölüm)
 
 - `minSdk 24` (Android 7.0) — **Android 15 dahil** tüm sürümlerde çalışır
 - `targetSdk 35` (Android 15). Bu seviyeden itibaren kenardan kenara çizim
@@ -1123,7 +1123,7 @@ okur — tek doğru kaynak orasıdır, iş akışının ayrıca bilmesine gerek 
 
 Deponun `docs/` klasörü aynı zamanda uygulamanın tanıtım sayfasıdır:
 
-**https://aripdcom.github.io/compass/**
+**https://compass.aripd.com/**
 
 Sayfanın da uygulama gibi hiçbir bağımlılığı yok: çerçeve, paket yöneticisi ve
 derleme adımı olmadan, dört dosya.
@@ -1135,8 +1135,13 @@ docs/
 ├── assets/i18n.js      diğer yirmi yedi dilin çevirileri
 ├── assets/site.js      dil seçimi
 ├── .nojekyll           GitHub sayfayı Jekyll'e sokmasın diye
+├── CNAME               özel alan adı: compass.aripd.com
 └── ekran-*.png         README'nin de kullandığı ekran görüntüleri
 ```
+
+Sayfadaki mutlak adresler (`canonical`, Open Graph ve yirmi sekiz `hreflang`
+bağlantısı) `compass.aripd.com`'u gösterir; geri kalan her yol görecelidir,
+bu yüzden site `/compass/` altından da kök dizinden de sorunsuz açılır.
 
 **Dil seçimi uygulamadakiyle aynı mantıkta**: sayfa tarayıcının — yani sistemin
 — diliyle açılır, listede olmayan bir dilde İngilizceye döner. Sıra şu:
@@ -1173,6 +1178,13 @@ Bir kereye mahsus ayar: `Settings → Pages → Build and deployment → Source`
 altında **GitHub Actions** seçilir. Bundan sonra `main` dalına `docs/` altını
 değiştiren her itiş `pages.yml` iş akışını tetikler, çeviri denetimi koşar ve
 sayfa güncellenir.
+
+Özel alan adı (`compass.aripd.com`) `Settings → Pages → Custom domain` altında
+duruyor; DNS tarafında `compass` için `aripdcom.github.io`'ya bir CNAME kaydı
+gerekir. Actions ile yayımlarken depodaki `docs/CNAME` dosyası şart değil ama
+kaynak ileride "Deploy from a branch"e çevrilirse gereklidir, o yüzden depoda
+duruyor — içeriği ayarlardaki alan adıyla aynı olmalı, ayrışırsa GitHub
+ayardaki adı dosyadakiyle değiştirir.
 
 Aynı yerde **Deploy from a branch** → `main` / `/docs` da seçilebilir: klasör
 hazır olduğu için o yol da çalışır, ama yayımdan önce denetim koşmaz ve
