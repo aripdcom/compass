@@ -17,8 +17,8 @@ android {
         // setDecorFitsSystemWindows(true) yok sayılıyor — pencere boşluklarını
         // uygulama kendisi bırakmak zorunda (bkz. MainActivity.applyInsets).
         targetSdk = 35
-        versionCode = 33
-        versionName = "4.2"
+        versionCode = 34
+        versionName = "4.3"
     }
 
 
