@@ -44,6 +44,11 @@ mkdir -p dist
 cp "$source_apk" "dist/$name.apk"
 ( cd dist && sha256sum "$name.apk" > "$name.apk.sha256" )
 
+# İki ölçü birden: `du` disk bloklarına yuvarlar (4 KB'lık bloklarda 112.089
+# baytlık bir APK "112K" görünür), README'nin 10. bölümü ise tam baytla
+# konuşuyor. Yuvarlanmış sayı koşunun günlüğünden okunamadığı için ikisi de
+# yazılıyor.
+bytes=$(wc -c < "dist/$name.apk" | tr -d ' ')
 size=$(du -h "dist/$name.apk" | cut -f1)
 digest=$(cut -d' ' -f1 < "dist/$name.apk.sha256")
 
@@ -65,9 +70,9 @@ if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
     echo "|---|---|"
     echo "| Sürüm | $version_name ($version_code) |"
     echo "| Tür | $label |"
-    echo "| Boyut | $size |"
+    echo "| Boyut | $size ($bytes bayt) |"
     echo "| SHA-256 | \`$digest\` |"
   } >> "$GITHUB_STEP_SUMMARY"
 fi
 
-echo "$name.apk  ($size)"
+echo "$name.apk  ($size, $bytes bayt)"
