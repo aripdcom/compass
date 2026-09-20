@@ -767,8 +767,9 @@ seçicisinde görünür ama uygulama İngilizce açılır.
 
 ## 10. Boyut
 
-Release APK **300.267 bayt** (~293 KB, sürüm 4.3). Bunun yaklaşık dörtte üçü
-yirmi sekiz dilin metinleri; kod, ikonlar ve imza toplam 65 KB tutuyor.
+Release APK **300.266 bayt** (~293 KB, sürüm 4.3 — Releases sayfasındaki
+imzalı dosya). Bunun yaklaşık dörtte üçü yirmi sekiz dilin metinleri; kod,
+ikonlar ve imza toplam 65 KB tutuyor.
 
 Aşağıdaki küçültme hikâyesi hâlâ geçerli, ama **4.2 sürümüne** ait: o APK
 112.089 bayttı ve başlangıç noktası 854.752 bayta göre **%87 küçülmüştü**.
@@ -804,9 +805,9 @@ artık metinlerdi.
 
 ### Dil sayısının bedeli
 
-4.3'te diller altıdan yirmi sekize çıktı ve APK **112.089 → 300.267 bayta**
+4.3'te diller altıdan yirmi sekize çıktı ve APK **112.089 → 300.266 bayta**
 (2,7 katı) büyüdü. Kod, ikonlar ve imza bu sürümde değişmediğine göre
-188.178 baytlık artışın tamamı `resources.arsc`'ye ait: o parça 37 KB'tan
+188.177 baytlık artışın tamamı `resources.arsc`'ye ait: o parça 37 KB'tan
 yaklaşık **228 KB**'a çıkmış oluyor (toplamdan değişmeyen 65 KB'ın düşülmesiyle;
 dosya ayrı ayrı ölçülmedi). Yani APK'nın dörtte üçü artık metin.
 
@@ -825,6 +826,11 @@ Bunu küçültmenin iki yolu var, ikisi de bu depoda **yapılmadı**:
   vazgeçmek bu projede tercih edilmedi.
 
 Üç yüz kilobayt hâlâ küçük: karşılaştırma için bir fotoğraf bundan büyük.
+
+Buradaki sayı **yayımlanan** APK'nındır. Aynı commit iki kez derlenip
+imzalandığında boyut bir iki bayt oynayabilir: imza bloğundaki DER kodlaması
+her imzada birebir aynı uzunlukta çıkmaz. Ölçüm yapılacaksa Releases
+sayfasındaki dosya esas alınmalı, elle koşturulan bir derleme değil.
 
 Karıştırma yığın izlerini okunmaz hâle getirdiğinden
 `app/build/outputs/mapping/release/mapping.txt` her yayında saklanmalıdır;
