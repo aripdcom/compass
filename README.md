@@ -1090,23 +1090,41 @@ Testler ya da lint düşerse APK üretilmez. Düşen testin raporu yine de
 `raporlar-<koşu numarası>` çıktısında durur: koşu günlüğü özeti verir, HTML rapor
 ayrıntıyı.
 
-### Etiketle sürüm yayımlamak
+### Sürüm yayımlamak
+
+Her iki yolda da önce `app/build.gradle.kts` içindeki `versionCode` ve
+`versionName` yükseltilip `main`'e alınır. Sonrası iki türlü olabilir.
+
+**Etiket iterek:**
 
 ```bash
-# 1. app/build.gradle.kts içinde versionCode ve versionName'i yükseltin
-# 2. commit'leyip itin
 git tag v4.3
 git push origin v4.3
 ```
 
-Gerisi kendiliğinden olur: etiket sürümle tutuyor mu diye bakılır, testler ve lint
-koşar, imzalı release APK üretilir ve **Releases** sayfasında APK'sı, SHA-256
-özeti ve önceki etiketten beri gelen commit listesiyle birlikte bir sürüm açılır.
+**Ya da iş akışını elle tetikleyerek:** `Actions → Release → Run workflow`,
+açılan kutuya `v4.3` yazılır. Etiketi de sürümü de iş akışı kendisi oluşturur
+(`gh release create --target`), yani git'e dokunmaya gerek kalmaz — tarayıcıdan,
+telefondan ya da etiket itme yetkisi olmayan bir ortamdan sürüm çıkarmanın yolu
+budur.
 
-İlk adım kasıtlı. Sürüm numarası iki yerde duruyor — derleme dosyasında ve
-etikette — ve ayrı düştüklerinde ortaya `v4.3` diye yayımlanmış ama içinde 4.2
-yazan bir APK çıkar. Bu, ancak telefona kurup Ayarlar'a bakınca fark edilen
-türden bir hatadır; `check-tag.sh` yayını daha ilk adımda durdurur.
+Kutu **boş bırakılırsa** hiçbir etiket ya da sürüm oluşmaz: koşu yalnızca imzalı
+APK'yı üretip çıktıya asar. "Derleniyor mu, boyutu ne oldu" sorusuna sürüm
+yayımlamadan bakmak için bu mod var (10. bölümdeki ölçüm böyle alındı).
+
+Gerisi her iki yolda da aynı: etiket sürümle tutuyor mu diye bakılır, testler ve
+lint koşar, imzalı release APK üretilir ve **Releases** sayfasında APK'sı,
+SHA-256 özeti ve önceki etiketten beri gelen commit listesiyle birlikte bir sürüm
+açılır.
+
+Sürüm numarasını önce yükseltmek kasıtlı. Numara iki yerde duruyor — derleme
+dosyasında ve etikette — ve ayrı düştüklerinde ortaya `v4.3` diye yayımlanmış ama
+içinde 4.2 yazan bir APK çıkar. Bu, ancak telefona kurup Ayarlar'a bakınca fark
+edilen türden bir hatadır; `check-tag.sh` yayını daha ilk adımda durdurur ve
+**iki yolda da koşar**. Elle tetiklemede ad doğrudan elle yazıldığı için betik
+ayrıca `v` önekini de şart koşar: `4.3` yazılsa karşılaştırma tutardı ama ortaya
+depodaki diğerlerine benzemeyen, `tags: ['v*']` süzgecine de takılmayan bir
+etiket çıkardı.
 
 ### İmzalama anahtarını CI'ya vermek
 
