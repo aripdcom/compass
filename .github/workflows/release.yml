@@ -1,7 +1,17 @@
-# Sürüm yayımı: `v` ile başlayan bir etiket itildiğinde imzalı release APK
-# üretilir ve GitHub sürümüne (Releases) eklenir.
+# Sürüm yayımı: imzalı release APK üretilir ve GitHub sürümüne (Releases)
+# eklenir. İki yoldan tetiklenir:
 #
-#   git tag v4.3 && git push origin v4.3
+#   1. Etiket itilir:  git tag v4.3 && git push origin v4.3
+#   2. Elle tetiklenir ("Actions -> Release -> Run workflow") ve kutuya etiket
+#      adı yazılır; etiketi de sürümü de iş akışının kendisi oluşturur.
+#
+# İkinci yol, etiket itemeyen bir ortamdan (ya da tarayıcıdan) sürüm çıkarmayı
+# mümkün kılıyor. Kutu boş bırakılırsa hiçbir etiket ya da sürüm oluşmaz: koşu
+# yalnızca APK'yı üretip çıktıya asar — "derleniyor mu, boyutu ne" sorusuna
+# sürüm yayımlamadan bakmanın yolu budur.
+#
+# Hangi yoldan gelinirse gelinsin `check-tag.sh` koşar: etiket ile
+# build.gradle.kts'deki versionName tutmuyorsa yayım daha ilk adımda durur.
 #
 # İmzalama anahtarı depoya girmez; depo ayarlarındaki secret'lardan gelir
 # (Settings -> Secrets and variables -> Actions):
@@ -21,6 +31,11 @@ on:
   push:
     tags: ['v*']
   workflow_dispatch:
+    inputs:
+      tag_name:
+        description: "Sürüm etiketi (örn. v4.4). Boş bırakılırsa sürüm yayımlanmaz, yalnızca APK üretilir."
+        required: false
+        default: ''
 
 permissions:
   contents: write   # sürüm oluşturmak ve APK eklemek için
@@ -41,13 +56,37 @@ jobs:
           # sığ kopyada o geçmiş bulunmaz.
           fetch-depth: 0
 
+      # Etiket iki yerden gelebilir: itilen etiketin kendisinden ya da elle
+      # tetiklemedeki kutudan. Aşağıdaki adımlar ikisini ayrı ayrı bilmek
+      # zorunda kalmasın diye burada tek bir değere indirgeniyor.
+      - name: Sürüm etiketini belirle
+        id: tag
+        env:
+          INPUT_TAG: ${{ inputs.tag_name }}
+        run: |
+          if [ "$GITHUB_REF_TYPE" = 'tag' ]; then
+            tag="$GITHUB_REF_NAME"
+          else
+            tag="${INPUT_TAG:-}"
+          fi
+          {
+            echo "name=$tag"
+            echo "publish=$([ -n "$tag" ] && echo true || echo false)"
+          } >> "$GITHUB_OUTPUT"
+          if [ -n "$tag" ]; then
+            echo "Sürüm yayımlanacak: $tag"
+          else
+            echo "Etiket verilmedi; yalnızca APK üretilecek."
+          fi
+
       # Etiket adı kabuğa doğrudan gömülmüyor, ortam değişkeninden geçiyor:
       # git etiket adlarında `;`, `&`, `$` gibi karakterlere izin veriyor ve
-      # gömülen bir ad koşucuda komut çalıştırabilirdi.
+      # gömülen bir ad koşucuda komut çalıştırabilirdi. Elle tetiklemede ad
+      # doğrudan kullanıcıdan geldiği için bu daha da önemli.
       - name: Etiket sürümle tutuyor mu
-        if: github.ref_type == 'tag'
+        if: steps.tag.outputs.publish == 'true'
         env:
-          TAG: ${{ github.ref_name }}
+          TAG: ${{ steps.tag.outputs.name }}
         run: bash .github/scripts/check-tag.sh "$TAG"
 
       - name: JDK 17
@@ -106,7 +145,7 @@ jobs:
           retention-days: 90
 
       - name: Sürüm notlarını hazırla
-        if: github.ref_type == 'tag'
+        if: steps.tag.outputs.publish == 'true'
         env:
           VERSION: ${{ steps.apk.outputs.version }}
           CODE: ${{ steps.apk.outputs.code }}
@@ -134,14 +173,19 @@ jobs:
 
       # `--generate-notes` önceki etiketten beri gelen commit listesini üretir;
       # GitHub API'si onu verilen gövdenin *ardına* ekler, üzerine yazmaz.
+      #
+      # `--target`: etiket henüz yoksa `gh` onu bu commit'te oluşturur. Etiket
+      # itilerek gelindiğinde zaten vardır ve bayrak yok sayılır; elle
+      # tetiklemede ise sürümü var eden şey budur.
       - name: GitHub sürümünü yayımla
-        if: github.ref_type == 'tag'
+        if: steps.tag.outputs.publish == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.ref_name }}
+          TAG: ${{ steps.tag.outputs.name }}
           VERSION: ${{ steps.apk.outputs.version }}
         run: |
           gh release create "$TAG" dist/* \
+            --target "$GITHUB_SHA" \
             --title "Pusula $VERSION" \
             --notes-file "$RUNNER_TEMP/notes.md" \
             --generate-notes
