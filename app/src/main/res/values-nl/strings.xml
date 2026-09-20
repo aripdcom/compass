@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Nederlands -->
+<resources>
+    <string name="app_name">Kompas</string>
+    <string name="no_sensor">Geen kompassensor op dit toestel.</string>
+    <string name="calibrate">Lage nauwkeurigheid — beweeg de telefoon in een acht.</string>
+    <string name="magnetic_disturbance">Magnetische storing: veld %1$d µT, verwacht %2$d µT — houd metaal en magneten weg.</string>
+    <string name="hold_flat">Houd de telefoon vlak — kantelen vervalst de aflezing.</string>
+    <string name="true_north">Geografisch noorden</string>
+    <string name="magnetic_north">Magnetisch noorden</string>
+    <string name="need_location">Locatietoestemming nodig voor het geografische noorden — tik hier</string>
+    <string name="waiting_location">Wachten op locatie…</string>
+    <string name="place_kaaba">Kaäba (qibla)</string>
+    <string name="place_kaaba_label">Qibla</string>
+    <string name="place_aqsa">Al-Aqsamoskee</string>
+    <string name="place_aqsa_label">Aqsa</string>
+    <string name="place_vatican">Vaticaan</string>
+    <string name="place_vatican_label">Vaticaan</string>
+    <string name="place_info">%1$s %2$s</string>
+    <string name="sun_rise_set">zonsopkomst %1$s (%2$s) · zonsondergang %3$s (%4$s)</string>
+    <string name="moon_info">Maan %1$s · %2$d%%</string>
+    <string name="moon_info_below">Maan %1$s · %2$d%% · onder de horizon</string>
+    <string name="approximate_location">bij benadering</string>
+    <string name="location_copied">Gekopieerd: %1$s</string>
+    <string name="sun_info">Zon %1$s</string>
+    <string name="sun_info_below">Zon %1$s · onder de horizon</string>
+    <string name="target_hint">Tik op de roos: koers vastzetten · lang drukken: punt · tik hier: koers invoeren</string>
+    <string name="waypoint_line">%1$s %2$s · %3$s</string>
+    <string name="waypoint_here">%1$s · u bent hier</string>
+    <string name="waypoint_more">+%1$d meer</string>
+    <string name="waypoint_saved">%1$s opgeslagen</string>
+    <string name="waypoint_cleared">%1$s verwijderd</string>
+    <string name="waypoint_needs_location">Geen locatie — punt niet opgeslagen</string>
+    <string name="bearing_dialog_title">Koers invoeren</string>
+    <string name="bearing_dialog_set">Instellen</string>
+    <string name="bearing_dialog_clear">Wissen</string>
+    <string name="bearing_dialog_cancel">Annuleren</string>
+    <string name="target_plain">Doel %1$s</string>
+    <string name="target_reached">Doel %1$s · op koers</string>
+    <string name="target_right">Doel %1$s · %2$s naar rechts</string>
+    <string name="target_left">Doel %1$s · %2$s naar links</string>
+    <string name="settings_title">Instellingen</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Gebaren</string>
+    <string name="settings_gestures_summary">Wat elke tik en lange druk doet</string>
+    <string name="settings_gestures_body">Tik op de roos — koers vastzetten; tik opnieuw om los te laten\nLang op de roos drukken — uw positie als punt opslaan\nTik op de grote graden — nachtmodus wisselen\nTik op de locatieregel — decimaal ⇄ graden-minuten-seconden\nLang op de locatieregel drukken — kopiëren of delen\nTik op de onderste regel — koers met de hand invoeren\nLang op de onderste regel drukken — opgeslagen punten en coördinaten</string>
+    <string name="settings_open">Instellingen</string>
+    <string name="settings_section_display">WEERGAVE</string>
+    <string name="settings_night">Nachtmodus</string>
+    <string name="settings_night_summary">Zwarte achtergrond, rode roos — spaart het nachtzicht</string>
+    <string name="settings_night_auto">Automatisch bij schemering</string>
+    <string name="settings_night_auto_summary">Schakelt aan het einde van de burgerlijke schemering, als het daglicht op is</string>
+    <string name="settings_unit">Hoekeenheid</string>
+    <string name="settings_unit_degree">Graden (0-360)</string>
+    <string name="settings_unit_mil">Strepen (0-6400)</string>
+    <string name="settings_keep_screen">Scherm aan houden</string>
+    <string name="settings_keep_screen_summary">Het scherm blijft aan zolang de app open is</string>
+    <string name="settings_fullscreen">Volledig scherm</string>
+    <string name="settings_fullscreen_summary">Verbergt de status- en navigatiebalk; veeg vanaf de rand om ze te tonen</string>
+    <string name="settings_section_compass">KOMPAS</string>
+    <string name="settings_true_north">Geografisch noorden gebruiken</string>
+    <string name="settings_true_north_summary">Telt de magnetische declinatie erbij als de locatie bekend is</string>
+    <string name="settings_smoothing">Demping</string>
+    <string name="settings_smoothing_calm">Rustig</string>
+    <string name="settings_smoothing_balanced">Gebalanceerd</string>
+    <string name="settings_smoothing_quick">Snel</string>
+    <string name="settings_vibrate">Trillen bij koersen</string>
+    <string name="settings_vibrate_summary">Een korte tik langs N/O/Z/W, een dubbele tik bij de vastgezette koers</string>
+    <string name="settings_section_marks">MARKERINGEN OP DE ROOS</string>
+    <string name="settings_show_magnetic">Magnetisch noorden (M)</string>
+    <string name="settings_show_magnetic_summary">Alleen zichtbaar als het geografische noorden in gebruik is</string>
+    <string name="settings_show_level">Waterpas</string>
+    <string name="settings_show_level_summary">De bel in het midden van de roos</string>
+    <string name="settings_show_sun">Zon</string>
+    <string name="settings_show_sun_arc">Zonnebaan</string>
+    <string name="settings_show_sun_arc_summary">De boog van zonsopkomst tot zonsondergang en de koersen van beide uiteinden</string>
+    <string name="settings_show_moon">Maan</string>
+    <string name="settings_show_moon_summary">Haar koers en schijngestalte; vaag getekend onder de horizon</string>
+    <string name="settings_marks_note">Doel- en puntmarkeringen staan hier niet: een tik of lange druk op de roos zet ze al aan en uit.</string>
+    <string name="mil_suffix">strepen</string>
+    <string name="a11y_degrees">%1$d graden</string>
+    <string name="a11y_mils">%1$d strepen</string>
+    <string name="a11y_heading">%1$s, %2$s, %3$s</string>
+    <string name="a11y_declination">Magnetisch %1$s, declinatie %2$s graden %3$s</string>
+    <string name="a11y_declination_east">oost</string>
+    <string name="a11y_declination_west">west</string>
+    <string name="a11y_dial">Kompasroos</string>
+    <string name="a11y_lock_bearing">koers vastzetten</string>
+    <string name="a11y_save_point">punt opslaan</string>
+    <string name="magnetic_reading">Magnetisch %1$s</string>
+    <string name="declination_reading">Declinatie %1$s°%2$s</string>
+    <string name="hemisphere_north">N</string>
+    <string name="hemisphere_south">Z</string>
+    <string name="hemisphere_east">O</string>
+    <string name="hemisphere_west">W</string>
+    <string name="magnetic_label">M</string>
+    <string name="distance_meters">%1$d m</string>
+    <string name="distance_kilometers">%1$s km</string>
+    <string name="coordinate_decimal">%1$s° %2$s</string>
+    <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
+    <string-array name="cardinal_names">
+        <item>noord</item>
+        <item>noordnoordoost</item>
+        <item>noordoost</item>
+        <item>oostnoordoost</item>
+        <item>oost</item>
+        <item>oostzuidoost</item>
+        <item>zuidoost</item>
+        <item>zuidzuidoost</item>
+        <item>zuid</item>
+        <item>zuidzuidwest</item>
+        <item>zuidwest</item>
+        <item>westzuidwest</item>
+        <item>west</item>
+        <item>westnoordwest</item>
+        <item>noordwest</item>
+        <item>noordnoordwest</item>
+    </string-array>
+    <string-array name="cardinal_abbreviations">
+        <item>N</item>
+        <item>NNO</item>
+        <item>NO</item>
+        <item>ONO</item>
+        <item>O</item>
+        <item>OZO</item>
+        <item>ZO</item>
+        <item>ZZO</item>
+        <item>Z</item>
+        <item>ZZW</item>
+        <item>ZW</item>
+        <item>WZW</item>
+        <item>W</item>
+        <item>WNW</item>
+        <item>NW</item>
+        <item>NNW</item>
+    </string-array>
+    <string-array name="dial_labels">
+        <item>N</item>
+        <item>NO</item>
+        <item>O</item>
+        <item>ZO</item>
+        <item>Z</item>
+        <item>ZW</item>
+        <item>W</item>
+        <item>NW</item>
+    </string-array>
+    <string name="waypoint_default_name">Punt %1$d</string>
+    <string name="waypoint_limit">Er kunnen hoogstens %1$d punten worden bewaard</string>
+    <string name="waypoints_title">Opgeslagen punten</string>
+    <string name="waypoints_empty">Nog geen punten — druk lang op de roos om er een op te slaan</string>
+    <string name="waypoint_rename">Naam wijzigen</string>
+    <string name="waypoint_delete">Verwijderen</string>
+    <string name="waypoint_name_hint">Naam van het punt</string>
+    <string name="waypoint_add">Punt toevoegen</string>
+    <string name="waypoint_enter_coordinates">Coördinaten invoeren…</string>
+    <string name="waypoint_coordinates_hint">41.0, 29.0 of een gedeelde link</string>
+    <string name="waypoint_coordinates_unreadable">Geen coördinaten gevonden</string>
+    <string name="location_action_copy">Kopiëren</string>
+    <string name="location_action_share">Delen</string>
+    <string name="share_chooser">Locatie delen</string>
+    <string name="settings_section_about">OVER</string>
+    <string name="settings_version">Versie</string>
+    <string name="settings_version_format">%1$s (%2$d)</string>
+    <string name="settings_source">Broncode</string>
+    <string name="settings_license">Licentie</string>
+    <string name="settings_license_value">MIT</string>
+    <string name="settings_privacy_note">De app heeft geen internettoestemming. De locatie wordt alleen op het toestel gebruikt — voor declinatie, qibla, zon en maan — en wordt nooit verstuurd.</string>
+</resources>

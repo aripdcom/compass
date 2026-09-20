@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Svenska -->
+<resources>
+    <string name="app_name">Kompass</string>
+    <string name="no_sensor">Ingen kompassensor på den här enheten.</string>
+    <string name="calibrate">Låg noggrannhet — rör telefonen i en åtta.</string>
+    <string name="magnetic_disturbance">Magnetisk störning: fält %1$d µT, väntat %2$d µT — flytta bort från metall eller magneter.</string>
+    <string name="hold_flat">Håll telefonen vågrät — lutning snedvrider avläsningen.</string>
+    <string name="true_north">Geografisk nord</string>
+    <string name="magnetic_north">Magnetisk nord</string>
+    <string name="need_location">Platsbehörighet krävs för geografisk nord — tryck här</string>
+    <string name="waiting_location">Väntar på plats…</string>
+    <string name="place_kaaba">Kaba (qibla)</string>
+    <string name="place_kaaba_label">Qibla</string>
+    <string name="place_aqsa">Al-Aqsa-moskén</string>
+    <string name="place_aqsa_label">Aqsa</string>
+    <string name="place_vatican">Vatikanen</string>
+    <string name="place_vatican_label">Vatikanen</string>
+    <string name="place_info">%1$s %2$s</string>
+    <string name="sun_rise_set">soluppgång %1$s (%2$s) · solnedgång %3$s (%4$s)</string>
+    <string name="moon_info">Måne %1$s · %2$d %%</string>
+    <string name="moon_info_below">Måne %1$s · %2$d %% · under horisonten</string>
+    <string name="approximate_location">ungefärlig</string>
+    <string name="location_copied">Kopierat: %1$s</string>
+    <string name="sun_info">Sol %1$s</string>
+    <string name="sun_info_below">Sol %1$s · under horisonten</string>
+    <string name="target_hint">Tryck på tavlan: lås bäringen · håll in: punkt · tryck här: ange bäring</string>
+    <string name="waypoint_line">%1$s %2$s · %3$s</string>
+    <string name="waypoint_here">%1$s · du är här</string>
+    <string name="waypoint_more">+%1$d till</string>
+    <string name="waypoint_saved">%1$s sparad</string>
+    <string name="waypoint_cleared">%1$s borttagen</string>
+    <string name="waypoint_needs_location">Ingen plats — punkten sparades inte</string>
+    <string name="bearing_dialog_title">Ange bäring</string>
+    <string name="bearing_dialog_set">Ställ in</string>
+    <string name="bearing_dialog_clear">Rensa</string>
+    <string name="bearing_dialog_cancel">Avbryt</string>
+    <string name="target_plain">Mål %1$s</string>
+    <string name="target_reached">Mål %1$s · på kurs</string>
+    <string name="target_right">Mål %1$s · %2$s åt höger</string>
+    <string name="target_left">Mål %1$s · %2$s åt vänster</string>
+    <string name="settings_title">Inställningar</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Gester</string>
+    <string name="settings_gestures_summary">Vad varje tryck och långt tryck gör</string>
+    <string name="settings_gestures_body">Tryck på tavlan — lås bäringen; tryck igen för att släppa\nHåll in tavlan — spara din position som punkt\nTryck på de stora graderna — växla nattläge\nTryck på platsraden — decimal ⇄ grader-minuter-sekunder\nHåll in platsraden — kopiera eller dela\nTryck på nedersta raden — ange bäring för hand\nHåll in nedersta raden — sparade punkter och koordinatinmatning</string>
+    <string name="settings_open">Inställningar</string>
+    <string name="settings_section_display">VISNING</string>
+    <string name="settings_night">Nattläge</string>
+    <string name="settings_night_summary">Svart bakgrund, röd tavla — bevarar mörkerseendet</string>
+    <string name="settings_night_auto">Automatiskt i skymningen</string>
+    <string name="settings_night_auto_summary">Växlar när den borgerliga skymningen tar slut, när dagsljuset är borta</string>
+    <string name="settings_unit">Vinkelenhet</string>
+    <string name="settings_unit_degree">Grader (0-360)</string>
+    <string name="settings_unit_mil">Streck (0-6400)</string>
+    <string name="settings_keep_screen">Håll skärmen tänd</string>
+    <string name="settings_keep_screen_summary">Skärmen släcks inte medan appen är öppen</string>
+    <string name="settings_fullscreen">Helskärm</string>
+    <string name="settings_fullscreen_summary">Döljer status- och navigeringsfälten; svep från kanten för att visa dem</string>
+    <string name="settings_section_compass">KOMPASS</string>
+    <string name="settings_true_north">Använd geografisk nord</string>
+    <string name="settings_true_north_summary">Lägger till missvisningen när platsen är känd</string>
+    <string name="settings_smoothing">Utjämning</string>
+    <string name="settings_smoothing_calm">Lugn</string>
+    <string name="settings_smoothing_balanced">Balanserad</string>
+    <string name="settings_smoothing_quick">Snabb</string>
+    <string name="settings_vibrate">Vibrera vid bäringar</string>
+    <string name="settings_vibrate_summary">En kort knäpp förbi N/O/S/V, en dubbel knäpp in i den låsta bäringen</string>
+    <string name="settings_section_marks">MARKERINGAR PÅ TAVLAN</string>
+    <string name="settings_show_magnetic">Magnetisk nord (M)</string>
+    <string name="settings_show_magnetic_summary">Visas bara när geografisk nord används</string>
+    <string name="settings_show_level">Vattenpass</string>
+    <string name="settings_show_level_summary">Bubblan mitt på tavlan</string>
+    <string name="settings_show_sun">Sol</string>
+    <string name="settings_show_sun_arc">Solens bana</string>
+    <string name="settings_show_sun_arc_summary">Bågen från soluppgång till solnedgång och bäringarna i dess ändar</string>
+    <string name="settings_show_moon">Måne</string>
+    <string name="settings_show_moon_summary">Dess bäring och fas; blek när den är under horisonten</string>
+    <string name="settings_marks_note">Mål- och punktmarkeringar finns inte här: ett tryck eller ett långt tryck på tavlan slår redan på och av dem.</string>
+    <string name="mil_suffix">streck</string>
+    <string name="a11y_degrees">%1$d grader</string>
+    <string name="a11y_mils">%1$d streck</string>
+    <string name="a11y_heading">%1$s, %2$s, %3$s</string>
+    <string name="a11y_declination">Magnetisk %1$s, missvisning %2$s grader %3$s</string>
+    <string name="a11y_declination_east">öst</string>
+    <string name="a11y_declination_west">väst</string>
+    <string name="a11y_dial">Kompasstavla</string>
+    <string name="a11y_lock_bearing">lås bäringen</string>
+    <string name="a11y_save_point">spara punkt</string>
+    <string name="magnetic_reading">Magnetisk %1$s</string>
+    <string name="declination_reading">Missvisning %1$s°%2$s</string>
+    <string name="hemisphere_north">N</string>
+    <string name="hemisphere_south">S</string>
+    <string name="hemisphere_east">O</string>
+    <string name="hemisphere_west">V</string>
+    <string name="magnetic_label">M</string>
+    <string name="distance_meters">%1$d m</string>
+    <string name="distance_kilometers">%1$s km</string>
+    <string name="coordinate_decimal">%1$s° %2$s</string>
+    <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
+    <string-array name="cardinal_names">
+        <item>nord</item>
+        <item>nordnordost</item>
+        <item>nordost</item>
+        <item>ostnordost</item>
+        <item>ost</item>
+        <item>ostsydost</item>
+        <item>sydost</item>
+        <item>sydsydost</item>
+        <item>syd</item>
+        <item>sydsydväst</item>
+        <item>sydväst</item>
+        <item>västsydväst</item>
+        <item>väst</item>
+        <item>västnordväst</item>
+        <item>nordväst</item>
+        <item>nordnordväst</item>
+    </string-array>
+    <string-array name="cardinal_abbreviations">
+        <item>N</item>
+        <item>NNO</item>
+        <item>NO</item>
+        <item>ONO</item>
+        <item>O</item>
+        <item>OSO</item>
+        <item>SO</item>
+        <item>SSO</item>
+        <item>S</item>
+        <item>SSV</item>
+        <item>SV</item>
+        <item>VSV</item>
+        <item>V</item>
+        <item>VNV</item>
+        <item>NV</item>
+        <item>NNV</item>
+    </string-array>
+    <string-array name="dial_labels">
+        <item>N</item>
+        <item>NO</item>
+        <item>O</item>
+        <item>SO</item>
+        <item>S</item>
+        <item>SV</item>
+        <item>V</item>
+        <item>NV</item>
+    </string-array>
+    <string name="waypoint_default_name">Punkt %1$d</string>
+    <string name="waypoint_limit">Högst %1$d punkter kan sparas</string>
+    <string name="waypoints_title">Sparade punkter</string>
+    <string name="waypoints_empty">Inga punkter än — håll in tavlan för att spara en</string>
+    <string name="waypoint_rename">Byt namn</string>
+    <string name="waypoint_delete">Ta bort</string>
+    <string name="waypoint_name_hint">Punktens namn</string>
+    <string name="waypoint_add">Lägg till punkt</string>
+    <string name="waypoint_enter_coordinates">Ange koordinater…</string>
+    <string name="waypoint_coordinates_hint">41.0, 29.0 eller en delad länk</string>
+    <string name="waypoint_coordinates_unreadable">Inga koordinater hittades</string>
+    <string name="location_action_copy">Kopiera</string>
+    <string name="location_action_share">Dela</string>
+    <string name="share_chooser">Dela plats</string>
+    <string name="settings_section_about">OM</string>
+    <string name="settings_version">Version</string>
+    <string name="settings_version_format">%1$s (%2$d)</string>
+    <string name="settings_source">Källkod</string>
+    <string name="settings_license">Licens</string>
+    <string name="settings_license_value">MIT</string>
+    <string name="settings_privacy_note">Appen har ingen internetbehörighet. Platsen används bara på enheten — för missvisning, qibla, sol och måne — och skickas aldrig vidare.</string>
+</resources>

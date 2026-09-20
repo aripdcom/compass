@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Română -->
+<resources>
+    <string name="app_name">Busolă</string>
+    <string name="no_sensor">Acest dispozitiv nu are senzor de busolă.</string>
+    <string name="calibrate">Precizie scăzută — mișcă telefonul în forma cifrei opt.</string>
+    <string name="magnetic_disturbance">Interferență magnetică: câmp %1$d µT, așteptat %2$d µT — îndepărtează telefonul de metal sau magneți.</string>
+    <string name="hold_flat">Ține telefonul orizontal — înclinarea denaturează citirea.</string>
+    <string name="true_north">Nordul geografic</string>
+    <string name="magnetic_north">Nordul magnetic</string>
+    <string name="need_location">Nordul geografic cere permisiunea de localizare — atinge aici</string>
+    <string name="waiting_location">Se așteaptă poziția…</string>
+    <string name="place_kaaba">Kaaba (qibla)</string>
+    <string name="place_kaaba_label">Qibla</string>
+    <string name="place_aqsa">Moscheea Al-Aqsa</string>
+    <string name="place_aqsa_label">Aqsa</string>
+    <string name="place_vatican">Vatican</string>
+    <string name="place_vatican_label">Vatican</string>
+    <string name="place_info">%1$s %2$s</string>
+    <string name="sun_rise_set">răsărit %1$s (%2$s) · apus %3$s (%4$s)</string>
+    <string name="moon_info">Luna %1$s · %2$d%%</string>
+    <string name="moon_info_below">Luna %1$s · %2$d%% · sub orizont</string>
+    <string name="approximate_location">aproximativă</string>
+    <string name="location_copied">Copiat: %1$s</string>
+    <string name="sun_info">Soarele %1$s</string>
+    <string name="sun_info_below">Soarele %1$s · sub orizont</string>
+    <string name="target_hint">Atinge cadranul: blochează direcția · apasă lung: punct · atinge aici: introdu direcția</string>
+    <string name="waypoint_line">%1$s %2$s · %3$s</string>
+    <string name="waypoint_here">%1$s · ești aici</string>
+    <string name="waypoint_more">+%1$d în plus</string>
+    <string name="waypoint_saved">%1$s salvat</string>
+    <string name="waypoint_cleared">%1$s șters</string>
+    <string name="waypoint_needs_location">Fără poziție — punctul nu a fost salvat</string>
+    <string name="bearing_dialog_title">Introdu direcția</string>
+    <string name="bearing_dialog_set">Setează</string>
+    <string name="bearing_dialog_clear">Șterge</string>
+    <string name="bearing_dialog_cancel">Anulează</string>
+    <string name="target_plain">Țintă %1$s</string>
+    <string name="target_reached">Țintă %1$s · pe direcție</string>
+    <string name="target_right">Țintă %1$s · %2$s la dreapta</string>
+    <string name="target_left">Țintă %1$s · %2$s la stânga</string>
+    <string name="settings_title">Setări</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Gesturi</string>
+    <string name="settings_gestures_summary">Ce face fiecare atingere și apăsare lungă</string>
+    <string name="settings_gestures_body">Atinge cadranul — blochează direcția; atinge din nou pentru a o elibera\nApasă lung cadranul — salvează poziția ta ca punct\nAtinge gradele mari — comută modul de noapte\nAtinge rândul cu poziția — zecimal ⇄ grade-minute-secunde\nApasă lung rândul cu poziția — copiază sau partajează\nAtinge rândul de jos — introdu direcția manual\nApasă lung rândul de jos — puncte salvate și introducere de coordonate</string>
+    <string name="settings_open">Setări</string>
+    <string name="settings_section_display">AFIȘARE</string>
+    <string name="settings_night">Mod de noapte</string>
+    <string name="settings_night_summary">Fundal negru, cadran roșu — păstrează vederea de noapte</string>
+    <string name="settings_night_auto">Automat la amurg</string>
+    <string name="settings_night_auto_summary">Comută la sfârșitul crepusculului civil, când se termină lumina zilei</string>
+    <string name="settings_unit">Unitate de unghi</string>
+    <string name="settings_unit_degree">Grade (0-360)</string>
+    <string name="settings_unit_mil">Miimi (0-6400)</string>
+    <string name="settings_keep_screen">Ține ecranul aprins</string>
+    <string name="settings_keep_screen_summary">Ecranul nu se stinge cât timp aplicația este deschisă</string>
+    <string name="settings_fullscreen">Ecran complet</string>
+    <string name="settings_fullscreen_summary">Ascunde bara de stare și de navigare; glisează de la margine pentru a le arăta</string>
+    <string name="settings_section_compass">BUSOLĂ</string>
+    <string name="settings_true_north">Folosește nordul geografic</string>
+    <string name="settings_true_north_summary">Adaugă declinația magnetică atunci când poziția este cunoscută</string>
+    <string name="settings_smoothing">Netezire</string>
+    <string name="settings_smoothing_calm">Calm</string>
+    <string name="settings_smoothing_balanced">Echilibrat</string>
+    <string name="settings_smoothing_quick">Rapid</string>
+    <string name="settings_vibrate">Vibrație la direcții</string>
+    <string name="settings_vibrate_summary">Un clic scurt la trecerea peste N/E/S/V, unul dublu la intrarea în direcția blocată</string>
+    <string name="settings_section_marks">SEMNE PE CADRAN</string>
+    <string name="settings_show_magnetic">Nordul magnetic (M)</string>
+    <string name="settings_show_magnetic_summary">Vizibil doar când se folosește nordul geografic</string>
+    <string name="settings_show_level">Nivelă cu bulă</string>
+    <string name="settings_show_level_summary">Bula din mijlocul cadranului</string>
+    <string name="settings_show_sun">Soare</string>
+    <string name="settings_show_sun_arc">Drumul Soarelui</string>
+    <string name="settings_show_sun_arc_summary">Arcul de la răsărit la apus și direcțiile capetelor</string>
+    <string name="settings_show_moon">Lună</string>
+    <string name="settings_show_moon_summary">Direcția și faza ei; desenată estompat sub orizont</string>
+    <string name="settings_marks_note">Semnele pentru țintă și punct nu sunt aici: o atingere sau o apăsare lungă pe cadran le pornește și le oprește deja.</string>
+    <string name="mil_suffix">miimi</string>
+    <string name="a11y_degrees">%1$d grade</string>
+    <string name="a11y_mils">%1$d miimi</string>
+    <string name="a11y_heading">%1$s, %2$s, %3$s</string>
+    <string name="a11y_declination">Magnetic %1$s, declinație %2$s grade %3$s</string>
+    <string name="a11y_declination_east">est</string>
+    <string name="a11y_declination_west">vest</string>
+    <string name="a11y_dial">Cadranul busolei</string>
+    <string name="a11y_lock_bearing">blochează direcția</string>
+    <string name="a11y_save_point">salvează punctul</string>
+    <string name="magnetic_reading">Magnetic %1$s</string>
+    <string name="declination_reading">Declinație %1$s°%2$s</string>
+    <string name="hemisphere_north">N</string>
+    <string name="hemisphere_south">S</string>
+    <string name="hemisphere_east">E</string>
+    <string name="hemisphere_west">V</string>
+    <string name="magnetic_label">M</string>
+    <string name="distance_meters">%1$d m</string>
+    <string name="distance_kilometers">%1$s km</string>
+    <string name="coordinate_decimal">%1$s° %2$s</string>
+    <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
+    <string-array name="cardinal_names">
+        <item>nord</item>
+        <item>nord-nord-est</item>
+        <item>nord-est</item>
+        <item>est-nord-est</item>
+        <item>est</item>
+        <item>est-sud-est</item>
+        <item>sud-est</item>
+        <item>sud-sud-est</item>
+        <item>sud</item>
+        <item>sud-sud-vest</item>
+        <item>sud-vest</item>
+        <item>vest-sud-vest</item>
+        <item>vest</item>
+        <item>vest-nord-vest</item>
+        <item>nord-vest</item>
+        <item>nord-nord-vest</item>
+    </string-array>
+    <string-array name="cardinal_abbreviations">
+        <item>N</item>
+        <item>NNE</item>
+        <item>NE</item>
+        <item>ENE</item>
+        <item>E</item>
+        <item>ESE</item>
+        <item>SE</item>
+        <item>SSE</item>
+        <item>S</item>
+        <item>SSV</item>
+        <item>SV</item>
+        <item>VSV</item>
+        <item>V</item>
+        <item>VNV</item>
+        <item>NV</item>
+        <item>NNV</item>
+    </string-array>
+    <string-array name="dial_labels">
+        <item>N</item>
+        <item>NE</item>
+        <item>E</item>
+        <item>SE</item>
+        <item>S</item>
+        <item>SV</item>
+        <item>V</item>
+        <item>NV</item>
+    </string-array>
+    <string name="waypoint_default_name">Punctul %1$d</string>
+    <string name="waypoint_limit">Se pot salva cel mult %1$d puncte</string>
+    <string name="waypoints_title">Puncte salvate</string>
+    <string name="waypoints_empty">Încă niciun punct — apasă lung cadranul pentru a salva unul</string>
+    <string name="waypoint_rename">Redenumește</string>
+    <string name="waypoint_delete">Șterge</string>
+    <string name="waypoint_name_hint">Numele punctului</string>
+    <string name="waypoint_add">Adaugă punct</string>
+    <string name="waypoint_enter_coordinates">Introdu coordonate…</string>
+    <string name="waypoint_coordinates_hint">41.0, 29.0 sau un link partajat</string>
+    <string name="waypoint_coordinates_unreadable">Nu s-au găsit coordonate</string>
+    <string name="location_action_copy">Copiază</string>
+    <string name="location_action_share">Partajează</string>
+    <string name="share_chooser">Partajează poziția</string>
+    <string name="settings_section_about">DESPRE</string>
+    <string name="settings_version">Versiune</string>
+    <string name="settings_version_format">%1$s (%2$d)</string>
+    <string name="settings_source">Cod sursă</string>
+    <string name="settings_license">Licență</string>
+    <string name="settings_license_value">MIT</string>
+    <string name="settings_privacy_note">Aplicația nu are permisiune de internet. Poziția se folosește doar pe dispozitiv — pentru declinație, qibla, Soare și Lună — și nu este trimisă nicăieri.</string>
+</resources>

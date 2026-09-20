@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Български -->
+<resources>
+    <string name="app_name">Компас</string>
+    <string name="no_sensor">Това устройство няма сензор за компас.</string>
+    <string name="calibrate">Ниска точност — движете телефона като осмица.</string>
+    <string name="magnetic_disturbance">Магнитни смущения: поле %1$d µT, очаквано %2$d µT — отдалечете телефона от метал или магнити.</string>
+    <string name="hold_flat">Дръжте телефона хоризонтално — наклонът изкривява отчитането.</string>
+    <string name="true_north">Географски север</string>
+    <string name="magnetic_north">Магнитен север</string>
+    <string name="need_location">Географският север изисква разрешение за местоположение — докоснете тук</string>
+    <string name="waiting_location">Изчаква се местоположение…</string>
+    <string name="place_kaaba">Кааба (кибла)</string>
+    <string name="place_kaaba_label">Кибла</string>
+    <string name="place_aqsa">Джамия Ал-Акса</string>
+    <string name="place_aqsa_label">Акса</string>
+    <string name="place_vatican">Ватикана</string>
+    <string name="place_vatican_label">Ватикана</string>
+    <string name="place_info">%1$s %2$s</string>
+    <string name="sun_rise_set">изгрев %1$s (%2$s) · залез %3$s (%4$s)</string>
+    <string name="moon_info">Луна %1$s · %2$d%%</string>
+    <string name="moon_info_below">Луна %1$s · %2$d%% · под хоризонта</string>
+    <string name="approximate_location">приблизително</string>
+    <string name="location_copied">Копирано: %1$s</string>
+    <string name="sun_info">Слънце %1$s</string>
+    <string name="sun_info_below">Слънце %1$s · под хоризонта</string>
+    <string name="target_hint">Докоснете скалата: заключи азимут · задръжте: точка · докоснете тук: въведи азимут</string>
+    <string name="waypoint_line">%1$s %2$s · %3$s</string>
+    <string name="waypoint_here">%1$s · вие сте тук</string>
+    <string name="waypoint_more">+%1$d още</string>
+    <string name="waypoint_saved">%1$s е запазена</string>
+    <string name="waypoint_cleared">%1$s е изтрита</string>
+    <string name="waypoint_needs_location">Няма местоположение — точката не е запазена</string>
+    <string name="bearing_dialog_title">Въведете азимут</string>
+    <string name="bearing_dialog_set">Задай</string>
+    <string name="bearing_dialog_clear">Изчисти</string>
+    <string name="bearing_dialog_cancel">Отказ</string>
+    <string name="target_plain">Цел %1$s</string>
+    <string name="target_reached">Цел %1$s · на курс</string>
+    <string name="target_right">Цел %1$s · %2$s надясно</string>
+    <string name="target_left">Цел %1$s · %2$s наляво</string>
+    <string name="settings_title">Настройки</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Жестове</string>
+    <string name="settings_gestures_summary">Какво прави всяко докосване и задържане</string>
+    <string name="settings_gestures_body">Докоснете скалата — заключете азимута; докоснете отново, за да го освободите\nЗадръжте скалата — запазете позицията си като точка\nДокоснете големите градуси — превключете нощния режим\nДокоснете реда с местоположението — десетично ⇄ градуси-минути-секунди\nЗадръжте реда с местоположението — копиране или споделяне\nДокоснете долния ред — въведете азимут ръчно\nЗадръжте долния ред — запазени точки и въвеждане на координати</string>
+    <string name="settings_open">Настройки</string>
+    <string name="settings_section_display">ИЗГЛЕД</string>
+    <string name="settings_night">Нощен режим</string>
+    <string name="settings_night_summary">Черен фон, червена скала — пази нощното зрение</string>
+    <string name="settings_night_auto">Автоматично по здрач</string>
+    <string name="settings_night_auto_summary">Превключва в края на гражданския здрач, когато дневната светлина свърши</string>
+    <string name="settings_unit">Единица за ъгъл</string>
+    <string name="settings_unit_degree">Градуси (0-360)</string>
+    <string name="settings_unit_mil">Хилядни (0-6400)</string>
+    <string name="settings_keep_screen">Дръж екрана включен</string>
+    <string name="settings_keep_screen_summary">Екранът не изгасва, докато приложението е отворено</string>
+    <string name="settings_fullscreen">Цял екран</string>
+    <string name="settings_fullscreen_summary">Скрива лентата на състоянието и лентата за навигация; плъзнете от ръба, за да се покажат</string>
+    <string name="settings_section_compass">КОМПАС</string>
+    <string name="settings_true_north">Използвай географски север</string>
+    <string name="settings_true_north_summary">Добавя магнитното отклонение, когато местоположението е известно</string>
+    <string name="settings_smoothing">Изглаждане</string>
+    <string name="settings_smoothing_calm">Спокойно</string>
+    <string name="settings_smoothing_balanced">Балансирано</string>
+    <string name="settings_smoothing_quick">Бързо</string>
+    <string name="settings_vibrate">Вибрация при азимути</string>
+    <string name="settings_vibrate_summary">Кратко щракване при преминаване на С/И/Ю/З, двойно при влизане в заключения азимут</string>
+    <string name="settings_section_marks">ЗНАЦИ ВЪРХУ СКАЛАТА</string>
+    <string name="settings_show_magnetic">Магнитен север (М)</string>
+    <string name="settings_show_magnetic_summary">Вижда се само когато се използва географски север</string>
+    <string name="settings_show_level">Нивелир</string>
+    <string name="settings_show_level_summary">Мехурчето в средата на скалата</string>
+    <string name="settings_show_sun">Слънце</string>
+    <string name="settings_show_sun_arc">Път на Слънцето</string>
+    <string name="settings_show_sun_arc_summary">Дъгата от изгрев до залез и азимутите на краищата ѝ</string>
+    <string name="settings_show_moon">Луна</string>
+    <string name="settings_show_moon_summary">Нейният азимут и фаза; под хоризонта се чертае бледо</string>
+    <string name="settings_marks_note">Знаците за цел и точка не са тук: докосване или задържане върху скалата вече ги включва и изключва.</string>
+    <string name="mil_suffix">хилядни</string>
+    <string name="a11y_degrees">%1$d градуса</string>
+    <string name="a11y_mils">%1$d хилядни</string>
+    <string name="a11y_heading">%1$s, %2$s, %3$s</string>
+    <string name="a11y_declination">Магнитен %1$s, отклонение %2$s градуса %3$s</string>
+    <string name="a11y_declination_east">на изток</string>
+    <string name="a11y_declination_west">на запад</string>
+    <string name="a11y_dial">Скала на компаса</string>
+    <string name="a11y_lock_bearing">заключи азимут</string>
+    <string name="a11y_save_point">запази точка</string>
+    <string name="magnetic_reading">Магнитен %1$s</string>
+    <string name="declination_reading">Отклонение %1$s°%2$s</string>
+    <string name="hemisphere_north">С</string>
+    <string name="hemisphere_south">Ю</string>
+    <string name="hemisphere_east">И</string>
+    <string name="hemisphere_west">З</string>
+    <string name="magnetic_label">М</string>
+    <string name="distance_meters">%1$d м</string>
+    <string name="distance_kilometers">%1$s км</string>
+    <string name="coordinate_decimal">%1$s° %2$s</string>
+    <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
+    <string-array name="cardinal_names">
+        <item>север</item>
+        <item>север-североизток</item>
+        <item>североизток</item>
+        <item>изток-североизток</item>
+        <item>изток</item>
+        <item>изток-югоизток</item>
+        <item>югоизток</item>
+        <item>юг-югоизток</item>
+        <item>юг</item>
+        <item>юг-югозапад</item>
+        <item>югозапад</item>
+        <item>запад-югозапад</item>
+        <item>запад</item>
+        <item>запад-северозапад</item>
+        <item>северозапад</item>
+        <item>север-северозапад</item>
+    </string-array>
+    <string-array name="cardinal_abbreviations">
+        <item>С</item>
+        <item>ССИ</item>
+        <item>СИ</item>
+        <item>ИСИ</item>
+        <item>И</item>
+        <item>ИЮИ</item>
+        <item>ЮИ</item>
+        <item>ЮЮИ</item>
+        <item>Ю</item>
+        <item>ЮЮЗ</item>
+        <item>ЮЗ</item>
+        <item>ЗЮЗ</item>
+        <item>З</item>
+        <item>ЗСЗ</item>
+        <item>СЗ</item>
+        <item>ССЗ</item>
+    </string-array>
+    <string-array name="dial_labels">
+        <item>С</item>
+        <item>СИ</item>
+        <item>И</item>
+        <item>ЮИ</item>
+        <item>Ю</item>
+        <item>ЮЗ</item>
+        <item>З</item>
+        <item>СЗ</item>
+    </string-array>
+    <string name="waypoint_default_name">Точка %1$d</string>
+    <string name="waypoint_limit">Могат да се запазят най-много %1$d точки</string>
+    <string name="waypoints_title">Запазени точки</string>
+    <string name="waypoints_empty">Още няма точки — задръжте скалата, за да запазите</string>
+    <string name="waypoint_rename">Преименувай</string>
+    <string name="waypoint_delete">Изтрий</string>
+    <string name="waypoint_name_hint">Име на точката</string>
+    <string name="waypoint_add">Добави точка</string>
+    <string name="waypoint_enter_coordinates">Въведи координати…</string>
+    <string name="waypoint_coordinates_hint">41.0, 29.0 или споделена връзка</string>
+    <string name="waypoint_coordinates_unreadable">Не бяха открити координати</string>
+    <string name="location_action_copy">Копирай</string>
+    <string name="location_action_share">Сподели</string>
+    <string name="share_chooser">Сподели местоположението</string>
+    <string name="settings_section_about">ЗА ПРИЛОЖЕНИЕТО</string>
+    <string name="settings_version">Версия</string>
+    <string name="settings_version_format">%1$s (%2$d)</string>
+    <string name="settings_source">Изходен код</string>
+    <string name="settings_license">Лиценз</string>
+    <string name="settings_license_value">MIT</string>
+    <string name="settings_privacy_note">Приложението няма разрешение за интернет. Местоположението се използва само на устройството — за отклонението, киблата, Слънцето и Луната — и не се изпраща никъде.</string>
+</resources>

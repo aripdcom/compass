@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Latviešu -->
+<resources>
+    <string name="app_name">Kompass</string>
+    <string name="no_sensor">Šajā ierīcē nav kompasa sensora.</string>
+    <string name="calibrate">Zema precizitāte — kustiniet tālruni astotnieka veidā.</string>
+    <string name="magnetic_disturbance">Magnētiski traucējumi: lauks %1$d µT, gaidītais %2$d µT — attāliniet tālruni no metāla vai magnētiem.</string>
+    <string name="hold_flat">Turiet tālruni horizontāli — sasvēršanās izkropļo rādījumu.</string>
+    <string name="true_north">Ģeogrāfiskie ziemeļi</string>
+    <string name="magnetic_north">Magnētiskie ziemeļi</string>
+    <string name="need_location">Ģeogrāfiskajiem ziemeļiem vajadzīga atrašanās vietas atļauja — pieskarieties šeit</string>
+    <string name="waiting_location">Gaida atrašanās vietu…</string>
+    <string name="place_kaaba">Kaaba (kibla)</string>
+    <string name="place_kaaba_label">Kibla</string>
+    <string name="place_aqsa">Al Aksas mošeja</string>
+    <string name="place_aqsa_label">Aksa</string>
+    <string name="place_vatican">Vatikāns</string>
+    <string name="place_vatican_label">Vatikāns</string>
+    <string name="place_info">%1$s %2$s</string>
+    <string name="sun_rise_set">lēkts %1$s (%2$s) · riets %3$s (%4$s)</string>
+    <string name="moon_info">Mēness %1$s · %2$d %%</string>
+    <string name="moon_info_below">Mēness %1$s · %2$d %% · zem horizonta</string>
+    <string name="approximate_location">aptuvena</string>
+    <string name="location_copied">Nokopēts: %1$s</string>
+    <string name="sun_info">Saule %1$s</string>
+    <string name="sun_info_below">Saule %1$s · zem horizonta</string>
+    <string name="target_hint">Pieskarieties ciparnīcai: fiksēt azimutu · ilgi turiet: punkts · pieskarieties šeit: ievadīt azimutu</string>
+    <string name="waypoint_line">%1$s %2$s · %3$s</string>
+    <string name="waypoint_here">%1$s · jūs esat šeit</string>
+    <string name="waypoint_more">+%1$d vēl</string>
+    <string name="waypoint_saved">%1$s saglabāts</string>
+    <string name="waypoint_cleared">%1$s dzēsts</string>
+    <string name="waypoint_needs_location">Nav atrašanās vietas — punkts netika saglabāts</string>
+    <string name="bearing_dialog_title">Ievadiet azimutu</string>
+    <string name="bearing_dialog_set">Iestatīt</string>
+    <string name="bearing_dialog_clear">Notīrīt</string>
+    <string name="bearing_dialog_cancel">Atcelt</string>
+    <string name="target_plain">Mērķis %1$s</string>
+    <string name="target_reached">Mērķis %1$s · uz kursa</string>
+    <string name="target_right">Mērķis %1$s · %2$s pa labi</string>
+    <string name="target_left">Mērķis %1$s · %2$s pa kreisi</string>
+    <string name="settings_title">Iestatījumi</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Žesti</string>
+    <string name="settings_gestures_summary">Ko dara katrs pieskāriens un ilgs turējums</string>
+    <string name="settings_gestures_body">Pieskarieties ciparnīcai — fiksējiet azimutu; pieskarieties vēlreiz, lai atbrīvotu\nIlgi turiet ciparnīcu — saglabājiet savu atrašanās vietu kā punktu\nPieskarieties lielajiem grādiem — pārslēdziet nakts režīmu\nPieskarieties atrašanās vietas rindai — decimāldaļas ⇄ grādi-minūtes-sekundes\nIlgi turiet atrašanās vietas rindu — kopēt vai kopīgot\nPieskarieties apakšējai rindai — ievadiet azimutu ar roku\nIlgi turiet apakšējo rindu — saglabātie punkti un koordinātu ievade</string>
+    <string name="settings_open">Iestatījumi</string>
+    <string name="settings_section_display">IZSKATS</string>
+    <string name="settings_night">Nakts režīms</string>
+    <string name="settings_night_summary">Melns fons, sarkana ciparnīca — saudzē nakts redzi</string>
+    <string name="settings_night_auto">Automātiski krēslā</string>
+    <string name="settings_night_auto_summary">Pārslēdzas civilās krēslas beigās, kad beidzas dienasgaisma</string>
+    <string name="settings_unit">Leņķa mērvienība</string>
+    <string name="settings_unit_degree">Grādi (0-360)</string>
+    <string name="settings_unit_mil">Tūkstošdaļas (0-6400)</string>
+    <string name="settings_keep_screen">Neizslēgt ekrānu</string>
+    <string name="settings_keep_screen_summary">Ekrāns nenodziest, kamēr lietotne ir atvērta</string>
+    <string name="settings_fullscreen">Pilnekrāns</string>
+    <string name="settings_fullscreen_summary">Paslēpj statusa un navigācijas joslu; velciet no malas, lai tās parādītu</string>
+    <string name="settings_section_compass">KOMPASS</string>
+    <string name="settings_true_north">Lietot ģeogrāfiskos ziemeļus</string>
+    <string name="settings_true_north_summary">Pieskaita magnētisko deklināciju, kad atrašanās vieta ir zināma</string>
+    <string name="settings_smoothing">Izlīdzināšana</string>
+    <string name="settings_smoothing_calm">Mierīga</string>
+    <string name="settings_smoothing_balanced">Līdzsvarota</string>
+    <string name="settings_smoothing_quick">Ātra</string>
+    <string name="settings_vibrate">Vibrācija pie azimutiem</string>
+    <string name="settings_vibrate_summary">Īss klikšķis, šķērsojot Z/A/D/R, dubults, ieejot fiksētajā azimutā</string>
+    <string name="settings_section_marks">ATZĪMES UZ CIPARNĪCAS</string>
+    <string name="settings_show_magnetic">Magnētiskie ziemeļi (M)</string>
+    <string name="settings_show_magnetic_summary">Redzami tikai tad, kad lieto ģeogrāfiskos ziemeļus</string>
+    <string name="settings_show_level">Līmeņrādis</string>
+    <string name="settings_show_level_summary">Burbulis ciparnīcas vidū</string>
+    <string name="settings_show_sun">Saule</string>
+    <string name="settings_show_sun_arc">Saules ceļš</string>
+    <string name="settings_show_sun_arc_summary">Loks no lēkta līdz rietam un tā galu azimuti</string>
+    <string name="settings_show_moon">Mēness</string>
+    <string name="settings_show_moon_summary">Tā azimuts un fāze; zem horizonta zīmēts blāvi</string>
+    <string name="settings_marks_note">Mērķa un punkta atzīmju šeit nav: pieskāriens vai ilgs turējums uz ciparnīcas tās jau ieslēdz un izslēdz.</string>
+    <string name="mil_suffix">tūkstošdaļas</string>
+    <string name="a11y_degrees">%1$d grādi</string>
+    <string name="a11y_mils">%1$d tūkstošdaļas</string>
+    <string name="a11y_heading">%1$s, %2$s, %3$s</string>
+    <string name="a11y_declination">Magnētiskais %1$s, deklinācija %2$s grādi %3$s</string>
+    <string name="a11y_declination_east">uz austrumiem</string>
+    <string name="a11y_declination_west">uz rietumiem</string>
+    <string name="a11y_dial">Kompasa ciparnīca</string>
+    <string name="a11y_lock_bearing">fiksēt azimutu</string>
+    <string name="a11y_save_point">saglabāt punktu</string>
+    <string name="magnetic_reading">Magnētiskais %1$s</string>
+    <string name="declination_reading">Deklinācija %1$s°%2$s</string>
+    <string name="hemisphere_north">Z</string>
+    <string name="hemisphere_south">D</string>
+    <string name="hemisphere_east">A</string>
+    <string name="hemisphere_west">R</string>
+    <string name="magnetic_label">M</string>
+    <string name="distance_meters">%1$d m</string>
+    <string name="distance_kilometers">%1$s km</string>
+    <string name="coordinate_decimal">%1$s° %2$s</string>
+    <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
+    <string-array name="cardinal_names">
+        <item>ziemeļi</item>
+        <item>ziemeļziemeļaustrumi</item>
+        <item>ziemeļaustrumi</item>
+        <item>austrumziemeļaustrumi</item>
+        <item>austrumi</item>
+        <item>austrumdienvidaustrumi</item>
+        <item>dienvidaustrumi</item>
+        <item>dienviddienvidaustrumi</item>
+        <item>dienvidi</item>
+        <item>dienviddienvidrietumi</item>
+        <item>dienvidrietumi</item>
+        <item>rietumdienvidrietumi</item>
+        <item>rietumi</item>
+        <item>rietumziemeļrietumi</item>
+        <item>ziemeļrietumi</item>
+        <item>ziemeļziemeļrietumi</item>
+    </string-array>
+    <string-array name="cardinal_abbreviations">
+        <item>Z</item>
+        <item>ZZA</item>
+        <item>ZA</item>
+        <item>AZA</item>
+        <item>A</item>
+        <item>ADA</item>
+        <item>DA</item>
+        <item>DDA</item>
+        <item>D</item>
+        <item>DDR</item>
+        <item>DR</item>
+        <item>RDR</item>
+        <item>R</item>
+        <item>RZR</item>
+        <item>ZR</item>
+        <item>ZZR</item>
+    </string-array>
+    <string-array name="dial_labels">
+        <item>Z</item>
+        <item>ZA</item>
+        <item>A</item>
+        <item>DA</item>
+        <item>D</item>
+        <item>DR</item>
+        <item>R</item>
+        <item>ZR</item>
+    </string-array>
+    <string name="waypoint_default_name">Punkts %1$d</string>
+    <string name="waypoint_limit">Var saglabāt ne vairāk kā %1$d punktus</string>
+    <string name="waypoints_title">Saglabātie punkti</string>
+    <string name="waypoints_empty">Punktu vēl nav — ilgi turiet ciparnīcu</string>
+    <string name="waypoint_rename">Pārdēvēt</string>
+    <string name="waypoint_delete">Dzēst</string>
+    <string name="waypoint_name_hint">Punkta nosaukums</string>
+    <string name="waypoint_add">Pievienot punktu</string>
+    <string name="waypoint_enter_coordinates">Ievadīt koordinātas…</string>
+    <string name="waypoint_coordinates_hint">41.0, 29.0 vai kopīgota saite</string>
+    <string name="waypoint_coordinates_unreadable">Koordinātas netika atrastas</string>
+    <string name="location_action_copy">Kopēt</string>
+    <string name="location_action_share">Kopīgot</string>
+    <string name="share_chooser">Kopīgot atrašanās vietu</string>
+    <string name="settings_section_about">PAR</string>
+    <string name="settings_version">Versija</string>
+    <string name="settings_version_format">%1$s (%2$d)</string>
+    <string name="settings_source">Pirmkods</string>
+    <string name="settings_license">Licence</string>
+    <string name="settings_license_value">MIT</string>
+    <string name="settings_privacy_note">Lietotnei nav interneta atļaujas. Atrašanās vieta tiek izmantota tikai ierīcē — deklinācijai, kiblai, Saulei un Mēnesim — un netiek nekur sūtīta.</string>
+</resources>

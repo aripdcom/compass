@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Lietuvių -->
+<resources>
+    <string name="app_name">Kompasas</string>
+    <string name="no_sensor">Šiame įrenginyje nėra kompaso jutiklio.</string>
+    <string name="calibrate">Mažas tikslumas — judinkite telefoną aštuoniuke.</string>
+    <string name="magnetic_disturbance">Magnetiniai trikdžiai: laukas %1$d µT, tikėtasi %2$d µT — patraukite telefoną nuo metalo ar magnetų.</string>
+    <string name="hold_flat">Laikykite telefoną horizontaliai — pakrypimas iškraipo rodmenį.</string>
+    <string name="true_north">Tikroji šiaurė</string>
+    <string name="magnetic_north">Magnetinė šiaurė</string>
+    <string name="need_location">Tikrajai šiaurei reikia vietos leidimo — palieskite čia</string>
+    <string name="waiting_location">Laukiama vietos…</string>
+    <string name="place_kaaba">Kaaba (kibla)</string>
+    <string name="place_kaaba_label">Kibla</string>
+    <string name="place_aqsa">Al Aksos mečetė</string>
+    <string name="place_aqsa_label">Aksa</string>
+    <string name="place_vatican">Vatikanas</string>
+    <string name="place_vatican_label">Vatikanas</string>
+    <string name="place_info">%1$s %2$s</string>
+    <string name="sun_rise_set">saulėtekis %1$s (%2$s) · saulėlydis %3$s (%4$s)</string>
+    <string name="moon_info">Mėnulis %1$s · %2$d %%</string>
+    <string name="moon_info_below">Mėnulis %1$s · %2$d %% · žemiau horizonto</string>
+    <string name="approximate_location">apytikslė</string>
+    <string name="location_copied">Nukopijuota: %1$s</string>
+    <string name="sun_info">Saulė %1$s</string>
+    <string name="sun_info_below">Saulė %1$s · žemiau horizonto</string>
+    <string name="target_hint">Palieskite ciferblatą: užfiksuoti azimutą · ilgas paspaudimas: taškas · palieskite čia: įvesti azimutą</string>
+    <string name="waypoint_line">%1$s %2$s · %3$s</string>
+    <string name="waypoint_here">%1$s · esate čia</string>
+    <string name="waypoint_more">+%1$d daugiau</string>
+    <string name="waypoint_saved">%1$s išsaugotas</string>
+    <string name="waypoint_cleared">%1$s ištrintas</string>
+    <string name="waypoint_needs_location">Nėra vietos — taškas neišsaugotas</string>
+    <string name="bearing_dialog_title">Įveskite azimutą</string>
+    <string name="bearing_dialog_set">Nustatyti</string>
+    <string name="bearing_dialog_clear">Išvalyti</string>
+    <string name="bearing_dialog_cancel">Atšaukti</string>
+    <string name="target_plain">Tikslas %1$s</string>
+    <string name="target_reached">Tikslas %1$s · kursu</string>
+    <string name="target_right">Tikslas %1$s · %2$s į dešinę</string>
+    <string name="target_left">Tikslas %1$s · %2$s į kairę</string>
+    <string name="settings_title">Nustatymai</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Gestai</string>
+    <string name="settings_gestures_summary">Ką daro kiekvienas palietimas ir ilgas paspaudimas</string>
+    <string name="settings_gestures_body">Palieskite ciferblatą — užfiksuokite azimutą; palieskite dar kartą, kad atleistumėte\nIlgai paspauskite ciferblatą — išsaugokite savo padėtį kaip tašką\nPalieskite didelius laipsnius — perjunkite nakties režimą\nPalieskite vietos eilutę — dešimtainiai ⇄ laipsniai-minutės-sekundės\nIlgai paspauskite vietos eilutę — kopijuoti arba bendrinti\nPalieskite apatinę eilutę — įveskite azimutą ranka\nIlgai paspauskite apatinę eilutę — išsaugoti taškai ir koordinačių įvedimas</string>
+    <string name="settings_open">Nustatymai</string>
+    <string name="settings_section_display">VAIZDAS</string>
+    <string name="settings_night">Nakties režimas</string>
+    <string name="settings_night_summary">Juodas fonas, raudonas ciferblatas — saugo nakties regėjimą</string>
+    <string name="settings_night_auto">Automatiškai sutemus</string>
+    <string name="settings_night_auto_summary">Persijungia civilinių sutemų pabaigoje, kai baigiasi dienos šviesa</string>
+    <string name="settings_unit">Kampo vienetas</string>
+    <string name="settings_unit_degree">Laipsniai (0-360)</string>
+    <string name="settings_unit_mil">Tūkstantosios (0-6400)</string>
+    <string name="settings_keep_screen">Neišjungti ekrano</string>
+    <string name="settings_keep_screen_summary">Ekranas neužgęsta, kol programa atidaryta</string>
+    <string name="settings_fullscreen">Visas ekranas</string>
+    <string name="settings_fullscreen_summary">Paslepia būsenos ir naršymo juostas; brūkštelėkite nuo krašto, kad jas parodytumėte</string>
+    <string name="settings_section_compass">KOMPASAS</string>
+    <string name="settings_true_north">Naudoti tikrąją šiaurę</string>
+    <string name="settings_true_north_summary">Prideda magnetinę deklinaciją, kai vieta žinoma</string>
+    <string name="settings_smoothing">Glodinimas</string>
+    <string name="settings_smoothing_calm">Ramus</string>
+    <string name="settings_smoothing_balanced">Subalansuotas</string>
+    <string name="settings_smoothing_quick">Greitas</string>
+    <string name="settings_vibrate">Vibracija ties azimutais</string>
+    <string name="settings_vibrate_summary">Trumpas spragtelėjimas praeinant Š/R/P/V, dvigubas įėjus į užfiksuotą azimutą</string>
+    <string name="settings_section_marks">ŽYMĖS CIFERBLATE</string>
+    <string name="settings_show_magnetic">Magnetinė šiaurė (M)</string>
+    <string name="settings_show_magnetic_summary">Matoma tik tada, kai naudojama tikroji šiaurė</string>
+    <string name="settings_show_level">Gulsčiukas</string>
+    <string name="settings_show_level_summary">Burbuliukas ciferblato viduryje</string>
+    <string name="settings_show_sun">Saulė</string>
+    <string name="settings_show_sun_arc">Saulės kelias</string>
+    <string name="settings_show_sun_arc_summary">Lankas nuo saulėtekio iki saulėlydžio ir jo galų azimutai</string>
+    <string name="settings_show_moon">Mėnulis</string>
+    <string name="settings_show_moon_summary">Jo azimutas ir fazė; žemiau horizonto piešiamas blankiai</string>
+    <string name="settings_marks_note">Tikslo ir taško žymių čia nėra: ciferblato palietimas ar ilgas paspaudimas jas jau įjungia ir išjungia.</string>
+    <string name="mil_suffix">tūkstantųjų</string>
+    <string name="a11y_degrees">%1$d laipsnių</string>
+    <string name="a11y_mils">%1$d tūkstantųjų</string>
+    <string name="a11y_heading">%1$s, %2$s, %3$s</string>
+    <string name="a11y_declination">Magnetinis %1$s, deklinacija %2$s laipsnių %3$s</string>
+    <string name="a11y_declination_east">į rytus</string>
+    <string name="a11y_declination_west">į vakarus</string>
+    <string name="a11y_dial">Kompaso ciferblatas</string>
+    <string name="a11y_lock_bearing">užfiksuoti azimutą</string>
+    <string name="a11y_save_point">išsaugoti tašką</string>
+    <string name="magnetic_reading">Magnetinis %1$s</string>
+    <string name="declination_reading">Deklinacija %1$s°%2$s</string>
+    <string name="hemisphere_north">Š</string>
+    <string name="hemisphere_south">P</string>
+    <string name="hemisphere_east">R</string>
+    <string name="hemisphere_west">V</string>
+    <string name="magnetic_label">M</string>
+    <string name="distance_meters">%1$d m</string>
+    <string name="distance_kilometers">%1$s km</string>
+    <string name="coordinate_decimal">%1$s° %2$s</string>
+    <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
+    <string-array name="cardinal_names">
+        <item>šiaurė</item>
+        <item>šiaurė-šiaurės rytai</item>
+        <item>šiaurės rytai</item>
+        <item>rytai-šiaurės rytai</item>
+        <item>rytai</item>
+        <item>rytai-pietryčiai</item>
+        <item>pietryčiai</item>
+        <item>pietūs-pietryčiai</item>
+        <item>pietūs</item>
+        <item>pietūs-pietvakariai</item>
+        <item>pietvakariai</item>
+        <item>vakarai-pietvakariai</item>
+        <item>vakarai</item>
+        <item>vakarai-šiaurės vakarai</item>
+        <item>šiaurės vakarai</item>
+        <item>šiaurė-šiaurės vakarai</item>
+    </string-array>
+    <string-array name="cardinal_abbreviations">
+        <item>Š</item>
+        <item>ŠŠR</item>
+        <item>ŠR</item>
+        <item>RŠR</item>
+        <item>R</item>
+        <item>RPR</item>
+        <item>PR</item>
+        <item>PPR</item>
+        <item>P</item>
+        <item>PPV</item>
+        <item>PV</item>
+        <item>VPV</item>
+        <item>V</item>
+        <item>VŠV</item>
+        <item>ŠV</item>
+        <item>ŠŠV</item>
+    </string-array>
+    <string-array name="dial_labels">
+        <item>Š</item>
+        <item>ŠR</item>
+        <item>R</item>
+        <item>PR</item>
+        <item>P</item>
+        <item>PV</item>
+        <item>V</item>
+        <item>ŠV</item>
+    </string-array>
+    <string name="waypoint_default_name">Taškas %1$d</string>
+    <string name="waypoint_limit">Galima išsaugoti daugiausia %1$d taškų</string>
+    <string name="waypoints_title">Išsaugoti taškai</string>
+    <string name="waypoints_empty">Taškų dar nėra — ilgai paspauskite ciferblatą</string>
+    <string name="waypoint_rename">Pervadinti</string>
+    <string name="waypoint_delete">Ištrinti</string>
+    <string name="waypoint_name_hint">Taško pavadinimas</string>
+    <string name="waypoint_add">Pridėti tašką</string>
+    <string name="waypoint_enter_coordinates">Įveskite koordinates…</string>
+    <string name="waypoint_coordinates_hint">41.0, 29.0 arba bendrinta nuoroda</string>
+    <string name="waypoint_coordinates_unreadable">Koordinačių nerasta</string>
+    <string name="location_action_copy">Kopijuoti</string>
+    <string name="location_action_share">Bendrinti</string>
+    <string name="share_chooser">Bendrinti vietą</string>
+    <string name="settings_section_about">APIE</string>
+    <string name="settings_version">Versija</string>
+    <string name="settings_version_format">%1$s (%2$d)</string>
+    <string name="settings_source">Pirminis kodas</string>
+    <string name="settings_license">Licencija</string>
+    <string name="settings_license_value">MIT</string>
+    <string name="settings_privacy_note">Programa neturi interneto leidimo. Vieta naudojama tik įrenginyje — deklinacijai, kiblai, Saulei ir Mėnuliui — ir niekur nesiunčiama.</string>
+</resources>

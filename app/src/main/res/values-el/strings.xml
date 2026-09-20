@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ελληνικά -->
+<resources>
+    <string name="app_name">Πυξίδα</string>
+    <string name="no_sensor">Αυτή η συσκευή δεν έχει αισθητήρα πυξίδας.</string>
+    <string name="calibrate">Χαμηλή ακρίβεια — κινήστε το τηλέφωνο σχηματίζοντας οκτάρι.</string>
+    <string name="magnetic_disturbance">Μαγνητική παρεμβολή: πεδίο %1$d µT, αναμενόμενο %2$d µT — απομακρύνετε το τηλέφωνο από μέταλλα ή μαγνήτες.</string>
+    <string name="hold_flat">Κρατήστε το τηλέφωνο οριζόντια — η κλίση αλλοιώνει την ένδειξη.</string>
+    <string name="true_north">Αληθής βορράς</string>
+    <string name="magnetic_north">Μαγνητικός βορράς</string>
+    <string name="need_location">Ο αληθής βορράς απαιτεί άδεια τοποθεσίας — πατήστε εδώ</string>
+    <string name="waiting_location">Αναμονή τοποθεσίας…</string>
+    <string name="place_kaaba">Κάαβα (κίμπλα)</string>
+    <string name="place_kaaba_label">Κίμπλα</string>
+    <string name="place_aqsa">Τέμενος Αλ-Άκσα</string>
+    <string name="place_aqsa_label">Άκσα</string>
+    <string name="place_vatican">Βατικανό</string>
+    <string name="place_vatican_label">Βατικανό</string>
+    <string name="place_info">%1$s %2$s</string>
+    <string name="sun_rise_set">ανατολή %1$s (%2$s) · δύση %3$s (%4$s)</string>
+    <string name="moon_info">Σελήνη %1$s · %2$d%%</string>
+    <string name="moon_info_below">Σελήνη %1$s · %2$d%% · κάτω από τον ορίζοντα</string>
+    <string name="approximate_location">κατά προσέγγιση</string>
+    <string name="location_copied">Αντιγράφηκε: %1$s</string>
+    <string name="sun_info">Ήλιος %1$s</string>
+    <string name="sun_info_below">Ήλιος %1$s · κάτω από τον ορίζοντα</string>
+    <string name="target_hint">Πατήστε τον δίσκο: κλείδωμα διόπτευσης · παρατεταμένο: σημείο · πατήστε εδώ: εισαγωγή διόπτευσης</string>
+    <string name="waypoint_line">%1$s %2$s · %3$s</string>
+    <string name="waypoint_here">%1$s · είστε εδώ</string>
+    <string name="waypoint_more">+%1$d ακόμη</string>
+    <string name="waypoint_saved">%1$s αποθηκεύτηκε</string>
+    <string name="waypoint_cleared">%1$s διαγράφηκε</string>
+    <string name="waypoint_needs_location">Χωρίς τοποθεσία — το σημείο δεν αποθηκεύτηκε</string>
+    <string name="bearing_dialog_title">Εισαγωγή διόπτευσης</string>
+    <string name="bearing_dialog_set">Ορισμός</string>
+    <string name="bearing_dialog_clear">Καθαρισμός</string>
+    <string name="bearing_dialog_cancel">Άκυρο</string>
+    <string name="target_plain">Στόχος %1$s</string>
+    <string name="target_reached">Στόχος %1$s · σε πορεία</string>
+    <string name="target_right">Στόχος %1$s · %2$s δεξιά</string>
+    <string name="target_left">Στόχος %1$s · %2$s αριστερά</string>
+    <string name="settings_title">Ρυθμίσεις</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Χειρονομίες</string>
+    <string name="settings_gestures_summary">Τι κάνει κάθε πάτημα και παρατεταμένο πάτημα</string>
+    <string name="settings_gestures_body">Πατήστε τον δίσκο — κλειδώστε τη διόπτευση· πατήστε ξανά για να την ελευθερώσετε\nΠαρατεταμένο πάτημα στον δίσκο — αποθηκεύστε τη θέση σας ως σημείο\nΠατήστε τις μεγάλες μοίρες — εναλλαγή νυχτερινής λειτουργίας\nΠατήστε τη γραμμή τοποθεσίας — δεκαδικά ⇄ μοίρες-λεπτά-δευτερόλεπτα\nΠαρατεταμένο πάτημα στη γραμμή τοποθεσίας — αντιγραφή ή κοινοποίηση\nΠατήστε την κάτω γραμμή — εισαγωγή διόπτευσης με το χέρι\nΠαρατεταμένο πάτημα στην κάτω γραμμή — αποθηκευμένα σημεία και εισαγωγή συντεταγμένων</string>
+    <string name="settings_open">Ρυθμίσεις</string>
+    <string name="settings_section_display">ΕΜΦΑΝΙΣΗ</string>
+    <string name="settings_night">Νυχτερινή λειτουργία</string>
+    <string name="settings_night_summary">Μαύρο φόντο, κόκκινος δίσκος — διατηρεί τη νυχτερινή όραση</string>
+    <string name="settings_night_auto">Αυτόματα στο σούρουπο</string>
+    <string name="settings_night_auto_summary">Αλλάζει στο τέλος του αστικού λυκόφωτος, όταν τελειώνει το φως της ημέρας</string>
+    <string name="settings_unit">Μονάδα γωνίας</string>
+    <string name="settings_unit_degree">Μοίρες (0-360)</string>
+    <string name="settings_unit_mil">Χιλιοστά (0-6400)</string>
+    <string name="settings_keep_screen">Διατήρηση οθόνης αναμμένης</string>
+    <string name="settings_keep_screen_summary">Η οθόνη δεν σβήνει όσο η εφαρμογή είναι ανοιχτή</string>
+    <string name="settings_fullscreen">Πλήρης οθόνη</string>
+    <string name="settings_fullscreen_summary">Κρύβει τη γραμμή κατάστασης και πλοήγησης· σύρετε από την άκρη για να εμφανιστούν</string>
+    <string name="settings_section_compass">ΠΥΞΙΔΑ</string>
+    <string name="settings_true_north">Χρήση αληθούς βορρά</string>
+    <string name="settings_true_north_summary">Προσθέτει τη μαγνητική απόκλιση όταν η τοποθεσία είναι γνωστή</string>
+    <string name="settings_smoothing">Εξομάλυνση</string>
+    <string name="settings_smoothing_calm">Ήρεμη</string>
+    <string name="settings_smoothing_balanced">Ισορροπημένη</string>
+    <string name="settings_smoothing_quick">Γρήγορη</string>
+    <string name="settings_vibrate">Δόνηση στις διοπτεύσεις</string>
+    <string name="settings_vibrate_summary">Σύντομο τικ στο πέρασμα Β/Α/Ν/Δ, διπλό στην είσοδο στην κλειδωμένη διόπτευση</string>
+    <string name="settings_section_marks">ΣΗΜΑΔΙΑ ΣΤΟΝ ΔΙΣΚΟ</string>
+    <string name="settings_show_magnetic">Μαγνητικός βορράς (Μ)</string>
+    <string name="settings_show_magnetic_summary">Εμφανίζεται μόνο όταν χρησιμοποιείται ο αληθής βορράς</string>
+    <string name="settings_show_level">Αλφάδι</string>
+    <string name="settings_show_level_summary">Η φυσαλίδα στο κέντρο του δίσκου</string>
+    <string name="settings_show_sun">Ήλιος</string>
+    <string name="settings_show_sun_arc">Πορεία του Ήλιου</string>
+    <string name="settings_show_sun_arc_summary">Το τόξο από την ανατολή ως τη δύση και οι διοπτεύσεις των άκρων</string>
+    <string name="settings_show_moon">Σελήνη</string>
+    <string name="settings_show_moon_summary">Η διόπτευσή της και η φάση· κάτω από τον ορίζοντα σχεδιάζεται αχνά</string>
+    <string name="settings_marks_note">Τα σημάδια στόχου και σημείου δεν είναι εδώ: το πάτημα ή το παρατεταμένο πάτημα στον δίσκο ήδη τα ανάβει και τα σβήνει.</string>
+    <string name="mil_suffix">χιλιοστά</string>
+    <string name="a11y_degrees">%1$d μοίρες</string>
+    <string name="a11y_mils">%1$d χιλιοστά</string>
+    <string name="a11y_heading">%1$s, %2$s, %3$s</string>
+    <string name="a11y_declination">Μαγνητικός %1$s, απόκλιση %2$s μοίρες %3$s</string>
+    <string name="a11y_declination_east">ανατολικά</string>
+    <string name="a11y_declination_west">δυτικά</string>
+    <string name="a11y_dial">Δίσκος πυξίδας</string>
+    <string name="a11y_lock_bearing">κλείδωμα διόπτευσης</string>
+    <string name="a11y_save_point">αποθήκευση σημείου</string>
+    <string name="magnetic_reading">Μαγνητικός %1$s</string>
+    <string name="declination_reading">Απόκλιση %1$s°%2$s</string>
+    <string name="hemisphere_north">Β</string>
+    <string name="hemisphere_south">Ν</string>
+    <string name="hemisphere_east">Α</string>
+    <string name="hemisphere_west">Δ</string>
+    <string name="magnetic_label">Μ</string>
+    <string name="distance_meters">%1$d μ</string>
+    <string name="distance_kilometers">%1$s χλμ</string>
+    <string name="coordinate_decimal">%1$s° %2$s</string>
+    <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
+    <string-array name="cardinal_names">
+        <item>βόρεια</item>
+        <item>βόρεια-βορειοανατολικά</item>
+        <item>βορειοανατολικά</item>
+        <item>ανατολικά-βορειοανατολικά</item>
+        <item>ανατολικά</item>
+        <item>ανατολικά-νοτιοανατολικά</item>
+        <item>νοτιοανατολικά</item>
+        <item>νότια-νοτιοανατολικά</item>
+        <item>νότια</item>
+        <item>νότια-νοτιοδυτικά</item>
+        <item>νοτιοδυτικά</item>
+        <item>δυτικά-νοτιοδυτικά</item>
+        <item>δυτικά</item>
+        <item>δυτικά-βορειοδυτικά</item>
+        <item>βορειοδυτικά</item>
+        <item>βόρεια-βορειοδυτικά</item>
+    </string-array>
+    <string-array name="cardinal_abbreviations">
+        <item>Β</item>
+        <item>ΒΒΑ</item>
+        <item>ΒΑ</item>
+        <item>ΑΒΑ</item>
+        <item>Α</item>
+        <item>ΑΝΑ</item>
+        <item>ΝΑ</item>
+        <item>ΝΝΑ</item>
+        <item>Ν</item>
+        <item>ΝΝΔ</item>
+        <item>ΝΔ</item>
+        <item>ΔΝΔ</item>
+        <item>Δ</item>
+        <item>ΔΒΔ</item>
+        <item>ΒΔ</item>
+        <item>ΒΒΔ</item>
+    </string-array>
+    <string-array name="dial_labels">
+        <item>Β</item>
+        <item>ΒΑ</item>
+        <item>Α</item>
+        <item>ΝΑ</item>
+        <item>Ν</item>
+        <item>ΝΔ</item>
+        <item>Δ</item>
+        <item>ΒΔ</item>
+    </string-array>
+    <string name="waypoint_default_name">Σημείο %1$d</string>
+    <string name="waypoint_limit">Μπορούν να αποθηκευτούν το πολύ %1$d σημεία</string>
+    <string name="waypoints_title">Αποθηκευμένα σημεία</string>
+    <string name="waypoints_empty">Κανένα σημείο ακόμη — παρατεταμένο πάτημα στον δίσκο</string>
+    <string name="waypoint_rename">Μετονομασία</string>
+    <string name="waypoint_delete">Διαγραφή</string>
+    <string name="waypoint_name_hint">Όνομα σημείου</string>
+    <string name="waypoint_add">Προσθήκη σημείου</string>
+    <string name="waypoint_enter_coordinates">Εισαγωγή συντεταγμένων…</string>
+    <string name="waypoint_coordinates_hint">41.0, 29.0 ή κοινοποιημένος σύνδεσμος</string>
+    <string name="waypoint_coordinates_unreadable">Δεν βρέθηκαν συντεταγμένες</string>
+    <string name="location_action_copy">Αντιγραφή</string>
+    <string name="location_action_share">Κοινοποίηση</string>
+    <string name="share_chooser">Κοινοποίηση τοποθεσίας</string>
+    <string name="settings_section_about">ΣΧΕΤΙΚΑ</string>
+    <string name="settings_version">Έκδοση</string>
+    <string name="settings_version_format">%1$s (%2$d)</string>
+    <string name="settings_source">Πηγαίος κώδικας</string>
+    <string name="settings_license">Άδεια</string>
+    <string name="settings_license_value">MIT</string>
+    <string name="settings_privacy_note">Η εφαρμογή δεν έχει άδεια διαδικτύου. Η τοποθεσία χρησιμοποιείται μόνο στη συσκευή — για την απόκλιση, την κίμπλα, τον Ήλιο και τη Σελήνη — και δεν στέλνεται πουθενά.</string>
+</resources>

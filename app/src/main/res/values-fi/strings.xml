@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Suomi -->
+<resources>
+    <string name="app_name">Kompassi</string>
+    <string name="no_sensor">Tässä laitteessa ei ole kompassianturia.</string>
+    <string name="calibrate">Tarkkuus heikko — liikuta puhelinta kahdeksikon muotoisesti.</string>
+    <string name="magnetic_disturbance">Magneettinen häiriö: kenttä %1$d µT, odotettu %2$d µT — siirrä pois metallin tai magneettien läheltä.</string>
+    <string name="hold_flat">Pidä puhelin vaakasuorassa — kallistus vääristää lukemaa.</string>
+    <string name="true_north">Tosipohjoinen</string>
+    <string name="magnetic_north">Magneettinen pohjoinen</string>
+    <string name="need_location">Tosipohjoinen vaatii sijaintiluvan — napauta tästä</string>
+    <string name="waiting_location">Odotetaan sijaintia…</string>
+    <string name="place_kaaba">Kaaba (qibla)</string>
+    <string name="place_kaaba_label">Qibla</string>
+    <string name="place_aqsa">Al-Aqsan moskeija</string>
+    <string name="place_aqsa_label">Aqsa</string>
+    <string name="place_vatican">Vatikaani</string>
+    <string name="place_vatican_label">Vatikaani</string>
+    <string name="place_info">%1$s %2$s</string>
+    <string name="sun_rise_set">auringonnousu %1$s (%2$s) · auringonlasku %3$s (%4$s)</string>
+    <string name="moon_info">Kuu %1$s · %2$d %%</string>
+    <string name="moon_info_below">Kuu %1$s · %2$d %% · horisontin alapuolella</string>
+    <string name="approximate_location">likimääräinen</string>
+    <string name="location_copied">Kopioitu: %1$s</string>
+    <string name="sun_info">Aurinko %1$s</string>
+    <string name="sun_info_below">Aurinko %1$s · horisontin alapuolella</string>
+    <string name="target_hint">Napauta kehää: lukitse suunta · pitkä painallus: piste · napauta tästä: syötä suunta</string>
+    <string name="waypoint_line">%1$s %2$s · %3$s</string>
+    <string name="waypoint_here">%1$s · olet tässä</string>
+    <string name="waypoint_more">+%1$d lisää</string>
+    <string name="waypoint_saved">%1$s tallennettu</string>
+    <string name="waypoint_cleared">%1$s poistettu</string>
+    <string name="waypoint_needs_location">Ei sijaintia — pistettä ei tallennettu</string>
+    <string name="bearing_dialog_title">Syötä suunta</string>
+    <string name="bearing_dialog_set">Aseta</string>
+    <string name="bearing_dialog_clear">Tyhjennä</string>
+    <string name="bearing_dialog_cancel">Peruuta</string>
+    <string name="target_plain">Kohde %1$s</string>
+    <string name="target_reached">Kohde %1$s · suunnassa</string>
+    <string name="target_right">Kohde %1$s · %2$s oikealle</string>
+    <string name="target_left">Kohde %1$s · %2$s vasemmalle</string>
+    <string name="settings_title">Asetukset</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Eleet</string>
+    <string name="settings_gestures_summary">Mitä kukin napautus ja pitkä painallus tekee</string>
+    <string name="settings_gestures_body">Napauta kehää — lukitse suunta; napauta uudelleen vapauttaaksesi\nPaina kehää pitkään — tallenna sijaintisi pisteeksi\nNapauta suuria asteita — vaihda yötilaa\nNapauta sijaintiriviä — desimaali ⇄ asteet-minuutit-sekunnit\nPaina sijaintiriviä pitkään — kopioi tai jaa\nNapauta alinta riviä — syötä suunta käsin\nPaina alinta riviä pitkään — tallennetut pisteet ja koordinaattien syöttö</string>
+    <string name="settings_open">Asetukset</string>
+    <string name="settings_section_display">NÄYTTÖ</string>
+    <string name="settings_night">Yötila</string>
+    <string name="settings_night_summary">Musta tausta, punainen kehä — säilyttää hämäränäön</string>
+    <string name="settings_night_auto">Automaattinen hämärässä</string>
+    <string name="settings_night_auto_summary">Vaihtuu siviilihämärän lopussa, kun päivänvalo loppuu</string>
+    <string name="settings_unit">Kulmayksikkö</string>
+    <string name="settings_unit_degree">Asteet (0-360)</string>
+    <string name="settings_unit_mil">Piirut (0-6400)</string>
+    <string name="settings_keep_screen">Pidä näyttö päällä</string>
+    <string name="settings_keep_screen_summary">Näyttö ei sammu sovelluksen ollessa auki</string>
+    <string name="settings_fullscreen">Koko näyttö</string>
+    <string name="settings_fullscreen_summary">Piilottaa tila- ja navigointipalkin; pyyhkäise reunasta näyttääksesi ne</string>
+    <string name="settings_section_compass">KOMPASSI</string>
+    <string name="settings_true_north">Käytä tosipohjoista</string>
+    <string name="settings_true_north_summary">Lisää erannon, kun sijainti tiedetään</string>
+    <string name="settings_smoothing">Pehmennys</string>
+    <string name="settings_smoothing_calm">Rauhallinen</string>
+    <string name="settings_smoothing_balanced">Tasapainoinen</string>
+    <string name="settings_smoothing_quick">Nopea</string>
+    <string name="settings_vibrate">Värinä suunnissa</string>
+    <string name="settings_vibrate_summary">Lyhyt naps ohitettaessa P/I/E/L, kaksoisnaps lukittuun suuntaan tultaessa</string>
+    <string name="settings_section_marks">KEHÄN MERKIT</string>
+    <string name="settings_show_magnetic">Magneettinen pohjoinen (M)</string>
+    <string name="settings_show_magnetic_summary">Näkyy vain, kun tosipohjoinen on käytössä</string>
+    <string name="settings_show_level">Vesivaaka</string>
+    <string name="settings_show_level_summary">Kupla kehän keskellä</string>
+    <string name="settings_show_sun">Aurinko</string>
+    <string name="settings_show_sun_arc">Auringon rata</string>
+    <string name="settings_show_sun_arc_summary">Kaari auringonnoususta auringonlaskuun ja päiden suunnat</string>
+    <string name="settings_show_moon">Kuu</string>
+    <string name="settings_show_moon_summary">Sen suunta ja vaihe; himmeänä horisontin alapuolella</string>
+    <string name="settings_marks_note">Kohde- ja pistemerkit eivät ole täällä: kehän napautus tai pitkä painallus kytkee ne jo päälle ja pois.</string>
+    <string name="mil_suffix">piirua</string>
+    <string name="a11y_degrees">%1$d astetta</string>
+    <string name="a11y_mils">%1$d piirua</string>
+    <string name="a11y_heading">%1$s, %2$s, %3$s</string>
+    <string name="a11y_declination">Magneettinen %1$s, eranto %2$s astetta %3$s</string>
+    <string name="a11y_declination_east">itään</string>
+    <string name="a11y_declination_west">länteen</string>
+    <string name="a11y_dial">Kompassikehä</string>
+    <string name="a11y_lock_bearing">lukitse suunta</string>
+    <string name="a11y_save_point">tallenna piste</string>
+    <string name="magnetic_reading">Magneettinen %1$s</string>
+    <string name="declination_reading">Eranto %1$s°%2$s</string>
+    <string name="hemisphere_north">P</string>
+    <string name="hemisphere_south">E</string>
+    <string name="hemisphere_east">I</string>
+    <string name="hemisphere_west">L</string>
+    <string name="magnetic_label">M</string>
+    <string name="distance_meters">%1$d m</string>
+    <string name="distance_kilometers">%1$s km</string>
+    <string name="coordinate_decimal">%1$s° %2$s</string>
+    <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
+    <string-array name="cardinal_names">
+        <item>pohjoinen</item>
+        <item>pohjoiskoillinen</item>
+        <item>koillinen</item>
+        <item>itäkoillinen</item>
+        <item>itä</item>
+        <item>itäkaakko</item>
+        <item>kaakko</item>
+        <item>eteläkaakko</item>
+        <item>etelä</item>
+        <item>etelälounas</item>
+        <item>lounas</item>
+        <item>länsilounas</item>
+        <item>länsi</item>
+        <item>länsiluode</item>
+        <item>luode</item>
+        <item>pohjoisluode</item>
+    </string-array>
+    <string-array name="cardinal_abbreviations">
+        <item>P</item>
+        <item>PKO</item>
+        <item>KO</item>
+        <item>IKO</item>
+        <item>I</item>
+        <item>IKA</item>
+        <item>KA</item>
+        <item>EKA</item>
+        <item>E</item>
+        <item>ELO</item>
+        <item>LO</item>
+        <item>LLO</item>
+        <item>L</item>
+        <item>LLU</item>
+        <item>LU</item>
+        <item>PLU</item>
+    </string-array>
+    <string-array name="dial_labels">
+        <item>P</item>
+        <item>KO</item>
+        <item>I</item>
+        <item>KA</item>
+        <item>E</item>
+        <item>LO</item>
+        <item>L</item>
+        <item>LU</item>
+    </string-array>
+    <string name="waypoint_default_name">Piste %1$d</string>
+    <string name="waypoint_limit">Pisteitä voi tallentaa enintään %1$d</string>
+    <string name="waypoints_title">Tallennetut pisteet</string>
+    <string name="waypoints_empty">Ei vielä pisteitä — paina kehää pitkään tallentaaksesi</string>
+    <string name="waypoint_rename">Nimeä uudelleen</string>
+    <string name="waypoint_delete">Poista</string>
+    <string name="waypoint_name_hint">Pisteen nimi</string>
+    <string name="waypoint_add">Lisää piste</string>
+    <string name="waypoint_enter_coordinates">Syötä koordinaatit…</string>
+    <string name="waypoint_coordinates_hint">41.0, 29.0 tai jaettu linkki</string>
+    <string name="waypoint_coordinates_unreadable">Koordinaatteja ei löytynyt</string>
+    <string name="location_action_copy">Kopioi</string>
+    <string name="location_action_share">Jaa</string>
+    <string name="share_chooser">Jaa sijainti</string>
+    <string name="settings_section_about">TIETOJA</string>
+    <string name="settings_version">Versio</string>
+    <string name="settings_version_format">%1$s (%2$d)</string>
+    <string name="settings_source">Lähdekoodi</string>
+    <string name="settings_license">Lisenssi</string>
+    <string name="settings_license_value">MIT</string>
+    <string name="settings_privacy_note">Sovelluksella ei ole internet-lupaa. Sijaintia käytetään vain laitteessa — erantoon, qiblaan, aurinkoon ja kuuhun — eikä sitä lähetetä mihinkään.</string>
+</resources>

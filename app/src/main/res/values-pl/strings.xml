@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Polski -->
+<resources>
+    <string name="app_name">Kompas</string>
+    <string name="no_sensor">Brak czujnika kompasu w tym urządzeniu.</string>
+    <string name="calibrate">Niska dokładność — poruszaj telefonem, zataczając ósemkę.</string>
+    <string name="magnetic_disturbance">Zakłócenie magnetyczne: pole %1$d µT, oczekiwane %2$d µT — odsuń telefon od metalu i magnesów.</string>
+    <string name="hold_flat">Trzymaj telefon poziomo — przechylenie zniekształca wskazanie.</string>
+    <string name="true_north">Północ geograficzna</string>
+    <string name="magnetic_north">Północ magnetyczna</string>
+    <string name="need_location">Północ geograficzna wymaga zgody na lokalizację — dotknij tutaj</string>
+    <string name="waiting_location">Oczekiwanie na lokalizację…</string>
+    <string name="place_kaaba">Kaaba (kibla)</string>
+    <string name="place_kaaba_label">Kibla</string>
+    <string name="place_aqsa">Meczet Al-Aksa</string>
+    <string name="place_aqsa_label">Aksa</string>
+    <string name="place_vatican">Watykan</string>
+    <string name="place_vatican_label">Watykan</string>
+    <string name="place_info">%1$s %2$s</string>
+    <string name="sun_rise_set">wschód %1$s (%2$s) · zachód %3$s (%4$s)</string>
+    <string name="moon_info">Księżyc %1$s · %2$d%%</string>
+    <string name="moon_info_below">Księżyc %1$s · %2$d%% · pod horyzontem</string>
+    <string name="approximate_location">przybliżona</string>
+    <string name="location_copied">Skopiowano: %1$s</string>
+    <string name="sun_info">Słońce %1$s</string>
+    <string name="sun_info_below">Słońce %1$s · pod horyzontem</string>
+    <string name="target_hint">Dotknij tarczy: zablokuj azymut · przytrzymaj: punkt · dotknij tutaj: wpisz azymut</string>
+    <string name="waypoint_line">%1$s %2$s · %3$s</string>
+    <string name="waypoint_here">%1$s · jesteś tutaj</string>
+    <string name="waypoint_more">+%1$d więcej</string>
+    <string name="waypoint_saved">Zapisano %1$s</string>
+    <string name="waypoint_cleared">Usunięto %1$s</string>
+    <string name="waypoint_needs_location">Brak lokalizacji — nie zapisano punktu</string>
+    <string name="bearing_dialog_title">Wpisz azymut</string>
+    <string name="bearing_dialog_set">Ustaw</string>
+    <string name="bearing_dialog_clear">Wyczyść</string>
+    <string name="bearing_dialog_cancel">Anuluj</string>
+    <string name="target_plain">Cel %1$s</string>
+    <string name="target_reached">Cel %1$s · na kursie</string>
+    <string name="target_right">Cel %1$s · %2$s w prawo</string>
+    <string name="target_left">Cel %1$s · %2$s w lewo</string>
+    <string name="settings_title">Ustawienia</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Gesty</string>
+    <string name="settings_gestures_summary">Co robi każde dotknięcie i przytrzymanie</string>
+    <string name="settings_gestures_body">Dotknij tarczy — zablokuj azymut; dotknij ponownie, aby zwolnić\nPrzytrzymaj tarczę — zapisz swoją pozycję jako punkt\nDotknij dużych stopni — przełącz tryb nocny\nDotknij wiersza lokalizacji — dziesiętne ⇄ stopnie-minuty-sekundy\nPrzytrzymaj wiersz lokalizacji — kopiuj lub udostępnij\nDotknij dolnego wiersza — wpisz azymut ręcznie\nPrzytrzymaj dolny wiersz — zapisane punkty i wpisywanie współrzędnych</string>
+    <string name="settings_open">Ustawienia</string>
+    <string name="settings_section_display">WYGLĄD</string>
+    <string name="settings_night">Tryb nocny</string>
+    <string name="settings_night_summary">Czarne tło, czerwona tarcza — chroni widzenie nocne</string>
+    <string name="settings_night_auto">Automatycznie o zmierzchu</string>
+    <string name="settings_night_auto_summary">Przełącza się pod koniec zmierzchu cywilnego, gdy kończy się światło dzienne</string>
+    <string name="settings_unit">Jednostka kąta</string>
+    <string name="settings_unit_degree">Stopnie (0-360)</string>
+    <string name="settings_unit_mil">Tysięczne (0-6400)</string>
+    <string name="settings_keep_screen">Nie wygaszaj ekranu</string>
+    <string name="settings_keep_screen_summary">Ekran pozostaje włączony, gdy aplikacja jest otwarta</string>
+    <string name="settings_fullscreen">Pełny ekran</string>
+    <string name="settings_fullscreen_summary">Ukrywa pasek stanu i nawigacji; przesuń od krawędzi, aby je pokazać</string>
+    <string name="settings_section_compass">KOMPAS</string>
+    <string name="settings_true_north">Używaj północy geograficznej</string>
+    <string name="settings_true_north_summary">Dodaje deklinację magnetyczną, gdy lokalizacja jest znana</string>
+    <string name="settings_smoothing">Wygładzanie</string>
+    <string name="settings_smoothing_calm">Spokojne</string>
+    <string name="settings_smoothing_balanced">Zrównoważone</string>
+    <string name="settings_smoothing_quick">Szybkie</string>
+    <string name="settings_vibrate">Wibracja przy azymutach</string>
+    <string name="settings_vibrate_summary">Krótkie stuknięcie przy mijaniu N/E/S/W, podwójne po wejściu w zablokowany azymut</string>
+    <string name="settings_section_marks">ZNACZNIKI NA TARCZY</string>
+    <string name="settings_show_magnetic">Północ magnetyczna (M)</string>
+    <string name="settings_show_magnetic_summary">Widoczna tylko przy północy geograficznej</string>
+    <string name="settings_show_level">Poziomica</string>
+    <string name="settings_show_level_summary">Bąbelek pośrodku tarczy</string>
+    <string name="settings_show_sun">Słońce</string>
+    <string name="settings_show_sun_arc">Droga Słońca</string>
+    <string name="settings_show_sun_arc_summary">Łuk od wschodu do zachodu i azymuty jego końców</string>
+    <string name="settings_show_moon">Księżyc</string>
+    <string name="settings_show_moon_summary">Jego azymut i faza; pod horyzontem rysowany blado</string>
+    <string name="settings_marks_note">Znaczników celu i punktu tu nie ma: dotknięcie lub przytrzymanie tarczy już je włącza i wyłącza.</string>
+    <string name="mil_suffix">tysięcznych</string>
+    <string name="a11y_degrees">%1$d stopni</string>
+    <string name="a11y_mils">%1$d tysięcznych</string>
+    <string name="a11y_heading">%1$s, %2$s, %3$s</string>
+    <string name="a11y_declination">Magnetyczny %1$s, deklinacja %2$s stopni %3$s</string>
+    <string name="a11y_declination_east">na wschód</string>
+    <string name="a11y_declination_west">na zachód</string>
+    <string name="a11y_dial">Tarcza kompasu</string>
+    <string name="a11y_lock_bearing">zablokuj azymut</string>
+    <string name="a11y_save_point">zapisz punkt</string>
+    <string name="magnetic_reading">Magnetyczny %1$s</string>
+    <string name="declination_reading">Deklinacja %1$s°%2$s</string>
+    <string name="hemisphere_north">N</string>
+    <string name="hemisphere_south">S</string>
+    <string name="hemisphere_east">E</string>
+    <string name="hemisphere_west">W</string>
+    <string name="magnetic_label">M</string>
+    <string name="distance_meters">%1$d m</string>
+    <string name="distance_kilometers">%1$s km</string>
+    <string name="coordinate_decimal">%1$s° %2$s</string>
+    <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
+    <string-array name="cardinal_names">
+        <item>północ</item>
+        <item>północny-północny wschód</item>
+        <item>północny wschód</item>
+        <item>wschodni-północny wschód</item>
+        <item>wschód</item>
+        <item>wschodni-południowy wschód</item>
+        <item>południowy wschód</item>
+        <item>południowy-południowy wschód</item>
+        <item>południe</item>
+        <item>południowy-południowy zachód</item>
+        <item>południowy zachód</item>
+        <item>zachodni-południowy zachód</item>
+        <item>zachód</item>
+        <item>zachodni-północny zachód</item>
+        <item>północny zachód</item>
+        <item>północny-północny zachód</item>
+    </string-array>
+    <string-array name="cardinal_abbreviations">
+        <item>N</item>
+        <item>NNE</item>
+        <item>NE</item>
+        <item>ENE</item>
+        <item>E</item>
+        <item>ESE</item>
+        <item>SE</item>
+        <item>SSE</item>
+        <item>S</item>
+        <item>SSW</item>
+        <item>SW</item>
+        <item>WSW</item>
+        <item>W</item>
+        <item>WNW</item>
+        <item>NW</item>
+        <item>NNW</item>
+    </string-array>
+    <string-array name="dial_labels">
+        <item>N</item>
+        <item>NE</item>
+        <item>E</item>
+        <item>SE</item>
+        <item>S</item>
+        <item>SW</item>
+        <item>W</item>
+        <item>NW</item>
+    </string-array>
+    <string name="waypoint_default_name">Punkt %1$d</string>
+    <string name="waypoint_limit">Można zapisać najwyżej %1$d punktów</string>
+    <string name="waypoints_title">Zapisane punkty</string>
+    <string name="waypoints_empty">Brak punktów — przytrzymaj tarczę, aby zapisać</string>
+    <string name="waypoint_rename">Zmień nazwę</string>
+    <string name="waypoint_delete">Usuń</string>
+    <string name="waypoint_name_hint">Nazwa punktu</string>
+    <string name="waypoint_add">Dodaj punkt</string>
+    <string name="waypoint_enter_coordinates">Wpisz współrzędne…</string>
+    <string name="waypoint_coordinates_hint">41.0, 29.0 lub udostępniony link</string>
+    <string name="waypoint_coordinates_unreadable">Nie znaleziono współrzędnych</string>
+    <string name="location_action_copy">Kopiuj</string>
+    <string name="location_action_share">Udostępnij</string>
+    <string name="share_chooser">Udostępnij lokalizację</string>
+    <string name="settings_section_about">O APLIKACJI</string>
+    <string name="settings_version">Wersja</string>
+    <string name="settings_version_format">%1$s (%2$d)</string>
+    <string name="settings_source">Kod źródłowy</string>
+    <string name="settings_license">Licencja</string>
+    <string name="settings_license_value">MIT</string>
+    <string name="settings_privacy_note">Aplikacja nie ma uprawnienia do internetu. Lokalizacja jest używana tylko na urządzeniu — do deklinacji, kibli, Słońca i Księżyca — i nigdy nigdzie nie jest wysyłana.</string>
+</resources>

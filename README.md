@@ -1,6 +1,6 @@
 # Compass
 
-[![CI](https://github.com/aripdcem/compass/actions/workflows/ci.yml/badge.svg)](https://github.com/aripdcem/compass/actions/workflows/ci.yml)
+[![CI](https://github.com/aripdcom/compass/actions/workflows/ci.yml/badge.svg)](https://github.com/aripdcom/compass/actions/workflows/ci.yml)
 
 Android için sade bir pusula uygulaması. Dış bağımlılığı yok — sadece Android SDK
 ve Kotlin standart kütüphanesi kullanılıyor, kadran `Canvas` ile elle çiziliyor.
@@ -17,6 +17,9 @@ göbeğinde su terazisi.
   ve koordinat paneli için; reddedilirse uygulama manyetik kuzeyle çalışmaya devam
   eder, "yaklaşık" seçilirse koordinatlar o etiketle gösterilir).
 - Dışarıdan konum alır: `geo:` bağlantıları ve paylaşılan düz metin (bkz. 5. bölüm).
+- **28 dil**: AB'nin 24 resmî dili, İzlandaca, Norveççenin iki yazı dili ve
+  Türkçe. Varsayılan İngilizce; uygulama telefonun sistem diliyle açılır
+  (bkz. 9. bölüm).
 
 ## 0. Klasör düzeni
 
@@ -26,6 +29,7 @@ compass/
 ├── .github/      iş akışları ve yardımcı betikler (bkz. 15. bölüm)
 ├── dist/         üretilen APK'lar          (gitignore'da)
 ├── docs/         ekran görüntüleri, ikon
+├── tools/        depo denetimleri: çeviri tutarlılığı (bkz. 9. bölüm)
 ├── keys/         imzalama anahtarı         (gitignore'da)
 └── keystore.properties                     (gitignore'da)
 ```
@@ -684,9 +688,16 @@ büyütüldü.
 
 ## 9. Diller
 
-Uygulama altı dilde: **İngilizce, Türkçe, Fransızca, Almanca, İtalyanca,
-İspanyolca**. Uygulama içinde dil ayarı yoktur — sistemde hangisi seçiliyse o
-kullanılır. Android 13'ten itibaren `locales_config.xml` sayesinde
+Uygulama **yirmi sekiz dilde**:
+
+| | |
+|---|---|
+| AB'nin 24 resmî dili | Bulgarca, Çekçe, Danca, Almanca, Yunanca, İngilizce, İspanyolca, Estonca, Fince, Fransızca, İrlandaca, Hırvatça, Macarca, İtalyanca, Litvanca, Letonca, Maltaca, Felemenkçe, Lehçe, Portekizce, Romence, Slovakça, Slovence, İsveççe |
+| Kuzey ülkelerinin ekledikleri | İzlandaca, Norveççe **bokmål** ve **nynorsk** |
+| Uygulamanın ilk dili | Türkçe |
+
+Uygulama içinde dil ayarı yoktur — sistemde hangisi seçiliyse o kullanılır.
+Android 13'ten itibaren `locales_config.xml` sayesinde
 `Ayarlar → Uygulamalar → Pusula → Dil` altında uygulamaya özel bir seçici de
 çıkar.
 
@@ -697,22 +708,60 @@ düşer; orada Türkçe olsaydı o kullanıcılar okuyamadıkları bir dille kar
 Çeviri yalnızca cümleleri değil, **yön sisteminin kendisini** kapsar. Kısaltmalar
 dilden dile değişir ve bunlar kadranın üstünde de yazılıdır:
 
-| | K/N | Doğu | Batı | Kuzeydoğu |
+| | Kuzey | Doğu | Batı | Kuzeydoğu |
 |---|---|---|---|---|
-| Türkçe | K | **D** | **B** | KD |
 | İngilizce | N | E | W | NE |
+| Türkçe | **K** | **D** | **B** | KD |
 | Fransızca | N | E | **O** (ouest) | NE |
 | Almanca | N | **O** (Ost) | W | **NO** |
 | İtalyanca / İspanyolca | N | E | **O** | NE |
+| İsveççe / Danca | N | **O** / **Ø** | V | NO / NØ |
+| Çekçe / Slovakça | **S** (sever) | **V** (východ) | **Z** (západ) | SV |
+| Lehçe | N | E | W | NE |
+| Macarca | **É** | **K** | **Ny** | ÉK |
+| Fince | **P** | **I** | **L** | **KO** (koillinen) |
+| Yunanca | **Β** | **Α** | **Δ** | ΒΑ |
+| Bulgarca | **С** | **И** | **З** | СИ |
+| Maltaca | **T** (tramuntana) | **L** (lvant) | **P** (punent) | **G** (grigal) |
 
-Almanca'da doğu **O**, Fransızca'da batı **O** — aynı harf iki dilde zıt yönü
-gösterir. Bu yüzden yön harfleri kodda gömülü olamazdı; hepsi (kadran harfleri,
-16 kısaltma, koordinatların yarım küre harfleri, sapmanın yön eki) kaynak
-dosyalara taşındı. Ondalık ayracı da dile uyar: aynı sapma İngilizce'de
-`6.4°E`, Almanca'da `6,4°O` yazar.
+Aynı harf dilden dile zıt yöne bakabiliyor: Almanca'da **O** doğu, Fransızca'da
+batı; Çekçe'de **S** kuzey, İsveççe'de güney; Fince'de **L** batı (länsi),
+Estonca'da güney (lõuna). Bu yüzden yön harfleri kodda gömülü olamazdı; hepsi (kadran harfleri, 16 kısaltma, koordinatların yarım küre
+harfleri, sapmanın yön eki) kaynak dosyalara taşındı. Ondalık ayracı da dile
+uyar: aynı sapma İngilizce'de `6.4°E`, Almanca'da `6,4°O` yazar.
+
+Bazı dillerde ara yönlerin **kendi adları** var, iki yönün birleşimi değiller:
+Fince `koillinen` (kuzeydoğu), `kaakko`, `lounas`, `luode`; Estonca `kirre`,
+`kagu`, `edel`, `loe`. Maltaca ise Akdeniz rüzgârlarının adlarını kullanır:
+`grigal` (KD), `xlokk` (GD), `lbiċ` (GB), `majjistral` (KB). Maltaca'da
+kuzeybatı kadranda `Mj` yazar — `M` manyetik kuzeyin işareti olduğundan tek
+harfe bırakılmadı, yoksa kadranda iki ayrı şey aynı harfle görünecekti.
 
 Ekran okuyucu için kullanılan açık yön adları da her dilde ayrıdır
-(`kuzey kuzeydoğu` / `north-northeast` / `Nordnordost`).
+(`kuzey kuzeydoğu` / `north-northeast` / `Nordnordost` / `pohjoiskoillinen`).
+
+### Çevirilerin denetimi
+
+Yirmi sekiz dosyanın elle tutulmasında gözden kaçması en kolay üç hata ne
+derlemeyi kırar ne de testlerde görünür:
+
+- **eksik anahtar** — Android o metinde varsayılana düşer, ekranın yarısı bir
+  dilde yarısı İngilizce çıkar;
+- **bozuk biçim belirteci** — `%1$d` yerine `%1$s` yazıldığında uygulama o
+  satırı çizerken çöker, hem de yalnızca o dildeki cihazlarda;
+- **dizi uzunluğunun tutmaması** — on altı kısaltma yerine on beşi olan bir
+  dilde kadran çizilirken dizi taşar.
+
+Üçünü de `tools/check-translations.py` yakalar ve CI'da her itişte koşar:
+
+```bash
+python3 tools/check-translations.py
+# 28 dil, 118 metin, 3 dizi — hepsi tutuyor.
+```
+
+Betik ayrıca `locales_config.xml` ile `values-*` klasörlerinin aynı kümeyi
+gösterdiğini sınar: listede olup çevirisi olmayan bir dil, sistemin dil
+seçicisinde görünür ama uygulama İngilizce açılır.
 
 ## 10. Boyut
 
@@ -745,6 +794,14 @@ ibrenin iki yarısı ayrılamadığı için kuzey dolu, güney içi boş çizili
 
 Geriye kalan dağılım: `resources.arsc` (altı dilin metinleri) 37 KB, bütün kod
 33 KB, ikonlar 16 KB, imza ve diğer 16 KB. Artık en büyük parça metinler.
+
+> **Bu ölçüm altı dille yapıldı.** Dil sayısı yirmi sekize çıktı: çeviri
+> dosyalarının ham hâli 57 KB'tan ~281 KB'a çıktığına göre `resources.arsc` da
+> büyümüş olmalı ve **112.089 bayt artık geçerli değil**. Yeni rakam bir sonraki
+> release derlemesinde ölçülüp buraya yazılmalı. Kodun, ikonların ve imzanın
+> payı değişmedi; büyüyen tek parça metinler. Tek parça APK dağıtılırken yirmi
+> sekiz dil birlikte gider; Play Store'a AAB verilirse kullanıcı yalnızca kendi
+> dilinin metinlerini indirir.
 
 Karıştırma yığın izlerini okunmaz hâle getirdiğinden
 `app/build/outputs/mapping/release/mapping.txt` her yayında saklanmalıdır;
@@ -1051,6 +1108,8 @@ okur — tek doğru kaynak orasıdır, iş akışının ayrıca bilmesine gerek 
 
 ### Neler koşuluyor
 
+- `python3 tools/check-translations.py` — yirmi sekiz dilin anahtarları,
+  biçim belirteçleri ve dizi uzunlukları (9. bölüm)
 - `./gradlew test` — 84 test, JVM'de, cihaz gerekmez (12. bölüm)
 - `./gradlew lintDebug` — Android lint; uyarılar koşuyu kırmaz, rapor saklanır
 - `./gradlew assembleDebug` / `assembleRelease`
