@@ -1,0 +1,64 @@
+# Tanıtım sayfasını GitHub Pages'e yayımlar.
+#
+# Sayfanın kaynağı `docs/` klasörü: tek HTML, tek CSS, iki JS ve ekran
+# görüntüleri. Derleme adımı yok — klasör olduğu gibi yükleniyor.
+#
+# Bir kereye mahsus ayar: depo ayarlarında Settings -> Pages -> "Build and
+# deployment" altında Source olarak **GitHub Actions** seçilmeli. Orada
+# "Deploy from a branch" seçiliyse bu iş akışı "Pages is not enabled" diyerek
+# kırılır; o seçenekle de aynı klasör (main dalı, /docs) yayımlanabilir ama o
+# zaman bu iş akışını silmek gerekir.
+#
+# Yayımlanan adres: https://aripdcom.github.io/compass/
+
+name: Pages
+
+on:
+  push:
+    branches: [main]
+    # Uygulama kodu değişince sayfayı yeniden yayımlamanın anlamı yok.
+    paths:
+      - 'docs/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write      # deploy-pages bununla kimliğini kanıtlıyor
+
+# Üst üste gelen yayımlar sıraya girsin; yarıda kesilen bir yayım siteyi
+# bozuk bırakabilir, bu yüzden cancel-in-progress kapalı.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: docs/ klasörünü yayımla
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Kaynağı al
+        uses: actions/checkout@v4
+
+      # Sayfanın metinleri ile çeviri tablosu ayrışmışsa burada durulur:
+      # yarısı İngilizce çıkan bir sayfa yayımlanmasın.
+      - name: Site çevirileri
+        run: node tools/check-site.js
+
+      - name: Pages ayarları
+        uses: actions/configure-pages@v5
+
+      - name: Klasörü yükle
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Yayımla
+        id: deployment
+        uses: actions/deploy-pages@v4

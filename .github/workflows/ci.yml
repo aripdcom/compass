@@ -61,6 +61,10 @@ jobs:
       - name: Çeviriler
         run: python3 tools/check-translations.py
 
+      # Tanıtım sayfası da yirmi sekiz dilde; aynı sebeple ayrı bir adım.
+      - name: Site çevirileri
+        run: node tools/check-site.js
+
       # Testler JVM'de koşar, öykünücü gerekmez. Lint uyarıları derlemeyi
       # kırmaz ama raporu çıktı olarak saklanır.
       - name: Testler ve lint
