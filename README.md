@@ -767,8 +767,12 @@ seçicisinde görünür ama uygulama İngilizce açılır.
 
 ## 10. Boyut
 
-Release APK **112.089 bayt** (~109 KB). Başlangıç noktası 854.752 baytt: **%87 küçülme**.
-İki adımda geldi.
+Release APK **300.267 bayt** (~293 KB, sürüm 4.3). Bunun yaklaşık dörtte üçü
+yirmi sekiz dilin metinleri; kod, ikonlar ve imza toplam 65 KB tutuyor.
+
+Aşağıdaki küçültme hikâyesi hâlâ geçerli, ama **4.2 sürümüne** ait: o APK
+112.089 bayttı ve başlangıç noktası 854.752 bayta göre **%87 küçülmüştü**.
+İki adımda gelmişti.
 
 **R8** (kullanılmayan kodu ve kaynakları atar, kalanı küçültüp karıştırır):
 854.752 → 238.872 bayt. Uygulamada yansıma kullanılmadığı için
@@ -794,16 +798,33 @@ Vektöre geçmek **temalı ikonu** da bedavaya getirdi: `<monochrome>` katmanı 
 şekli tek renkte gösterir, Android 13'te ana ekran temasına uyar. Tek renkte
 ibrenin iki yarısı ayrılamadığı için kuzey dolu, güney içi boş çizilir.
 
-Geriye kalan dağılım: `resources.arsc` (altı dilin metinleri) 37 KB, bütün kod
-33 KB, ikonlar 16 KB, imza ve diğer 16 KB. Artık en büyük parça metinler.
+4.2'de geriye kalan dağılım şuydu: `resources.arsc` (altı dilin metinleri)
+37 KB, bütün kod 33 KB, ikonlar 16 KB, imza ve diğer 16 KB. En büyük parça
+artık metinlerdi.
 
-> **Bu ölçüm altı dille yapıldı.** Dil sayısı yirmi sekize çıktı: çeviri
-> dosyalarının ham hâli 57 KB'tan ~281 KB'a çıktığına göre `resources.arsc` da
-> büyümüş olmalı ve **112.089 bayt artık geçerli değil**. Yeni rakam bir sonraki
-> release derlemesinde ölçülüp buraya yazılmalı. Kodun, ikonların ve imzanın
-> payı değişmedi; büyüyen tek parça metinler. Tek parça APK dağıtılırken yirmi
-> sekiz dil birlikte gider; Play Store'a AAB verilirse kullanıcı yalnızca kendi
-> dilinin metinlerini indirir.
+### Dil sayısının bedeli
+
+4.3'te diller altıdan yirmi sekize çıktı ve APK **112.089 → 300.267 bayta**
+(2,7 katı) büyüdü. Kod, ikonlar ve imza bu sürümde değişmediğine göre
+188.178 baytlık artışın tamamı `resources.arsc`'ye ait: o parça 37 KB'tan
+yaklaşık **228 KB**'a çıkmış oluyor (toplamdan değişmeyen 65 KB'ın düşülmesiyle;
+dosya ayrı ayrı ölçülmedi). Yani APK'nın dörtte üçü artık metin.
+
+Metinlerin ham hâli 281 KB; `resources.arsc` bunu dizge havuzunda toplayıp
+sıkıştırdığı için APK'ya 228 KB olarak giriyor. Yunanca ve Bulgarca'nın
+Kiril/Yunan harfleri UTF-8'de latin harflerin iki katı yer tutuyor, o da payın
+bir kısmını açıklıyor.
+
+Bunu küçültmenin iki yolu var, ikisi de bu depoda **yapılmadı**:
+
+- **AAB** (Play Store): Google her dil için ayrı bir parça üretir, kullanıcı
+  yalnızca kendi dilininkini indirir — APK yeniden ~110 KB'a iner. Tek parça
+  APK doğrudan dağıtıldığı sürece yirmi sekiz dil birlikte gider.
+- **`resConfigs`**: derlemede dil listesini kısmak. Uygulamanın tamamı sistemin
+  dilini kullandığı için bu, desteklenen dili silmek demek; boyut için dilden
+  vazgeçmek bu projede tercih edilmedi.
+
+Üç yüz kilobayt hâlâ küçük: karşılaştırma için bir fotoğraf bundan büyük.
 
 Karıştırma yığın izlerini okunmaz hâle getirdiğinden
 `app/build/outputs/mapping/release/mapping.txt` her yayında saklanmalıdır;
