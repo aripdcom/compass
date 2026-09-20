@@ -55,6 +55,12 @@ jobs:
       - name: Android SDK bileşenleri
         run: bash .github/scripts/android-sdk.sh
 
+      # Yirmi sekiz dilin metinleri elle tutuluyor; eksik anahtar, bozuk biçim
+      # belirteci ve tutmayan dizi uzunluğu ne derlemeyi kırar ne de testlerde
+      # görünür. Bu yüzden ayrı bir adım (bkz. tools/check-translations.py).
+      - name: Çeviriler
+        run: python3 tools/check-translations.py
+
       # Testler JVM'de koşar, öykünücü gerekmez. Lint uyarıları derlemeyi
       # kırmaz ama raporu çıktı olarak saklanır.
       - name: Testler ve lint

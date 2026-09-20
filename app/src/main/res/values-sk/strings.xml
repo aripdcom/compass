@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Slovenčina -->
+<resources>
+    <string name="app_name">Kompas</string>
+    <string name="no_sensor">Toto zariadenie nemá kompasový senzor.</string>
+    <string name="calibrate">Nízka presnosť — pohybujte telefónom do tvaru osmičky.</string>
+    <string name="magnetic_disturbance">Magnetické rušenie: pole %1$d µT, očakávané %2$d µT — oddiaľte telefón od kovu a magnetov.</string>
+    <string name="hold_flat">Držte telefón vodorovne — náklon skresľuje údaj.</string>
+    <string name="true_north">Zemepisný sever</string>
+    <string name="magnetic_north">Magnetický sever</string>
+    <string name="need_location">Zemepisný sever vyžaduje povolenie polohy — ťuknite sem</string>
+    <string name="waiting_location">Čaká sa na polohu…</string>
+    <string name="place_kaaba">Kaaba (kibla)</string>
+    <string name="place_kaaba_label">Kibla</string>
+    <string name="place_aqsa">Mešita Al-Aksá</string>
+    <string name="place_aqsa_label">Aksá</string>
+    <string name="place_vatican">Vatikán</string>
+    <string name="place_vatican_label">Vatikán</string>
+    <string name="place_info">%1$s %2$s</string>
+    <string name="sun_rise_set">východ %1$s (%2$s) · západ %3$s (%4$s)</string>
+    <string name="moon_info">Mesiac %1$s · %2$d %%</string>
+    <string name="moon_info_below">Mesiac %1$s · %2$d %% · pod obzorom</string>
+    <string name="approximate_location">približná</string>
+    <string name="location_copied">Skopírované: %1$s</string>
+    <string name="sun_info">Slnko %1$s</string>
+    <string name="sun_info_below">Slnko %1$s · pod obzorom</string>
+    <string name="target_hint">Ťuknutie na ružicu: zamknúť azimut · dlhé stlačenie: bod · ťuknutie sem: zadať azimut</string>
+    <string name="waypoint_line">%1$s %2$s · %3$s</string>
+    <string name="waypoint_here">%1$s · ste tu</string>
+    <string name="waypoint_more">+%1$d ďalších</string>
+    <string name="waypoint_saved">%1$s uložený</string>
+    <string name="waypoint_cleared">%1$s vymazaný</string>
+    <string name="waypoint_needs_location">Bez polohy — bod sa nedá uložiť</string>
+    <string name="bearing_dialog_title">Zadať azimut</string>
+    <string name="bearing_dialog_set">Nastaviť</string>
+    <string name="bearing_dialog_clear">Vymazať</string>
+    <string name="bearing_dialog_cancel">Zrušiť</string>
+    <string name="target_plain">Cieľ %1$s</string>
+    <string name="target_reached">Cieľ %1$s · na kurze</string>
+    <string name="target_right">Cieľ %1$s · %2$s doprava</string>
+    <string name="target_left">Cieľ %1$s · %2$s doľava</string>
+    <string name="settings_title">Nastavenia</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Gestá</string>
+    <string name="settings_gestures_summary">Čo robí každé ťuknutie a dlhé stlačenie</string>
+    <string name="settings_gestures_body">Ťuknite na ružicu — zamknite azimut; ďalším ťuknutím ho uvoľníte\nDlho stlačte ružicu — uložte svoju polohu ako bod\nŤuknite na veľké stupne — prepnite nočný režim\nŤuknite na riadok polohy — desatinne ⇄ stupne-minúty-sekundy\nDlho stlačte riadok polohy — kopírovať alebo zdieľať\nŤuknite na spodný riadok — zadajte azimut ručne\nDlho stlačte spodný riadok — uložené body a zadanie súradníc</string>
+    <string name="settings_open">Nastavenia</string>
+    <string name="settings_section_display">ZOBRAZENIE</string>
+    <string name="settings_night">Nočný režim</string>
+    <string name="settings_night_summary">Čierne pozadie, červená ružica — chráni nočné videnie</string>
+    <string name="settings_night_auto">Automaticky za súmraku</string>
+    <string name="settings_night_auto_summary">Prepne sa na konci občianskeho súmraku, keď sa minie denné svetlo</string>
+    <string name="settings_unit">Jednotka uhla</string>
+    <string name="settings_unit_degree">Stupne (0-360)</string>
+    <string name="settings_unit_mil">Dieliky (0-6400)</string>
+    <string name="settings_keep_screen">Nechať obrazovku zapnutú</string>
+    <string name="settings_keep_screen_summary">Obrazovka nezhasne, kým je aplikácia otvorená</string>
+    <string name="settings_fullscreen">Celá obrazovka</string>
+    <string name="settings_fullscreen_summary">Skryje stavový a navigačný panel; potiahnutím od okraja ich zobrazíte</string>
+    <string name="settings_section_compass">KOMPAS</string>
+    <string name="settings_true_north">Používať zemepisný sever</string>
+    <string name="settings_true_north_summary">Pripočíta magnetickú deklináciu, ak je poloha známa</string>
+    <string name="settings_smoothing">Vyhladzovanie</string>
+    <string name="settings_smoothing_calm">Pokojné</string>
+    <string name="settings_smoothing_balanced">Vyvážené</string>
+    <string name="settings_smoothing_quick">Rýchle</string>
+    <string name="settings_vibrate">Vibrácie pri azimutoch</string>
+    <string name="settings_vibrate_summary">Krátke cvaknutie pri míňaní S/V/J/Z, dvojité pri vstupe do zamknutého azimutu</string>
+    <string name="settings_section_marks">ZNAČKY NA RUŽICI</string>
+    <string name="settings_show_magnetic">Magnetický sever (M)</string>
+    <string name="settings_show_magnetic_summary">Zobrazí sa len pri použití zemepisného severu</string>
+    <string name="settings_show_level">Vodováha</string>
+    <string name="settings_show_level_summary">Bublina v strede ružice</string>
+    <string name="settings_show_sun">Slnko</string>
+    <string name="settings_show_sun_arc">Dráha Slnka</string>
+    <string name="settings_show_sun_arc_summary">Oblúk od východu po západ a azimuty jeho koncov</string>
+    <string name="settings_show_moon">Mesiac</string>
+    <string name="settings_show_moon_summary">Jeho azimut a fáza; pod obzorom slabo</string>
+    <string name="settings_marks_note">Značky cieľa a bodu tu nie sú: ťuknutie alebo dlhé stlačenie ružice ich už zapína a vypína.</string>
+    <string name="mil_suffix">dielikov</string>
+    <string name="a11y_degrees">%1$d stupňov</string>
+    <string name="a11y_mils">%1$d dielikov</string>
+    <string name="a11y_heading">%1$s, %2$s, %3$s</string>
+    <string name="a11y_declination">Magnetický %1$s, deklinácia %2$s stupňov %3$s</string>
+    <string name="a11y_declination_east">na východ</string>
+    <string name="a11y_declination_west">na západ</string>
+    <string name="a11y_dial">Ružica kompasu</string>
+    <string name="a11y_lock_bearing">zamknúť azimut</string>
+    <string name="a11y_save_point">uložiť bod</string>
+    <string name="magnetic_reading">Magnetický %1$s</string>
+    <string name="declination_reading">Deklinácia %1$s°%2$s</string>
+    <string name="hemisphere_north">S</string>
+    <string name="hemisphere_south">J</string>
+    <string name="hemisphere_east">V</string>
+    <string name="hemisphere_west">Z</string>
+    <string name="magnetic_label">M</string>
+    <string name="distance_meters">%1$d m</string>
+    <string name="distance_kilometers">%1$s km</string>
+    <string name="coordinate_decimal">%1$s° %2$s</string>
+    <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
+    <string-array name="cardinal_names">
+        <item>sever</item>
+        <item>severoseverovýchod</item>
+        <item>severovýchod</item>
+        <item>východoseverovýchod</item>
+        <item>východ</item>
+        <item>východojuhovýchod</item>
+        <item>juhovýchod</item>
+        <item>juhojuhovýchod</item>
+        <item>juh</item>
+        <item>juhojuhozápad</item>
+        <item>juhozápad</item>
+        <item>západojuhozápad</item>
+        <item>západ</item>
+        <item>západoseverozápad</item>
+        <item>severozápad</item>
+        <item>severoseverozápad</item>
+    </string-array>
+    <string-array name="cardinal_abbreviations">
+        <item>S</item>
+        <item>SSV</item>
+        <item>SV</item>
+        <item>VSV</item>
+        <item>V</item>
+        <item>VJV</item>
+        <item>JV</item>
+        <item>JJV</item>
+        <item>J</item>
+        <item>JJZ</item>
+        <item>JZ</item>
+        <item>ZJZ</item>
+        <item>Z</item>
+        <item>ZSZ</item>
+        <item>SZ</item>
+        <item>SSZ</item>
+    </string-array>
+    <string-array name="dial_labels">
+        <item>S</item>
+        <item>SV</item>
+        <item>V</item>
+        <item>JV</item>
+        <item>J</item>
+        <item>JZ</item>
+        <item>Z</item>
+        <item>SZ</item>
+    </string-array>
+    <string name="waypoint_default_name">Bod %1$d</string>
+    <string name="waypoint_limit">Uložiť možno najviac %1$d bodov</string>
+    <string name="waypoints_title">Uložené body</string>
+    <string name="waypoints_empty">Zatiaľ žiadne body — dlho stlačte ružicu</string>
+    <string name="waypoint_rename">Premenovať</string>
+    <string name="waypoint_delete">Vymazať</string>
+    <string name="waypoint_name_hint">Názov bodu</string>
+    <string name="waypoint_add">Pridať bod</string>
+    <string name="waypoint_enter_coordinates">Zadať súradnice…</string>
+    <string name="waypoint_coordinates_hint">41.0, 29.0 alebo zdieľaný odkaz</string>
+    <string name="waypoint_coordinates_unreadable">Nenašli sa žiadne súradnice</string>
+    <string name="location_action_copy">Kopírovať</string>
+    <string name="location_action_share">Zdieľať</string>
+    <string name="share_chooser">Zdieľať polohu</string>
+    <string name="settings_section_about">O APLIKÁCII</string>
+    <string name="settings_version">Verzia</string>
+    <string name="settings_version_format">%1$s (%2$d)</string>
+    <string name="settings_source">Zdrojový kód</string>
+    <string name="settings_license">Licencia</string>
+    <string name="settings_license_value">MIT</string>
+    <string name="settings_privacy_note">Aplikácia nemá povolenie na internet. Poloha sa používa len v zariadení — na deklináciu, kiblu, Slnko a Mesiac — a nikam sa neodosiela.</string>
+</resources>

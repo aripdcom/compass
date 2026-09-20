@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Slovenščina -->
+<resources>
+    <string name="app_name">Kompas</string>
+    <string name="no_sensor">Ta naprava nima senzorja za kompas.</string>
+    <string name="calibrate">Nizka natančnost — premikajte telefon v obliki osmice.</string>
+    <string name="magnetic_disturbance">Magnetne motnje: polje %1$d µT, pričakovano %2$d µT — odmaknite telefon od kovine ali magnetov.</string>
+    <string name="hold_flat">Držite telefon vodoravno — nagib popači odčitek.</string>
+    <string name="true_north">Geografski sever</string>
+    <string name="magnetic_north">Magnetni sever</string>
+    <string name="need_location">Geografski sever zahteva dovoljenje za lokacijo — tapnite sem</string>
+    <string name="waiting_location">Čakanje na lokacijo…</string>
+    <string name="place_kaaba">Kaaba (kibla)</string>
+    <string name="place_kaaba_label">Kibla</string>
+    <string name="place_aqsa">Mošeja Al Aksa</string>
+    <string name="place_aqsa_label">Aksa</string>
+    <string name="place_vatican">Vatikan</string>
+    <string name="place_vatican_label">Vatikan</string>
+    <string name="place_info">%1$s %2$s</string>
+    <string name="sun_rise_set">vzhod %1$s (%2$s) · zahod %3$s (%4$s)</string>
+    <string name="moon_info">Luna %1$s · %2$d %%</string>
+    <string name="moon_info_below">Luna %1$s · %2$d %% · pod obzorjem</string>
+    <string name="approximate_location">približna</string>
+    <string name="location_copied">Kopirano: %1$s</string>
+    <string name="sun_info">Sonce %1$s</string>
+    <string name="sun_info_below">Sonce %1$s · pod obzorjem</string>
+    <string name="target_hint">Tapnite številčnico: zakleni azimut · dolg pritisk: točka · tapnite sem: vnesi azimut</string>
+    <string name="waypoint_line">%1$s %2$s · %3$s</string>
+    <string name="waypoint_here">%1$s · tukaj ste</string>
+    <string name="waypoint_more">+%1$d več</string>
+    <string name="waypoint_saved">%1$s shranjena</string>
+    <string name="waypoint_cleared">%1$s izbrisana</string>
+    <string name="waypoint_needs_location">Ni lokacije — točke ni bilo mogoče shraniti</string>
+    <string name="bearing_dialog_title">Vnesi azimut</string>
+    <string name="bearing_dialog_set">Nastavi</string>
+    <string name="bearing_dialog_clear">Počisti</string>
+    <string name="bearing_dialog_cancel">Prekliči</string>
+    <string name="target_plain">Cilj %1$s</string>
+    <string name="target_reached">Cilj %1$s · na kurzu</string>
+    <string name="target_right">Cilj %1$s · %2$s desno</string>
+    <string name="target_left">Cilj %1$s · %2$s levo</string>
+    <string name="settings_title">Nastavitve</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Poteze</string>
+    <string name="settings_gestures_summary">Kaj naredi vsak tap in dolg pritisk</string>
+    <string name="settings_gestures_body">Tapnite številčnico — zaklenite azimut; znova tapnite za sprostitev\nDolgo pritisnite številčnico — shranite svoj položaj kot točko\nTapnite velike stopinje — preklopite nočni način\nTapnite vrstico z lokacijo — decimalno ⇄ stopinje-minute-sekunde\nDolgo pritisnite vrstico z lokacijo — kopirajte ali delite\nTapnite spodnjo vrstico — ročno vnesite azimut\nDolgo pritisnite spodnjo vrstico — shranjene točke in vnos koordinat</string>
+    <string name="settings_open">Nastavitve</string>
+    <string name="settings_section_display">PRIKAZ</string>
+    <string name="settings_night">Nočni način</string>
+    <string name="settings_night_summary">Črno ozadje, rdeča številčnica — ohranja nočni vid</string>
+    <string name="settings_night_auto">Samodejno v mraku</string>
+    <string name="settings_night_auto_summary">Preklopi ob koncu civilnega mraka, ko zmanjka dnevne svetlobe</string>
+    <string name="settings_unit">Enota kota</string>
+    <string name="settings_unit_degree">Stopinje (0-360)</string>
+    <string name="settings_unit_mil">Tisočinke (0-6400)</string>
+    <string name="settings_keep_screen">Naj zaslon ostane prižgan</string>
+    <string name="settings_keep_screen_summary">Zaslon ne ugasne, dokler je aplikacija odprta</string>
+    <string name="settings_fullscreen">Celozaslonsko</string>
+    <string name="settings_fullscreen_summary">Skrije vrstico stanja in krmarjenja; povlecite z roba, da ju prikažete</string>
+    <string name="settings_section_compass">KOMPAS</string>
+    <string name="settings_true_north">Uporabi geografski sever</string>
+    <string name="settings_true_north_summary">Prišteje magnetno deklinacijo, ko je lokacija znana</string>
+    <string name="settings_smoothing">Glajenje</string>
+    <string name="settings_smoothing_calm">Mirno</string>
+    <string name="settings_smoothing_balanced">Uravnoteženo</string>
+    <string name="settings_smoothing_quick">Hitro</string>
+    <string name="settings_vibrate">Vibriranje pri azimutih</string>
+    <string name="settings_vibrate_summary">Kratek klik ob prehodu S/V/J/Z, dvojni ob vstopu v zaklenjeni azimut</string>
+    <string name="settings_section_marks">OZNAKE NA ŠTEVILČNICI</string>
+    <string name="settings_show_magnetic">Magnetni sever (M)</string>
+    <string name="settings_show_magnetic_summary">Vidno samo, kadar je v rabi geografski sever</string>
+    <string name="settings_show_level">Vodna tehtnica</string>
+    <string name="settings_show_level_summary">Mehurček na sredini številčnice</string>
+    <string name="settings_show_sun">Sonce</string>
+    <string name="settings_show_sun_arc">Pot Sonca</string>
+    <string name="settings_show_sun_arc_summary">Lok od vzhoda do zahoda in azimuta obeh koncev</string>
+    <string name="settings_show_moon">Luna</string>
+    <string name="settings_show_moon_summary">Njen azimut in mena; pod obzorjem bledo</string>
+    <string name="settings_marks_note">Oznak cilja in točke tu ni: tap ali dolg pritisk na številčnico ju že vklopi in izklopi.</string>
+    <string name="mil_suffix">tisočink</string>
+    <string name="a11y_degrees">%1$d stopinj</string>
+    <string name="a11y_mils">%1$d tisočink</string>
+    <string name="a11y_heading">%1$s, %2$s, %3$s</string>
+    <string name="a11y_declination">Magnetni %1$s, deklinacija %2$s stopinj %3$s</string>
+    <string name="a11y_declination_east">proti vzhodu</string>
+    <string name="a11y_declination_west">proti zahodu</string>
+    <string name="a11y_dial">Številčnica kompasa</string>
+    <string name="a11y_lock_bearing">zakleni azimut</string>
+    <string name="a11y_save_point">shrani točko</string>
+    <string name="magnetic_reading">Magnetni %1$s</string>
+    <string name="declination_reading">Deklinacija %1$s°%2$s</string>
+    <string name="hemisphere_north">S</string>
+    <string name="hemisphere_south">J</string>
+    <string name="hemisphere_east">V</string>
+    <string name="hemisphere_west">Z</string>
+    <string name="magnetic_label">M</string>
+    <string name="distance_meters">%1$d m</string>
+    <string name="distance_kilometers">%1$s km</string>
+    <string name="coordinate_decimal">%1$s° %2$s</string>
+    <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
+    <string-array name="cardinal_names">
+        <item>sever</item>
+        <item>severoseverovzhod</item>
+        <item>severovzhod</item>
+        <item>vzhodnoseverovzhod</item>
+        <item>vzhod</item>
+        <item>vzhodnojugovzhod</item>
+        <item>jugovzhod</item>
+        <item>jugojugovzhod</item>
+        <item>jug</item>
+        <item>jugojugozahod</item>
+        <item>jugozahod</item>
+        <item>zahodnojugozahod</item>
+        <item>zahod</item>
+        <item>zahodnoseverozahod</item>
+        <item>severozahod</item>
+        <item>severoseverozahod</item>
+    </string-array>
+    <string-array name="cardinal_abbreviations">
+        <item>S</item>
+        <item>SSV</item>
+        <item>SV</item>
+        <item>VSV</item>
+        <item>V</item>
+        <item>VJV</item>
+        <item>JV</item>
+        <item>JJV</item>
+        <item>J</item>
+        <item>JJZ</item>
+        <item>JZ</item>
+        <item>ZJZ</item>
+        <item>Z</item>
+        <item>ZSZ</item>
+        <item>SZ</item>
+        <item>SSZ</item>
+    </string-array>
+    <string-array name="dial_labels">
+        <item>S</item>
+        <item>SV</item>
+        <item>V</item>
+        <item>JV</item>
+        <item>J</item>
+        <item>JZ</item>
+        <item>Z</item>
+        <item>SZ</item>
+    </string-array>
+    <string name="waypoint_default_name">Točka %1$d</string>
+    <string name="waypoint_limit">Shraniti je mogoče največ %1$d točk</string>
+    <string name="waypoints_title">Shranjene točke</string>
+    <string name="waypoints_empty">Še ni točk — dolgo pritisnite številčnico</string>
+    <string name="waypoint_rename">Preimenuj</string>
+    <string name="waypoint_delete">Izbriši</string>
+    <string name="waypoint_name_hint">Ime točke</string>
+    <string name="waypoint_add">Dodaj točko</string>
+    <string name="waypoint_enter_coordinates">Vnesi koordinate…</string>
+    <string name="waypoint_coordinates_hint">41.0, 29.0 ali deljena povezava</string>
+    <string name="waypoint_coordinates_unreadable">Koordinat ni bilo mogoče najti</string>
+    <string name="location_action_copy">Kopiraj</string>
+    <string name="location_action_share">Deli</string>
+    <string name="share_chooser">Deli lokacijo</string>
+    <string name="settings_section_about">O APLIKACIJI</string>
+    <string name="settings_version">Različica</string>
+    <string name="settings_version_format">%1$s (%2$d)</string>
+    <string name="settings_source">Izvorna koda</string>
+    <string name="settings_license">Licenca</string>
+    <string name="settings_license_value">MIT</string>
+    <string name="settings_privacy_note">Aplikacija nima dovoljenja za internet. Lokacija se uporablja samo v napravi — za deklinacijo, kiblo, Sonce in Luno — in se nikoli nikamor ne pošlje.</string>
+</resources>

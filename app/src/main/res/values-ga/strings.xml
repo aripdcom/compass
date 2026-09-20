@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Gaeilge -->
+<resources>
+    <string name="app_name">Compás</string>
+    <string name="no_sensor">Níl braiteoir compáis sa ghléas seo.</string>
+    <string name="calibrate">Cruinneas íseal — bog an fón i bhfoirm uimhir a hocht.</string>
+    <string name="magnetic_disturbance">Trasnaíocht mhaighnéadach: réimse %1$d µT, ceaptha %2$d µT — bog an fón ó mhiotal nó ó mhaighnéid.</string>
+    <string name="hold_flat">Coinnigh an fón cothrom — cuireann claonadh an léamh amú.</string>
+    <string name="true_north">An fíorthuaisceart</string>
+    <string name="magnetic_north">An tuaisceart maighnéadach</string>
+    <string name="need_location">Teastaíonn cead suímh don fhíorthuaisceart — tapáil anseo</string>
+    <string name="waiting_location">Ag fanacht le suíomh…</string>
+    <string name="place_kaaba">Kaaba (qibla)</string>
+    <string name="place_kaaba_label">Qibla</string>
+    <string name="place_aqsa">Mosc Al-Aqsa</string>
+    <string name="place_aqsa_label">Aqsa</string>
+    <string name="place_vatican">An Vatacáin</string>
+    <string name="place_vatican_label">An Vatacáin</string>
+    <string name="place_info">%1$s %2$s</string>
+    <string name="sun_rise_set">éirí gréine %1$s (%2$s) · luí gréine %3$s (%4$s)</string>
+    <string name="moon_info">Gealach %1$s · %2$d%%</string>
+    <string name="moon_info_below">Gealach %1$s · %2$d%% · faoin léaslíne</string>
+    <string name="approximate_location">measta</string>
+    <string name="location_copied">Cóipeáilte: %1$s</string>
+    <string name="sun_info">Grian %1$s</string>
+    <string name="sun_info_below">Grian %1$s · faoin léaslíne</string>
+    <string name="target_hint">Tapáil an diail: glasáil an treo · brú fada: pointe · tapáil anseo: cuir treo isteach</string>
+    <string name="waypoint_line">%1$s %2$s · %3$s</string>
+    <string name="waypoint_here">%1$s · tá tú anseo</string>
+    <string name="waypoint_more">+%1$d eile</string>
+    <string name="waypoint_saved">%1$s sábháilte</string>
+    <string name="waypoint_cleared">%1$s scriosta</string>
+    <string name="waypoint_needs_location">Gan suíomh — níor sábháladh an pointe</string>
+    <string name="bearing_dialog_title">Cuir treo isteach</string>
+    <string name="bearing_dialog_set">Socraigh</string>
+    <string name="bearing_dialog_clear">Glan</string>
+    <string name="bearing_dialog_cancel">Cealaigh</string>
+    <string name="target_plain">Sprioc %1$s</string>
+    <string name="target_reached">Sprioc %1$s · ar an gcúrsa</string>
+    <string name="target_right">Sprioc %1$s · %2$s ar dheis</string>
+    <string name="target_left">Sprioc %1$s · %2$s ar chlé</string>
+    <string name="settings_title">Socruithe</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Gothaí</string>
+    <string name="settings_gestures_summary">Cad a dhéanann gach tapáil agus brú fada</string>
+    <string name="settings_gestures_body">Tapáil an diail — glasáil an treo; tapáil arís chun é a scaoileadh\nBrúigh an diail go fada — sábháil do shuíomh mar phointe\nTapáil na céimeanna móra — athraigh an mód oíche\nTapáil líne an tsuímh — deachúlach ⇄ céimeanna-nóiméid-soicindí\nBrúigh líne an tsuímh go fada — cóipeáil nó comhroinn\nTapáil an líne íochtarach — cuir treo isteach de láimh\nBrúigh an líne íochtarach go fada — pointí sábháilte agus iontráil comhordanáidí</string>
+    <string name="settings_open">Socruithe</string>
+    <string name="settings_section_display">TAISPEÁINT</string>
+    <string name="settings_night">Mód oíche</string>
+    <string name="settings_night_summary">Cúlra dubh, diail dhearg — caomhnaíonn sé radharc na hoíche</string>
+    <string name="settings_night_auto">Go huathoibríoch ag titim na hoíche</string>
+    <string name="settings_night_auto_summary">Athraíonn sé ag deireadh an chlapsholais shibhialta, nuair a imíonn solas an lae</string>
+    <string name="settings_unit">Aonad uillinne</string>
+    <string name="settings_unit_degree">Céimeanna (0-360)</string>
+    <string name="settings_unit_mil">Mil (0-6400)</string>
+    <string name="settings_keep_screen">Coinnigh an scáileán ar siúl</string>
+    <string name="settings_keep_screen_summary">Ní mhúchann an scáileán fad is atá an aip ar oscailt</string>
+    <string name="settings_fullscreen">Lánscáileán</string>
+    <string name="settings_fullscreen_summary">Folaíonn sé an barra stádais agus nascleanúna; svaidhpeáil ón imeall chun iad a thaispeáint</string>
+    <string name="settings_section_compass">COMPÁS</string>
+    <string name="settings_true_north">Úsáid an fíorthuaisceart</string>
+    <string name="settings_true_north_summary">Cuireann sé an diallas maighnéadach leis nuair atá an suíomh ar eolas</string>
+    <string name="settings_smoothing">Míniú</string>
+    <string name="settings_smoothing_calm">Socair</string>
+    <string name="settings_smoothing_balanced">Cothrom</string>
+    <string name="settings_smoothing_quick">Tapa</string>
+    <string name="settings_vibrate">Creathadh ag treonna</string>
+    <string name="settings_vibrate_summary">Cniog gairid ag dul thar T/O/D/I, cniog dúbailte ag teacht isteach sa treo glasáilte</string>
+    <string name="settings_section_marks">MARCANNA AR AN DIAIL</string>
+    <string name="settings_show_magnetic">Tuaisceart maighnéadach (M)</string>
+    <string name="settings_show_magnetic_summary">Le feiceáil nuair atá an fíorthuaisceart in úsáid amháin</string>
+    <string name="settings_show_level">Leibhéal boilgeoige</string>
+    <string name="settings_show_level_summary">An bolgán i lár an diail</string>
+    <string name="settings_show_sun">Grian</string>
+    <string name="settings_show_sun_arc">Cosán na gréine</string>
+    <string name="settings_show_sun_arc_summary">An stua ó éirí go luí na gréine agus treonna a dhá cheann</string>
+    <string name="settings_show_moon">Gealach</string>
+    <string name="settings_show_moon_summary">A treo agus a céim; líortha go lag faoin léaslíne</string>
+    <string name="settings_marks_note">Níl marcanna na sprice ná an phointe anseo: cuireann tapáil nó brú fada ar an diail ar siúl agus as iad cheana.</string>
+    <string name="mil_suffix">mil</string>
+    <string name="a11y_degrees">%1$d céim</string>
+    <string name="a11y_mils">%1$d mil</string>
+    <string name="a11y_heading">%1$s, %2$s, %3$s</string>
+    <string name="a11y_declination">Maighnéadach %1$s, diallas %2$s céim %3$s</string>
+    <string name="a11y_declination_east">soir</string>
+    <string name="a11y_declination_west">siar</string>
+    <string name="a11y_dial">Diail an chompáis</string>
+    <string name="a11y_lock_bearing">glasáil an treo</string>
+    <string name="a11y_save_point">sábháil pointe</string>
+    <string name="magnetic_reading">Maighnéadach %1$s</string>
+    <string name="declination_reading">Diallas %1$s°%2$s</string>
+    <string name="hemisphere_north">T</string>
+    <string name="hemisphere_south">D</string>
+    <string name="hemisphere_east">O</string>
+    <string name="hemisphere_west">I</string>
+    <string name="magnetic_label">M</string>
+    <string name="distance_meters">%1$d m</string>
+    <string name="distance_kilometers">%1$s km</string>
+    <string name="coordinate_decimal">%1$s° %2$s</string>
+    <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
+    <string-array name="cardinal_names">
+        <item>tuaisceart</item>
+        <item>tuaisceart-oirthuaisceart</item>
+        <item>oirthuaisceart</item>
+        <item>oirthear-oirthuaisceart</item>
+        <item>oirthear</item>
+        <item>oirthear-oirdheisceart</item>
+        <item>oirdheisceart</item>
+        <item>deisceart-oirdheisceart</item>
+        <item>deisceart</item>
+        <item>deisceart-iardheisceart</item>
+        <item>iardheisceart</item>
+        <item>iarthar-iardheisceart</item>
+        <item>iarthar</item>
+        <item>iarthar-iarthuaisceart</item>
+        <item>iarthuaisceart</item>
+        <item>tuaisceart-iarthuaisceart</item>
+    </string-array>
+    <string-array name="cardinal_abbreviations">
+        <item>T</item>
+        <item>TOT</item>
+        <item>OT</item>
+        <item>OOT</item>
+        <item>O</item>
+        <item>OOD</item>
+        <item>OD</item>
+        <item>DOD</item>
+        <item>D</item>
+        <item>DID</item>
+        <item>ID</item>
+        <item>IID</item>
+        <item>I</item>
+        <item>IIT</item>
+        <item>IT</item>
+        <item>TIT</item>
+    </string-array>
+    <string-array name="dial_labels">
+        <item>T</item>
+        <item>OT</item>
+        <item>O</item>
+        <item>OD</item>
+        <item>D</item>
+        <item>ID</item>
+        <item>I</item>
+        <item>IT</item>
+    </string-array>
+    <string name="waypoint_default_name">Pointe %1$d</string>
+    <string name="waypoint_limit">Is féidir %1$d pointe ar a mhéad a shábháil</string>
+    <string name="waypoints_title">Pointí sábháilte</string>
+    <string name="waypoints_empty">Gan phointe fós — brúigh an diail go fada chun ceann a shábháil</string>
+    <string name="waypoint_rename">Athainmnigh</string>
+    <string name="waypoint_delete">Scrios</string>
+    <string name="waypoint_name_hint">Ainm an phointe</string>
+    <string name="waypoint_add">Cuir pointe leis</string>
+    <string name="waypoint_enter_coordinates">Cuir comhordanáidí isteach…</string>
+    <string name="waypoint_coordinates_hint">41.0, 29.0 nó nasc comhroinnte</string>
+    <string name="waypoint_coordinates_unreadable">Níor aimsíodh comhordanáidí</string>
+    <string name="location_action_copy">Cóipeáil</string>
+    <string name="location_action_share">Comhroinn</string>
+    <string name="share_chooser">Comhroinn an suíomh</string>
+    <string name="settings_section_about">EOLAS</string>
+    <string name="settings_version">Leagan</string>
+    <string name="settings_version_format">%1$s (%2$d)</string>
+    <string name="settings_source">Cód foinseach</string>
+    <string name="settings_license">Ceadúnas</string>
+    <string name="settings_license_value">MIT</string>
+    <string name="settings_privacy_note">Níl cead idirlín ag an aip. Ní úsáidtear an suíomh ach ar an ngléas — don diallas, don qibla, don ghrian agus don ghealach — agus ní sheoltar áit ar bith é.</string>
+</resources>

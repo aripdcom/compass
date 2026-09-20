@@ -1,15 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Desteklenen diller. Android 13'ten itibaren sistem bu listeyi okuyup
-  Ayarlar > Uygulamalar > Pusula > Dil altında uygulamaya özel bir dil
-  seçici gösterir. Uygulama içinde ayrı bir ayar yok: hangi dil sistemde
-  seçiliyse o kullanılır, listede olmayan bir dilde İngilizceye düşülür.
+  Desteklenen diller: Avrupa Birliği'nin 24 resmî dili, Kuzey ülkelerinin
+  bunlara eklediği üçü (İzlandaca, Norveççe bokmål ve nynorsk) ve Türkçe.
+
+  Android 13'ten itibaren sistem bu listeyi okuyup Ayarlar > Uygulamalar >
+  Pusula > Dil altında uygulamaya özel bir dil seçici gösterir. Uygulama
+  içinde ayrı bir ayar yok: hangi dil sistemde seçiliyse o kullanılır,
+  listede olmayan bir dilde varsayılana — İngilizceye — düşülür.
+
+  Liste ile values-* klasörleri aynı kümeyi göstermek zorunda; ikisi
+  ayrışırsa `tools/check-translations.py` bunu yakalar ve CI kırılır.
 -->
 <locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Varsayılan -->
     <locale android:name="en" />
-    <locale android:name="tr" />
-    <locale android:name="fr" />
+
+    <!-- AB resmî dilleri -->
+    <locale android:name="bg" />
+    <locale android:name="cs" />
+    <locale android:name="da" />
     <locale android:name="de" />
-    <locale android:name="it" />
+    <locale android:name="el" />
     <locale android:name="es" />
+    <locale android:name="et" />
+    <locale android:name="fi" />
+    <locale android:name="fr" />
+    <locale android:name="ga" />
+    <locale android:name="hr" />
+    <locale android:name="hu" />
+    <locale android:name="it" />
+    <locale android:name="lt" />
+    <locale android:name="lv" />
+    <locale android:name="mt" />
+    <locale android:name="nl" />
+    <locale android:name="pl" />
+    <locale android:name="pt" />
+    <locale android:name="ro" />
+    <locale android:name="sk" />
+    <locale android:name="sl" />
+    <locale android:name="sv" />
+
+    <!-- Kuzey ülkelerinin AB listesinde olmayan dilleri -->
+    <locale android:name="is" />
+    <locale android:name="nb" />
+    <locale android:name="nn" />
+
+    <!-- Uygulamanın ilk dili -->
+    <locale android:name="tr" />
 </locale-config>

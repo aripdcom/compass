@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Eesti -->
+<resources>
+    <string name="app_name">Kompass</string>
+    <string name="no_sensor">Sellel seadmel pole kompassiandurit.</string>
+    <string name="calibrate">Täpsus on madal — liiguta telefoni kaheksakujuliselt.</string>
+    <string name="magnetic_disturbance">Magnethäire: väli %1$d µT, oodatud %2$d µT — vii telefon metallist või magnetitest eemale.</string>
+    <string name="hold_flat">Hoia telefoni rõhtsalt — kalle moonutab näitu.</string>
+    <string name="true_north">Geograafiline põhi</string>
+    <string name="magnetic_north">Magnetiline põhi</string>
+    <string name="need_location">Geograafiline põhi vajab asukohaluba — puuduta siia</string>
+    <string name="waiting_location">Ootan asukohta…</string>
+    <string name="place_kaaba">Kaaba (qibla)</string>
+    <string name="place_kaaba_label">Qibla</string>
+    <string name="place_aqsa">Al-Aqsa mošee</string>
+    <string name="place_aqsa_label">Aqsa</string>
+    <string name="place_vatican">Vatikan</string>
+    <string name="place_vatican_label">Vatikan</string>
+    <string name="place_info">%1$s %2$s</string>
+    <string name="sun_rise_set">päikesetõus %1$s (%2$s) · päikeseloojang %3$s (%4$s)</string>
+    <string name="moon_info">Kuu %1$s · %2$d%%</string>
+    <string name="moon_info_below">Kuu %1$s · %2$d%% · horisondi all</string>
+    <string name="approximate_location">ligikaudne</string>
+    <string name="location_copied">Kopeeritud: %1$s</string>
+    <string name="sun_info">Päike %1$s</string>
+    <string name="sun_info_below">Päike %1$s · horisondi all</string>
+    <string name="target_hint">Puuduta sihverplaati: lukusta suund · pikk vajutus: punkt · puuduta siia: sisesta suund</string>
+    <string name="waypoint_line">%1$s %2$s · %3$s</string>
+    <string name="waypoint_here">%1$s · sa oled siin</string>
+    <string name="waypoint_more">+%1$d veel</string>
+    <string name="waypoint_saved">%1$s salvestatud</string>
+    <string name="waypoint_cleared">%1$s kustutatud</string>
+    <string name="waypoint_needs_location">Asukohta pole — punkti ei salvestatud</string>
+    <string name="bearing_dialog_title">Sisesta suund</string>
+    <string name="bearing_dialog_set">Määra</string>
+    <string name="bearing_dialog_clear">Tühjenda</string>
+    <string name="bearing_dialog_cancel">Loobu</string>
+    <string name="target_plain">Siht %1$s</string>
+    <string name="target_reached">Siht %1$s · õigel suunal</string>
+    <string name="target_right">Siht %1$s · %2$s paremale</string>
+    <string name="target_left">Siht %1$s · %2$s vasakule</string>
+    <string name="settings_title">Seaded</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Žestid</string>
+    <string name="settings_gestures_summary">Mida iga puudutus ja pikk vajutus teeb</string>
+    <string name="settings_gestures_body">Puuduta sihverplaati — lukusta suund; puuduta uuesti vabastamiseks\nVajuta sihverplaati pikalt — salvesta oma asukoht punktina\nPuuduta suuri kraade — vaheta öörežiimi\nPuuduta asukoharida — kümnendkohad ⇄ kraadid-minutid-sekundid\nVajuta asukoharida pikalt — kopeeri või jaga\nPuuduta alumist rida — sisesta suund käsitsi\nVajuta alumist rida pikalt — salvestatud punktid ja koordinaatide sisestus</string>
+    <string name="settings_open">Seaded</string>
+    <string name="settings_section_display">KUVA</string>
+    <string name="settings_night">Öörežiim</string>
+    <string name="settings_night_summary">Must taust, punane sihverplaat — säilitab hämaranägemise</string>
+    <string name="settings_night_auto">Automaatselt hämaras</string>
+    <string name="settings_night_auto_summary">Lülitub tsiviilhämaruse lõpus, kui päevavalgus on läbi</string>
+    <string name="settings_unit">Nurgaühik</string>
+    <string name="settings_unit_degree">Kraadid (0-360)</string>
+    <string name="settings_unit_mil">Tuhandikud (0-6400)</string>
+    <string name="settings_keep_screen">Hoia ekraan sees</string>
+    <string name="settings_keep_screen_summary">Ekraan ei kustu, kuni rakendus on avatud</string>
+    <string name="settings_fullscreen">Täisekraan</string>
+    <string name="settings_fullscreen_summary">Peidab oleku- ja navigeerimisriba; too need servast pühkides tagasi</string>
+    <string name="settings_section_compass">KOMPASS</string>
+    <string name="settings_true_north">Kasuta geograafilist põhja</string>
+    <string name="settings_true_north_summary">Lisab magnetilise deklinatsiooni, kui asukoht on teada</string>
+    <string name="settings_smoothing">Silumine</string>
+    <string name="settings_smoothing_calm">Rahulik</string>
+    <string name="settings_smoothing_balanced">Tasakaalus</string>
+    <string name="settings_smoothing_quick">Kiire</string>
+    <string name="settings_vibrate">Vibratsioon suundadel</string>
+    <string name="settings_vibrate_summary">Lühike naks P/I/L/LÄ juures, topeltnaks lukustatud suunale jõudes</string>
+    <string name="settings_section_marks">SIHVERPLAADI MÄRGID</string>
+    <string name="settings_show_magnetic">Magnetiline põhi (M)</string>
+    <string name="settings_show_magnetic_summary">Nähtav ainult siis, kui kasutusel on geograafiline põhi</string>
+    <string name="settings_show_level">Vesilood</string>
+    <string name="settings_show_level_summary">Mull sihverplaadi keskel</string>
+    <string name="settings_show_sun">Päike</string>
+    <string name="settings_show_sun_arc">Päikese teekond</string>
+    <string name="settings_show_sun_arc_summary">Kaar tõusust loojanguni ja selle otste suunad</string>
+    <string name="settings_show_moon">Kuu</string>
+    <string name="settings_show_moon_summary">Selle suund ja faas; horisondi all kahvatuna</string>
+    <string name="settings_marks_note">Sihi- ja punktimärke siin pole: sihverplaadi puudutus või pikk vajutus lülitab need juba sisse ja välja.</string>
+    <string name="mil_suffix">tuhandikku</string>
+    <string name="a11y_degrees">%1$d kraadi</string>
+    <string name="a11y_mils">%1$d tuhandikku</string>
+    <string name="a11y_heading">%1$s, %2$s, %3$s</string>
+    <string name="a11y_declination">Magnetiline %1$s, deklinatsioon %2$s kraadi %3$s</string>
+    <string name="a11y_declination_east">itta</string>
+    <string name="a11y_declination_west">läände</string>
+    <string name="a11y_dial">Kompassi sihverplaat</string>
+    <string name="a11y_lock_bearing">lukusta suund</string>
+    <string name="a11y_save_point">salvesta punkt</string>
+    <string name="magnetic_reading">Magnetiline %1$s</string>
+    <string name="declination_reading">Deklinatsioon %1$s°%2$s</string>
+    <string name="hemisphere_north">P</string>
+    <string name="hemisphere_south">L</string>
+    <string name="hemisphere_east">I</string>
+    <string name="hemisphere_west">LÄ</string>
+    <string name="magnetic_label">M</string>
+    <string name="distance_meters">%1$d m</string>
+    <string name="distance_kilometers">%1$s km</string>
+    <string name="coordinate_decimal">%1$s° %2$s</string>
+    <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
+    <string-array name="cardinal_names">
+        <item>põhi</item>
+        <item>põhjakirre</item>
+        <item>kirre</item>
+        <item>idakirre</item>
+        <item>ida</item>
+        <item>idakagu</item>
+        <item>kagu</item>
+        <item>lõunakagu</item>
+        <item>lõuna</item>
+        <item>lõunaedel</item>
+        <item>edel</item>
+        <item>lääneedel</item>
+        <item>lääs</item>
+        <item>lääneloe</item>
+        <item>loe</item>
+        <item>põhjaloe</item>
+    </string-array>
+    <string-array name="cardinal_abbreviations">
+        <item>P</item>
+        <item>PKI</item>
+        <item>KI</item>
+        <item>IKI</item>
+        <item>I</item>
+        <item>IKA</item>
+        <item>KA</item>
+        <item>LKA</item>
+        <item>L</item>
+        <item>LE</item>
+        <item>E</item>
+        <item>LÄE</item>
+        <item>LÄ</item>
+        <item>LÄLO</item>
+        <item>LO</item>
+        <item>PLO</item>
+    </string-array>
+    <string-array name="dial_labels">
+        <item>P</item>
+        <item>KI</item>
+        <item>I</item>
+        <item>KA</item>
+        <item>L</item>
+        <item>E</item>
+        <item>LÄ</item>
+        <item>LO</item>
+    </string-array>
+    <string name="waypoint_default_name">Punkt %1$d</string>
+    <string name="waypoint_limit">Salvestada saab kuni %1$d punkti</string>
+    <string name="waypoints_title">Salvestatud punktid</string>
+    <string name="waypoints_empty">Punkte veel pole — vajuta sihverplaati pikalt, et üks salvestada</string>
+    <string name="waypoint_rename">Nimeta ümber</string>
+    <string name="waypoint_delete">Kustuta</string>
+    <string name="waypoint_name_hint">Punkti nimi</string>
+    <string name="waypoint_add">Lisa punkt</string>
+    <string name="waypoint_enter_coordinates">Sisesta koordinaadid…</string>
+    <string name="waypoint_coordinates_hint">41.0, 29.0 või jagatud link</string>
+    <string name="waypoint_coordinates_unreadable">Koordinaate ei leitud</string>
+    <string name="location_action_copy">Kopeeri</string>
+    <string name="location_action_share">Jaga</string>
+    <string name="share_chooser">Jaga asukohta</string>
+    <string name="settings_section_about">TEAVE</string>
+    <string name="settings_version">Versioon</string>
+    <string name="settings_version_format">%1$s (%2$d)</string>
+    <string name="settings_source">Lähtekood</string>
+    <string name="settings_license">Litsents</string>
+    <string name="settings_license_value">MIT</string>
+    <string name="settings_privacy_note">Rakendusel pole interneti luba. Asukohta kasutatakse ainult seadmes — deklinatsiooni, qibla, päikese ja kuu jaoks — ja seda ei saadeta kuhugi.</string>
+</resources>

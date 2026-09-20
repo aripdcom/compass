@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Magyar -->
+<resources>
+    <string name="app_name">Iránytű</string>
+    <string name="no_sensor">Ezen az eszközön nincs iránytűérzékelő.</string>
+    <string name="calibrate">Alacsony pontosság — mozgassa a telefont nyolcas alakban.</string>
+    <string name="magnetic_disturbance">Mágneses zavar: tér %1$d µT, várt %2$d µT — vigye a telefont fémtől és mágnestől távolabb.</string>
+    <string name="hold_flat">Tartsa a telefont vízszintesen — a döntés torzítja a leolvasást.</string>
+    <string name="true_north">Földrajzi észak</string>
+    <string name="magnetic_north">Mágneses észak</string>
+    <string name="need_location">A földrajzi északhoz helyhozzáférés kell — koppintson ide</string>
+    <string name="waiting_location">Várakozás a helyzetre…</string>
+    <string name="place_kaaba">Kába (kibla)</string>
+    <string name="place_kaaba_label">Kibla</string>
+    <string name="place_aqsa">Al-Aksza mecset</string>
+    <string name="place_aqsa_label">Aksza</string>
+    <string name="place_vatican">Vatikán</string>
+    <string name="place_vatican_label">Vatikán</string>
+    <string name="place_info">%1$s %2$s</string>
+    <string name="sun_rise_set">napkelte %1$s (%2$s) · napnyugta %3$s (%4$s)</string>
+    <string name="moon_info">Hold %1$s · %2$d%%</string>
+    <string name="moon_info_below">Hold %1$s · %2$d%% · a horizont alatt</string>
+    <string name="approximate_location">hozzávetőleges</string>
+    <string name="location_copied">Másolva: %1$s</string>
+    <string name="sun_info">Nap %1$s</string>
+    <string name="sun_info_below">Nap %1$s · a horizont alatt</string>
+    <string name="target_hint">Koppintás a számlapra: irány rögzítése · hosszú nyomás: pont · koppintás ide: irány megadása</string>
+    <string name="waypoint_line">%1$s %2$s · %3$s</string>
+    <string name="waypoint_here">%1$s · itt van</string>
+    <string name="waypoint_more">+%1$d további</string>
+    <string name="waypoint_saved">%1$s mentve</string>
+    <string name="waypoint_cleared">%1$s törölve</string>
+    <string name="waypoint_needs_location">Nincs helyzet — a pont nem lett mentve</string>
+    <string name="bearing_dialog_title">Irány megadása</string>
+    <string name="bearing_dialog_set">Beállít</string>
+    <string name="bearing_dialog_clear">Törlés</string>
+    <string name="bearing_dialog_cancel">Mégse</string>
+    <string name="target_plain">Cél %1$s</string>
+    <string name="target_reached">Cél %1$s · irányban</string>
+    <string name="target_right">Cél %1$s · %2$s jobbra</string>
+    <string name="target_left">Cél %1$s · %2$s balra</string>
+    <string name="settings_title">Beállítások</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Mozdulatok</string>
+    <string name="settings_gestures_summary">Mit csinál minden koppintás és hosszú nyomás</string>
+    <string name="settings_gestures_body">Koppintson a számlapra — rögzítse az irányt; újabb koppintás feloldja\nNyomja hosszan a számlapot — mentse a helyzetét pontként\nKoppintson a nagy fokokra — váltson éjszakai módot\nKoppintson a helyzetsorra — tizedes ⇄ fok-perc-másodperc\nNyomja hosszan a helyzetsort — másolás vagy megosztás\nKoppintson az alsó sorra — adja meg az irányt kézzel\nNyomja hosszan az alsó sort — mentett pontok és koordinátabevitel</string>
+    <string name="settings_open">Beállítások</string>
+    <string name="settings_section_display">MEGJELENÍTÉS</string>
+    <string name="settings_night">Éjszakai mód</string>
+    <string name="settings_night_summary">Fekete háttér, vörös számlap — megőrzi az éjszakai látást</string>
+    <string name="settings_night_auto">Automatikus alkonyatkor</string>
+    <string name="settings_night_auto_summary">A polgári szürkület végén vált, amikor elfogy a nappali fény</string>
+    <string name="settings_unit">Szögegység</string>
+    <string name="settings_unit_degree">Fok (0-360)</string>
+    <string name="settings_unit_mil">Ezred (0-6400)</string>
+    <string name="settings_keep_screen">Képernyő ébren tartása</string>
+    <string name="settings_keep_screen_summary">A képernyő nem alszik el, amíg az alkalmazás nyitva van</string>
+    <string name="settings_fullscreen">Teljes képernyő</string>
+    <string name="settings_fullscreen_summary">Elrejti az állapot- és navigációs sávot; a szélről húzva előhívhatók</string>
+    <string name="settings_section_compass">IRÁNYTŰ</string>
+    <string name="settings_true_north">Földrajzi észak használata</string>
+    <string name="settings_true_north_summary">Hozzáadja a mágneses elhajlást, ha ismert a helyzet</string>
+    <string name="settings_smoothing">Simítás</string>
+    <string name="settings_smoothing_calm">Nyugodt</string>
+    <string name="settings_smoothing_balanced">Kiegyensúlyozott</string>
+    <string name="settings_smoothing_quick">Gyors</string>
+    <string name="settings_vibrate">Rezgés irányoknál</string>
+    <string name="settings_vibrate_summary">Rövid kattanás É/K/D/Ny átlépésekor, dupla a rögzített irányba érkezve</string>
+    <string name="settings_section_marks">JELEK A SZÁMLAPON</string>
+    <string name="settings_show_magnetic">Mágneses észak (M)</string>
+    <string name="settings_show_magnetic_summary">Csak akkor látszik, ha a földrajzi észak van használatban</string>
+    <string name="settings_show_level">Vízmérték</string>
+    <string name="settings_show_level_summary">A buborék a számlap közepén</string>
+    <string name="settings_show_sun">Nap</string>
+    <string name="settings_show_sun_arc">A Nap útja</string>
+    <string name="settings_show_sun_arc_summary">A napkeltétől napnyugtáig tartó ív és a végpontok irányai</string>
+    <string name="settings_show_moon">Hold</string>
+    <string name="settings_show_moon_summary">Iránya és fázisa; a horizont alatt halványan</string>
+    <string name="settings_marks_note">A cél- és pontjelek nem itt vannak: a számlapra koppintás vagy hosszú nyomás már be- és kikapcsolja őket.</string>
+    <string name="mil_suffix">ezred</string>
+    <string name="a11y_degrees">%1$d fok</string>
+    <string name="a11y_mils">%1$d ezred</string>
+    <string name="a11y_heading">%1$s, %2$s, %3$s</string>
+    <string name="a11y_declination">Mágneses %1$s, elhajlás %2$s fok %3$s</string>
+    <string name="a11y_declination_east">kelet</string>
+    <string name="a11y_declination_west">nyugat</string>
+    <string name="a11y_dial">Iránytű számlapja</string>
+    <string name="a11y_lock_bearing">irány rögzítése</string>
+    <string name="a11y_save_point">pont mentése</string>
+    <string name="magnetic_reading">Mágneses %1$s</string>
+    <string name="declination_reading">Elhajlás %1$s°%2$s</string>
+    <string name="hemisphere_north">É</string>
+    <string name="hemisphere_south">D</string>
+    <string name="hemisphere_east">K</string>
+    <string name="hemisphere_west">Ny</string>
+    <string name="magnetic_label">M</string>
+    <string name="distance_meters">%1$d m</string>
+    <string name="distance_kilometers">%1$s km</string>
+    <string name="coordinate_decimal">%1$s° %2$s</string>
+    <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
+    <string-array name="cardinal_names">
+        <item>észak</item>
+        <item>észak-északkelet</item>
+        <item>északkelet</item>
+        <item>kelet-északkelet</item>
+        <item>kelet</item>
+        <item>kelet-délkelet</item>
+        <item>délkelet</item>
+        <item>dél-délkelet</item>
+        <item>dél</item>
+        <item>dél-délnyugat</item>
+        <item>délnyugat</item>
+        <item>nyugat-délnyugat</item>
+        <item>nyugat</item>
+        <item>nyugat-északnyugat</item>
+        <item>északnyugat</item>
+        <item>észak-északnyugat</item>
+    </string-array>
+    <string-array name="cardinal_abbreviations">
+        <item>É</item>
+        <item>ÉÉK</item>
+        <item>ÉK</item>
+        <item>KÉK</item>
+        <item>K</item>
+        <item>KDK</item>
+        <item>DK</item>
+        <item>DDK</item>
+        <item>D</item>
+        <item>DDNy</item>
+        <item>DNy</item>
+        <item>NyDNy</item>
+        <item>Ny</item>
+        <item>NyÉNy</item>
+        <item>ÉNy</item>
+        <item>ÉÉNy</item>
+    </string-array>
+    <string-array name="dial_labels">
+        <item>É</item>
+        <item>ÉK</item>
+        <item>K</item>
+        <item>DK</item>
+        <item>D</item>
+        <item>DNy</item>
+        <item>Ny</item>
+        <item>ÉNy</item>
+    </string-array>
+    <string name="waypoint_default_name">%1$d. pont</string>
+    <string name="waypoint_limit">Legfeljebb %1$d pont menthető</string>
+    <string name="waypoints_title">Mentett pontok</string>
+    <string name="waypoints_empty">Még nincs pont — nyomja hosszan a számlapot</string>
+    <string name="waypoint_rename">Átnevezés</string>
+    <string name="waypoint_delete">Törlés</string>
+    <string name="waypoint_name_hint">A pont neve</string>
+    <string name="waypoint_add">Pont hozzáadása</string>
+    <string name="waypoint_enter_coordinates">Koordináták megadása…</string>
+    <string name="waypoint_coordinates_hint">41.0, 29.0 vagy megosztott hivatkozás</string>
+    <string name="waypoint_coordinates_unreadable">Nem található koordináta</string>
+    <string name="location_action_copy">Másolás</string>
+    <string name="location_action_share">Megosztás</string>
+    <string name="share_chooser">Helyzet megosztása</string>
+    <string name="settings_section_about">NÉVJEGY</string>
+    <string name="settings_version">Verzió</string>
+    <string name="settings_version_format">%1$s (%2$d)</string>
+    <string name="settings_source">Forráskód</string>
+    <string name="settings_license">Licenc</string>
+    <string name="settings_license_value">MIT</string>
+    <string name="settings_privacy_note">Az alkalmazásnak nincs internet-jogosultsága. A helyzetet csak az eszközön használja — elhajláshoz, kiblához, Naphoz és Holdhoz — és sehova nem küldi el.</string>
+</resources>

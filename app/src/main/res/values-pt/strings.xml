@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Português -->
+<resources>
+    <string name="app_name">Bússola</string>
+    <string name="no_sensor">Este dispositivo não tem sensor de bússola.</string>
+    <string name="calibrate">Precisão baixa — mova o telemóvel em forma de oito.</string>
+    <string name="magnetic_disturbance">Interferência magnética: campo %1$d µT, esperado %2$d µT — afaste-o de metais ou ímanes.</string>
+    <string name="hold_flat">Mantenha o telemóvel na horizontal — a inclinação distorce a leitura.</string>
+    <string name="true_north">Norte geográfico</string>
+    <string name="magnetic_north">Norte magnético</string>
+    <string name="need_location">O norte geográfico precisa da permissão de localização — toque aqui</string>
+    <string name="waiting_location">A aguardar localização…</string>
+    <string name="place_kaaba">Caaba (quibla)</string>
+    <string name="place_kaaba_label">Quibla</string>
+    <string name="place_aqsa">Mesquita de Al-Aqsa</string>
+    <string name="place_aqsa_label">Aqsa</string>
+    <string name="place_vatican">Vaticano</string>
+    <string name="place_vatican_label">Vaticano</string>
+    <string name="place_info">%1$s %2$s</string>
+    <string name="sun_rise_set">nascer %1$s (%2$s) · pôr %3$s (%4$s)</string>
+    <string name="moon_info">Lua %1$s · %2$d%%</string>
+    <string name="moon_info_below">Lua %1$s · %2$d%% · abaixo do horizonte</string>
+    <string name="approximate_location">aproximada</string>
+    <string name="location_copied">Copiado: %1$s</string>
+    <string name="sun_info">Sol %1$s</string>
+    <string name="sun_info_below">Sol %1$s · abaixo do horizonte</string>
+    <string name="target_hint">Toque no mostrador: fixar rumo · toque longo: ponto · toque aqui: introduzir rumo</string>
+    <string name="waypoint_line">%1$s %2$s · %3$s</string>
+    <string name="waypoint_here">%1$s · está aqui</string>
+    <string name="waypoint_more">+%1$d mais</string>
+    <string name="waypoint_saved">%1$s guardado</string>
+    <string name="waypoint_cleared">%1$s eliminado</string>
+    <string name="waypoint_needs_location">Sem localização — o ponto não foi guardado</string>
+    <string name="bearing_dialog_title">Introduzir rumo</string>
+    <string name="bearing_dialog_set">Definir</string>
+    <string name="bearing_dialog_clear">Limpar</string>
+    <string name="bearing_dialog_cancel">Cancelar</string>
+    <string name="target_plain">Alvo %1$s</string>
+    <string name="target_reached">Alvo %1$s · no rumo</string>
+    <string name="target_right">Alvo %1$s · %2$s à direita</string>
+    <string name="target_left">Alvo %1$s · %2$s à esquerda</string>
+    <string name="settings_title">Definições</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Gestos</string>
+    <string name="settings_gestures_summary">O que faz cada toque e toque longo</string>
+    <string name="settings_gestures_body">Toque no mostrador — fixe o rumo; toque de novo para libertar\nToque longo no mostrador — guarde a sua posição como ponto\nToque nos graus grandes — alterne o modo noturno\nToque na linha da localização — decimal ⇄ graus-minutos-segundos\nToque longo na linha da localização — copiar ou partilhar\nToque na linha inferior — introduza um rumo à mão\nToque longo na linha inferior — pontos guardados e introdução de coordenadas</string>
+    <string name="settings_open">Definições</string>
+    <string name="settings_section_display">VISUALIZAÇÃO</string>
+    <string name="settings_night">Modo noturno</string>
+    <string name="settings_night_summary">Fundo preto, mostrador vermelho — preserva a visão noturna</string>
+    <string name="settings_night_auto">Automático ao anoitecer</string>
+    <string name="settings_night_auto_summary">Muda no fim do crepúsculo civil, quando acaba a luz do dia</string>
+    <string name="settings_unit">Unidade de ângulo</string>
+    <string name="settings_unit_degree">Graus (0-360)</string>
+    <string name="settings_unit_mil">Milésimos (0-6400)</string>
+    <string name="settings_keep_screen">Manter o ecrã ligado</string>
+    <string name="settings_keep_screen_summary">O ecrã não se apaga enquanto a aplicação estiver aberta</string>
+    <string name="settings_fullscreen">Ecrã inteiro</string>
+    <string name="settings_fullscreen_summary">Oculta as barras de estado e de navegação; deslize a partir da margem para as mostrar</string>
+    <string name="settings_section_compass">BÚSSOLA</string>
+    <string name="settings_true_north">Usar o norte geográfico</string>
+    <string name="settings_true_north_summary">Soma a declinação magnética quando a localização é conhecida</string>
+    <string name="settings_smoothing">Suavização</string>
+    <string name="settings_smoothing_calm">Calma</string>
+    <string name="settings_smoothing_balanced">Equilibrada</string>
+    <string name="settings_smoothing_quick">Rápida</string>
+    <string name="settings_vibrate">Vibrar nos rumos</string>
+    <string name="settings_vibrate_summary">Um toque curto ao passar N/E/S/O, duplo ao entrar no rumo fixado</string>
+    <string name="settings_section_marks">MARCAS NO MOSTRADOR</string>
+    <string name="settings_show_magnetic">Norte magnético (M)</string>
+    <string name="settings_show_magnetic_summary">Só aparece quando o norte geográfico está em uso</string>
+    <string name="settings_show_level">Nível de bolha</string>
+    <string name="settings_show_level_summary">A bolha no centro do mostrador</string>
+    <string name="settings_show_sun">Sol</string>
+    <string name="settings_show_sun_arc">Trajeto do Sol</string>
+    <string name="settings_show_sun_arc_summary">O arco do nascer ao pôr do sol e os rumos dos extremos</string>
+    <string name="settings_show_moon">Lua</string>
+    <string name="settings_show_moon_summary">O seu rumo e fase; desenhada esbatida abaixo do horizonte</string>
+    <string name="settings_marks_note">As marcas de alvo e de ponto não estão aqui: tocar ou manter premido o mostrador já as liga e desliga.</string>
+    <string name="mil_suffix">milésimos</string>
+    <string name="a11y_degrees">%1$d graus</string>
+    <string name="a11y_mils">%1$d milésimos</string>
+    <string name="a11y_heading">%1$s, %2$s, %3$s</string>
+    <string name="a11y_declination">Magnético %1$s, declinação %2$s graus %3$s</string>
+    <string name="a11y_declination_east">este</string>
+    <string name="a11y_declination_west">oeste</string>
+    <string name="a11y_dial">Mostrador da bússola</string>
+    <string name="a11y_lock_bearing">fixar rumo</string>
+    <string name="a11y_save_point">guardar ponto</string>
+    <string name="magnetic_reading">Magnético %1$s</string>
+    <string name="declination_reading">Declinação %1$s°%2$s</string>
+    <string name="hemisphere_north">N</string>
+    <string name="hemisphere_south">S</string>
+    <string name="hemisphere_east">E</string>
+    <string name="hemisphere_west">O</string>
+    <string name="magnetic_label">M</string>
+    <string name="distance_meters">%1$d m</string>
+    <string name="distance_kilometers">%1$s km</string>
+    <string name="coordinate_decimal">%1$s° %2$s</string>
+    <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
+    <string-array name="cardinal_names">
+        <item>norte</item>
+        <item>norte-nordeste</item>
+        <item>nordeste</item>
+        <item>este-nordeste</item>
+        <item>este</item>
+        <item>este-sudeste</item>
+        <item>sudeste</item>
+        <item>sul-sudeste</item>
+        <item>sul</item>
+        <item>sul-sudoeste</item>
+        <item>sudoeste</item>
+        <item>oeste-sudoeste</item>
+        <item>oeste</item>
+        <item>oeste-noroeste</item>
+        <item>noroeste</item>
+        <item>norte-noroeste</item>
+    </string-array>
+    <string-array name="cardinal_abbreviations">
+        <item>N</item>
+        <item>NNE</item>
+        <item>NE</item>
+        <item>ENE</item>
+        <item>E</item>
+        <item>ESE</item>
+        <item>SE</item>
+        <item>SSE</item>
+        <item>S</item>
+        <item>SSO</item>
+        <item>SO</item>
+        <item>OSO</item>
+        <item>O</item>
+        <item>ONO</item>
+        <item>NO</item>
+        <item>NNO</item>
+    </string-array>
+    <string-array name="dial_labels">
+        <item>N</item>
+        <item>NE</item>
+        <item>E</item>
+        <item>SE</item>
+        <item>S</item>
+        <item>SO</item>
+        <item>O</item>
+        <item>NO</item>
+    </string-array>
+    <string name="waypoint_default_name">Ponto %1$d</string>
+    <string name="waypoint_limit">Podem guardar-se no máximo %1$d pontos</string>
+    <string name="waypoints_title">Pontos guardados</string>
+    <string name="waypoints_empty">Ainda sem pontos — toque longo no mostrador para guardar um</string>
+    <string name="waypoint_rename">Mudar o nome</string>
+    <string name="waypoint_delete">Eliminar</string>
+    <string name="waypoint_name_hint">Nome do ponto</string>
+    <string name="waypoint_add">Adicionar ponto</string>
+    <string name="waypoint_enter_coordinates">Introduzir coordenadas…</string>
+    <string name="waypoint_coordinates_hint">41.0, 29.0 ou uma ligação partilhada</string>
+    <string name="waypoint_coordinates_unreadable">Não foram encontradas coordenadas</string>
+    <string name="location_action_copy">Copiar</string>
+    <string name="location_action_share">Partilhar</string>
+    <string name="share_chooser">Partilhar localização</string>
+    <string name="settings_section_about">ACERCA</string>
+    <string name="settings_version">Versão</string>
+    <string name="settings_version_format">%1$s (%2$d)</string>
+    <string name="settings_source">Código-fonte</string>
+    <string name="settings_license">Licença</string>
+    <string name="settings_license_value">MIT</string>
+    <string name="settings_privacy_note">A aplicação não tem permissão de internet. A localização é usada apenas no dispositivo — para a declinação, a quibla, o Sol e a Lua — e nunca é enviada.</string>
+</resources>

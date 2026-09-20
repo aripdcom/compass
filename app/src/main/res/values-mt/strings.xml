@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Malti -->
+<resources>
+    <string name="app_name">Boxxla</string>
+    <string name="no_sensor">Dan l-apparat m’għandux sensur tal-boxxla.</string>
+    <string name="calibrate">Preċiżjoni baxxa — ċaqlaq it-telefon f’forma ta’ tmienja.</string>
+    <string name="magnetic_disturbance">Interferenza manjetika: kamp %1$d µT, mistenni %2$d µT — biegħed it-telefon minn metall jew kalamiti.</string>
+    <string name="hold_flat">Żomm it-telefon orizzontali — il-mejl ifixkel il-qari.</string>
+    <string name="true_north">It-tramuntana vera</string>
+    <string name="magnetic_north">It-tramuntana manjetika</string>
+    <string name="need_location">It-tramuntana vera teħtieġ permess tal-post — messu hawn</string>
+    <string name="waiting_location">Qed jistenna l-post…</string>
+    <string name="place_kaaba">Kaaba (qibla)</string>
+    <string name="place_kaaba_label">Qibla</string>
+    <string name="place_aqsa">Moskea Al-Aqsa</string>
+    <string name="place_aqsa_label">Aqsa</string>
+    <string name="place_vatican">Vatikan</string>
+    <string name="place_vatican_label">Vatikan</string>
+    <string name="place_info">%1$s %2$s</string>
+    <string name="sun_rise_set">tlugħ ix-xemx %1$s (%2$s) · inżul ix-xemx %3$s (%4$s)</string>
+    <string name="moon_info">Qamar %1$s · %2$d%%</string>
+    <string name="moon_info_below">Qamar %1$s · %2$d%% · taħt l-orizzont</string>
+    <string name="approximate_location">bejn wieħed u ieħor</string>
+    <string name="location_copied">Ikkupjat: %1$s</string>
+    <string name="sun_info">Xemx %1$s</string>
+    <string name="sun_info_below">Xemx %1$s · taħt l-orizzont</string>
+    <string name="target_hint">Messu d-dial: aqfel id-direzzjoni · żomm: punt · messu hawn: daħħal direzzjoni</string>
+    <string name="waypoint_line">%1$s %2$s · %3$s</string>
+    <string name="waypoint_here">%1$s · inti hawn</string>
+    <string name="waypoint_more">+%1$d oħra</string>
+    <string name="waypoint_saved">%1$s salvat</string>
+    <string name="waypoint_cleared">%1$s imħassar</string>
+    <string name="waypoint_needs_location">L-ebda post — il-punt ma ġiex salvat</string>
+    <string name="bearing_dialog_title">Daħħal id-direzzjoni</string>
+    <string name="bearing_dialog_set">Issettja</string>
+    <string name="bearing_dialog_clear">Neħħi</string>
+    <string name="bearing_dialog_cancel">Ikkanċella</string>
+    <string name="target_plain">Mira %1$s</string>
+    <string name="target_reached">Mira %1$s · fid-direzzjoni</string>
+    <string name="target_right">Mira %1$s · %2$s lejn il-lemin</string>
+    <string name="target_left">Mira %1$s · %2$s lejn ix-xellug</string>
+    <string name="settings_title">Issettjar</string>
+    <string name="settings_back">‹ %1$s</string>
+    <string name="settings_gestures">Ġesti</string>
+    <string name="settings_gestures_summary">X’jagħmel kull mess u żamma twila</string>
+    <string name="settings_gestures_body">Messu d-dial — aqfel id-direzzjoni; erġa’ messu biex teħles\nŻomm id-dial — issejvja l-pożizzjoni tiegħek bħala punt\nMessu l-gradi l-kbar — ibdel il-mod bil-lejl\nMessu l-linja tal-post — deċimali ⇄ gradi-minuti-sekondi\nŻomm il-linja tal-post — ikkopja jew aqsam\nMessu l-linja t’isfel — daħħal direzzjoni bl-idejn\nŻomm il-linja t’isfel — punti salvati u dħul ta’ koordinati</string>
+    <string name="settings_open">Issettjar</string>
+    <string name="settings_section_display">DEHRA</string>
+    <string name="settings_night">Mod bil-lejl</string>
+    <string name="settings_night_summary">Sfond iswed, dial aħmar — iħares il-vista bil-lejl</string>
+    <string name="settings_night_auto">Awtomatiku fl-għabex</string>
+    <string name="settings_night_auto_summary">Jinbidel fi tmiem l-għabex ċivili, meta jispiċċa d-dawl tal-jum</string>
+    <string name="settings_unit">Unità tal-angolu</string>
+    <string name="settings_unit_degree">Gradi (0-360)</string>
+    <string name="settings_unit_mil">Mils (0-6400)</string>
+    <string name="settings_keep_screen">Żomm l-iskrin mixgħul</string>
+    <string name="settings_keep_screen_summary">L-iskrin ma jintefiex sakemm l-app tkun miftuħa</string>
+    <string name="settings_fullscreen">Skrin sħiħ</string>
+    <string name="settings_fullscreen_summary">Jaħbi l-barra tal-istatus u tan-navigazzjoni; iżżerżaq mit-tarf biex jidhru</string>
+    <string name="settings_section_compass">BOXXLA</string>
+    <string name="settings_true_north">Uża t-tramuntana vera</string>
+    <string name="settings_true_north_summary">Iżid id-deklinazzjoni manjetika meta l-post ikun magħruf</string>
+    <string name="settings_smoothing">Illixxar</string>
+    <string name="settings_smoothing_calm">Kalm</string>
+    <string name="settings_smoothing_balanced">Bilanċjat</string>
+    <string name="settings_smoothing_quick">Mgħaġġel</string>
+    <string name="settings_vibrate">Vibrazzjoni fid-direzzjonijiet</string>
+    <string name="settings_vibrate_summary">Tektika qasira meta tgħaddi T/L/N/P, doppja meta tidħol fid-direzzjoni maqfula</string>
+    <string name="settings_section_marks">MARKI FUQ ID-DIAL</string>
+    <string name="settings_show_magnetic">Tramuntana manjetika (M)</string>
+    <string name="settings_show_magnetic_summary">Tidher biss meta tintuża t-tramuntana vera</string>
+    <string name="settings_show_level">Livella</string>
+    <string name="settings_show_level_summary">Il-bużżieqa f’nofs id-dial</string>
+    <string name="settings_show_sun">Xemx</string>
+    <string name="settings_show_sun_arc">Il-mixja tax-xemx</string>
+    <string name="settings_show_sun_arc_summary">L-ark minn tlugħ ix-xemx sa nżulha u d-direzzjonijiet tat-truf</string>
+    <string name="settings_show_moon">Qamar</string>
+    <string name="settings_show_moon_summary">Id-direzzjoni u l-fażi tiegħu; jitpinġa ħafif meta jkun taħt l-orizzont</string>
+    <string name="settings_marks_note">Il-marki tal-mira u tal-punt mhumiex hawn: mess jew żamma fuq id-dial diġà jixegħluhom u jitfihom.</string>
+    <string name="mil_suffix">mils</string>
+    <string name="a11y_degrees">%1$d gradi</string>
+    <string name="a11y_mils">%1$d mils</string>
+    <string name="a11y_heading">%1$s, %2$s, %3$s</string>
+    <string name="a11y_declination">Manjetiku %1$s, deklinazzjoni %2$s gradi %3$s</string>
+    <string name="a11y_declination_east">lvant</string>
+    <string name="a11y_declination_west">punent</string>
+    <string name="a11y_dial">Id-dial tal-boxxla</string>
+    <string name="a11y_lock_bearing">aqfel id-direzzjoni</string>
+    <string name="a11y_save_point">issejvja punt</string>
+    <string name="magnetic_reading">Manjetiku %1$s</string>
+    <string name="declination_reading">Deklinazzjoni %1$s°%2$s</string>
+    <string name="hemisphere_north">T</string>
+    <string name="hemisphere_south">N</string>
+    <string name="hemisphere_east">L</string>
+    <string name="hemisphere_west">P</string>
+    <string name="magnetic_label">M</string>
+    <string name="distance_meters">%1$d m</string>
+    <string name="distance_kilometers">%1$s km</string>
+    <string name="coordinate_decimal">%1$s° %2$s</string>
+    <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
+    <string-array name="cardinal_names">
+        <item>tramuntana</item>
+        <item>tramuntana-grigal</item>
+        <item>grigal</item>
+        <item>lvant-grigal</item>
+        <item>lvant</item>
+        <item>lvant-xlokk</item>
+        <item>xlokk</item>
+        <item>nofsinhar-xlokk</item>
+        <item>nofsinhar</item>
+        <item>nofsinhar-lbiċ</item>
+        <item>lbiċ</item>
+        <item>punent-lbiċ</item>
+        <item>punent</item>
+        <item>punent-majjistral</item>
+        <item>majjistral</item>
+        <item>tramuntana-majjistral</item>
+    </string-array>
+    <string-array name="cardinal_abbreviations">
+        <item>T</item>
+        <item>TG</item>
+        <item>G</item>
+        <item>LG</item>
+        <item>L</item>
+        <item>LX</item>
+        <item>X</item>
+        <item>NX</item>
+        <item>N</item>
+        <item>NLb</item>
+        <item>Lb</item>
+        <item>PLb</item>
+        <item>P</item>
+        <item>PMj</item>
+        <item>Mj</item>
+        <item>TMj</item>
+    </string-array>
+    <string-array name="dial_labels">
+        <item>T</item>
+        <item>G</item>
+        <item>L</item>
+        <item>X</item>
+        <item>N</item>
+        <item>Lb</item>
+        <item>P</item>
+        <item>Mj</item>
+    </string-array>
+    <string name="waypoint_default_name">Punt %1$d</string>
+    <string name="waypoint_limit">Jistgħu jiġu salvati sa %1$d punti</string>
+    <string name="waypoints_title">Punti salvati</string>
+    <string name="waypoints_empty">L-ebda punt s’issa — żomm id-dial biex issejvja wieħed</string>
+    <string name="waypoint_rename">Ibdel l-isem</string>
+    <string name="waypoint_delete">Ħassar</string>
+    <string name="waypoint_name_hint">Isem il-punt</string>
+    <string name="waypoint_add">Żid punt</string>
+    <string name="waypoint_enter_coordinates">Daħħal koordinati…</string>
+    <string name="waypoint_coordinates_hint">41.0, 29.0 jew link maqsum</string>
+    <string name="waypoint_coordinates_unreadable">Ma nstabet l-ebda koordinata</string>
+    <string name="location_action_copy">Ikkopja</string>
+    <string name="location_action_share">Aqsam</string>
+    <string name="share_chooser">Aqsam il-post</string>
+    <string name="settings_section_about">DWAR</string>
+    <string name="settings_version">Verżjoni</string>
+    <string name="settings_version_format">%1$s (%2$d)</string>
+    <string name="settings_source">Kodiċi sors</string>
+    <string name="settings_license">Liċenzja</string>
+    <string name="settings_license_value">MIT</string>
+    <string name="settings_privacy_note">L-app m’għandhiex permess għall-internet. Il-post jintuża biss fuq l-apparat — għad-deklinazzjoni, il-qibla, ix-xemx u l-qamar — u qatt ma jintbagħat imkien.</string>
+</resources>
