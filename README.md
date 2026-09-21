@@ -384,8 +384,10 @@ atlanır ve diğerleri korunur — yedi test bunu doğrular.
 Eski sürümlerde tek nokta iki ayrı anahtarda tutuluyordu; ilk açılışta listeye
 taşınır ve eski anahtarlar silinir.
 
-Yön kıbleyle aynı büyük daire formülünden, mesafe `Location.distanceBetween` ile.
-Bir kilometrenin altında metre, üstünde kilometre yazar.
+Yön ve mesafe, aşağıdaki **Büyük daire, loksodrom ve deniz mili** başlığındaki
+ayarlara uyar; varsayılanda yön kıbleyle aynı büyük daire formülünden, mesafe
+`Location.distanceBetween` ile gelir ve bir kilometrenin altında metre, üstünde
+kilometre yazar.
 
 Noktanın üstündeyken yön ne yazılır ne de kadranda gösterilir; yalnızca
 `Araba · buradasınız` denir. Sebebi: mesafe
@@ -396,9 +398,7 @@ güvenilmez, çok kötü bir fix'te de yüz metre öteye "buradasınız" demek y
 olurdu.
 
 Tekrar uzun basmak siler. Nokta `SharedPreferences`'a yazıldığı için uygulamayı
-kapatsanız da durur. Yön, kıbleyle aynı büyük daire formülünden; mesafe
-`Location.distanceBetween` ile (WGS84 elipsoidi). Bir kilometrenin altında metre,
-üstünde kilometre yazar.
+kapatsanız da durur.
 
 Hedef ve nokta bilgisi tek satırda, kadrandaki işaretlerle aynı renklerde
 gösterilir; ikisi de yokken satır iki hareketi birden anlatır. Satır iki sıra yer
@@ -577,6 +577,51 @@ döndürülmez**. Evre şekli yönlü bir simgedir; işaret kadranın dibine dü
 180° dönüp aynalanıyor ve büyüyen ay küçülen gibi görünüyordu. Konumu açıdan
 hesaplanıp simge ekrana dik çiziliyor.
 
+### Büyük daire, loksodrom ve deniz mili
+
+Kaydedilen noktaların yönü iki ayrı soruya cevap verebilir ve ikisi aynı sayı
+değildir.
+
+**Büyük daire** (varsayılan) en kısa yolu verir. Kıblenin tanımı da budur. Ama o
+yolun pruvası yol boyunca döner: dümende tutulacak tek bir sayı vermez. New
+York'tan Lizbon'a 70°'den çıkılır, 114°'te varılır.
+
+**Loksodrom** (sabit pruva) baştan sona değişmeyen açıyı verir. Biraz uzundur,
+buna karşılık bir kez söylenir ve varana kadar geçerlidir; seyir haritası
+geleneğinin kullandığı yol budur. Aynı New York-Lizbon yolu için 92°.
+
+Ayar **kerteriz türü** adıyla Ayarlar → Pusula altında. Yalnızca kaydedilen
+noktalara işler; **sabit yerler her hâlükârda büyük dairede kalır**, çünkü
+kıblenin tanımı odur — bir ayarın onu sessizce değiştirmesi uygulamaya yanlış
+söyletmek olurdu.
+
+Loksodrom seçilince **mesafe de o yola göre** yazılır, en kısa yola göre değil.
+İkisini karıştırmak sayıyı bozacak kadar büyük bir fark: Horn Burnu'ndan Agulhas
+Burnu'na en kısa yol 6722 km, sabit pruvayla 7110 km — 389 kilometre.
+
+Hesap kürede değil **WGS-84 elipsoidinde** yapılıyor, çünkü uygulamanın
+mesafeleri zaten `Location.distanceBetween`'den, yani o elipsoitten geliyor;
+ikisinin ayrı yer şekli kullanması tutarsızlık olurdu. Bedeli ölçüldü: kürede
+hesaplamak kerterizi İstanbul'dan Kâbe'ye altı dakika, en kötü hâlde on bir
+dakika kaydırıyor. Elipsoidin meridyen yayının kapalı biçimi olmadığı için seri
+açılımı e⁸'e kadar alındı; çeyrek meridyende (10.002 km) hata onda bir
+milimetrenin altında.
+
+İki incelik koda yazıldı:
+
+- **Kutup.** Loksodromun dayandığı izometrik enlem kutupta sonsuza gider ve
+  `tan(π/2)` Double'da sonsuz çıkmaz — 1,6×10¹⁶ çıkar, logaritması da makul
+  görünen sessizce yanlış bir sayı verirdi. Kutup elle ayrılıyor; kayıt biçimi
+  ±90°'ye izin verdiğine göre oraya bir nokta konabilir.
+- **"Buradasınız" kararı** her hâlükârda en kısa yola bakar. Varış bir yakınlık
+  sorusudur, hangi yoldan gidileceği sorusu değil; uzun yol yüzünden karar geç
+  verilseydi noktanın üstünde dururken hâlâ yön gösterilirdi.
+
+**Mesafe birimi** ayrı bir ayar (Ayarlar → Görünüm): metre/kilometre ya da
+metre/deniz mili. Deniz milinde eşik bir deniz milidir (1852 m) — altında metre
+yazmak hem daha okunur hem daha hassas, çünkü "0,3 NM" beş yüz elli metrelik bir
+aralığı tek basamağa sıkıştırırdı.
+
 ## 6. Ayarlar
 
 Sağ üstteki dişliden açılır. Dış bağımlılık olmadığı için `PreferenceFragment`
@@ -591,9 +636,11 @@ ayrışması demekti.
 | **Gece modu** | Siyah zemin, kırmızı kadran. Büyük derece yazısına dokunmak da aynı işi yapar. |
 | **Alacakaranlıkta otomatik** | Gece modunu güneşin yüksekliğine bağlar; sivil alacakaranlığın sonunda (-6°) geçer. Elle yapılan her seçim bunu kapatır. |
 | **Açı birimi** | Derece (0-360) ya da NATO mili (0-6400). Bütün yön yazılarını etkiler; sapma derecede kalır, çünkü konumun fiziksel özelliğidir. |
+| **Mesafe birimi** | Metre/kilometre ya da metre/deniz mili. Deniz milinde eşik 1852 m'dir. |
 | **Ekranı açık tut** | `FLAG_KEEP_SCREEN_ON`. Kapatılabilir olması pil için önemli. |
 | **Tam ekran** | Durum ve gezinme çubuklarını gizler; kenardan kaydırınca geçici olarak geri gelirler. Kazanılan yer doğrudan kadranın çapına gider. |
 | **Gerçek kuzeyi kullan** | Kapatılırsa kadran manyetik kuzeye oturur. |
+| **Kerteriz türü** | Büyük daire (en kısa) ya da loksodrom (sabit pruva). Yalnızca kaydedilen noktalara işler; sabit yerler büyük dairede kalır. Loksodromda mesafe de o yola göre ölçülür. Ayrıntısı 5. bölümde. |
 | **Yumuşatma** | Sakin (0,35 sn) / Dengeli (0,17 sn) / Çevik (0,08 sn). Saklanan şey katsayı değil **zaman sabiti**; gerekçesi 11. bölümde. Ortadaki, uygulamanın başından beri kullandığı 0,12 katsayısının 50 Hz'deki karşılığıdır. |
 | **Yön geçişlerinde titreşim** | Hem ana yön tıkını hem hedef çift tıkını kapatır. |
 | **Kadran işaretleri** | Manyetik kuzey (M), su terazisi, güneş, güneşin yolu ve ayı ayrı ayrı açar/kapatır. |
@@ -653,7 +700,7 @@ kimlikler aynı olduğu için kod değişmez.
 | `app/src/main/java/com/aripd/kerteriz/Places.kt` | On bir sabit yerin koordinatları ve kategorileri |
 | `app/src/main/java/com/aripd/kerteriz/PlaceSearch.kt` | Yer aramasının harf katlaması (aksan, noktasız ı) |
 | `app/src/main/java/com/aripd/kerteriz/Waypoints.kt` | Kaydedilen noktaların saklanması |
-| `app/src/main/java/com/aripd/kerteriz/Geo.kt` | Yön, açı ve birim dönüşümleri (Android'e dokunmaz) |
+| `app/src/main/java/com/aripd/kerteriz/Geo.kt` | Yön, açı ve birim dönüşümleri; büyük daire ve loksodrom (Android'e dokunmaz) |
 | `app/src/main/java/com/aripd/kerteriz/RimLayout.kt` | Kadran işaretlerinin yarıçap dağıtımı |
 | `app/src/main/java/com/aripd/kerteriz/Marks.kt` | Yakın işaretlerin tek etikette birleştirilmesi |
 | `app/src/main/java/com/aripd/kerteriz/Smoothing.kt` | İbrenin alçak geçiren süzgeci |
@@ -942,7 +989,7 @@ değişince kuruluyor; önceden içerik aynıyken her derece değişiminde başt
 ## 12. Testler
 
 ```bash
-./gradlew test          # 106 test, saniyeler içinde, cihaz gerekmez
+./gradlew test          # 114 test, saniyeler içinde, cihaz gerekmez
 ```
 
 Testler JVM'de koşar; Android çalışma zamanı gerekmez. Bunun için uygulamanın
@@ -956,7 +1003,7 @@ Her koşuda ayrıca `./gradlew lintDebug` koşulur (CI'da da); şu an 0 hata.
 
 | Dosya | Neyi sınıyor |
 |---|---|
-| `GeoTest` | Kutsal yerlerin yönleri, sıfır geçişi, vektörel ortalama, mil ve çerçeve dönüşümleri |
+| `GeoTest` | Kutsal yerlerin yönleri, sıfır geçişi, vektörel ortalama, mil ve çerçeve dönüşümleri; loksodromun büyük daireden ayrılması, karşılıklılık ve simetri, kutup, tarih çizgisi, deniz milinin bir dakikalık enlemden çıkması |
 | `SunTest` | Bilinen an için konum, doğuş yönünün mevsimle 64° gezinmesi, kutup gündüzü |
 | `MoonTest` | Bilinen yeni ay, ay-güneş çapraz kontrolü, sinodik ay, evre sınırları |
 | `RimLayoutTest` | Çakışan işaretlerin alt yarıçapa inmesi, sabit göstergenin etkisi, kademelerin tükenmesi |

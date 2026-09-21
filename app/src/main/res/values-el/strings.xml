@@ -69,6 +69,9 @@
     <string name="settings_unit">Μονάδα γωνίας</string>
     <string name="settings_unit_degree">Μοίρες (0-360)</string>
     <string name="settings_unit_mil">Χιλιοστά (0-6400)</string>
+    <string name="settings_distance_unit">Μονάδα απόστασης</string>
+    <string name="settings_distance_metric">Μέτρα και χιλιόμετρα</string>
+    <string name="settings_distance_nautical">Μέτρα και ναυτικά μίλια</string>
     <string name="settings_keep_screen">Διατήρηση οθόνης αναμμένης</string>
     <string name="settings_keep_screen_summary">Η οθόνη δεν σβήνει όσο η εφαρμογή είναι ανοιχτή</string>
     <string name="settings_fullscreen">Πλήρης οθόνη</string>
@@ -76,6 +79,10 @@
     <string name="settings_section_compass">ΠΥΞΙΔΑ</string>
     <string name="settings_true_north">Χρήση αληθούς βορρά</string>
     <string name="settings_true_north_summary">Προσθέτει τη μαγνητική απόκλιση όταν η τοποθεσία είναι γνωστή</string>
+    <string name="settings_course">Τύπος διόπτευσης</string>
+    <string name="settings_course_great_circle">Μέγιστος κύκλος (συντομότερος)</string>
+    <string name="settings_course_rhumb">Λοξοδρομία (σταθερή πορεία)</string>
+    <string name="settings_course_note">Ισχύει για τα αποθηκευμένα σημεία. Τα σταθερά σημεία μένουν στον μέγιστο κύκλο — αυτό ακριβώς σημαίνει η κίμπλα.</string>
     <string name="settings_smoothing">Εξομάλυνση</string>
     <string name="settings_smoothing_calm">Ήρεμη</string>
     <string name="settings_smoothing_balanced">Ισορροπημένη</string>
@@ -123,6 +130,7 @@
     <string name="magnetic_label">Μ</string>
     <string name="distance_meters">%1$d μ</string>
     <string name="distance_kilometers">%1$s χλμ</string>
+    <string name="distance_nautical_miles">%1$s NM</string>
     <string name="coordinate_decimal">%1$s° %2$s</string>
     <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
     <string-array name="cardinal_names">

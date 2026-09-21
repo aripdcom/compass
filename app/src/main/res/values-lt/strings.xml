@@ -69,6 +69,9 @@
     <string name="settings_unit">Kampo vienetas</string>
     <string name="settings_unit_degree">Laipsniai (0-360)</string>
     <string name="settings_unit_mil">Tūkstantosios (0-6400)</string>
+    <string name="settings_distance_unit">Atstumo vienetas</string>
+    <string name="settings_distance_metric">Metrai ir kilometrai</string>
+    <string name="settings_distance_nautical">Metrai ir jūrmylės</string>
     <string name="settings_keep_screen">Neišjungti ekrano</string>
     <string name="settings_keep_screen_summary">Ekranas neužgęsta, kol programa atidaryta</string>
     <string name="settings_fullscreen">Visas ekranas</string>
@@ -76,6 +79,10 @@
     <string name="settings_section_compass">KOMPASAS</string>
     <string name="settings_true_north">Naudoti tikrąją šiaurę</string>
     <string name="settings_true_north_summary">Prideda magnetinę deklinaciją, kai vieta žinoma</string>
+    <string name="settings_course">Azimuto tipas</string>
+    <string name="settings_course_great_circle">Ortodromė (trumpiausias kelias)</string>
+    <string name="settings_course_rhumb">Loksodromė (pastovus kursas)</string>
+    <string name="settings_course_note">Taikoma išsaugotiems taškams. Pastovios vietos lieka ortodromėje — būtent tai ir reiškia kibla.</string>
     <string name="settings_smoothing">Glodinimas</string>
     <string name="settings_smoothing_calm">Ramus</string>
     <string name="settings_smoothing_balanced">Subalansuotas</string>
@@ -123,6 +130,7 @@
     <string name="magnetic_label">M</string>
     <string name="distance_meters">%1$d m</string>
     <string name="distance_kilometers">%1$s km</string>
+    <string name="distance_nautical_miles">%1$s NM</string>
     <string name="coordinate_decimal">%1$s° %2$s</string>
     <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
     <string-array name="cardinal_names">

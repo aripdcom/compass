@@ -69,6 +69,9 @@
     <string name="settings_unit">Unidade de ângulo</string>
     <string name="settings_unit_degree">Graus (0-360)</string>
     <string name="settings_unit_mil">Milésimos (0-6400)</string>
+    <string name="settings_distance_unit">Unidade de distância</string>
+    <string name="settings_distance_metric">Metros e quilómetros</string>
+    <string name="settings_distance_nautical">Metros e milhas náuticas</string>
     <string name="settings_keep_screen">Manter o ecrã ligado</string>
     <string name="settings_keep_screen_summary">O ecrã não se apaga enquanto a aplicação estiver aberta</string>
     <string name="settings_fullscreen">Ecrã inteiro</string>
@@ -76,6 +79,10 @@
     <string name="settings_section_compass">BÚSSOLA</string>
     <string name="settings_true_north">Usar o norte geográfico</string>
     <string name="settings_true_north_summary">Soma a declinação magnética quando a localização é conhecida</string>
+    <string name="settings_course">Tipo de rumo</string>
+    <string name="settings_course_great_circle">Círculo máximo (o mais curto)</string>
+    <string name="settings_course_rhumb">Loxodrómica (rumo constante)</string>
+    <string name="settings_course_note">Aplica-se aos pontos guardados. Os lugares fixos mantêm o círculo máximo: é isso que significa a quibla.</string>
     <string name="settings_smoothing">Suavização</string>
     <string name="settings_smoothing_calm">Calma</string>
     <string name="settings_smoothing_balanced">Equilibrada</string>
@@ -123,6 +130,7 @@
     <string name="magnetic_label">M</string>
     <string name="distance_meters">%1$d m</string>
     <string name="distance_kilometers">%1$s km</string>
+    <string name="distance_nautical_miles">%1$s NM</string>
     <string name="coordinate_decimal">%1$s° %2$s</string>
     <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
     <string-array name="cardinal_names">

@@ -69,6 +69,9 @@
     <string name="settings_unit">Vinkelenhet</string>
     <string name="settings_unit_degree">Grader (0-360)</string>
     <string name="settings_unit_mil">Streck (0-6400)</string>
+    <string name="settings_distance_unit">Avståndsenhet</string>
+    <string name="settings_distance_metric">Meter och kilometer</string>
+    <string name="settings_distance_nautical">Meter och nautiska mil</string>
     <string name="settings_keep_screen">Håll skärmen tänd</string>
     <string name="settings_keep_screen_summary">Skärmen släcks inte medan appen är öppen</string>
     <string name="settings_fullscreen">Helskärm</string>
@@ -76,6 +79,10 @@
     <string name="settings_section_compass">KOMPASS</string>
     <string name="settings_true_north">Använd geografisk nord</string>
     <string name="settings_true_north_summary">Lägger till missvisningen när platsen är känd</string>
+    <string name="settings_course">Bäringstyp</string>
+    <string name="settings_course_great_circle">Storcirkel (kortaste vägen)</string>
+    <string name="settings_course_rhumb">Loxodrom (fast kurs)</string>
+    <string name="settings_course_note">Gäller sparade punkter. Fasta platser stannar på storcirkeln — det är just det qibla betyder.</string>
     <string name="settings_smoothing">Utjämning</string>
     <string name="settings_smoothing_calm">Lugn</string>
     <string name="settings_smoothing_balanced">Balanserad</string>
@@ -123,6 +130,7 @@
     <string name="magnetic_label">M</string>
     <string name="distance_meters">%1$d m</string>
     <string name="distance_kilometers">%1$s km</string>
+    <string name="distance_nautical_miles">%1$s NM</string>
     <string name="coordinate_decimal">%1$s° %2$s</string>
     <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
     <string-array name="cardinal_names">

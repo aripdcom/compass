@@ -43,6 +43,11 @@ class SettingsActivity : RowsActivity() {
             R.string.settings_unit, Prefs.KEY_UNIT, Prefs.DEFAULT_UNIT,
             intArrayOf(R.string.settings_unit_degree, R.string.settings_unit_mil)
         )
+        choiceRow(
+            R.string.settings_distance_unit, Prefs.KEY_DISTANCE_UNIT,
+            Prefs.DEFAULT_DISTANCE_UNIT,
+            intArrayOf(R.string.settings_distance_metric, R.string.settings_distance_nautical)
+        )
         switchRow(
             R.string.settings_keep_screen, R.string.settings_keep_screen_summary,
             Prefs.KEY_KEEP_SCREEN, Prefs.DEFAULT_KEEP_SCREEN
@@ -57,6 +62,13 @@ class SettingsActivity : RowsActivity() {
             R.string.settings_true_north, R.string.settings_true_north_summary,
             Prefs.KEY_TRUE_NORTH, Prefs.DEFAULT_TRUE_NORTH
         )
+        // Gerçek kuzeyin hemen altında: ikisi de "bu sayı neyi ölçüyor"
+        // sorusunun ayarı, biri çerçeveyi biri yolu seçiyor.
+        choiceRow(
+            R.string.settings_course, Prefs.KEY_COURSE, Prefs.DEFAULT_COURSE,
+            intArrayOf(R.string.settings_course_great_circle, R.string.settings_course_rhumb)
+        )
+        note(getString(R.string.settings_course_note))
         choiceRow(
             R.string.settings_smoothing, Prefs.KEY_SMOOTHING, Prefs.DEFAULT_SMOOTHING,
             intArrayOf(

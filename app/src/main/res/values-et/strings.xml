@@ -69,6 +69,9 @@
     <string name="settings_unit">Nurgaühik</string>
     <string name="settings_unit_degree">Kraadid (0-360)</string>
     <string name="settings_unit_mil">Tuhandikud (0-6400)</string>
+    <string name="settings_distance_unit">Kauguse ühik</string>
+    <string name="settings_distance_metric">Meetrid ja kilomeetrid</string>
+    <string name="settings_distance_nautical">Meetrid ja meremiilid</string>
     <string name="settings_keep_screen">Hoia ekraan sees</string>
     <string name="settings_keep_screen_summary">Ekraan ei kustu, kuni rakendus on avatud</string>
     <string name="settings_fullscreen">Täisekraan</string>
@@ -76,6 +79,10 @@
     <string name="settings_section_compass">KOMPASS</string>
     <string name="settings_true_north">Kasuta geograafilist põhja</string>
     <string name="settings_true_north_summary">Lisab magnetilise deklinatsiooni, kui asukoht on teada</string>
+    <string name="settings_course">Suuna tüüp</string>
+    <string name="settings_course_great_circle">Suurring (lühim tee)</string>
+    <string name="settings_course_rhumb">Loksodroom (püsiv kurss)</string>
+    <string name="settings_course_note">Kehtib salvestatud punktide kohta. Paiksed kohad jäävad suurringile — just seda qibla tähendabki.</string>
     <string name="settings_smoothing">Silumine</string>
     <string name="settings_smoothing_calm">Rahulik</string>
     <string name="settings_smoothing_balanced">Tasakaalus</string>
@@ -123,6 +130,7 @@
     <string name="magnetic_label">M</string>
     <string name="distance_meters">%1$d m</string>
     <string name="distance_kilometers">%1$s km</string>
+    <string name="distance_nautical_miles">%1$s NM</string>
     <string name="coordinate_decimal">%1$s° %2$s</string>
     <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
     <string-array name="cardinal_names">
