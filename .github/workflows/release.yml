@@ -116,6 +116,17 @@ jobs:
           COMPASS_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: ./gradlew assembleRelease
 
+      # Play yalnızca AAB kabul ediyor (yeni uygulamalarda APK yüklenemiyor).
+      # Aynı imzalama yapılandırmasını kullanır: bu anahtar Play App Signing'de
+      # "yükleme anahtarı" olur, mağazaya giden kopyayı Google kendi anahtarıyla
+      # yeniden imzalar.
+      - name: Play paketi (AAB)
+        env:
+          COMPASS_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          COMPASS_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          COMPASS_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: ./gradlew bundleRelease
+
       - name: Anahtarı sil
         if: always()
         run: rm -f "$RUNNER_TEMP/release.jks"
@@ -129,6 +140,43 @@ jobs:
         with:
           name: ${{ steps.apk.outputs.name }}
           path: dist/*
+          if-no-files-found: error
+          retention-days: 90
+
+      # AAB `dist/` altına konmuyor: orası sürüm sayfasına eklenen dosyaların
+      # yeri ve bir AAB telefona kurulamaz — indiren kişiyi yanıltırdı. Yalnızca
+      # koşunun çıktısına asılıyor, Play Console'a oradan yüklenir.
+      - name: AAB'yi adlandır
+        id: aab
+        env:
+          VERSION: ${{ steps.apk.outputs.version }}
+          CODE: ${{ steps.apk.outputs.code }}
+        run: |
+          name="compass-$VERSION-$CODE-$(git rev-parse --short=7 HEAD).aab"
+          mkdir -p bundle
+          cp app/build/outputs/bundle/release/app-release.aab "bundle/$name"
+          ( cd bundle && sha256sum "$name" > "$name.sha256" )
+          bytes=$(wc -c < "bundle/$name" | tr -d ' ')
+          digest=$(cut -d' ' -f1 < "bundle/$name.sha256")
+          echo "name=${name%.aab}" >> "$GITHUB_OUTPUT"
+          {
+            echo "### AAB: \`$name\`"
+            echo
+            echo "| | |"
+            echo "|---|---|"
+            echo "| Sürüm | $VERSION ($CODE) |"
+            echo "| Boyut | $(du -h "bundle/$name" | cut -f1) ($bytes bayt) |"
+            echo "| SHA-256 | \`$digest\` |"
+            echo
+            echo "Play Console'a yüklenecek dosya budur; sürüm sayfasına eklenmez."
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "$name  ($bytes bayt)"
+
+      - name: AAB'yi çıktıya as
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.aab.outputs.name }}
+          path: bundle/*
           if-no-files-found: error
           retention-days: 90
 
