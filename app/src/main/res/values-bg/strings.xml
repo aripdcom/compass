@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Български -->
 <resources>
-    <string name="app_name">Компас</string>
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">Това устройство няма сензор за компас.</string>
     <string name="calibrate">Ниска точност — движете телефона като осмица.</string>
     <string name="magnetic_disturbance">Магнитни смущения: поле %1$d µT, очаквано %2$d µT — отдалечете телефона от метал или магнити.</string>

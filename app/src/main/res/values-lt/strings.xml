@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Lietuvių -->
 <resources>
-    <string name="app_name">Kompasas</string>
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">Šiame įrenginyje nėra kompaso jutiklio.</string>
     <string name="calibrate">Mažas tikslumas — judinkite telefoną aštuoniuke.</string>
     <string name="magnetic_disturbance">Magnetiniai trikdžiai: laukas %1$d µT, tikėtasi %2$d µT — patraukite telefoną nuo metalo ar magnetų.</string>

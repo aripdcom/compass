@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Español -->
 <resources>
-    <string name="app_name">Brújula</string>
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">No hay sensor de brújula en este dispositivo.</string>
     <string name="calibrate">Precisión baja — mueve el teléfono dibujando un ocho.</string>
     <string name="magnetic_disturbance">Interferencia magnética: campo %1$d µT, esperado %2$d µT — aleja el teléfono de metales o imanes.</string>

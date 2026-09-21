@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Português -->
 <resources>
-    <string name="app_name">Bússola</string>
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">Este dispositivo não tem sensor de bússola.</string>
     <string name="calibrate">Precisão baixa — mova o telemóvel em forma de oito.</string>
     <string name="magnetic_disturbance">Interferência magnética: campo %1$d µT, esperado %2$d µT — afaste-o de metais ou ímanes.</string>

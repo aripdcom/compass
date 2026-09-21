@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Italiano -->
 <resources>
-    <string name="app_name">Bussola</string>
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">Nessun sensore bussola su questo dispositivo.</string>
     <string name="calibrate">Precisione bassa — muovi il telefono a forma di otto.</string>
     <string name="magnetic_disturbance">Disturbo magnetico: campo %1$d µT, atteso %2$d µT — allontana il telefono da metalli o magneti.</string>

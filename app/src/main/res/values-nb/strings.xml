@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Norsk bokmål -->
 <resources>
-    <string name="app_name">Kompass</string>
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">Ingen kompassensor på denne enheten.</string>
     <string name="calibrate">Lav nøyaktighet — beveg telefonen i et åttetall.</string>
     <string name="magnetic_disturbance">Magnetisk forstyrrelse: felt %1$d µT, ventet %2$d µT — flytt den bort fra metall eller magneter.</string>

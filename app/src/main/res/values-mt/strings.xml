@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Malti -->
 <resources>
-    <string name="app_name">Boxxla</string>
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">Dan l-apparat m’għandux sensur tal-boxxla.</string>
     <string name="calibrate">Preċiżjoni baxxa — ċaqlaq it-telefon f’forma ta’ tmienja.</string>
     <string name="magnetic_disturbance">Interferenza manjetika: kamp %1$d µT, mistenni %2$d µT — biegħed it-telefon minn metall jew kalamiti.</string>

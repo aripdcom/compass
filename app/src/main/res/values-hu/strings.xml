@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Magyar -->
 <resources>
-    <string name="app_name">Iránytű</string>
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">Ezen az eszközön nincs iránytűérzékelő.</string>
     <string name="calibrate">Alacsony pontosság — mozgassa a telefont nyolcas alakban.</string>
     <string name="magnetic_disturbance">Mágneses zavar: tér %1$d µT, várt %2$d µT — vigye a telefont fémtől és mágnestől távolabb.</string>

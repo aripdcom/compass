@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Polski -->
 <resources>
-    <string name="app_name">Kompas</string>
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">Brak czujnika kompasu w tym urządzeniu.</string>
     <string name="calibrate">Niska dokładność — poruszaj telefonem, zataczając ósemkę.</string>
     <string name="magnetic_disturbance">Zakłócenie magnetyczne: pole %1$d µT, oczekiwane %2$d µT — odsuń telefon od metalu i magnesów.</string>

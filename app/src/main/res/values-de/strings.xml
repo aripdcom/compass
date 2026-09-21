@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Deutsch -->
 <resources>
-    <string name="app_name">Kompass</string>
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">Kein Kompasssensor auf diesem Gerät.</string>
     <string name="calibrate">Geringe Genauigkeit — bewegen Sie das Telefon in einer Acht.</string>
     <string name="magnetic_disturbance">Magnetische Störung: Feld %1$d µT, erwartet %2$d µT — vom Metall oder Magneten entfernen.</string>

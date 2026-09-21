@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Gaeilge -->
 <resources>
-    <string name="app_name">Compás</string>
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">Níl braiteoir compáis sa ghléas seo.</string>
     <string name="calibrate">Cruinneas íseal — bog an fón i bhfoirm uimhir a hocht.</string>
     <string name="magnetic_disturbance">Trasnaíocht mhaighnéadach: réimse %1$d µT, ceaptha %2$d µT — bog an fón ó mhiotal nó ó mhaighnéid.</string>

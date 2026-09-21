@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Ελληνικά -->
 <resources>
-    <string name="app_name">Πυξίδα</string>
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">Αυτή η συσκευή δεν έχει αισθητήρα πυξίδας.</string>
     <string name="calibrate">Χαμηλή ακρίβεια — κινήστε το τηλέφωνο σχηματίζοντας οκτάρι.</string>
     <string name="magnetic_disturbance">Μαγνητική παρεμβολή: πεδίο %1$d µT, αναμενόμενο %2$d µT — απομακρύνετε το τηλέφωνο από μέταλλα ή μαγνήτες.</string>

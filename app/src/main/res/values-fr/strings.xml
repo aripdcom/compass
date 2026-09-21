@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Français -->
 <resources>
-    <string name="app_name">Boussole</string>
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">Aucun capteur de boussole sur cet appareil.</string>
     <string name="calibrate">Précision faible — décrivez un huit avec le téléphone.</string>
     <string name="magnetic_disturbance">Perturbation magnétique : champ %1$d µT, attendu %2$d µT — éloignez le téléphone du métal ou des aimants.</string>
