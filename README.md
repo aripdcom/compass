@@ -802,7 +802,7 @@ Uygulama **yirmi sekiz dilde**:
 
 Uygulama içinde dil ayarı yoktur — sistemde hangisi seçiliyse o kullanılır.
 Android 13'ten itibaren `locales_config.xml` sayesinde
-`Ayarlar → Uygulamalar → Pusula → Dil` altında uygulamaya özel bir seçici de
+`Ayarlar → Uygulamalar → Kerteriz → Dil` altında uygulamaya özel bir seçici de
 çıkar.
 
 Varsayılan (`values/`) **İngilizce**, Türkçe ise `values-tr/` altındadır. Sebep:
@@ -1097,15 +1097,15 @@ ve siteyle birlikte yayımlanıyor; ayrıntısı 16. bölümde.
 
 Önce hangi durumda olduğunuzu ayırın:
 
-`Ayarlar → Uygulamalar → Tüm uygulamaları göster` listesinde **Pusula** var mı?
+`Ayarlar → Uygulamalar → Tüm uygulamaları göster` listesinde **Kerteriz** var mı?
 
 - **Varsa:** uygulama kurulu, sorun launcher'da. Aynı ekrandaki **Aç** düğmesiyle
   hemen çalıştırabilirsiniz. Çekmecede görünmesi için: ana ekranı kapatıp açın
   (ya da telefonu yeniden başlatın) ve launcher'ın **gizli uygulamalar**
   ayarına bakın (Samsung: `Ana ekran ayarları → Uygulamaları gizle`,
   Xiaomi: `Ayarlar → Uygulamalar → Uygulama kilidi → Gizli uygulamalar`).
-  Çekmece alfabetikse **P** harfinde arayın, ya da çekmecenin arama kutusuna
-  "Pusula" yazın.
+  Çekmece alfabetikse **K** harfinde arayın, ya da çekmecenin arama kutusuna
+  "Kerteriz" yazın.
 - **Yoksa:** kurulum aslında tamamlanmamış. Genelde Play Protect sessizce
   engellemiştir: `Play Store → profil simgesi → Play Protect → Ayarlar →
   Uygulamaları Play Protect ile tara` seçeneğini geçici olarak kapatıp APK'ya
@@ -1121,7 +1121,7 @@ kendi `label`/`icon` değerleri var — v1.0'da launcher'ın ikonu çözemeyip u
 Sırasıyla şunlara bakın:
 
 1. **Önce eski sürümü kaldırın.** En sık sebep budur. `Ayarlar → Uygulamalar →
-   Tüm uygulamaları göster → Pusula → Kaldır`. Aynı paket adına (`com.aripd.kerteriz`)
+   Tüm uygulamaları göster → Kerteriz → Kaldır`. Aynı paket adına (`com.aripd.kerteriz`)
    sahip, farklı bir anahtarla imzalanmış bir kurulum varsa Android yeni APK'yı
    "Uygulama yüklenmedi" diyerek reddeder. **Debug APK ile release APK'nın
    imzaları farklıdır**, dolayısıyla debug'dan release'e geçerken kaldırma adımı
