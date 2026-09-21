@@ -82,7 +82,7 @@
     <string name="settings_course">Kurstype</string>
     <string name="settings_course_great_circle">Storsirkel (kortaste veg)</string>
     <string name="settings_course_rhumb">Loksodrom (fast kurs)</string>
-    <string name="settings_course_note">Gjeld lagra punkt. Faste stader blir på storsirkelen — det er nettopp det qibla tyder.</string>
+    <string name="settings_course_note">Gjeld lagra punkt. Faste stader brukar alltid storsirkelen, uansett kva som er valt her.</string>
     <string name="settings_smoothing">Utjamning</string>
     <string name="settings_smoothing_calm">Roleg</string>
     <string name="settings_smoothing_balanced">Balansert</string>

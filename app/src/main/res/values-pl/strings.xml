@@ -82,7 +82,7 @@
     <string name="settings_course">Rodzaj azymutu</string>
     <string name="settings_course_great_circle">Ortodroma (najkrótsza droga)</string>
     <string name="settings_course_rhumb">Loksodroma (stały kurs)</string>
-    <string name="settings_course_note">Dotyczy zapisanych punktów. Stałe miejsca pozostają na ortodromie — właśnie to oznacza kibla.</string>
+    <string name="settings_course_note">Dotyczy zapisanych punktów. Stałe miejsca zawsze używają ortodromy, niezależnie od tego ustawienia.</string>
     <string name="settings_smoothing">Wygładzanie</string>
     <string name="settings_smoothing_calm">Spokojne</string>
     <string name="settings_smoothing_balanced">Zrównoważone</string>

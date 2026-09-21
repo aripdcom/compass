@@ -82,7 +82,7 @@
     <string name="settings_course">Suunnan tyyppi</string>
     <string name="settings_course_great_circle">Isoympyrä (lyhin reitti)</string>
     <string name="settings_course_rhumb">Loksodromi (tasainen kurssi)</string>
-    <string name="settings_course_note">Koskee tallennettuja pisteitä. Kiinteät paikat pysyvät isoympyrällä — juuri sitä qibla tarkoittaa.</string>
+    <string name="settings_course_note">Koskee tallennettuja pisteitä. Kiinteät paikat käyttävät aina isoympyrää, oli tämä valinta mikä tahansa.</string>
     <string name="settings_smoothing">Pehmennys</string>
     <string name="settings_smoothing_calm">Rauhallinen</string>
     <string name="settings_smoothing_balanced">Tasapainoinen</string>

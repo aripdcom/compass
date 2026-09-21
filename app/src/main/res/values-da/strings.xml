@@ -82,7 +82,7 @@
     <string name="settings_course">Pejlingstype</string>
     <string name="settings_course_great_circle">Storcirkel (korteste vej)</string>
     <string name="settings_course_rhumb">Loksodrom (fast kurs)</string>
-    <string name="settings_course_note">Gælder gemte punkter. Faste steder bliver på storcirklen — det er netop det, qibla betyder.</string>
+    <string name="settings_course_note">Gælder gemte punkter. Faste steder bruger altid storcirklen, uanset hvad der er valgt her.</string>
     <string name="settings_smoothing">Udjævning</string>
     <string name="settings_smoothing_calm">Rolig</string>
     <string name="settings_smoothing_balanced">Afbalanceret</string>

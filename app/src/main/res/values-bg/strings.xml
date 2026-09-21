@@ -82,7 +82,7 @@
     <string name="settings_course">Вид на азимута</string>
     <string name="settings_course_great_circle">Голям кръг (най-къс път)</string>
     <string name="settings_course_rhumb">Локсодрома (постоянен курс)</string>
-    <string name="settings_course_note">Важи за запазените точки. Постоянните места остават на големия кръг — това означава киблата.</string>
+    <string name="settings_course_note">Важи за запазените точки. Постоянните места винаги използват големия кръг, каквото и да е избрано тук.</string>
     <string name="settings_smoothing">Изглаждане</string>
     <string name="settings_smoothing_calm">Спокойно</string>
     <string name="settings_smoothing_balanced">Балансирано</string>

@@ -82,7 +82,7 @@
     <string name="settings_course">Kurstype</string>
     <string name="settings_course_great_circle">Storsirkel (korteste vei)</string>
     <string name="settings_course_rhumb">Loksodrom (fast kurs)</string>
-    <string name="settings_course_note">Gjelder lagrede punkter. Faste steder blir på storsirkelen — det er nettopp det qibla betyr.</string>
+    <string name="settings_course_note">Gjelder lagrede punkter. Faste steder bruker alltid storsirkelen, uansett hva som er valgt her.</string>
     <string name="settings_smoothing">Utjevning</string>
     <string name="settings_smoothing_calm">Rolig</string>
     <string name="settings_smoothing_balanced">Balansert</string>

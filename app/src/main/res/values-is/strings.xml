@@ -82,7 +82,7 @@
     <string name="settings_course">Tegund stefnu</string>
     <string name="settings_course_great_circle">Stórbaugur (stysta leið)</string>
     <string name="settings_course_rhumb">Loxodróma (föst stefna)</string>
-    <string name="settings_course_note">Gildir um vistaða punkta. Fastir staðir haldast á stórbaugnum — það er einmitt það sem qibla merkir.</string>
+    <string name="settings_course_note">Gildir um vistaða punkta. Fastir staðir nota alltaf stórbauginn, sama hvað er valið hér.</string>
     <string name="settings_smoothing">Mýking</string>
     <string name="settings_smoothing_calm">Rólegt</string>
     <string name="settings_smoothing_balanced">Jafnvægi</string>

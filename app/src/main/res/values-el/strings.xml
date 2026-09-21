@@ -82,7 +82,7 @@
     <string name="settings_course">Τύπος διόπτευσης</string>
     <string name="settings_course_great_circle">Μέγιστος κύκλος (συντομότερος)</string>
     <string name="settings_course_rhumb">Λοξοδρομία (σταθερή πορεία)</string>
-    <string name="settings_course_note">Ισχύει για τα αποθηκευμένα σημεία. Τα σταθερά σημεία μένουν στον μέγιστο κύκλο — αυτό ακριβώς σημαίνει η κίμπλα.</string>
+    <string name="settings_course_note">Ισχύει για τα αποθηκευμένα σημεία. Τα σταθερά σημεία χρησιμοποιούν πάντα τον μέγιστο κύκλο, ό,τι κι αν επιλεγεί εδώ.</string>
     <string name="settings_smoothing">Εξομάλυνση</string>
     <string name="settings_smoothing_calm">Ήρεμη</string>
     <string name="settings_smoothing_balanced">Ισορροπημένη</string>

@@ -82,7 +82,7 @@
     <string name="settings_course">Suuna tüüp</string>
     <string name="settings_course_great_circle">Suurring (lühim tee)</string>
     <string name="settings_course_rhumb">Loksodroom (püsiv kurss)</string>
-    <string name="settings_course_note">Kehtib salvestatud punktide kohta. Paiksed kohad jäävad suurringile — just seda qibla tähendabki.</string>
+    <string name="settings_course_note">Kehtib salvestatud punktide kohta. Paiksed kohad kasutavad alati suurringi, olenemata sellest valikust.</string>
     <string name="settings_smoothing">Silumine</string>
     <string name="settings_smoothing_calm">Rahulik</string>
     <string name="settings_smoothing_balanced">Tasakaalus</string>

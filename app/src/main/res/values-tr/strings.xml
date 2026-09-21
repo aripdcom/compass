@@ -82,7 +82,7 @@
     <string name="settings_course">Kerteriz türü</string>
     <string name="settings_course_great_circle">Büyük daire (en kısa)</string>
     <string name="settings_course_rhumb">Loksodrom (sabit pruva)</string>
-    <string name="settings_course_note">Kaydedilen noktalar için geçerli. Sabit yerler büyük dairede kalır — kıblenin anlamı zaten budur.</string>
+    <string name="settings_course_note">Kaydedilen noktalar için geçerli. Sabit yerler bu ayar ne olursa olsun büyük dairede kalır.</string>
     <string name="settings_smoothing">Yumuşatma</string>
     <string name="settings_smoothing_calm">Sakin</string>
     <string name="settings_smoothing_balanced">Dengeli</string>
