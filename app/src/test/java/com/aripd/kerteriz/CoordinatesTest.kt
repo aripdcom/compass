@@ -1,4 +1,4 @@
-package com.aripd.compass
+package com.aripd.kerteriz
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull

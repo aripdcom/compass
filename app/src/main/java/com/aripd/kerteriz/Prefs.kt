@@ -1,4 +1,4 @@
-package com.aripd.compass
+package com.aripd.kerteriz
 
 /**
  * Ayar anahtarları ve varsayılanları. Ana ekran ile ayarlar ekranı aynı

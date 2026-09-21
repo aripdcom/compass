@@ -1,4 +1,4 @@
-package com.aripd.compass
+package com.aripd.kerteriz
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -351,10 +351,10 @@ class SettingsActivity : Activity() {
 
     private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
 
-    private fun prefs() = getSharedPreferences("compass", Context.MODE_PRIVATE)
+    private fun prefs() = getSharedPreferences("kerteriz", Context.MODE_PRIVATE)
 
     private companion object {
-        const val SOURCE_URL = "https://github.com/aripdcem/compass"
-        const val SOURCE_LABEL = "github.com/aripdcem/compass"
+        const val SOURCE_URL = "https://github.com/aripdcom/kerteriz"
+        const val SOURCE_LABEL = "github.com/aripdcom/kerteriz"
     }
 }

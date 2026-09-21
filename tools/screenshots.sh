@@ -23,7 +23,7 @@
 
 set -euo pipefail
 
-PACKAGE="${PACKAGE:-com.aripd.compass}"
+PACKAGE="${PACKAGE:-com.aripd.kerteriz}"
 OUT="${OUT:-dist/ekran}"
 WARMUP="${WARMUP:-4}"      # uygulama açıldıktan sonra beklenen saniye
 DEMO="${DEMO:-1}"          # durum çubuğunu düzene sok (saat 12:00, pil dolu)

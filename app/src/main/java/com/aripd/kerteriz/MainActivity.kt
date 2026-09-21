@@ -1,4 +1,4 @@
-package com.aripd.compass
+package com.aripd.kerteriz
 
 import android.Manifest
 import android.app.Activity
@@ -1587,7 +1587,7 @@ class MainActivity : Activity(), SensorEventListener {
     /** On altı yönlü gülde açının düştüğü dilim. */
     private fun cardinalIndex(degrees: Float): Int = ((degrees / 22.5f) + 0.5f).toInt() % 16
 
-    private fun prefs() = getSharedPreferences("compass", Context.MODE_PRIVATE)
+    private fun prefs() = getSharedPreferences("kerteriz", Context.MODE_PRIVATE)
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         if (sensor?.type == Sensor.TYPE_MAGNETIC_FIELD ||

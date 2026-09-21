@@ -12,7 +12,11 @@
     <!-- Ana yön geçişlerinde kısa tık; normal izin, çalışma anında sorulmaz -->
     <uses-permission android:name="android.permission.VIBRATE" />
 
-    <!-- Pusula donanımı olmayan cihazlarda uygulama yine kurulabilsin diye required=false -->
+    <!--
+      Pusula donanımı olmayan cihazlarda uygulama yine kurulabilsin diye
+      required=false. Buradaki "compass" Android'in kendi sabitinin parçası,
+      uygulamanın adıyla ilgisi yok — Kerteriz'e çevrilecek bir yer değil.
+    -->
     <uses-feature
         android:name="android.hardware.sensor.compass"
         android:required="false" />

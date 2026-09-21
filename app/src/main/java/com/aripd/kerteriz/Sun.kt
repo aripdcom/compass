@@ -1,4 +1,4 @@
-package com.aripd.compass
+package com.aripd.kerteriz
 
 import kotlin.math.acos
 import kotlin.math.asin

@@ -6,9 +6,9 @@
 -->
 <data-extraction-rules>
     <cloud-backup>
-        <include domain="sharedpref" path="compass.xml" />
+        <include domain="sharedpref" path="kerteriz.xml" />
     </cloud-backup>
     <device-transfer>
-        <include domain="sharedpref" path="compass.xml" />
+        <include domain="sharedpref" path="kerteriz.xml" />
     </device-transfer>
 </data-extraction-rules>

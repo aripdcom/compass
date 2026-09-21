@@ -6,5 +6,5 @@
   Android 12 öncesi bu dosyaya bakar.
 -->
 <full-backup-content>
-    <include domain="sharedpref" path="compass.xml" />
+    <include domain="sharedpref" path="kerteriz.xml" />
 </full-backup-content>

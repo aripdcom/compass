@@ -1,4 +1,4 @@
-package com.aripd.compass
+package com.aripd.kerteriz
 
 /**
  * Konum düzeltmeleri hakkındaki kararlar. Android'in `Location` sınıfına

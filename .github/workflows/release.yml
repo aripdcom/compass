@@ -16,7 +16,7 @@
 # İmzalama anahtarı depoya girmez; depo ayarlarındaki secret'lardan gelir
 # (Settings -> Secrets and variables -> Actions):
 #
-#   KEYSTORE_BASE64      anahtar deposunun base64 hâli:  base64 -w0 keys/compass.jks
+#   KEYSTORE_BASE64      anahtar deposunun base64 hâli:  base64 -w0 keys/kerteriz-release.jks
 #   KEYSTORE_PASSWORD    depo parolası
 #   KEY_ALIAS            anahtar takma adı
 #   KEY_PASSWORD         anahtar parolası
@@ -152,7 +152,7 @@ jobs:
           VERSION: ${{ steps.apk.outputs.version }}
           CODE: ${{ steps.apk.outputs.code }}
         run: |
-          name="compass-$VERSION-$CODE-$(git rev-parse --short=7 HEAD).aab"
+          name="kerteriz-$VERSION-$CODE-$(git rev-parse --short=7 HEAD).aab"
           mkdir -p bundle
           cp app/build/outputs/bundle/release/app-release.aab "bundle/$name"
           ( cd bundle && sha256sum "$name" > "$name.sha256" )

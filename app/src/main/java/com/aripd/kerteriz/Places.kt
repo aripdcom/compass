@@ -1,4 +1,4 @@
-package com.aripd.compass
+package com.aripd.kerteriz
 
 /**
  * Kadranda yönü gösterilebilen sabit noktalar.
