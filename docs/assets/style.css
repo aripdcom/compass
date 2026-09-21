@@ -232,6 +232,68 @@ img { max-width: 100%; height: auto; }
   border-color: var(--accent);
 }
 
+/* ----------------------------------------------------------- gizlilik sayfası */
+
+/*
+  Tek sütun, dar ölçü: bu sayfa baştan sona okunur, göz gezdirilmez. Kartlar,
+  ızgaralar ve ekran görüntüleri yok — başlıklar, paragraflar ve bir izin
+  listesi var.
+*/
+
+.policy {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: clamp(24px, 5vw, 48px) 16px clamp(32px, 6vw, 64px);
+}
+.policy h1 { font-size: clamp(2rem, 5vw, 2.6rem); }
+.policy h2 {
+  margin-top: 2em;
+  padding-top: .9em;
+  border-top: 1px solid var(--line);
+}
+.policy .lead { font-size: 1.1rem; color: var(--dim); }
+.policy > .note { margin-top: -.4em; }
+
+.plain {
+  list-style: none;
+  margin: 0 0 1em;
+  padding: 0;
+  max-width: var(--measure);
+}
+.plain li {
+  position: relative;
+  padding-left: 1.1em;
+  margin-bottom: .7em;
+}
+/* Madde imi yerine ince bir çizgi: nokta değil, sayfanın kendi tonunda. */
+.plain li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .72em;
+  width: .6em;
+  height: 1px;
+  background: var(--accent);
+}
+
+.perms {
+  margin: 0 0 1.2em;
+  max-width: var(--measure);
+  border-left: 3px solid var(--accent);
+  padding: 4px 0 4px 16px;
+}
+.perms dt { font-weight: 600; margin-top: .9em; }
+.perms dt:first-child { margin-top: 0; }
+.perms dd { margin: .15em 0 0; color: var(--dim); }
+/* İznin teknik adı: çevrilmez, telefonun izin listesinde aynen bu yazar. */
+.perms code {
+  display: inline-block;
+  font-size: .82rem;
+  font-weight: 400;
+  color: var(--dim);
+  word-break: break-all;
+}
+
 /* --------------------------------------------------------------------- alt */
 
 .foot {

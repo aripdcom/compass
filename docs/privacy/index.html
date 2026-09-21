@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!--
+  Gizlilik metni. Play Console yayımlanmış bir uygulamadan bunu ayrı, herkese
+  açık ve düzenlenemez bir adreste istiyor; adres burası:
+  https://compass.aripd.com/privacy/
+
+  Ana sayfayla aynı düzenek: İngilizce metin bu dosyanın içinde, diğer yirmi
+  yedi dil `../assets/privacy-i18n.js` içinde, çeviriyi uygulayan `site.js`
+  ikisinde de aynı. Ayrı bir çeviri dosyası olmasının sebebi ağırlık: ana
+  sayfanın hiç kullanmayacağı yüz kilobaytlık gizlilik metnini ziyaretçiye
+  indirtmenin anlamı yok.
+
+  Metin uygulamanın gerçekten yaptığını anlatır; söylenen her şey manifest'ten,
+  `compass.xml`'den ya da kaynak koddan doğrulanabilir. Yedekleme bölümü de
+  buna dâhil: `allowBackup` açık, yani koordinatlar sistemin yedeğiyle Google
+  hesabına gidebiliyor — bunu yazmayan bir gizlilik metni eksik olurdu.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy — Compass</title>
+<meta name="description" content="Compass for Android collects nothing and sends nothing: it holds no internet permission, so it cannot. What it reads, what it keeps on your phone, and how to check it yourself.">
+<meta name="theme-color" content="#101418">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="../ikon.png" sizes="192x192">
+<link rel="apple-touch-icon" href="../ikon.png">
+<link rel="canonical" href="https://compass.aripd.com/privacy/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Privacy — Compass">
+<meta property="og:description" content="No internet permission, no analytics, no accounts. What the app reads, what it keeps, and how to check it yourself.">
+<meta property="og:url" content="https://compass.aripd.com/privacy/">
+
+<link rel="alternate" hreflang="x-default" href="https://compass.aripd.com/privacy/">
+<link rel="alternate" hreflang="en" href="https://compass.aripd.com/privacy/?lang=en">
+<link rel="alternate" hreflang="bg" href="https://compass.aripd.com/privacy/?lang=bg">
+<link rel="alternate" hreflang="cs" href="https://compass.aripd.com/privacy/?lang=cs">
+<link rel="alternate" hreflang="da" href="https://compass.aripd.com/privacy/?lang=da">
+<link rel="alternate" hreflang="de" href="https://compass.aripd.com/privacy/?lang=de">
+<link rel="alternate" hreflang="el" href="https://compass.aripd.com/privacy/?lang=el">
+<link rel="alternate" hreflang="es" href="https://compass.aripd.com/privacy/?lang=es">
+<link rel="alternate" hreflang="et" href="https://compass.aripd.com/privacy/?lang=et">
+<link rel="alternate" hreflang="fi" href="https://compass.aripd.com/privacy/?lang=fi">
+<link rel="alternate" hreflang="fr" href="https://compass.aripd.com/privacy/?lang=fr">
+<link rel="alternate" hreflang="ga" href="https://compass.aripd.com/privacy/?lang=ga">
+<link rel="alternate" hreflang="hr" href="https://compass.aripd.com/privacy/?lang=hr">
+<link rel="alternate" hreflang="hu" href="https://compass.aripd.com/privacy/?lang=hu">
+<link rel="alternate" hreflang="is" href="https://compass.aripd.com/privacy/?lang=is">
+<link rel="alternate" hreflang="it" href="https://compass.aripd.com/privacy/?lang=it">
+<link rel="alternate" hreflang="lt" href="https://compass.aripd.com/privacy/?lang=lt">
+<link rel="alternate" hreflang="lv" href="https://compass.aripd.com/privacy/?lang=lv">
+<link rel="alternate" hreflang="mt" href="https://compass.aripd.com/privacy/?lang=mt">
+<link rel="alternate" hreflang="nb" href="https://compass.aripd.com/privacy/?lang=nb">
+<link rel="alternate" hreflang="nl" href="https://compass.aripd.com/privacy/?lang=nl">
+<link rel="alternate" hreflang="nn" href="https://compass.aripd.com/privacy/?lang=nn">
+<link rel="alternate" hreflang="pl" href="https://compass.aripd.com/privacy/?lang=pl">
+<link rel="alternate" hreflang="pt" href="https://compass.aripd.com/privacy/?lang=pt">
+<link rel="alternate" hreflang="ro" href="https://compass.aripd.com/privacy/?lang=ro">
+<link rel="alternate" hreflang="sk" href="https://compass.aripd.com/privacy/?lang=sk">
+<link rel="alternate" hreflang="sl" href="https://compass.aripd.com/privacy/?lang=sl">
+<link rel="alternate" hreflang="sv" href="https://compass.aripd.com/privacy/?lang=sv">
+<link rel="alternate" hreflang="tr" href="https://compass.aripd.com/privacy/?lang=tr">
+
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+<header class="top">
+  <a class="brand" href="../">
+    <img src="../ikon.png" width="36" height="36" alt="" decoding="async">
+    <span>Compass</span>
+  </a>
+
+  <form class="picker" id="picker" hidden>
+    <label for="lang" data-i18n="langLabel">Language</label>
+    <select id="lang" name="lang"></select>
+    <noscript><button type="submit">OK</button></noscript>
+  </form>
+</header>
+
+<main id="main" class="policy">
+
+  <h1 data-i18n="h1">Privacy policy</h1>
+  <p class="note" data-i18n="updated">Applies to the Compass app for Android (com.aripd.compass) and to this site. In effect from 21 September 2026.</p>
+  <p class="lead" data-i18n="lead">Compass collects nothing, sends nothing, and has no server to send anything to. This page says that in detail — and, more usefully, says how you can check it yourself instead of taking our word for it.</p>
+
+  <h2 data-i18n="secShort">The short version</h2>
+  <ul class="plain">
+    <li data-i18n="sh1">The app holds no internet permission. Android will not give it a network connection, so nothing can leave your phone through the app — no reading, no coordinate, no identifier.</li>
+    <li data-i18n="sh2">There is no advertising, no analytics and no crash reporting, and no third-party code at all. The app is built from the Android SDK and the Kotlin standard library and nothing else.</li>
+    <li data-i18n="sh3">Your location is read on the phone, used on the phone, and kept only where you put it — in the points you save yourself.</li>
+    <li data-i18n="sh4">There is no account, no sign-in and nothing to register.</li>
+  </ul>
+
+  <h2 data-i18n="secWhat">What the app reads</h2>
+  <p data-i18n="whatLoc">Your location, once you allow it. It gives the magnetic declination — which is what makes north on the dial the geographic pole rather than the magnetic one — the bearings and distances to the qibla and the other fixed places, and the positions of the sun and the moon.</p>
+  <p data-i18n="whatLocB">Approximate location is enough for all of that. Precise location is used only for the coordinate panel and for the distance to a saved point. Allow only the approximate one and the app keeps working and says so on screen; allow neither and the compass still works, showing magnetic north and leaving out the qibla, the sun and the moon.</p>
+  <p data-i18n="whatSensors">The magnetometer, the accelerometer and, where the phone has one, the rotation-vector sensor. These are what a compass is made of: they give the direction the phone is facing and how level it is. Reading them needs no permission, and they say nothing about who you are.</p>
+  <p data-i18n="whatYou">Whatever you type or paste yourself: the name of a point, a pair of coordinates, or a map link shared into the app.</p>
+
+  <h2 data-i18n="secStore">What is kept, and where</h2>
+  <p data-i18n="store1">One file on your phone, private to the app. It holds your settings, the last position the app was given, a locked bearing if you set one, and the points you saved, with their names and coordinates. Nothing is written anywhere else.</p>
+  <p data-i18n="store2">Android's own backup is left switched on, so that changing phones does not cost you your saved points. That means this: if backup is on in the Android settings, the operating system copies that one file — coordinates included — into your own Google account. The app neither does this nor can see it, and switching backup off in the Android settings stops it without affecting the app.</p>
+  <p data-i18n="store3">Uninstalling deletes the file. Deleting a saved point in the app removes it at once. Settings → Apps → Compass → Storage → Clear data puts everything back to a fresh install.</p>
+
+  <h2 data-i18n="secOut">What leaves the phone</h2>
+  <p data-i18n="out1">Through the app, nothing. That is not a promise but a missing permission: the manifest asks for approximate location, precise location and vibration, and does not ask for internet. Android refuses a network connection to an app that never asked for one.</p>
+  <p data-i18n="out2">It takes ten seconds to check on the phone, under Settings → Apps → Compass → Permissions. It can be checked in the file, by unpacking the APK and reading the manifest. It can be checked in the source, which is public in full: there is not one line in it that opens a connection.</p>
+  <p data-i18n="out3">Through you, whatever you send yourself. The share button hands a line of text — the coordinates and a map link — to the app you choose to send it with, and that app and its recipient then have it. A map link opened from Compass works the same way: the map application takes over from there, under its own policy.</p>
+
+  <h2 data-i18n="secPerms">The permissions, one by one</h2>
+  <dl class="perms">
+    <dt><span data-i18n="permCoarse">Approximate location</span> <code>ACCESS_COARSE_LOCATION</code></dt>
+    <dd data-i18n="permCoarseWhy">The declination, the qibla, the sun and the moon.</dd>
+    <dt><span data-i18n="permFine">Precise location</span> <code>ACCESS_FINE_LOCATION</code></dt>
+    <dd data-i18n="permFineWhy">The coordinate panel and the distance to a saved point.</dd>
+    <dt><span data-i18n="permVibrate">Vibration</span> <code>VIBRATE</code></dt>
+    <dd data-i18n="permVibrateWhy">The short tick as the dial passes north, east, south and west.</dd>
+  </dl>
+  <p data-i18n="permNone">That is the entire list. No internet, no camera, no microphone, no contacts, no files, no device identifier.</p>
+
+  <h2 data-i18n="secThird">Third parties</h2>
+  <p data-i18n="third1">Inside the app there are none: no software development kits, no libraries beyond the Android platform itself, no advertising network, no analytics, no crash reporter.</p>
+  <p data-i18n="third2">Around it there are two. Google Play, if that is where you installed it from, gathers its own install and crash figures under Google's privacy policy; GitHub serves this site and the source code under GitHub's. Neither is asked for anything by us, and neither is given anything by us.</p>
+
+  <h2 data-i18n="secKids">Children</h2>
+  <p data-i18n="kids">The app suits any age. It gathers nothing from anyone, so it gathers nothing from a child either.</p>
+
+  <h2 data-i18n="secRights">Your rights</h2>
+  <p data-i18n="rights">European data protection law gives you the right to see, correct, export and erase the personal data a service holds about you. We hold none: there is no database, no account and no server. What the app produces stays on your phone, in your hands, and Clear data erases it. There is no request to file and nobody to file it with.</p>
+
+  <h2 data-i18n="secChanges">Changes</h2>
+  <p data-i18n="changes">If this policy changes, the new text appears here and the date at the top changes with it. Every earlier version stays in the repository's history, so what changed, and when, is a matter of record rather than of memory.</p>
+
+  <h2 data-i18n="secContact">Contact</h2>
+  <p data-i18n="contact">Questions about this policy, or about anything on this page, are welcome. The quickest way is an issue on GitHub; the developer address shown on the app's Google Play listing reaches the same person.</p>
+  <p class="actions">
+    <a class="button" href="https://github.com/aripdcom/compass/issues" data-i18n="contactLink">Open an issue on GitHub</a>
+    <a class="button" href="../" data-i18n="backHome">Back to the home page</a>
+  </p>
+
+</main>
+
+<footer class="foot">
+  <p data-i18n="footNote">MIT licensed. Built with the Android SDK and the Kotlin standard library, and nothing else.</p>
+  <p><a href="https://github.com/aripdcom/compass" data-i18n="btnSource">Source on GitHub</a></p>
+</footer>
+
+<script src="../assets/privacy-i18n.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>
