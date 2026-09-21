@@ -39,12 +39,29 @@ class PlaceSearchTest {
         assertTrue(PlaceSearch.matches("Cape Horn", "Horn", ""))
     }
 
+    /**
+     * Ad da etiket de aranır; kadran etiketi adın içinde geçmeyebilir. Türkçede
+     * yerin adı "Kâbe", kadrandaki etiketi "Kıble" — "kible" yazan onu ancak
+     * etiketten bulur.
+     */
     @Test
     fun `hem tam ad hem kadran etiketi aranir`() {
-        val needle = PlaceSearch.fold("horn")
-        assertTrue(PlaceSearch.matches("Cape Horn", "Horn", needle))
-        assertTrue(PlaceSearch.matches("Kap Hoorn", "Hoorn", needle))
-        assertFalse(PlaceSearch.matches("Point Nemo", "Nemo", needle))
+        assertTrue(PlaceSearch.matches("Cape Horn", "Horn", PlaceSearch.fold("horn")))
+        assertTrue(PlaceSearch.matches("Kâbe", "Kıble", PlaceSearch.fold("kible")))
+        assertFalse(PlaceSearch.matches("Point Nemo", "Nemo", PlaceSearch.fold("horn")))
+    }
+
+    /**
+     * Arama alt dizgi araması, benzerlik araması değil — ve bu bilerek böyle.
+     * Almancada burnun adı "Kap Hoorn"; çift o yüzünden içinde "horn" geçmiyor,
+     * yani Almanca arayüzde "hoorn" yazılır. Bulanık eşleme on bir yerin tek
+     * ekrana sığdığı bir listede kazandırdığından çok götürürdü: "horn" yazanın
+     * karşısına Hoorn da, Horn da, benzeyen başka bir şey de çıkardı.
+     */
+    @Test
+    fun `arama benzerlige degil alt dizgiye bakar`() {
+        assertFalse(PlaceSearch.matches("Kap Hoorn", "Hoorn", PlaceSearch.fold("horn")))
+        assertTrue(PlaceSearch.matches("Kap Hoorn", "Hoorn", PlaceSearch.fold("hoorn")))
     }
 
     @Test

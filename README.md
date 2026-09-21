@@ -942,7 +942,7 @@ değişince kuruluyor; önceden içerik aynıyken her derece değişiminde başt
 ## 12. Testler
 
 ```bash
-./gradlew test          # 105 test, saniyeler içinde, cihaz gerekmez
+./gradlew test          # 106 test, saniyeler içinde, cihaz gerekmez
 ```
 
 Testler JVM'de koşar; Android çalışma zamanı gerekmez. Bunun için uygulamanın
