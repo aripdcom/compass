@@ -199,5 +199,5 @@
     <string name="settings_source">Cód foinseach</string>
     <string name="settings_license">Ceadúnas</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">Níl cead idirlín ag an aip. Ní úsáidtear an suíomh ach ar an ngléas — don diallas, don qibla, don ghrian agus don ghealach — agus ní sheoltar áit ar bith é.</string>
+    <string name="settings_privacy_note">Níl cead idirlín ag an aip. Ní úsáidtear an suíomh ach ar an ngléas — don diallas, do na háiteanna seasta, don ghrian agus don ghealach — agus ní sheoltar áit ar bith é.</string>
 </resources>

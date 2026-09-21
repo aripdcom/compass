@@ -1055,7 +1055,7 @@ dağıtır; tek şart telif bildiriminin korunması.
 Uygulamanın **internet izni yoktur**. İstediği izinler bunlardan ibaret:
 
 ```
-ACCESS_COARSE_LOCATION    sapma, kıble, güneş ve ay hesabı için
+ACCESS_COARSE_LOCATION    sapma, sabit yerler, güneş ve ay hesabı için
 ACCESS_FINE_LOCATION      koordinat paneli ve nokta mesafesi için
 VIBRATE                   ana yön geçişlerindeki tık için
 ```
@@ -1073,6 +1073,14 @@ uygulama değil işletim sistemidir, kapsamı `backup_rules.xml` ile tek dosyayl
 sınırlandırılmıştır ve ayar kullanıcının elindedir; yine de "hiçbir şey
 telefondan çıkmıyor" cümlesinin yanına yazılması gereken bir şeydir. Açık
 bırakılmasının sebebi telefon değiştirenin noktalarını kaybetmemesi.
+
+Gizlilik metni konum izninin gerekçesini sayarken **"sabit yerler"** diyor,
+"kıble" demiyor — ne uygulama içindeki notta ne sayfada. Sebebi konumlandırma
+değil doğruluk: uygulama on bir sabit yere yön hesaplıyor ve bunlardan yalnızca
+birini adıyla saymak, iznin ne için istendiğini eksik anlatmak olurdu. Terim
+sitenin ve mağazanın zaten kullandığı terim. Yerlerin hepsi adlarıyla
+uygulamanın içinde, `Ayarlar → Kadran işaretleri → Sabit yerler` altında
+duruyor; gizlenen bir şey yok.
 
 Ayarların altındaki **Hakkında** bölümü sürümü, kaynak kod adresini, lisansı ve
 bu gizlilik notunu gösterir. Sürüm `PackageManager`'dan okunur, elle yazılmış bir
@@ -1538,9 +1546,11 @@ i18n.js`) hazır cümleleri veriyor.
 **Dini motifler mağaza tarafında geçmiyor.** Kâbe, Mescid-i Aksa ve Vatikan
 uygulamanın içinde duruyor ve ayarlardan açılıp kapanıyor; mağaza başlığı,
 açıklamaları, ekran görüntüleri ve tanıtım sayfası "sabit yerlere yön" diyor.
-Özellik gizlenmiyor — adı genel. Gizlilik metni bunun dışında: orası konum
-izninin neden istendiğini sayan bir belge ve doğruluğu konumlandırmadan önce
-geliyor.
+Özellik gizlenmiyor — adı genel. **Gizlilik metni de aynı terimi kullanıyor**
+ama başka bir gerekçeyle: orası konum izninin neden istendiğini sayan bir belge
+ve doğruluğu konumlandırmadan önce gelir. On bir yerden yalnızca birini adıyla
+saymak iznin gerekçesini eksik anlatırdı; "sabit yerler" hepsini kapsıyor.
+Ayrıntısı 13. bölümde.
 
 ### Mağaza ekran görüntüleri
 

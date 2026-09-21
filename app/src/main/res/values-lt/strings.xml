@@ -199,5 +199,5 @@
     <string name="settings_source">Pirminis kodas</string>
     <string name="settings_license">Licencija</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">Programa neturi interneto leidimo. Vieta naudojama tik įrenginyje — deklinacijai, kiblai, Saulei ir Mėnuliui — ir niekur nesiunčiama.</string>
+    <string name="settings_privacy_note">Programa neturi interneto leidimo. Vieta naudojama tik įrenginyje — deklinacijai, pastovioms vietoms, Saulei ir Mėnuliui — ir niekur nesiunčiama.</string>
 </resources>

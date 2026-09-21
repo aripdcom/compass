@@ -199,5 +199,5 @@
     <string name="settings_source">Izvorni kod</string>
     <string name="settings_license">Licencija</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">Aplikacija nema dopuštenje za internet. Lokacija se koristi samo na uređaju — za deklinaciju, kiblu, Sunce i Mjesec — i nikamo se ne šalje.</string>
+    <string name="settings_privacy_note">Aplikacija nema dopuštenje za internet. Lokacija se koristi samo na uređaju — za deklinaciju, stalna mjesta, Sunce i Mjesec — i nikamo se ne šalje.</string>
 </resources>

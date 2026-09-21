@@ -199,5 +199,5 @@
     <string name="settings_source">Πηγαίος κώδικας</string>
     <string name="settings_license">Άδεια</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">Η εφαρμογή δεν έχει άδεια διαδικτύου. Η τοποθεσία χρησιμοποιείται μόνο στη συσκευή — για την απόκλιση, την κίμπλα, τον Ήλιο και τη Σελήνη — και δεν στέλνεται πουθενά.</string>
+    <string name="settings_privacy_note">Η εφαρμογή δεν έχει άδεια διαδικτύου. Η τοποθεσία χρησιμοποιείται μόνο στη συσκευή — για την απόκλιση, τα σταθερά σημεία, τον Ήλιο και τη Σελήνη — και δεν στέλνεται πουθενά.</string>
 </resources>
