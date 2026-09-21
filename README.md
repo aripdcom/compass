@@ -40,7 +40,7 @@ kerteriz/
 | | | |
 |---|---|---|
 | ![Gündüz](docs/ekran-gunduz.png) | ![Gece modu](docs/ekran-gece.png) | ![Ayarlar](docs/ekran-ayarlar.png) |
-| Kadranda altı işaret: mavi **M** manyetik kuzey, yeşil **Kıble**, altın disk güneş ve yayı, mor baklava kaydedilen nokta, gri disk ay. Altta yönler, koordinat ve hedef satırı. | Gece modu: siyah zemin, kırmızı kadran. Ayrım parlaklıkla değil tonla kurulur, gece görüşü korunur. | Ayarlar: görünüm, pusula davranışı ve hangi işaretlerin görüneceği. Uygulama içinde dil ayarı yoktur, sistem dili kullanılır. |
+| Kadranda altı işaret: mavi **M** manyetik kuzey, yeşil **Greenwich**, altın disk güneş ve yayı, mor baklava kaydedilen nokta, gri disk ay. Altta yönler, koordinat ve hedef satırı. | Gece modu: siyah zemin, kırmızı kadran. Ayrım parlaklıkla değil tonla kurulur, gece görüşü korunur. | Ayarlar: görünüm, pusula davranışı ve hangi işaretlerin görüneceği. Uygulama içinde dil ayarı yoktur, sistem dili kullanılır. |
 
 ## 1. Hazır APK'yı telefona kurmak
 
