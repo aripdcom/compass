@@ -69,6 +69,12 @@
             android:label="@string/settings_title"
             android:parentActivityName=".MainActivity" />
 
+        <activity
+            android:name=".PlacesActivity"
+            android:exported="false"
+            android:label="@string/places_title"
+            android:parentActivityName=".SettingsActivity" />
+
     </application>
 
 </manifest>

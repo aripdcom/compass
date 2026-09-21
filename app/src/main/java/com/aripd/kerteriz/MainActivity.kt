@@ -333,7 +333,7 @@ class MainActivity : Activity(), SensorEventListener {
         showMagnetic = stored.getBoolean(Prefs.KEY_SHOW_MAGNETIC, Prefs.DEFAULT_SHOW_MAGNETIC)
         showLevel = stored.getBoolean(Prefs.KEY_SHOW_LEVEL, Prefs.DEFAULT_SHOW_LEVEL)
         visiblePlaces = Places.ALL
-            .filter { stored.getBoolean(it.prefKey, it.defaultVisible) }
+            .filter { stored.getBoolean(it.prefKey, Places.DEFAULT_VISIBLE) }
             .map { it.prefKey }
             .toSet()
         showSun = stored.getBoolean(Prefs.KEY_SHOW_SUN, Prefs.DEFAULT_SHOW_SUN)
