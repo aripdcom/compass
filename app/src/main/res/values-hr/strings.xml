@@ -82,7 +82,7 @@
     <string name="settings_course">Vrsta azimuta</string>
     <string name="settings_course_great_circle">Ortodroma (najkraći put)</string>
     <string name="settings_course_rhumb">Loksodroma (stalni kurs)</string>
-    <string name="settings_course_note">Vrijedi za spremljene točke. Stalna mjesta ostaju na ortodromi — upravo to kibla znači.</string>
+    <string name="settings_course_note">Vrijedi za spremljene točke. Stalna mjesta uvijek koriste ortodromu, bez obzira na ovu postavku.</string>
     <string name="settings_smoothing">Zaglađivanje</string>
     <string name="settings_smoothing_calm">Mirno</string>
     <string name="settings_smoothing_balanced">Uravnoteženo</string>

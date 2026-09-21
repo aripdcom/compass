@@ -89,7 +89,15 @@
     <string name="settings_course">Bearing type</string>
     <string name="settings_course_great_circle">Great circle (shortest)</string>
     <string name="settings_course_rhumb">Rhumb line (steady heading)</string>
-    <string name="settings_course_note">Applies to saved points. Fixed places keep the great circle — that is what the qibla means.</string>
+    <!--
+      Bu not kıbleden söz etmiyor ve etmemeli. Sabit yerlerin büyük dairede
+      kalmasının sebebi kıblenin tanımı — gerekçe README'nin 5. bölümünde —
+      ama ayarlar ekranı mağaza ekran görüntülerine giriyor ve mağaza
+      tarafında dini motif geçmiyor (17. bölüm). Not satırın hemen altında
+      durduğu için kadraj dışında bırakılamıyor: çekimde "kerteriz türü"
+      satırı varsa bu metin de var.
+    -->
+    <string name="settings_course_note">Applies to saved points. Fixed places always use the great circle, whatever this is set to.</string>
     <string name="settings_smoothing">Smoothing</string>
     <string name="settings_smoothing_calm">Calm</string>
     <string name="settings_smoothing_balanced">Balanced</string>

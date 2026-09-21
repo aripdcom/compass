@@ -82,7 +82,7 @@
     <string name="settings_course">Typ azimutu</string>
     <string name="settings_course_great_circle">Ortodroma (nejkratší cesta)</string>
     <string name="settings_course_rhumb">Loxodroma (stálý kurz)</string>
-    <string name="settings_course_note">Platí pro uložené body. Stálá místa zůstávají na ortodromě — přesně to kibla znamená.</string>
+    <string name="settings_course_note">Platí pro uložené body. Stálá místa používají ortodromu vždy, ať je zde nastaveno cokoli.</string>
     <string name="settings_smoothing">Vyhlazování</string>
     <string name="settings_smoothing_calm">Klidné</string>
     <string name="settings_smoothing_balanced">Vyvážené</string>

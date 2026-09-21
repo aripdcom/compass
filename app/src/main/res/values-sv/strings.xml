@@ -82,7 +82,7 @@
     <string name="settings_course">Bäringstyp</string>
     <string name="settings_course_great_circle">Storcirkel (kortaste vägen)</string>
     <string name="settings_course_rhumb">Loxodrom (fast kurs)</string>
-    <string name="settings_course_note">Gäller sparade punkter. Fasta platser stannar på storcirkeln — det är just det qibla betyder.</string>
+    <string name="settings_course_note">Gäller sparade punkter. Fasta platser använder alltid storcirkeln, oavsett vad som är valt här.</string>
     <string name="settings_smoothing">Utjämning</string>
     <string name="settings_smoothing_calm">Lugn</string>
     <string name="settings_smoothing_balanced">Balanserad</string>

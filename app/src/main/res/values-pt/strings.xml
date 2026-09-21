@@ -82,7 +82,7 @@
     <string name="settings_course">Tipo de rumo</string>
     <string name="settings_course_great_circle">Círculo máximo (o mais curto)</string>
     <string name="settings_course_rhumb">Loxodrómica (rumo constante)</string>
-    <string name="settings_course_note">Aplica-se aos pontos guardados. Os lugares fixos mantêm o círculo máximo: é isso que significa a quibla.</string>
+    <string name="settings_course_note">Aplica-se aos pontos guardados. Os lugares fixos usam sempre o círculo máximo, seja qual for esta opção.</string>
     <string name="settings_smoothing">Suavização</string>
     <string name="settings_smoothing_calm">Calma</string>
     <string name="settings_smoothing_balanced">Equilibrada</string>

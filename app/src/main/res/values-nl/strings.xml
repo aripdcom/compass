@@ -82,7 +82,7 @@
     <string name="settings_course">Koerssoort</string>
     <string name="settings_course_great_circle">Grootcirkel (kortste weg)</string>
     <string name="settings_course_rhumb">Loxodroom (vaste koers)</string>
-    <string name="settings_course_note">Geldt voor opgeslagen punten. Vaste plaatsen blijven op de grootcirkel — dat is precies wat qibla betekent.</string>
+    <string name="settings_course_note">Geldt voor opgeslagen punten. Vaste plaatsen gebruiken altijd de grootcirkel, wat hier ook is ingesteld.</string>
     <string name="settings_smoothing">Demping</string>
     <string name="settings_smoothing_calm">Rustig</string>
     <string name="settings_smoothing_balanced">Gebalanceerd</string>

@@ -82,7 +82,7 @@
     <string name="settings_course">Tipo de rumbo</string>
     <string name="settings_course_great_circle">Círculo máximo (el más corto)</string>
     <string name="settings_course_rhumb">Loxodrómica (rumbo constante)</string>
-    <string name="settings_course_note">Se aplica a los puntos guardados. Los lugares fijos siguen el círculo máximo: eso es lo que significa la alquibla.</string>
+    <string name="settings_course_note">Se aplica a los puntos guardados. Los lugares fijos siempre usan el círculo máximo, sea cual sea esta opción.</string>
     <string name="settings_smoothing">Suavizado</string>
     <string name="settings_smoothing_calm">Suave</string>
     <string name="settings_smoothing_balanced">Equilibrado</string>
