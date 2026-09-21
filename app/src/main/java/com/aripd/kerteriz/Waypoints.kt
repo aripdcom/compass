@@ -1,4 +1,4 @@
-package com.aripd.compass
+package com.aripd.kerteriz
 
 /** Kaydedilmiş bir nokta: adı ve koordinatı. */
 data class Waypoint(val name: String, val latitude: Double, val longitude: Double)

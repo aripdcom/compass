@@ -5,7 +5,7 @@
 #
 # Adın anlamlı olması işe yarıyor: indirilen dosya "app-debug.apk" diye durunca
 # hangi sürüm olduğu ancak kurup Ayarlar'a bakınca anlaşılıyor. Burada ad
-# doğrudan söylüyor: compass-4.2-33-debug-1a2b3c4.apk
+# doğrudan söylüyor: kerteriz-5.0-35-debug-1a2b3c4.apk
 #
 # Kullanım: collect-apk.sh <debug|release>
 
@@ -39,7 +39,7 @@ case "$(basename "$source_apk")" in
   *)          label="$variant" ;;
 esac
 
-name="compass-$version_name-$version_code-$label-$short_sha"
+name="kerteriz-$version_name-$version_code-$label-$short_sha"
 mkdir -p dist
 cp "$source_apk" "dist/$name.apk"
 ( cd dist && sha256sum "$name.apk" > "$name.apk.sha256" )

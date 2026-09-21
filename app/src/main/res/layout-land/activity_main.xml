@@ -100,7 +100,7 @@
             android:textSize="14sp" />
     </LinearLayout>
 
-    <com.aripd.compass.CompassView
+    <com.aripd.kerteriz.CompassView
         android:id="@+id/compassView"
         android:layout_width="0dp"
         android:layout_height="match_parent"

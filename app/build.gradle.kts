@@ -6,19 +6,19 @@ plugins {
 }
 
 android {
-    namespace = "com.aripd.compass"
+    namespace = "com.aripd.kerteriz"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.aripd.compass"
+        applicationId = "com.aripd.kerteriz"
         minSdk = 24          // Android 7.0
         // Android 15. Play Store yeni sürümler için 35 istiyor; ayrıca bu
         // seviyeden itibaren kenardan kenara çizim zorunlu ve
         // setDecorFitsSystemWindows(true) yok sayılıyor — pencere boşluklarını
         // uygulama kendisi bırakmak zorunda (bkz. MainActivity.applyInsets).
         targetSdk = 35
-        versionCode = 34
-        versionName = "4.3"
+        versionCode = 35
+        versionName = "5.0"
     }
 
 
