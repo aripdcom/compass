@@ -1,6 +1,6 @@
 # Compass
 
-[![CI](https://github.com/aripdcom/compass/actions/workflows/ci.yml/badge.svg)](https://github.com/aripdcom/compass/actions/workflows/ci.yml)
+[![CI](https://github.com/aripdcom/kerteriz/actions/workflows/ci.yml/badge.svg)](https://github.com/aripdcom/kerteriz/actions/workflows/ci.yml)
 
 Android için sade bir pusula uygulaması. Dış bağımlılığı yok — sadece Android SDK
 ve Kotlin standart kütüphanesi kullanılıyor, kadran `Canvas` ile elle çiziliyor.
@@ -8,8 +8,8 @@ ve Kotlin standart kütüphanesi kullanılıyor, kadran `Canvas` ile elle çizil
 Gerçek kuzey, kıble yönü, dokununca yön kilitleyen hedef göstergesi ve kadranın
 göbeğinde su terazisi.
 
-**Tanıtım sayfası: https://compass.aripd.com/** (16. bölüm) ·
-**Gizlilik: https://compass.aripd.com/privacy/** (13. ve 16. bölüm)
+**Tanıtım sayfası: https://kerteriz.aripd.com/** (16. bölüm) ·
+**Gizlilik: https://kerteriz.aripd.com/privacy/** (13. ve 16. bölüm)
 
 - `minSdk 24` (Android 7.0) — **Android 15 dahil** tüm sürümlerde çalışır
 - `targetSdk 35` (Android 15). Bu seviyeden itibaren kenardan kenara çizim
@@ -975,7 +975,7 @@ Ayarların altındaki **Hakkında** bölümü sürümü, kaynak kod adresini, li
 bu gizlilik notunu gösterir. Sürüm `PackageManager`'dan okunur, elle yazılmış bir
 sabitten değil.
 
-Metnin tamamı, yirmi sekiz dilde, **https://compass.aripd.com/privacy/**
+Metnin tamamı, yirmi sekiz dilde, **https://kerteriz.aripd.com/privacy/**
 adresinde. Play yayımlanan uygulamalardan gizlilik metnini böyle sabit ve
 herkese açık bir adreste istediği için sayfa depoda (`docs/privacy/`) duruyor
 ve siteyle birlikte yayımlanıyor; ayrıntısı 16. bölümde.
@@ -1196,7 +1196,7 @@ okur — tek doğru kaynak orasıdır, iş akışının ayrıca bilmesine gerek 
 
 Deponun `docs/` klasörü aynı zamanda uygulamanın tanıtım sayfasıdır:
 
-**https://compass.aripd.com/**
+**https://kerteriz.aripd.com/**
 
 Sayfanın da uygulama gibi hiçbir bağımlılığı yok: çerçeve, paket yöneticisi ve
 derleme adımı olmadan, dört dosya.
@@ -1210,12 +1210,12 @@ docs/
 ├── assets/privacy-i18n.js   gizlilik metninin diğer yirmi yedi dildeki çevirisi
 ├── assets/site.js           dil seçimi; iki sayfada da aynısı
 ├── .nojekyll                GitHub sayfayı Jekyll'e sokmasın diye
-├── CNAME                    özel alan adı: compass.aripd.com
+├── CNAME                    özel alan adı: kerteriz.aripd.com
 └── ekran-*.png              README'nin de kullandığı ekran görüntüleri
 ```
 
 Sayfadaki mutlak adresler (`canonical`, Open Graph ve yirmi sekiz `hreflang`
-bağlantısı) `compass.aripd.com`'u gösterir; geri kalan her yol görecelidir,
+bağlantısı) `kerteriz.aripd.com`'u gösterir; geri kalan her yol görecelidir,
 bu yüzden site `/compass/` altından da kök dizinden de sorunsuz açılır.
 
 **Dil seçimi uygulamadakiyle aynı mantıkta**: sayfa tarayıcının — yani sistemin
@@ -1240,7 +1240,7 @@ boş kutu yerine İngilizce görünüyor. JavaScript kapalıysa sayfa tümüyle
 
 ### Gizlilik sayfası
 
-**https://compass.aripd.com/privacy/** ayrı bir sayfadır ve ayrı bir çeviri
+**https://kerteriz.aripd.com/privacy/** ayrı bir sayfadır ve ayrı bir çeviri
 tablosu kullanır. Play, yayımlanan bir uygulamadan gizlilik metnini herkese
 açık ve sabit bir adreste istiyor; adres burasıdır.
 
@@ -1280,8 +1280,8 @@ altında **GitHub Actions** seçilir. Bundan sonra `main` dalına `docs/` altın
 değiştiren her itiş `pages.yml` iş akışını tetikler, çeviri denetimi koşar ve
 sayfa güncellenir.
 
-Özel alan adı (`compass.aripd.com`) `Settings → Pages → Custom domain` altında
-duruyor; DNS tarafında `compass` için `aripdcom.github.io`'ya bir CNAME kaydı
+Özel alan adı (`kerteriz.aripd.com`) `Settings → Pages → Custom domain` altında
+duruyor; DNS tarafında `kerteriz` için `aripdcom.github.io`'ya bir CNAME kaydı
 gerekir. Actions ile yayımlarken depodaki `docs/CNAME` dosyası şart değil ama
 kaynak ileride "Deploy from a branch"e çevrilirse gereklidir, o yüzden depoda
 duruyor — içeriği ayarlardaki alan adıyla aynı olmalı, ayrışırsa GitHub
@@ -1309,7 +1309,7 @@ ikisi birbirinin üzerine güncellenemez. Bu bir hata değil, Play App Signing'i
 sürüm yüklemek onunla imzalamayı gerektirir.
 
 **Gizlilik metni.** Play, yayımlanan uygulamadan bunu sabit ve herkese açık bir
-adreste ister; adres **https://compass.aripd.com/privacy/**. Console'da
+adreste ister; adres **https://kerteriz.aripd.com/privacy/**. Console'da
 `App content → Privacy policy` alanına yazılan şey budur.
 
 **Veri güvenliği formu (Data safety).** Uygulamanın verdiği cevap "**Veri
