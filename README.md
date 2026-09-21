@@ -1554,12 +1554,28 @@ Gece modu ile ayarlar ekranı dokunma gerektirdiği için `-i` kipinde betik her
 sahnede durup bekler; dokunma yerini betiğe gömmek telefon değişince sessizce
 yanlış yere basardı.
 
-**Çekimden önce `Ayarlar → işaretler → Kıble`'yi kapatın.** Mağaza görsellerinde
-dini motif olmaması kararı gereği; özellik yerinde duruyor, yalnızca o karede
-görünmüyor. Depodaki `docs/ekran-*.png` dosyaları eski çekimler ve kadranda
-yeşil "Kıble" etiketi duruyor — tanıtım sayfasının metinleri "sabit yerlere
-yön" dediği hâlde resimler henüz demiyor. Yeni çekimler alınınca o üç dosya da
-değiştirilmeli.
+**Sabit yerler için çekimden önce bir şey yapmak gerekmiyor.** Mağaza
+görsellerinde dini motif olmaması kararı gereği kadranda görünmemeleri lazım,
+ama hiçbiri varsayılan açık olmadığı için dokunulmadıkça kadran zaten temiz
+çıkıyor. Sınarken birini açtıysanız `Ayarlar → Kadran işaretleri → Sabit
+yerler`'den kapatın.
+
+**Depodaki `docs/ekran-*.png` dosyaları eski ve üçü de yenilenmeli.** Neyin
+eskidiği:
+
+- Kadranda yeşil **Kıble** etiketi duruyor, oysa tanıtım sayfasının metinleri
+  "sabit yerlere yön" diyor — ve artık hiçbir yer varsayılan açık değil.
+- Ayarlar çekimi iki sürüm geride: sabit yerler hâlâ tek tek anahtar satırı
+  olarak görünüyor (kendi ekranına taşındılar) ve **mesafe birimi** ile
+  **kerteriz türü** satırları hiç yok.
+- Ayarlar çekiminde durum çubuğu demo kipinde değil: gerçek saat ve kişisel
+  bildirim simgeleri görünüyor. Betik bunu kendisi düzeltiyor, o kare betikten
+  önce alınmış.
+
+Yeni çekim alınınca üç dosyanın yanında iki yeri daha güncellemek gerekiyor:
+bu belgenin başındaki tablo altyazısı (kadrandaki işaretleri sayıyor ve yeşil
+**Kıble**'yi anıyor) ve telefon başka çözünürlükteyse `docs/index.html`'deki üç
+`<img>` etiketinin `width`/`height` değerleri — şu an 1080x2400 yazıyor.
 
 Bir uyarıyı betik kendisi veriyor: Play'in ölçüsünde **uzun kenar kısa kenarın
 iki katını geçemez**. 1080x2400'lük bir telefonun ekranı 2,22 oranıyla bu
