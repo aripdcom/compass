@@ -91,6 +91,21 @@ android {
         }
     }
 
+    /**
+     * Play'e yüklenen paket (AAB) dil başına parçalara ayrılır: kullanıcı yirmi
+     * sekiz dilin metnini değil yalnızca kendi dilininkini indirir. Üçü de AGP'nin
+     * varsayılanı; burada açıkça yazılmalarının sebebi bunun bilinçli bir tercih
+     * olduğunu belgelemek. 10. bölümdeki ölçümle birlikte okunmalı: tek parça APK
+     * 300 KB, bunun dörtte üçü metin.
+     *
+     * Doğrudan dağıtılan APK'yı etkilemez; orada bütün diller birliktedir.
+     */
+    bundle {
+        language { enableSplit = true }
+        density { enableSplit = true }
+        abi { enableSplit = true }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17

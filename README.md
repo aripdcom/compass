@@ -816,14 +816,18 @@ sıkıştırdığı için APK'ya 228 KB olarak giriyor. Yunanca ve Bulgarca'nın
 Kiril/Yunan harfleri UTF-8'de latin harflerin iki katı yer tutuyor, o da payın
 bir kısmını açıklıyor.
 
-Bunu küçültmenin iki yolu var, ikisi de bu depoda **yapılmadı**:
+Bunu küçültmenin iki yolu var; biri yapıldı, biri bilerek yapılmadı:
 
-- **AAB** (Play Store): Google her dil için ayrı bir parça üretir, kullanıcı
-  yalnızca kendi dilininkini indirir — APK yeniden ~110 KB'a iner. Tek parça
-  APK doğrudan dağıtıldığı sürece yirmi sekiz dil birlikte gider.
-- **`resConfigs`**: derlemede dil listesini kısmak. Uygulamanın tamamı sistemin
-  dilini kullandığı için bu, desteklenen dili silmek demek; boyut için dilden
-  vazgeçmek bu projede tercih edilmedi.
+- **AAB** (Play Store) — **yapıldı**: `app/build.gradle.kts` içindeki `bundle`
+  bloğu dil, yoğunluk ve ABI parçalarını açık tutuyor, sürüm iş akışı da
+  `bundleRelease` ile paketi üretiyor. Google her dil için ayrı bir parça
+  hazırlar, kullanıcı yalnızca kendi dilininkini indirir — kurulan boyut
+  yeniden ~110 KB'a iner. Bu yalnızca Play'den kurulanlar için geçerli:
+  Releases sayfasından indirilen tek parça APK yirmi sekiz dili birlikte
+  taşımayı sürdürür, çünkü oradan indiren kişinin dili önceden bilinmiyor.
+- **`resConfigs`** — **yapılmadı**: derlemede dil listesini kısmak. Uygulamanın
+  tamamı sistemin dilini kullandığı için bu, desteklenen dili silmek demek;
+  boyut için dilden vazgeçmek bu projede tercih edilmedi.
 
 Üç yüz kilobayt hâlâ küçük: karşılaştırma için bir fotoğraf bundan büyük.
 
@@ -1116,6 +1120,16 @@ Gerisi her iki yolda da aynı: etiket sürümle tutuyor mu diye bakılır, testl
 lint koşar, imzalı release APK üretilir ve **Releases** sayfasında APK'sı,
 SHA-256 özeti ve önceki etiketten beri gelen commit listesiyle birlikte bir sürüm
 açılır.
+
+**Play paketi (AAB)** her koşuda ayrıca üretilir — etiket verilmemiş koşularda
+bile, çünkü asıl işi ölçmek ve yüklenmeye hazır durmak. `dist/` altına
+konmuyor, yani **sürüm sayfasına eklenmiyor**: oradan indirilen dosyanın
+telefona kurulabilmesi gerekir, bir AAB kurulamaz. Koşunun kendi çıktısına
+`compass-<sürüm>-<kod>-<commit>.aab` adıyla asılır, boyutu ve SHA-256'sı koşu
+özetinde görünür; Play Console'a yüklenecek dosya budur. İmzası release
+APK'sıyla aynı anahtarla atılır — o anahtar Play App Signing'de "yükleme
+anahtarı" olur, mağazadan dağıtılan kopyayı Google kendi anahtarıyla yeniden
+imzalar.
 
 Sürüm numarasını önce yükseltmek kasıtlı. Numara iki yerde duruyor — derleme
 dosyasında ve etikette — ve ayrı düştüklerinde ortaya `v4.3` diye yayımlanmış ama
