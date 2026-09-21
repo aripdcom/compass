@@ -199,5 +199,5 @@
     <string name="settings_source">Forráskód</string>
     <string name="settings_license">Licenc</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">Az alkalmazásnak nincs internet-jogosultsága. A helyzetet csak az eszközön használja — elhajláshoz, kiblához, Naphoz és Holdhoz — és sehova nem küldi el.</string>
+    <string name="settings_privacy_note">Az alkalmazásnak nincs internet-jogosultsága. A helyzetet csak az eszközön használja — elhajláshoz, rögzített helyekhez, Naphoz és Holdhoz — és sehova nem küldi el.</string>
 </resources>

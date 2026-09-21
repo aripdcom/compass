@@ -199,5 +199,5 @@
     <string name="settings_source">Kodiċi sors</string>
     <string name="settings_license">Liċenzja</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">L-app m’għandhiex permess għall-internet. Il-post jintuża biss fuq l-apparat — għad-deklinazzjoni, il-qibla, ix-xemx u l-qamar — u qatt ma jintbagħat imkien.</string>
+    <string name="settings_privacy_note">L-app m’għandhiex permess għall-internet. Il-post jintuża biss fuq l-apparat — għad-deklinazzjoni, il-postijiet fissi, ix-xemx u l-qamar — u qatt ma jintbagħat imkien.</string>
 </resources>

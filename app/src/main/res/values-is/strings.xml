@@ -199,5 +199,5 @@
     <string name="settings_source">Frumkóði</string>
     <string name="settings_license">Leyfi</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">Forritið hefur enga internetheimild. Staðsetningin er aðeins notuð í tækinu — fyrir misvísun, qibla, sól og tungl — og er aldrei send neitt.</string>
+    <string name="settings_privacy_note">Forritið hefur enga internetheimild. Staðsetningin er aðeins notuð í tækinu — fyrir misvísun, fasta staði, sól og tungl — og er aldrei send neitt.</string>
 </resources>

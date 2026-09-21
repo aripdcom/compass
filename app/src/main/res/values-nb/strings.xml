@@ -199,5 +199,5 @@
     <string name="settings_source">Kildekode</string>
     <string name="settings_license">Lisens</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">Appen har ingen internettillatelse. Posisjonen brukes bare på enheten — til misvisning, qibla, sol og måne — og sendes aldri videre.</string>
+    <string name="settings_privacy_note">Appen har ingen internettillatelse. Posisjonen brukes bare på enheten — til misvisning, faste steder, sol og måne — og sendes aldri videre.</string>
 </resources>

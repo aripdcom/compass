@@ -199,5 +199,5 @@
     <string name="settings_source">Código fuente</string>
     <string name="settings_license">Licencia</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">La aplicación no tiene permiso de internet. La ubicación se usa solo en el dispositivo para declinación, alquibla, sol y luna, y nunca se envía.</string>
+    <string name="settings_privacy_note">La aplicación no tiene permiso de internet. La ubicación se usa solo en el dispositivo para declinación, lugares fijos, sol y luna, y nunca se envía.</string>
 </resources>

@@ -199,5 +199,5 @@
     <string name="settings_source">Cod sursă</string>
     <string name="settings_license">Licență</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">Aplicația nu are permisiune de internet. Poziția se folosește doar pe dispozitiv — pentru declinație, qibla, Soare și Lună — și nu este trimisă nicăieri.</string>
+    <string name="settings_privacy_note">Aplicația nu are permisiune de internet. Poziția se folosește doar pe dispozitiv — pentru declinație, locuri fixe, Soare și Lună — și nu este trimisă nicăieri.</string>
 </resources>

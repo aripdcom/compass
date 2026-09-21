@@ -199,5 +199,5 @@
     <string name="settings_source">Källkod</string>
     <string name="settings_license">Licens</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">Appen har ingen internetbehörighet. Platsen används bara på enheten — för missvisning, qibla, sol och måne — och skickas aldrig vidare.</string>
+    <string name="settings_privacy_note">Appen har ingen internetbehörighet. Platsen används bara på enheten — för missvisning, fasta platser, sol och måne — och skickas aldrig vidare.</string>
 </resources>

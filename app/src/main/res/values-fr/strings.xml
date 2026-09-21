@@ -199,5 +199,5 @@
     <string name="settings_source">Code source</string>
     <string name="settings_license">Licence</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">L’application n’a aucune autorisation internet. La position sert uniquement sur l’appareil — déclinaison, qibla, soleil et lune — et n’est jamais transmise.</string>
+    <string name="settings_privacy_note">L’application n’a aucune autorisation internet. La position sert uniquement sur l’appareil — déclinaison, lieux fixes, soleil et lune — et n’est jamais transmise.</string>
 </resources>

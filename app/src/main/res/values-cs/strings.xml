@@ -199,5 +199,5 @@
     <string name="settings_source">Zdrojový kód</string>
     <string name="settings_license">Licence</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">Aplikace nemá oprávnění k internetu. Poloha se používá jen v zařízení — pro deklinaci, kiblu, Slunce a Měsíc — a nikam se neodesílá.</string>
+    <string name="settings_privacy_note">Aplikace nemá oprávnění k internetu. Poloha se používá jen v zařízení — pro deklinaci, stálá místa, Slunce a Měsíc — a nikam se neodesílá.</string>
 </resources>

@@ -199,5 +199,5 @@
     <string name="settings_source">Broncode</string>
     <string name="settings_license">Licentie</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">De app heeft geen internettoestemming. De locatie wordt alleen op het toestel gebruikt — voor declinatie, qibla, zon en maan — en wordt nooit verstuurd.</string>
+    <string name="settings_privacy_note">De app heeft geen internettoestemming. De locatie wordt alleen op het toestel gebruikt — voor declinatie, vaste plaatsen, zon en maan — en wordt nooit verstuurd.</string>
 </resources>
