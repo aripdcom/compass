@@ -47,10 +47,11 @@ scenes_interactive=(
   "ayarlar:Ayarlar ekranı"
 )
 
-# Mağaza görselleri için: çekimden önce Ayarlar → işaretler altından Kıble'yi
-# kapatın. Özellik duruyor ve varsayılanı açık; kapatılmasının tek sebebi
-# mağaza sayfasında dini bir motif göstermemek. Uygulamanın içinde ve
-# README'de yerinde duruyor.
+# Mağaza görsellerinde sabit yerler kadranda görünmemeli; dini motif mağaza
+# tarafında geçmiyor. Bunun için ayrıca bir şey yapmak gerekmiyor: hiçbir yer
+# varsayılan açık değil, yani dokunulmadıkça kadran zaten temiz çıkar.
+# Sınarken birini açtıysanız Ayarlar → Kadran işaretleri → Sabit yerler'den
+# kapatın. Özellik uygulamanın içinde ve README'de yerinde duruyor.
 
 say() { printf '%s\n' "$*" >&2; }
 die() { printf 'hata: %s\n' "$*" >&2; exit 1; }
