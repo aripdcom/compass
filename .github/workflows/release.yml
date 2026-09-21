@@ -207,6 +207,10 @@ jobs:
             echo "Kurulum adımları README'nin 1. bölümünde."
           } > "$RUNNER_TEMP/notes.md"
 
+      # Başlıktaki ad markadır ve uygulamanın adıyla birlikte değişmeli. Bir kez
+      # geride kaldı: uygulama Kerteriz olurken buradaki "Pusula" yerinde kaldı,
+      # çünkü o tarama İngilizce "Compass" arıyordu ve "Pusula" ona takılmaz.
+      #
       # `--generate-notes` önceki etiketten beri gelen commit listesini üretir;
       # GitHub API'si onu verilen gövdenin *ardına* ekler, üzerine yazmaz.
       #
@@ -222,6 +226,6 @@ jobs:
         run: |
           gh release create "$TAG" dist/* \
             --target "$GITHUB_SHA" \
-            --title "Pusula $VERSION" \
+            --title "Kerteriz $VERSION" \
             --notes-file "$RUNNER_TEMP/notes.md" \
             --generate-notes
