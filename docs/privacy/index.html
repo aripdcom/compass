@@ -11,7 +11,7 @@
   de indirtmenin anlamı yok.
 
   Metin uygulamanın gerçekten yaptığını anlatır; söylenen her şey manifest'ten,
-  `compass.xml`'den ya da kaynak koddan doğrulanabilir. Yedekleme bölümü de
+  `kerteriz.xml`'den ya da kaynak koddan doğrulanabilir. Yedekleme bölümü de
   buna dâhil: `allowBackup` açık, yani koordinatlar sistemin yedeğiyle Google
   hesabına gidebiliyor — bunu yazmayan bir gizlilik metni eksik olurdu.
 -->
@@ -19,15 +19,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Privacy — Compass</title>
-<meta name="description" content="Compass for Android collects nothing and sends nothing: it holds no internet permission, so it cannot. What it reads, what it keeps on your phone, and how to check it yourself.">
+<title>Privacy — Kerteriz</title>
+<meta name="description" content="Kerteriz for Android collects nothing and sends nothing: it holds no internet permission, so it cannot. What it reads, what it keeps on your phone, and how to check it yourself.">
 <meta name="theme-color" content="#101418">
 <meta name="color-scheme" content="dark light">
 <link rel="icon" href="../ikon.png" sizes="192x192">
 <link rel="apple-touch-icon" href="../ikon.png">
 <link rel="canonical" href="https://kerteriz.aripd.com/privacy/">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Privacy — Compass">
+<meta property="og:title" content="Privacy — Kerteriz">
 <meta property="og:description" content="No internet permission, no analytics, no accounts. What the app reads, what it keeps, and how to check it yourself.">
 <meta property="og:url" content="https://kerteriz.aripd.com/privacy/">
 
@@ -70,7 +70,7 @@
 <header class="top">
   <a class="brand" href="../">
     <img src="../ikon.png" width="36" height="36" alt="" decoding="async">
-    <span>Compass</span>
+    <span>Kerteriz</span>
   </a>
 
   <form class="picker" id="picker" hidden>
@@ -83,8 +83,8 @@
 <main id="main" class="policy">
 
   <h1 data-i18n="h1">Privacy policy</h1>
-  <p class="note" data-i18n="updated">Applies to the Compass app for Android (com.aripd.compass) and to this site. In effect from 21 September 2026.</p>
-  <p class="lead" data-i18n="lead">Compass collects nothing, sends nothing, and has no server to send anything to. This page says that in detail — and, more usefully, says how you can check it yourself instead of taking our word for it.</p>
+  <p class="note" data-i18n="updated">Applies to the Kerteriz app for Android (com.aripd.kerteriz) and to this site. In effect from 21 September 2026.</p>
+  <p class="lead" data-i18n="lead">Kerteriz collects nothing, sends nothing, and has no server to send anything to. This page says that in detail — and, more usefully, says how you can check it yourself instead of taking our word for it.</p>
 
   <h2 data-i18n="secShort">The short version</h2>
   <ul class="plain">
@@ -103,12 +103,12 @@
   <h2 data-i18n="secStore">What is kept, and where</h2>
   <p data-i18n="store1">One file on your phone, private to the app. It holds your settings, the last position the app was given, a locked bearing if you set one, and the points you saved, with their names and coordinates. Nothing is written anywhere else.</p>
   <p data-i18n="store2">Android's own backup is left switched on, so that changing phones does not cost you your saved points. That means this: if backup is on in the Android settings, the operating system copies that one file — coordinates included — into your own Google account. The app neither does this nor can see it, and switching backup off in the Android settings stops it without affecting the app.</p>
-  <p data-i18n="store3">Uninstalling deletes the file. Deleting a saved point in the app removes it at once. Settings → Apps → Compass → Storage → Clear data puts everything back to a fresh install.</p>
+  <p data-i18n="store3">Uninstalling deletes the file. Deleting a saved point in the app removes it at once. Settings → Apps → Kerteriz → Storage → Clear data puts everything back to a fresh install.</p>
 
   <h2 data-i18n="secOut">What leaves the phone</h2>
   <p data-i18n="out1">Through the app, nothing. That is not a promise but a missing permission: the manifest asks for approximate location, precise location and vibration, and does not ask for internet. Android refuses a network connection to an app that never asked for one.</p>
-  <p data-i18n="out2">It takes ten seconds to check on the phone, under Settings → Apps → Compass → Permissions. It can be checked in the file, by unpacking the APK and reading the manifest. It can be checked in the source, which is public in full: there is not one line in it that opens a connection.</p>
-  <p data-i18n="out3">Through you, whatever you send yourself. The share button hands a line of text — the coordinates and a map link — to the app you choose to send it with, and that app and its recipient then have it. A map link opened from Compass works the same way: the map application takes over from there, under its own policy.</p>
+  <p data-i18n="out2">It takes ten seconds to check on the phone, under Settings → Apps → Kerteriz → Permissions. It can be checked in the file, by unpacking the APK and reading the manifest. It can be checked in the source, which is public in full: there is not one line in it that opens a connection.</p>
+  <p data-i18n="out3">Through you, whatever you send yourself. The share button hands a line of text — the coordinates and a map link — to the app you choose to send it with, and that app and its recipient then have it. A map link opened from Kerteriz works the same way: the map application takes over from there, under its own policy.</p>
 
   <h2 data-i18n="secPerms">The permissions, one by one</h2>
   <dl class="perms">

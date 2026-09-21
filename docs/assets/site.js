@@ -20,7 +20,7 @@
 
   var TABLE = window.COMPASS_I18N || {};
   var DEFAULT = "en";
-  var STORE_KEY = "compass.lang";
+  var STORE_KEY = "kerteriz.lang";
 
   // Birbirinin yerine geçen kodlar: Norveççenin eski kodu `no`, Endonezce ve
   // İbranicenin eski kodları da tarayıcılarda hâlâ görülüyor. Bizi ilgilendiren

@@ -1,4 +1,4 @@
-# Compass
+# Kerteriz
 
 [![CI](https://github.com/aripdcom/kerteriz/actions/workflows/ci.yml/badge.svg)](https://github.com/aripdcom/kerteriz/actions/workflows/ci.yml)
 
@@ -15,7 +15,7 @@ göbeğinde su terazisi.
 - `targetSdk 35` (Android 15). Bu seviyeden itibaren kenardan kenara çizim
   zorunlu ve `setDecorFitsSystemWindows(true)` yok sayılıyor; pencere
   boşluklarını uygulama kendisi bırakıyor.
-- Paket adı: `com.aripd.compass`
+- Paket adı: `com.aripd.kerteriz`
 - İzinler: `VIBRATE` (yön geçişi tıkı) ile `ACCESS_COARSE_LOCATION` ve `ACCESS_FINE_LOCATION` (gerçek kuzey, kıble
   ve koordinat paneli için; reddedilirse uygulama manyetik kuzeyle çalışmaya devam
   eder, "yaklaşık" seçilirse koordinatlar o etiketle gösterilir).
@@ -27,7 +27,7 @@ göbeğinde su terazisi.
 ## 0. Klasör düzeni
 
 ```
-compass/
+kerteriz/
 ├── app/          uygulama kaynağı
 ├── .github/      iş akışları ve yardımcı betikler (bkz. 15. bölüm)
 ├── dist/         üretilen APK'lar          (gitignore'da)
@@ -602,23 +602,23 @@ kimlikler aynı olduğu için kod değişmez.
 
 | Dosya | İş |
 |---|---|
-| `app/src/main/java/com/aripd/compass/MainActivity.kt` | Sensör okuma, açı hesabı, yumuşatma, konum/sapma/kıble, hedef kilidi |
-| `app/src/main/java/com/aripd/compass/CompassView.kt` | Kadranın `Canvas` ile çizimi: ibre, işaretler, su terazisi |
-| `app/src/main/java/com/aripd/compass/Sun.kt` | Güneşin azimut, yükseklik, doğuş ve batış yönleri (NOAA) |
-| `app/src/main/java/com/aripd/compass/Moon.kt` | Ayın azimut, yükseklik ve evresi (Schlyter) |
-| `app/src/main/java/com/aripd/compass/Places.kt` | Kâbe, Mescid-i Aksa, Vatikan koordinatları |
-| `app/src/main/java/com/aripd/compass/Waypoints.kt` | Kaydedilen noktaların saklanması |
-| `app/src/main/java/com/aripd/compass/Geo.kt` | Yön, açı ve birim dönüşümleri (Android'e dokunmaz) |
-| `app/src/main/java/com/aripd/compass/RimLayout.kt` | Kadran işaretlerinin yarıçap dağıtımı |
-| `app/src/main/java/com/aripd/compass/Marks.kt` | Yakın işaretlerin tek etikette birleştirilmesi |
-| `app/src/main/java/com/aripd/compass/Smoothing.kt` | İbrenin alçak geçiren süzgeci |
-| `app/src/main/java/com/aripd/compass/Crossing.kt` | Bir yönün üzerinden geçişin algılanması (titreşim) |
-| `app/src/main/java/com/aripd/compass/Disturbance.kt` | Manyetik anomali algılama ve histerezisi |
-| `app/src/main/java/com/aripd/compass/Fixes.kt` | Hangi konum düzeltmesinin kazandığı, "buradasınız" eşiği |
-| `app/src/main/java/com/aripd/compass/Coordinates.kt` | Paylaşılan metinden koordinat okuma |
-| `app/src/main/java/com/aripd/compass/Palette.kt` | Gündüz ve gece renk düzenleri |
-| `app/src/main/java/com/aripd/compass/Prefs.kt` | Ayar anahtarları ve varsayılanları |
-| `app/src/main/java/com/aripd/compass/SettingsActivity.kt` | Ayarlar ekranı (kodla kurulan arayüz) |
+| `app/src/main/java/com/aripd/kerteriz/MainActivity.kt` | Sensör okuma, açı hesabı, yumuşatma, konum/sapma/kıble, hedef kilidi |
+| `app/src/main/java/com/aripd/kerteriz/CompassView.kt` | Kadranın `Canvas` ile çizimi: ibre, işaretler, su terazisi |
+| `app/src/main/java/com/aripd/kerteriz/Sun.kt` | Güneşin azimut, yükseklik, doğuş ve batış yönleri (NOAA) |
+| `app/src/main/java/com/aripd/kerteriz/Moon.kt` | Ayın azimut, yükseklik ve evresi (Schlyter) |
+| `app/src/main/java/com/aripd/kerteriz/Places.kt` | Kâbe, Mescid-i Aksa, Vatikan koordinatları |
+| `app/src/main/java/com/aripd/kerteriz/Waypoints.kt` | Kaydedilen noktaların saklanması |
+| `app/src/main/java/com/aripd/kerteriz/Geo.kt` | Yön, açı ve birim dönüşümleri (Android'e dokunmaz) |
+| `app/src/main/java/com/aripd/kerteriz/RimLayout.kt` | Kadran işaretlerinin yarıçap dağıtımı |
+| `app/src/main/java/com/aripd/kerteriz/Marks.kt` | Yakın işaretlerin tek etikette birleştirilmesi |
+| `app/src/main/java/com/aripd/kerteriz/Smoothing.kt` | İbrenin alçak geçiren süzgeci |
+| `app/src/main/java/com/aripd/kerteriz/Crossing.kt` | Bir yönün üzerinden geçişin algılanması (titreşim) |
+| `app/src/main/java/com/aripd/kerteriz/Disturbance.kt` | Manyetik anomali algılama ve histerezisi |
+| `app/src/main/java/com/aripd/kerteriz/Fixes.kt` | Hangi konum düzeltmesinin kazandığı, "buradasınız" eşiği |
+| `app/src/main/java/com/aripd/kerteriz/Coordinates.kt` | Paylaşılan metinden koordinat okuma |
+| `app/src/main/java/com/aripd/kerteriz/Palette.kt` | Gündüz ve gece renk düzenleri |
+| `app/src/main/java/com/aripd/kerteriz/Prefs.kt` | Ayar anahtarları ve varsayılanları |
+| `app/src/main/java/com/aripd/kerteriz/SettingsActivity.kt` | Ayarlar ekranı (kodla kurulan arayüz) |
 | `app/src/main/res/layout/activity_main.xml` | Dikey yerleşim: yazılar üstte, kadran altta |
 | `app/src/main/res/layout-land/activity_main.xml` | Yatay yerleşim: yazılar solda, kadran sağda |
 
@@ -1010,7 +1010,7 @@ kendi `label`/`icon` değerleri var — v1.0'da launcher'ın ikonu çözemeyip u
 Sırasıyla şunlara bakın:
 
 1. **Önce eski sürümü kaldırın.** En sık sebep budur. `Ayarlar → Uygulamalar →
-   Tüm uygulamaları göster → Pusula → Kaldır`. Aynı paket adına (`com.aripd.compass`)
+   Tüm uygulamaları göster → Pusula → Kaldır`. Aynı paket adına (`com.aripd.kerteriz`)
    sahip, farklı bir anahtarla imzalanmış bir kurulum varsa Android yeni APK'yı
    "Uygulama yüklenmedi" diyerek reddeder. **Debug APK ile release APK'nın
    imzaları farklıdır**, dolayısıyla debug'dan release'e geçerken kaldırma adımı
@@ -1041,7 +1041,7 @@ cihazlarda en güvenilir yol adb ile kurmaktır:
 
 ```bash
 export ANDROID_HOME=$HOME/Android/Sdk
-$ANDROID_HOME/platform-tools/adb install -r dist/compass-4.2-release.apk
+$ANDROID_HOME/platform-tools/adb install -r dist/kerteriz-5.0-release.apk
 ```
 
 Kablosuz adb'de eşleştirme portu ile bağlantı portunun farklı olduğunu unutmayın;
@@ -1094,7 +1094,7 @@ beklemeden yerelde denenebiliyor.
 ### Her değişiklikte APK
 
 İtişten sonra: **Actions** sekmesi → ilgili koşu → sayfanın altındaki
-**Artifacts** → `compass-4.2-33-debug-1a2b3c4.apk`.
+**Artifacts** → `kerteriz-5.0-35-debug-1a2b3c4.apk`.
 
 Ad tesadüf değil: indirilen dosya `app-debug.apk` diye durunca hangi sürüm olduğu
 ancak kurup Ayarlar'a bakınca anlaşılıyordu. Şimdi sürüm, sürüm kodu, tür ve
@@ -1139,7 +1139,7 @@ açılır.
 bile, çünkü asıl işi ölçmek ve yüklenmeye hazır durmak. `dist/` altına
 konmuyor, yani **sürüm sayfasına eklenmiyor**: oradan indirilen dosyanın
 telefona kurulabilmesi gerekir, bir AAB kurulamaz. Koşunun kendi çıktısına
-`compass-<sürüm>-<kod>-<commit>.aab` adıyla asılır, boyutu ve SHA-256'sı koşu
+`kerteriz-<sürüm>-<kod>-<commit>.aab` adıyla asılır, boyutu ve SHA-256'sı koşu
 özetinde görünür; Play Console'a yüklenecek dosya budur. İmzası release
 APK'sıyla aynı anahtarla atılır — o anahtar Play App Signing'de "yükleme
 anahtarı" olur, mağazadan dağıtılan kopyayı Google kendi anahtarıyla yeniden
@@ -1216,7 +1216,7 @@ docs/
 
 Sayfadaki mutlak adresler (`canonical`, Open Graph ve yirmi sekiz `hreflang`
 bağlantısı) `kerteriz.aripd.com`'u gösterir; geri kalan her yol görecelidir,
-bu yüzden site `/compass/` altından da kök dizinden de sorunsuz açılır.
+bu yüzden site `/kerteriz/` altından da kök dizinden de sorunsuz açılır.
 
 **Dil seçimi uygulamadakiyle aynı mantıkta**: sayfa tarayıcının — yani sistemin
 — diliyle açılır, listede olmayan bir dilde İngilizceye döner. Sıra şu:
@@ -1254,7 +1254,7 @@ Dil seçimi de ortak: `localStorage` aynı anahtarı kullandığından Almanca
 açılmış ana sayfadan geçilen gizlilik sayfası da Almanca açılır.
 
 Metin, uygulamanın gerçekten yaptığını anlatır; söylenen her şey manifest'ten,
-`compass.xml`'den ya da kaynak koddan doğrulanabilir. Buna **yedekleme** de
+`kerteriz.xml`'den ya da kaynak koddan doğrulanabilir. Buna **yedekleme** de
 dâhil: `allowBackup` açık olduğu için, telefonda Android yedeklemesi açıksa
 kaydedilen noktalar koordinatlarıyla birlikte kullanıcının kendi Google
 hesabına kopyalanır. Bunu yapan uygulama değil işletim sistemidir ve ayar
@@ -1296,7 +1296,7 @@ iş akışı silinmeli.
 
 Play yeni uygulamalarda APK kabul etmiyor; istediği **AAB**. Onu her sürüm
 koşusu üretiyor (15. bölüm): koşunun çıktısında
-`compass-<sürüm>-<kod>-<commit>.aab` adıyla duruyor, boyutu ve SHA-256'sı da
+`kerteriz-<sürüm>-<kod>-<commit>.aab` adıyla duruyor, boyutu ve SHA-256'sı da
 koşu özetinde. Sürüm sayfasına eklenmiyor, çünkü bir AAB telefona kurulamaz;
 Releases'ten indirilen dosya her zaman kurulabilir bir APK olmalı.
 

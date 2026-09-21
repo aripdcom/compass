@@ -19,7 +19,7 @@ window.COMPASS_I18N = {
 
   bg: {
     name: "Български",
-    _title: "Compass — обикновен компас за Android",
+    _title: "Kerteriz — обикновен компас за Android",
     _desc: "Обикновен компас за Android: географски север, кибла, Слънце и Луна, запазени точки и нощен режим. Без разрешение за интернет, без реклами, без проследяване, около 109 KB.",
     skip: "Към съдържанието",
     langLabel: "Език",
@@ -67,7 +67,7 @@ window.COMPASS_I18N = {
 
   cs: {
     name: "Čeština",
-    _title: "Compass — prostý kompas pro Android",
+    _title: "Kerteriz — prostý kompas pro Android",
     _desc: "Prostý kompas pro Android: zeměpisný sever, kibla, Slunce a Měsíc, uložené body a noční režim. Bez oprávnění k internetu, bez reklam, bez sledování, asi 109 KB.",
     skip: "Přejít k obsahu",
     langLabel: "Jazyk",
@@ -115,7 +115,7 @@ window.COMPASS_I18N = {
 
   da: {
     name: "Dansk",
-    _title: "Compass — et enkelt kompas til Android",
+    _title: "Kerteriz — et enkelt kompas til Android",
     _desc: "Et enkelt kompas til Android: retvisende nord, qibla, sol og måne, gemte punkter og nattilstand. Ingen internettilladelse, ingen reklamer, ingen sporing, omkring 109 KB.",
     skip: "Gå til indhold",
     langLabel: "Sprog",
@@ -163,7 +163,7 @@ window.COMPASS_I18N = {
 
   de: {
     name: "Deutsch",
-    _title: "Compass — ein schlichter Kompass für Android",
+    _title: "Kerteriz — ein schlichter Kompass für Android",
     _desc: "Ein schlichter Kompass für Android: geografisch Nord, Qibla, Sonne und Mond, gespeicherte Punkte und ein Nachtmodus. Keine Internetberechtigung, keine Werbung, kein Tracking, rund 109 KB.",
     skip: "Zum Inhalt springen",
     langLabel: "Sprache",
@@ -211,7 +211,7 @@ window.COMPASS_I18N = {
 
   el: {
     name: "Ελληνικά",
-    _title: "Compass — μια απλή πυξίδα για Android",
+    _title: "Kerteriz — μια απλή πυξίδα για Android",
     _desc: "Μια απλή πυξίδα για Android: αληθής βορράς, κίμπλα, Ήλιος και Σελήνη, αποθηκευμένα σημεία και νυχτερινή λειτουργία. Χωρίς άδεια διαδικτύου, χωρίς διαφημίσεις, χωρίς παρακολούθηση, περίπου 109 KB.",
     skip: "Μετάβαση στο περιεχόμενο",
     langLabel: "Γλώσσα",
@@ -259,7 +259,7 @@ window.COMPASS_I18N = {
 
   es: {
     name: "Español",
-    _title: "Compass — una brújula sencilla para Android",
+    _title: "Kerteriz — una brújula sencilla para Android",
     _desc: "Una brújula sencilla para Android: norte geográfico, alquibla, Sol y Luna, puntos guardados y modo nocturno. Sin permiso de internet, sin anuncios, sin rastreo, unos 109 KB.",
     skip: "Saltar al contenido",
     langLabel: "Idioma",
@@ -307,7 +307,7 @@ window.COMPASS_I18N = {
 
   et: {
     name: "Eesti",
-    _title: "Compass — lihtne kompass Androidile",
+    _title: "Kerteriz — lihtne kompass Androidile",
     _desc: "Lihtne kompass Androidile: geograafiline põhi, qibla, Päike ja Kuu, salvestatud punktid ja öörežiim. Ilma interneti loata, ilma reklaamideta, ilma jälgimiseta, umbes 109 KB.",
     skip: "Liigu sisu juurde",
     langLabel: "Keel",
@@ -355,7 +355,7 @@ window.COMPASS_I18N = {
 
   fi: {
     name: "Suomi",
-    _title: "Compass — yksinkertainen kompassi Androidille",
+    _title: "Kerteriz — yksinkertainen kompassi Androidille",
     _desc: "Yksinkertainen kompassi Androidille: tosipohjoinen, qibla, Aurinko ja Kuu, tallennetut pisteet ja yötila. Ei internet-lupaa, ei mainoksia, ei seurantaa, noin 109 kt.",
     skip: "Siirry sisältöön",
     langLabel: "Kieli",
@@ -403,7 +403,7 @@ window.COMPASS_I18N = {
 
   fr: {
     name: "Français",
-    _title: "Compass — une boussole simple pour Android",
+    _title: "Kerteriz — une boussole simple pour Android",
     _desc: "Une boussole simple pour Android : nord géographique, qibla, Soleil et Lune, points enregistrés et mode nuit. Aucune autorisation internet, aucune publicité, aucun pistage, environ 109 Ko.",
     skip: "Aller au contenu",
     langLabel: "Langue",
@@ -451,7 +451,7 @@ window.COMPASS_I18N = {
 
   ga: {
     name: "Gaeilge",
-    _title: "Compass — compás simplí do Android",
+    _title: "Kerteriz — compás simplí do Android",
     _desc: "Compás simplí do Android: fíorthuaisceart, qibla, an Ghrian agus an Ghealach, pointí sábháilte agus mód oíche. Gan chead idirlín, gan fógraí, gan rianú, tuairim is 109 KB.",
     skip: "Téigh go dtí an t-ábhar",
     langLabel: "Teanga",
@@ -499,7 +499,7 @@ window.COMPASS_I18N = {
 
   hr: {
     name: "Hrvatski",
-    _title: "Compass — jednostavan kompas za Android",
+    _title: "Kerteriz — jednostavan kompas za Android",
     _desc: "Jednostavan kompas za Android: zemljopisni sjever, kibla, Sunce i Mjesec, spremljene točke i noćni način. Bez dopuštenja za internet, bez oglasa, bez praćenja, oko 109 KB.",
     skip: "Prijeđi na sadržaj",
     langLabel: "Jezik",
@@ -547,7 +547,7 @@ window.COMPASS_I18N = {
 
   hu: {
     name: "Magyar",
-    _title: "Compass — egyszerű iránytű Androidra",
+    _title: "Kerteriz — egyszerű iránytű Androidra",
     _desc: "Egyszerű iránytű Androidra: földrajzi észak, kibla, Nap és Hold, mentett pontok és éjszakai mód. Internet-jogosultság nélkül, reklám nélkül, követés nélkül, körülbelül 109 KB.",
     skip: "Ugrás a tartalomra",
     langLabel: "Nyelv",
@@ -595,7 +595,7 @@ window.COMPASS_I18N = {
 
   is: {
     name: "Íslenska",
-    _title: "Compass — einfaldur áttaviti fyrir Android",
+    _title: "Kerteriz — einfaldur áttaviti fyrir Android",
     _desc: "Einfaldur áttaviti fyrir Android: réttvísandi norður, qibla, sól og tungl, vistaðir punktar og næturhamur. Engin internetheimild, engar auglýsingar, engin rakning, um 109 KB.",
     skip: "Fara í efnið",
     langLabel: "Tungumál",
@@ -643,7 +643,7 @@ window.COMPASS_I18N = {
 
   it: {
     name: "Italiano",
-    _title: "Compass — una bussola essenziale per Android",
+    _title: "Kerteriz — una bussola essenziale per Android",
     _desc: "Una bussola essenziale per Android: nord geografico, qibla, Sole e Luna, punti salvati e modalità notturna. Nessun permesso internet, nessuna pubblicità, nessun tracciamento, circa 109 KB.",
     skip: "Vai al contenuto",
     langLabel: "Lingua",
@@ -691,7 +691,7 @@ window.COMPASS_I18N = {
 
   lt: {
     name: "Lietuvių",
-    _title: "Compass — paprastas kompasas Androidui",
+    _title: "Kerteriz — paprastas kompasas Androidui",
     _desc: "Paprastas kompasas Androidui: tikroji šiaurė, kibla, Saulė ir Mėnulis, išsaugoti taškai ir nakties režimas. Be interneto leidimo, be reklamų, be sekimo, maždaug 109 KB.",
     skip: "Pereiti prie turinio",
     langLabel: "Kalba",
@@ -739,7 +739,7 @@ window.COMPASS_I18N = {
 
   lv: {
     name: "Latviešu",
-    _title: "Compass — vienkāršs kompass Android ierīcēm",
+    _title: "Kerteriz — vienkāršs kompass Android ierīcēm",
     _desc: "Vienkāršs kompass Android ierīcēm: ģeogrāfiskie ziemeļi, kibla, Saule un Mēness, saglabātie punkti un nakts režīms. Bez interneta atļaujas, bez reklāmām, bez izsekošanas, ap 109 KB.",
     skip: "Pāriet uz saturu",
     langLabel: "Valoda",
@@ -787,7 +787,7 @@ window.COMPASS_I18N = {
 
   mt: {
     name: "Malti",
-    _title: "Compass — boxxla sempliċi għal Android",
+    _title: "Kerteriz — boxxla sempliċi għal Android",
     _desc: "Boxxla sempliċi għal Android: tramuntana vera, qibla, ix-Xemx u l-Qamar, punti salvati u mod bil-lejl. Bla permess għall-internet, bla reklami, bla traċċar, madwar 109 KB.",
     skip: "Aqbeż għall-kontenut",
     langLabel: "Lingwa",
@@ -835,7 +835,7 @@ window.COMPASS_I18N = {
 
   nb: {
     name: "Norsk bokmål",
-    _title: "Compass — et enkelt kompass for Android",
+    _title: "Kerteriz — et enkelt kompass for Android",
     _desc: "Et enkelt kompass for Android: geografisk nord, qibla, sol og måne, lagrede punkter og nattmodus. Ingen internettillatelse, ingen reklame, ingen sporing, rundt 109 KB.",
     skip: "Gå til innholdet",
     langLabel: "Språk",
@@ -883,7 +883,7 @@ window.COMPASS_I18N = {
 
   nl: {
     name: "Nederlands",
-    _title: "Compass — een eenvoudig kompas voor Android",
+    _title: "Kerteriz — een eenvoudig kompas voor Android",
     _desc: "Een eenvoudig kompas voor Android: geografisch noorden, qibla, zon en maan, opgeslagen punten en een nachtmodus. Geen internettoestemming, geen advertenties, geen tracking, ongeveer 109 KB.",
     skip: "Naar de inhoud",
     langLabel: "Taal",
@@ -931,7 +931,7 @@ window.COMPASS_I18N = {
 
   nn: {
     name: "Norsk nynorsk",
-    _title: "Compass — eit enkelt kompass for Android",
+    _title: "Kerteriz — eit enkelt kompass for Android",
     _desc: "Eit enkelt kompass for Android: geografisk nord, qibla, sol og måne, lagra punkt og nattmodus. Utan internettløyve, utan reklame, utan sporing, om lag 109 KB.",
     skip: "Gå til innhaldet",
     langLabel: "Språk",
@@ -979,7 +979,7 @@ window.COMPASS_I18N = {
 
   pl: {
     name: "Polski",
-    _title: "Compass — prosty kompas na Androida",
+    _title: "Kerteriz — prosty kompas na Androida",
     _desc: "Prosty kompas na Androida: północ geograficzna, kibla, Słońce i Księżyc, zapisane punkty i tryb nocny. Bez uprawnienia do internetu, bez reklam, bez śledzenia, około 109 KB.",
     skip: "Przejdź do treści",
     langLabel: "Język",
@@ -1027,7 +1027,7 @@ window.COMPASS_I18N = {
 
   pt: {
     name: "Português",
-    _title: "Compass — uma bússola simples para Android",
+    _title: "Kerteriz — uma bússola simples para Android",
     _desc: "Uma bússola simples para Android: norte geográfico, quibla, Sol e Lua, pontos guardados e modo noturno. Sem permissão de internet, sem anúncios, sem rastreio, cerca de 109 KB.",
     skip: "Ir para o conteúdo",
     langLabel: "Idioma",
@@ -1075,7 +1075,7 @@ window.COMPASS_I18N = {
 
   ro: {
     name: "Română",
-    _title: "Compass — o busolă simplă pentru Android",
+    _title: "Kerteriz — o busolă simplă pentru Android",
     _desc: "O busolă simplă pentru Android: nordul geografic, qibla, Soarele și Luna, puncte salvate și mod de noapte. Fără permisiune de internet, fără reclame, fără urmărire, aproximativ 109 KB.",
     skip: "Sari la conținut",
     langLabel: "Limbă",
@@ -1123,7 +1123,7 @@ window.COMPASS_I18N = {
 
   sk: {
     name: "Slovenčina",
-    _title: "Compass — jednoduchý kompas pre Android",
+    _title: "Kerteriz — jednoduchý kompas pre Android",
     _desc: "Jednoduchý kompas pre Android: zemepisný sever, kibla, Slnko a Mesiac, uložené body a nočný režim. Bez povolenia na internet, bez reklám, bez sledovania, asi 109 KB.",
     skip: "Prejsť na obsah",
     langLabel: "Jazyk",
@@ -1171,7 +1171,7 @@ window.COMPASS_I18N = {
 
   sl: {
     name: "Slovenščina",
-    _title: "Compass — preprost kompas za Android",
+    _title: "Kerteriz — preprost kompas za Android",
     _desc: "Preprost kompas za Android: geografski sever, kibla, Sonce in Luna, shranjene točke in nočni način. Brez dovoljenja za internet, brez oglasov, brez sledenja, približno 109 KB.",
     skip: "Skoči na vsebino",
     langLabel: "Jezik",
@@ -1219,7 +1219,7 @@ window.COMPASS_I18N = {
 
   sv: {
     name: "Svenska",
-    _title: "Compass — en enkel kompass för Android",
+    _title: "Kerteriz — en enkel kompass för Android",
     _desc: "En enkel kompass för Android: geografisk nord, qibla, sol och måne, sparade punkter och nattläge. Ingen internetbehörighet, ingen reklam, ingen spårning, omkring 109 KB.",
     skip: "Hoppa till innehållet",
     langLabel: "Språk",
@@ -1267,7 +1267,7 @@ window.COMPASS_I18N = {
 
   tr: {
     name: "Türkçe",
-    _title: "Compass — Android için sade bir pusula",
+    _title: "Kerteriz — Android için sade bir pusula",
     _desc: "Android için sade bir pusula: gerçek kuzey, kıble, Güneş ve Ay, kaydedilen noktalar ve gece modu. İnternet izni yok, reklam yok, izleme yok, yaklaşık 109 KB.",
     skip: "İçeriğe geç",
     langLabel: "Dil",
