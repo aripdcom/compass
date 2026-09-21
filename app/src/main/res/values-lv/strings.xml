@@ -69,6 +69,9 @@
     <string name="settings_unit">Leņķa mērvienība</string>
     <string name="settings_unit_degree">Grādi (0-360)</string>
     <string name="settings_unit_mil">Tūkstošdaļas (0-6400)</string>
+    <string name="settings_distance_unit">Attāluma mērvienība</string>
+    <string name="settings_distance_metric">Metri un kilometri</string>
+    <string name="settings_distance_nautical">Metri un jūras jūdzes</string>
     <string name="settings_keep_screen">Neizslēgt ekrānu</string>
     <string name="settings_keep_screen_summary">Ekrāns nenodziest, kamēr lietotne ir atvērta</string>
     <string name="settings_fullscreen">Pilnekrāns</string>
@@ -76,6 +79,10 @@
     <string name="settings_section_compass">KOMPASS</string>
     <string name="settings_true_north">Lietot ģeogrāfiskos ziemeļus</string>
     <string name="settings_true_north_summary">Pieskaita magnētisko deklināciju, kad atrašanās vieta ir zināma</string>
+    <string name="settings_course">Azimuta veids</string>
+    <string name="settings_course_great_circle">Lielais loks (īsākais ceļš)</string>
+    <string name="settings_course_rhumb">Loksodroma (nemainīgs kurss)</string>
+    <string name="settings_course_note">Attiecas uz saglabātajiem punktiem. Nemainīgas vietas paliek uz lielā loka — tieši to kibla arī nozīmē.</string>
     <string name="settings_smoothing">Izlīdzināšana</string>
     <string name="settings_smoothing_calm">Mierīga</string>
     <string name="settings_smoothing_balanced">Līdzsvarota</string>
@@ -123,6 +130,7 @@
     <string name="magnetic_label">M</string>
     <string name="distance_meters">%1$d m</string>
     <string name="distance_kilometers">%1$s km</string>
+    <string name="distance_nautical_miles">%1$s NM</string>
     <string name="coordinate_decimal">%1$s° %2$s</string>
     <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
     <string-array name="cardinal_names">

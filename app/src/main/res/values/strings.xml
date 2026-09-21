@@ -76,6 +76,9 @@
     <string name="settings_unit">Angle unit</string>
     <string name="settings_unit_degree">Degrees (0-360)</string>
     <string name="settings_unit_mil">Mils (0-6400)</string>
+    <string name="settings_distance_unit">Distance unit</string>
+    <string name="settings_distance_metric">Metres and kilometres</string>
+    <string name="settings_distance_nautical">Metres and nautical miles</string>
     <string name="settings_keep_screen">Keep screen on</string>
     <string name="settings_keep_screen_summary">The screen stays on while the app is open</string>
     <string name="settings_fullscreen">Full screen</string>
@@ -83,6 +86,10 @@
     <string name="settings_section_compass">COMPASS</string>
     <string name="settings_true_north">Use true north</string>
     <string name="settings_true_north_summary">Adds magnetic declination when the location is known</string>
+    <string name="settings_course">Bearing type</string>
+    <string name="settings_course_great_circle">Great circle (shortest)</string>
+    <string name="settings_course_rhumb">Rhumb line (steady heading)</string>
+    <string name="settings_course_note">Applies to saved points. Fixed places keep the great circle — that is what the qibla means.</string>
     <string name="settings_smoothing">Smoothing</string>
     <string name="settings_smoothing_calm">Calm</string>
     <string name="settings_smoothing_balanced">Balanced</string>
@@ -130,6 +137,7 @@
     <string name="magnetic_label">M</string>
     <string name="distance_meters">%1$d m</string>
     <string name="distance_kilometers">%1$s km</string>
+    <string name="distance_nautical_miles">%1$s NM</string>
     <string name="coordinate_decimal">%1$s° %2$s</string>
     <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
     <string-array name="cardinal_names">

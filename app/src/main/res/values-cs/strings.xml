@@ -69,6 +69,9 @@
     <string name="settings_unit">Jednotka úhlu</string>
     <string name="settings_unit_degree">Stupně (0-360)</string>
     <string name="settings_unit_mil">Dílce (0-6400)</string>
+    <string name="settings_distance_unit">Jednotka vzdálenosti</string>
+    <string name="settings_distance_metric">Metry a kilometry</string>
+    <string name="settings_distance_nautical">Metry a námořní míle</string>
     <string name="settings_keep_screen">Nechat obrazovku zapnutou</string>
     <string name="settings_keep_screen_summary">Obrazovka nezhasne, dokud je aplikace otevřená</string>
     <string name="settings_fullscreen">Celá obrazovka</string>
@@ -76,6 +79,10 @@
     <string name="settings_section_compass">KOMPAS</string>
     <string name="settings_true_north">Používat zeměpisný sever</string>
     <string name="settings_true_north_summary">Přičte magnetickou deklinaci, je-li známa poloha</string>
+    <string name="settings_course">Typ azimutu</string>
+    <string name="settings_course_great_circle">Ortodroma (nejkratší cesta)</string>
+    <string name="settings_course_rhumb">Loxodroma (stálý kurz)</string>
+    <string name="settings_course_note">Platí pro uložené body. Stálá místa zůstávají na ortodromě — přesně to kibla znamená.</string>
     <string name="settings_smoothing">Vyhlazování</string>
     <string name="settings_smoothing_calm">Klidné</string>
     <string name="settings_smoothing_balanced">Vyvážené</string>
@@ -123,6 +130,7 @@
     <string name="magnetic_label">M</string>
     <string name="distance_meters">%1$d m</string>
     <string name="distance_kilometers">%1$s km</string>
+    <string name="distance_nautical_miles">%1$s NM</string>
     <string name="coordinate_decimal">%1$s° %2$s</string>
     <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
     <string-array name="cardinal_names">

@@ -69,6 +69,9 @@
     <string name="settings_unit">Szögegység</string>
     <string name="settings_unit_degree">Fok (0-360)</string>
     <string name="settings_unit_mil">Ezred (0-6400)</string>
+    <string name="settings_distance_unit">Távolság mértékegysége</string>
+    <string name="settings_distance_metric">Méter és kilométer</string>
+    <string name="settings_distance_nautical">Méter és tengeri mérföld</string>
     <string name="settings_keep_screen">Képernyő ébren tartása</string>
     <string name="settings_keep_screen_summary">A képernyő nem alszik el, amíg az alkalmazás nyitva van</string>
     <string name="settings_fullscreen">Teljes képernyő</string>
@@ -76,6 +79,10 @@
     <string name="settings_section_compass">IRÁNYTŰ</string>
     <string name="settings_true_north">Földrajzi észak használata</string>
     <string name="settings_true_north_summary">Hozzáadja a mágneses elhajlást, ha ismert a helyzet</string>
+    <string name="settings_course">Irány típusa</string>
+    <string name="settings_course_great_circle">Főkör (legrövidebb)</string>
+    <string name="settings_course_rhumb">Loxodroma (állandó irány)</string>
+    <string name="settings_course_note">A mentett pontokra vonatkozik. A rögzített helyek a főkörön maradnak — a kibla éppen ezt jelenti.</string>
     <string name="settings_smoothing">Simítás</string>
     <string name="settings_smoothing_calm">Nyugodt</string>
     <string name="settings_smoothing_balanced">Kiegyensúlyozott</string>
@@ -123,6 +130,7 @@
     <string name="magnetic_label">M</string>
     <string name="distance_meters">%1$d m</string>
     <string name="distance_kilometers">%1$s km</string>
+    <string name="distance_nautical_miles">%1$s NM</string>
     <string name="coordinate_decimal">%1$s° %2$s</string>
     <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
     <string-array name="cardinal_names">

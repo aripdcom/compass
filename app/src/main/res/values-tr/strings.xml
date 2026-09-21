@@ -69,6 +69,9 @@
     <string name="settings_unit">Açı birimi</string>
     <string name="settings_unit_degree">Derece (0-360)</string>
     <string name="settings_unit_mil">Mil (0-6400)</string>
+    <string name="settings_distance_unit">Mesafe birimi</string>
+    <string name="settings_distance_metric">Metre ve kilometre</string>
+    <string name="settings_distance_nautical">Metre ve deniz mili</string>
     <string name="settings_keep_screen">Ekranı açık tut</string>
     <string name="settings_keep_screen_summary">Uygulama açıkken ekran sönmez</string>
     <string name="settings_fullscreen">Tam ekran</string>
@@ -76,6 +79,10 @@
     <string name="settings_section_compass">PUSULA</string>
     <string name="settings_true_north">Gerçek kuzeyi kullan</string>
     <string name="settings_true_north_summary">Konum biliniyorsa manyetik sapma eklenir</string>
+    <string name="settings_course">Kerteriz türü</string>
+    <string name="settings_course_great_circle">Büyük daire (en kısa)</string>
+    <string name="settings_course_rhumb">Loksodrom (sabit pruva)</string>
+    <string name="settings_course_note">Kaydedilen noktalar için geçerli. Sabit yerler büyük dairede kalır — kıblenin anlamı zaten budur.</string>
     <string name="settings_smoothing">Yumuşatma</string>
     <string name="settings_smoothing_calm">Sakin</string>
     <string name="settings_smoothing_balanced">Dengeli</string>
@@ -123,6 +130,7 @@
     <string name="magnetic_label">M</string>
     <string name="distance_meters">%1$d m</string>
     <string name="distance_kilometers">%1$s km</string>
+    <string name="distance_nautical_miles">%1$s NM</string>
     <string name="coordinate_decimal">%1$s° %2$s</string>
     <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
     <string-array name="cardinal_names">

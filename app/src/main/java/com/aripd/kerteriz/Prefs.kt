@@ -10,6 +10,8 @@ object Prefs {
     const val KEY_NIGHT = "night"
     const val KEY_NIGHT_AUTO = "nightAuto"
     const val KEY_UNIT = "unit"
+    const val KEY_DISTANCE_UNIT = "distanceUnit"
+    const val KEY_COURSE = "course"
     const val KEY_KEEP_SCREEN = "keepScreen"
     const val KEY_FULLSCREEN = "fullscreen"
     const val KEY_TRUE_NORTH = "trueNorth"
@@ -49,6 +51,18 @@ object Prefs {
     const val UNIT_DEGREE = 0
     const val UNIT_MIL = 1
     const val DEFAULT_UNIT = UNIT_DEGREE
+
+    const val DISTANCE_METRIC = 0
+    const val DISTANCE_NAUTICAL = 1
+    const val DEFAULT_DISTANCE_UNIT = DISTANCE_METRIC
+
+    /**
+     * Kerterizin hangi yolu anlattığı. Varsayılan büyük daire: en kısa yol
+     * sorusu herkesin sorusu, sabit pruva denizcinin sorusu.
+     */
+    const val COURSE_GREAT_CIRCLE = 0
+    const val COURSE_RHUMB = 1
+    const val DEFAULT_COURSE = COURSE_GREAT_CIRCLE
 
     /**
      * Yumuşatmanın zaman sabitleri (saniye). Katsayı yerine süre tutuluyor,

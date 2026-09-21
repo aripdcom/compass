@@ -127,6 +127,8 @@ class MainActivity : Activity(), SensorEventListener {
     private var nightAuto = Prefs.DEFAULT_NIGHT_AUTO
     private var fullscreen = Prefs.DEFAULT_FULLSCREEN
     private var unit = Prefs.DEFAULT_UNIT
+    private var distanceUnit = Prefs.DEFAULT_DISTANCE_UNIT
+    private var course = Prefs.DEFAULT_COURSE
     private var useTrueNorth = Prefs.DEFAULT_TRUE_NORTH
     /** Son çizimin anı; kadran sensörden bağımsız bir hızda tazelenir. */
     private var lastRenderAt = 0L
@@ -328,6 +330,8 @@ class MainActivity : Activity(), SensorEventListener {
         if (nightAuto) sunIsDown()?.let { stored.edit().putBoolean(Prefs.KEY_NIGHT, it).apply() }
         nightMode = stored.getBoolean(Prefs.KEY_NIGHT, Prefs.DEFAULT_NIGHT)
         unit = stored.getInt(Prefs.KEY_UNIT, Prefs.DEFAULT_UNIT)
+        distanceUnit = stored.getInt(Prefs.KEY_DISTANCE_UNIT, Prefs.DEFAULT_DISTANCE_UNIT)
+        course = stored.getInt(Prefs.KEY_COURSE, Prefs.DEFAULT_COURSE)
         useTrueNorth = stored.getBoolean(Prefs.KEY_TRUE_NORTH, Prefs.DEFAULT_TRUE_NORTH)
         vibrateOnCardinals = stored.getBoolean(Prefs.KEY_VIBRATE, Prefs.DEFAULT_VIBRATE)
         showMagnetic = stored.getBoolean(Prefs.KEY_SHOW_MAGNETIC, Prefs.DEFAULT_SHOW_MAGNETIC)
@@ -493,12 +497,15 @@ class MainActivity : Activity(), SensorEventListener {
         locationText.setTextColor(colors.textDim)
         statusText.setTextColor(colors.warning)
         settingsButton.setTextColor(colors.textDim)
-        // Bunlar renkli parça içerdiği için baştan kurulmalı. Nokta satırı
-        // önbellekte durduğundan renk ya da birim değişince o da yenilenmeli.
-        // İşaret satırını applySettings'in hemen ardından çağırdığı applyMarks
-        // kurar; buradan ayrıca kurulursa aynı iş iki kez yapılmış olur.
+        // Bunlar renkli parça içerdiği için baştan kurulmalı. İşaret satırını
+        // applySettings'in hemen ardından çağırdığı applyMarks kurar; buradan
+        // ayrıca kurulursa aynı iş iki kez yapılmış olur.
         refreshInfoText(lastMagnetic)
-        refreshWaypointSpan()
+        // Noktaların yazısı değil, çözümü yenileniyor: yol ayarı açı ile
+        // mesafenin kendisini değiştiriyor, yalnızca yazılışını değil. Tek
+        // çağıran applySettings olduğu için burası ayar değişiminin yeri ve
+        // refreshWaypointFixes sonunda satırı zaten kuruyor.
+        refreshWaypointFixes()
         refreshTargetText()
     }
 
@@ -1014,15 +1021,28 @@ class MainActivity : Activity(), SensorEventListener {
             val arrivedWithin = Fixes.arrivedWithin(
                 here.accuracy.takeIf { here.hasAccuracy() }, ARRIVED_MIN_METERS, ARRIVED_MAX_METERS
             )
+            val rhumb = course == Prefs.COURSE_RHUMB
             val results = FloatArray(1)
             waypoints.map { point ->
+                // En kısa yol her hâlükârda ölçülüyor: varış kararı bir
+                // yakınlık sorusudur, hangi yoldan gidileceği sorusu değil.
+                // Sabit pruvayla gelen uzun yol yüzünden "buradasınız" geç
+                // yazılırsa noktanın üstünde durulurken hâlâ yön gösterilirdi.
                 Location.distanceBetween(
                     here.latitude, here.longitude, point.latitude, point.longitude, results
                 )
                 WaypointFix(
                     point,
-                    Geo.bearing(here.latitude, here.longitude, point.latitude, point.longitude),
-                    results[0],
+                    if (rhumb) {
+                        Geo.rhumbBearing(here.latitude, here.longitude, point.latitude, point.longitude)
+                    } else {
+                        Geo.bearing(here.latitude, here.longitude, point.latitude, point.longitude)
+                    },
+                    if (rhumb) {
+                        Geo.rhumbDistance(here.latitude, here.longitude, point.latitude, point.longitude)
+                    } else {
+                        results[0]
+                    },
                     results[0] <= arrivedWithin
                 )
             }
@@ -1067,10 +1087,22 @@ class MainActivity : Activity(), SensorEventListener {
     private fun formatTime(timeMillis: Long): String =
         android.text.format.DateFormat.getTimeFormat(this).format(java.util.Date(timeMillis))
 
-    /** Yakında metre, uzakta kilometre; ondalık ayraç cihazın diline uyar. */
-    private fun formatDistance(meters: Float): String =
-        if (meters < 1000f) getString(R.string.distance_meters, meters.roundToInt())
-        else getString(R.string.distance_kilometers, "%.1f".format(meters / 1000f))
+    /**
+     * Yakında metre, uzakta seçilen büyük birim; ondalık ayraç cihazın diline
+     * uyar.
+     *
+     * Deniz milinde eşik bir deniz mili: altında metre yazmak hem daha okunur
+     * hem daha hassas, "0,3 NM" beş yüz elli metrelik bir aralığı tek basamağa
+     * sıkıştırırdı. Kilometrede eşik zaten bin metre.
+     */
+    private fun formatDistance(meters: Float): String {
+        val nautical = distanceUnit == Prefs.DISTANCE_NAUTICAL
+        val crossover = if (nautical) Geo.METERS_PER_NAUTICAL_MILE else 1000f
+        if (meters < crossover) return getString(R.string.distance_meters, meters.roundToInt())
+        val large = "%.1f".format(meters / crossover)
+        return if (nautical) getString(R.string.distance_nautical_miles, large)
+        else getString(R.string.distance_kilometers, large)
+    }
 
     /**
      * Noktaları okur. Eski sürümlerde tek nokta iki ayrı anahtarda tutuluyordu;

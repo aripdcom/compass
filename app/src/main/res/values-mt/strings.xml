@@ -69,6 +69,9 @@
     <string name="settings_unit">Unità tal-angolu</string>
     <string name="settings_unit_degree">Gradi (0-360)</string>
     <string name="settings_unit_mil">Mils (0-6400)</string>
+    <string name="settings_distance_unit">Unità tad-distanza</string>
+    <string name="settings_distance_metric">Metri u kilometri</string>
+    <string name="settings_distance_nautical">Metri u mili nawtiċi</string>
     <string name="settings_keep_screen">Żomm l-iskrin mixgħul</string>
     <string name="settings_keep_screen_summary">L-iskrin ma jintefiex sakemm l-app tkun miftuħa</string>
     <string name="settings_fullscreen">Skrin sħiħ</string>
@@ -76,6 +79,10 @@
     <string name="settings_section_compass">BOXXLA</string>
     <string name="settings_true_north">Uża t-tramuntana vera</string>
     <string name="settings_true_north_summary">Iżid id-deklinazzjoni manjetika meta l-post ikun magħruf</string>
+    <string name="settings_course">Tip ta\' direzzjoni</string>
+    <string name="settings_course_great_circle">Ċirku kbir (l-iqsar)</string>
+    <string name="settings_course_rhumb">Loksodroma (rotta kostanti)</string>
+    <string name="settings_course_note">Japplika għall-punti salvati. Il-postijiet fissi jibqgħu fuq iċ-ċirku l-kbir — dak eżatt tfisser il-qibla.</string>
     <string name="settings_smoothing">Illixxar</string>
     <string name="settings_smoothing_calm">Kalm</string>
     <string name="settings_smoothing_balanced">Bilanċjat</string>
@@ -123,6 +130,7 @@
     <string name="magnetic_label">M</string>
     <string name="distance_meters">%1$d m</string>
     <string name="distance_kilometers">%1$s km</string>
+    <string name="distance_nautical_miles">%1$s NM</string>
     <string name="coordinate_decimal">%1$s° %2$s</string>
     <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
     <string-array name="cardinal_names">

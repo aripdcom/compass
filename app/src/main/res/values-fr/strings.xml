@@ -69,6 +69,9 @@
     <string name="settings_unit">Unité d’angle</string>
     <string name="settings_unit_degree">Degrés (0-360)</string>
     <string name="settings_unit_mil">Millièmes (0-6400)</string>
+    <string name="settings_distance_unit">Unité de distance</string>
+    <string name="settings_distance_metric">Mètres et kilomètres</string>
+    <string name="settings_distance_nautical">Mètres et milles marins</string>
     <string name="settings_keep_screen">Garder l’écran allumé</string>
     <string name="settings_keep_screen_summary">L’écran reste allumé tant que l’app est ouverte</string>
     <string name="settings_fullscreen">Plein écran</string>
@@ -76,6 +79,10 @@
     <string name="settings_section_compass">BOUSSOLE</string>
     <string name="settings_true_north">Utiliser le nord géographique</string>
     <string name="settings_true_north_summary">Ajoute la déclinaison magnétique si la position est connue</string>
+    <string name="settings_course">Type de cap</string>
+    <string name="settings_course_great_circle">Orthodromie (le plus court)</string>
+    <string name="settings_course_rhumb">Loxodromie (cap constant)</string>
+    <string name="settings_course_note">S’applique aux points enregistrés. Les lieux fixes restent sur l’orthodromie — c’est ce que signifie la qibla.</string>
     <string name="settings_smoothing">Lissage</string>
     <string name="settings_smoothing_calm">Doux</string>
     <string name="settings_smoothing_balanced">Équilibré</string>
@@ -123,6 +130,7 @@
     <string name="magnetic_label">M</string>
     <string name="distance_meters">%1$d m</string>
     <string name="distance_kilometers">%1$s km</string>
+    <string name="distance_nautical_miles">%1$s NM</string>
     <string name="coordinate_decimal">%1$s° %2$s</string>
     <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
     <string-array name="cardinal_names">

@@ -69,6 +69,9 @@
     <string name="settings_unit">Hoekeenheid</string>
     <string name="settings_unit_degree">Graden (0-360)</string>
     <string name="settings_unit_mil">Strepen (0-6400)</string>
+    <string name="settings_distance_unit">Afstandseenheid</string>
+    <string name="settings_distance_metric">Meters en kilometers</string>
+    <string name="settings_distance_nautical">Meters en zeemijlen</string>
     <string name="settings_keep_screen">Scherm aan houden</string>
     <string name="settings_keep_screen_summary">Het scherm blijft aan zolang de app open is</string>
     <string name="settings_fullscreen">Volledig scherm</string>
@@ -76,6 +79,10 @@
     <string name="settings_section_compass">KOMPAS</string>
     <string name="settings_true_north">Geografisch noorden gebruiken</string>
     <string name="settings_true_north_summary">Telt de magnetische declinatie erbij als de locatie bekend is</string>
+    <string name="settings_course">Koerssoort</string>
+    <string name="settings_course_great_circle">Grootcirkel (kortste weg)</string>
+    <string name="settings_course_rhumb">Loxodroom (vaste koers)</string>
+    <string name="settings_course_note">Geldt voor opgeslagen punten. Vaste plaatsen blijven op de grootcirkel — dat is precies wat qibla betekent.</string>
     <string name="settings_smoothing">Demping</string>
     <string name="settings_smoothing_calm">Rustig</string>
     <string name="settings_smoothing_balanced">Gebalanceerd</string>
@@ -123,6 +130,7 @@
     <string name="magnetic_label">M</string>
     <string name="distance_meters">%1$d m</string>
     <string name="distance_kilometers">%1$s km</string>
+    <string name="distance_nautical_miles">%1$s NM</string>
     <string name="coordinate_decimal">%1$s° %2$s</string>
     <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
     <string-array name="cardinal_names">

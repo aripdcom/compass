@@ -69,6 +69,9 @@
     <string name="settings_unit">Hornaeining</string>
     <string name="settings_unit_degree">Gráður (0-360)</string>
     <string name="settings_unit_mil">Mil (0-6400)</string>
+    <string name="settings_distance_unit">Fjarlægðareining</string>
+    <string name="settings_distance_metric">Metrar og kílómetrar</string>
+    <string name="settings_distance_nautical">Metrar og sjómílur</string>
     <string name="settings_keep_screen">Halda skjánum kveiktum</string>
     <string name="settings_keep_screen_summary">Skjárinn slokknar ekki meðan forritið er opið</string>
     <string name="settings_fullscreen">Heilskjár</string>
@@ -76,6 +79,10 @@
     <string name="settings_section_compass">ÁTTAVITI</string>
     <string name="settings_true_north">Nota réttvísandi norður</string>
     <string name="settings_true_north_summary">Bætir misvísuninni við þegar staðsetningin er þekkt</string>
+    <string name="settings_course">Tegund stefnu</string>
+    <string name="settings_course_great_circle">Stórbaugur (stysta leið)</string>
+    <string name="settings_course_rhumb">Loxodróma (föst stefna)</string>
+    <string name="settings_course_note">Gildir um vistaða punkta. Fastir staðir haldast á stórbaugnum — það er einmitt það sem qibla merkir.</string>
     <string name="settings_smoothing">Mýking</string>
     <string name="settings_smoothing_calm">Rólegt</string>
     <string name="settings_smoothing_balanced">Jafnvægi</string>
@@ -123,6 +130,7 @@
     <string name="magnetic_label">M</string>
     <string name="distance_meters">%1$d m</string>
     <string name="distance_kilometers">%1$s km</string>
+    <string name="distance_nautical_miles">%1$s NM</string>
     <string name="coordinate_decimal">%1$s° %2$s</string>
     <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
     <string-array name="cardinal_names">

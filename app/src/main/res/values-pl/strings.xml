@@ -69,6 +69,9 @@
     <string name="settings_unit">Jednostka kąta</string>
     <string name="settings_unit_degree">Stopnie (0-360)</string>
     <string name="settings_unit_mil">Tysięczne (0-6400)</string>
+    <string name="settings_distance_unit">Jednostka odległości</string>
+    <string name="settings_distance_metric">Metry i kilometry</string>
+    <string name="settings_distance_nautical">Metry i mile morskie</string>
     <string name="settings_keep_screen">Nie wygaszaj ekranu</string>
     <string name="settings_keep_screen_summary">Ekran pozostaje włączony, gdy aplikacja jest otwarta</string>
     <string name="settings_fullscreen">Pełny ekran</string>
@@ -76,6 +79,10 @@
     <string name="settings_section_compass">KOMPAS</string>
     <string name="settings_true_north">Używaj północy geograficznej</string>
     <string name="settings_true_north_summary">Dodaje deklinację magnetyczną, gdy lokalizacja jest znana</string>
+    <string name="settings_course">Rodzaj azymutu</string>
+    <string name="settings_course_great_circle">Ortodroma (najkrótsza droga)</string>
+    <string name="settings_course_rhumb">Loksodroma (stały kurs)</string>
+    <string name="settings_course_note">Dotyczy zapisanych punktów. Stałe miejsca pozostają na ortodromie — właśnie to oznacza kibla.</string>
     <string name="settings_smoothing">Wygładzanie</string>
     <string name="settings_smoothing_calm">Spokojne</string>
     <string name="settings_smoothing_balanced">Zrównoważone</string>
@@ -123,6 +130,7 @@
     <string name="magnetic_label">M</string>
     <string name="distance_meters">%1$d m</string>
     <string name="distance_kilometers">%1$s km</string>
+    <string name="distance_nautical_miles">%1$s NM</string>
     <string name="coordinate_decimal">%1$s° %2$s</string>
     <string name="coordinate_dms">%1$d°%2$s\'%3$s\" %4$s</string>
     <string-array name="cardinal_names">
