@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Eesti -->
 <resources>
-    <string name="app_name">Kompass</string>
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">Sellel seadmel pole kompassiandurit.</string>
     <string name="calibrate">Täpsus on madal — liiguta telefoni kaheksakujuliselt.</string>
     <string name="magnetic_disturbance">Magnethäire: väli %1$d µT, oodatud %2$d µT — vii telefon metallist või magnetitest eemale.</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Nederlands -->
 <resources>
-    <string name="app_name">Kompas</string>
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">Geen kompassensor op dit toestel.</string>
     <string name="calibrate">Lage nauwkeurigheid — beweeg de telefoon in een acht.</string>
     <string name="magnetic_disturbance">Magnetische storing: veld %1$d µT, verwacht %2$d µT — houd metaal en magneten weg.</string>

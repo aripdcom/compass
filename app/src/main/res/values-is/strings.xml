@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Íslenska -->
 <resources>
-    <string name="app_name">Áttaviti</string>
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">Enginn áttavitaskynjari í þessu tæki.</string>
     <string name="calibrate">Lítil nákvæmni — hreyfðu símann eins og þú teiknir áttu.</string>
     <string name="magnetic_disturbance">Segultruflun: svið %1$d µT, vænst %2$d µT — færðu símann frá málmi eða seglum.</string>

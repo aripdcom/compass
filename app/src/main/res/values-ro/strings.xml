@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Română -->
 <resources>
-    <string name="app_name">Busolă</string>
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">Acest dispozitiv nu are senzor de busolă.</string>
     <string name="calibrate">Precizie scăzută — mișcă telefonul în forma cifrei opt.</string>
     <string name="magnetic_disturbance">Interferență magnetică: câmp %1$d µT, așteptat %2$d µT — îndepărtează telefonul de metal sau magneți.</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Latviešu -->
 <resources>
-    <string name="app_name">Kompass</string>
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">Šajā ierīcē nav kompasa sensora.</string>
     <string name="calibrate">Zema precizitāte — kustiniet tālruni astotnieka veidā.</string>
     <string name="magnetic_disturbance">Magnētiski traucējumi: lauks %1$d µT, gaidītais %2$d µT — attāliniet tālruni no metāla vai magnētiem.</string>

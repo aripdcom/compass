@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Slovenščina -->
 <resources>
-    <string name="app_name">Kompas</string>
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">Ta naprava nima senzorja za kompas.</string>
     <string name="calibrate">Nizka natančnost — premikajte telefon v obliki osmice.</string>
     <string name="magnetic_disturbance">Magnetne motnje: polje %1$d µT, pričakovano %2$d µT — odmaknite telefon od kovine ali magnetov.</string>

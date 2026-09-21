@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- English (varsayılan / default) -->
 <resources>
-    <string name="app_name">Compass</string>
+    <!--
+      Uygulamanın adı markadır, çevrilmez: hangi dile ayarlı olursa olsun
+      simgenin altında "Kerteriz" yazar. Yirmi sekiz strings.xml'de de aynı
+      değerle duruyor, çünkü `MissingTranslation` denetimi eksik bırakılmasına
+      izin vermiyor ve tek bir dilde çevrilmiş kalması markayı bölerdi.
+      Mağaza başlığı ayrı bir şey: o Play Console'da dil başına yazılıyor.
+    -->
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">No compass sensor on this device.</string>
     <string name="calibrate">Low accuracy — move the phone in a figure-eight pattern.</string>
     <string name="magnetic_disturbance">Magnetic interference: field %1$d µT, expected %2$d µT — move away from metal or magnets.</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Suomi -->
 <resources>
-    <string name="app_name">Kompassi</string>
+    <string name="app_name">Kerteriz</string>
     <string name="no_sensor">Tässä laitteessa ei ole kompassianturia.</string>
     <string name="calibrate">Tarkkuus heikko — liikuta puhelinta kahdeksikon muotoisesti.</string>
     <string name="magnetic_disturbance">Magneettinen häiriö: kenttä %1$d µT, odotettu %2$d µT — siirrä pois metallin tai magneettien läheltä.</string>
