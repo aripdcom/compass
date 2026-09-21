@@ -32,7 +32,7 @@ compass/
 ├── .github/      iş akışları ve yardımcı betikler (bkz. 15. bölüm)
 ├── dist/         üretilen APK'lar          (gitignore'da)
 ├── docs/         tanıtım sayfası, gizlilik metni, ekran görüntüleri (16. bölüm)
-├── tools/        depo denetimleri: çeviri tutarlılığı (9. ve 16. bölüm)
+├── tools/        depo denetimleri ve yardımcılar (9., 16. ve 17. bölüm)
 ├── keys/         imzalama anahtarı         (gitignore'da)
 └── keystore.properties                     (gitignore'da)
 ```
@@ -1346,3 +1346,28 @@ olmasına bağlı değil**, hesap türüne bağlı.
 **Ücretsiz mi, ücretli mi.** Bu tek yönlü bir kapı: ücretsiz yayımlanan bir
 uygulama sonradan ücretli yapılamaz, tersi yapılabilir. Ücretli seçilirse
 ayrıca bir ödeme profili (merchant account) ve vergi bilgisi gerekir.
+
+### Mağaza ekran görüntüleri
+
+`tools/screenshots.sh` telefondan dil dil ekran görüntüsü çeker:
+
+```bash
+tools/screenshots.sh                 # en, tr, de
+tools/screenshots.sh -i en tr de     # her dilde ekranı elle kurarak
+```
+
+Telefonun sistem dilini değiştirmez; Android 13'ün **uygulama başına dil**
+ayarını kullanır (`cmd locale set-app-locales`), yani yalnızca bu uygulamanın
+dili değişir ve betik bitince o da geri alınır. Konum izni verilir (kadranda
+kıble, güneş ve ay görünsün diye), durum çubuğu demo kipiyle düzene sokulur
+(saat 12:00, pil dolu, bildirim yok) ve o da çıkışta kapatılır.
+
+Gece modu ile ayarlar ekranı dokunma gerektirdiği için `-i` kipinde betik her
+sahnede durup bekler; dokunma yerini betiğe gömmek telefon değişince sessizce
+yanlış yere basardı.
+
+Bir uyarıyı betik kendisi veriyor: Play'in ölçüsünde **uzun kenar kısa kenarın
+iki katını geçemez**. 1080x2400'lük bir telefonun ekranı 2,22 oranıyla bu
+sınırın dışında, yani ham görüntü olduğu gibi yüklenemez. Kırpmak kadranın bir
+kısmını götüreceği için betik yanlara uygulamanın zemin rengini ekleyen bir
+kopya üretir (ImageMagick varsa kendisi, yoksa komutu yazar).
