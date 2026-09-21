@@ -82,7 +82,7 @@
     <string name="settings_course">Tipo di rilevamento</string>
     <string name="settings_course_great_circle">Cerchio massimo (il più breve)</string>
     <string name="settings_course_rhumb">Lossodromia (rotta costante)</string>
-    <string name="settings_course_note">Vale per i punti salvati. I luoghi fissi restano sul cerchio massimo: è questo che significa la qibla.</string>
+    <string name="settings_course_note">Vale per i punti salvati. I luoghi fissi usano sempre il cerchio massimo, qualunque sia questa impostazione.</string>
     <string name="settings_smoothing">Livellamento</string>
     <string name="settings_smoothing_calm">Calmo</string>
     <string name="settings_smoothing_balanced">Bilanciato</string>

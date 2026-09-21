@@ -82,7 +82,7 @@
     <string name="settings_course">Azimuto tipas</string>
     <string name="settings_course_great_circle">Ortodromė (trumpiausias kelias)</string>
     <string name="settings_course_rhumb">Loksodromė (pastovus kursas)</string>
-    <string name="settings_course_note">Taikoma išsaugotiems taškams. Pastovios vietos lieka ortodromėje — būtent tai ir reiškia kibla.</string>
+    <string name="settings_course_note">Taikoma išsaugotiems taškams. Pastovios vietos visada naudoja ortodromę, kad ir kas čia būtų nustatyta.</string>
     <string name="settings_smoothing">Glodinimas</string>
     <string name="settings_smoothing_calm">Ramus</string>
     <string name="settings_smoothing_balanced">Subalansuotas</string>

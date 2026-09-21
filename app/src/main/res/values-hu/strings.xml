@@ -82,7 +82,7 @@
     <string name="settings_course">Irány típusa</string>
     <string name="settings_course_great_circle">Főkör (legrövidebb)</string>
     <string name="settings_course_rhumb">Loxodroma (állandó irány)</string>
-    <string name="settings_course_note">A mentett pontokra vonatkozik. A rögzített helyek a főkörön maradnak — a kibla éppen ezt jelenti.</string>
+    <string name="settings_course_note">A mentett pontokra vonatkozik. A rögzített helyek mindig a főkört használják, bármi is van itt beállítva.</string>
     <string name="settings_smoothing">Simítás</string>
     <string name="settings_smoothing_calm">Nyugodt</string>
     <string name="settings_smoothing_balanced">Kiegyensúlyozott</string>

@@ -595,6 +595,13 @@ noktalara işler; **sabit yerler her hâlükârda büyük dairede kalır**, çü
 kıblenin tanımı odur — bir ayarın onu sessizce değiştirmesi uygulamaya yanlış
 söyletmek olurdu.
 
+Ayardaki not bunu söylerken kıbleden söz etmiyor; yalnızca "sabit yerler bu
+ayar ne olursa olsun büyük dairede kalır" diyor. Gerekçe yanlış olduğu için
+değil: ayarlar ekranı mağaza ekran görüntülerine giriyor ve mağaza tarafında
+dini motif geçmiyor (17. bölüm). Gerekçe bu yüzden burada duruyor, uygulamanın
+içinde değil — ilk yazımda uygulamanın içindeydi ve doğrudan mağaza karesine
+düştü.
+
 Loksodrom seçilince **mesafe de o yola göre** yazılır, en kısa yola göre değil.
 İkisini karıştırmak sayıyı bozacak kadar büyük bir fark: Horn Burnu'ndan Agulhas
 Burnu'na en kısa yol 6722 km, sabit pruvayla 7110 km — 389 kilometre.
@@ -1554,28 +1561,33 @@ Gece modu ile ayarlar ekranı dokunma gerektirdiği için `-i` kipinde betik her
 sahnede durup bekler; dokunma yerini betiğe gömmek telefon değişince sessizce
 yanlış yere basardı.
 
-**Sabit yerler için çekimden önce bir şey yapmak gerekmiyor.** Mağaza
-görsellerinde dini motif olmaması kararı gereği kadranda görünmemeleri lazım,
-ama hiçbiri varsayılan açık olmadığı için dokunulmadıkça kadran zaten temiz
-çıkıyor. Sınarken birini açtıysanız `Ayarlar → Kadran işaretleri → Sabit
-yerler`'den kapatın.
+**Kadranda açık olan tek sabit yer Greenwich.** Mağaza tarafında dini motif
+geçmiyor, ama kadranı büsbütün boşaltmak da doğru değildi: tanıtım sayfasının
+altyazısı kadranda "altı işaret… bir sabit yer" olduğunu söylüyor ve bu metin
+yirmi sekiz dile çevrilmiş durumda. Greenwich dini olmayan bir yer, yani hem
+kuralı hem altyazıyı koruyor. Çekimde başka bir yer açılmamalı.
 
-**Depodaki `docs/ekran-*.png` dosyaları eski ve üçü de yenilenmeli.** Neyin
-eskidiği:
+**Çekimler İngilizce.** Uygulamanın dilini betik `en` yapıyor ama iki şey onun
+dışında kalıyor ve elle ayarlanması gerekiyor:
 
-- Kadranda yeşil **Kıble** etiketi duruyor, oysa tanıtım sayfasının metinleri
-  "sabit yerlere yön" diyor — ve artık hiçbir yer varsayılan açık değil.
-- Ayarlar çekimi iki sürüm geride: sabit yerler hâlâ tek tek anahtar satırı
-  olarak görünüyor (kendi ekranına taşındılar) ve **mesafe birimi** ile
-  **kerteriz türü** satırları hiç yok.
-- Ayarlar çekiminde durum çubuğu demo kipinde değil: gerçek saat ve kişisel
-  bildirim simgeleri görünüyor. Betik bunu kendisi düzeltiyor, o kare betikten
-  önce alınmış.
+- **Telefonun sistem dili.** Durum çubuğu yalnızca ayarlar karesinde görünür
+  ve pil yüzdesinin biçimi sistem diline bağlıdır — Türkçe sistemde `%100`,
+  İngilizcede `100%`. Uygulama başına dil ayarı durum çubuğunu kapsamıyor.
+  Çekimden önce sistem dilini İngilizce yapıp sonra geri alın.
+- **Kaydedilmiş noktaların adları.** Onları kullanıcı yazıyor, çevrilmiyorlar.
+  Uygulama İngilizceyken eklenen nokta kendiliğinden `Point 1` olur.
 
-Yeni çekim alınınca üç dosyanın yanında iki yeri daha güncellemek gerekiyor:
-bu belgenin başındaki tablo altyazısı (kadrandaki işaretleri sayıyor ve yeşil
-**Kıble**'yi anıyor) ve telefon başka çözünürlükteyse `docs/index.html`'deki üç
-`<img>` etiketinin `width`/`height` değerleri — şu an 1080x2400 yazıyor.
+**Ayarlar karesinde hangi satırların göründüğüne dikkat edin.** Uygulamanın
+içinde serbestçe yazılan bir metin, o kare mağazaya gidince mağaza metni olur.
+Bu bir kez yaşandı: kerteriz türü ayarının altındaki not kıbleden söz ediyordu
+ve doğrudan çekime düştü; not satırın hemen altında durduğu için kadraj dışında
+bırakılamıyor, metnin kendisi değişti. Ayarların en altındaki gizlilik notu da
+aynı sınıfta — o kare çekilecekse önce okunmalı.
+
+Yeni çekim alınınca üç dosyanın yanında iki yer daha gözden geçirilmeli: bu
+belgenin başındaki tablo altyazısı (kadrandaki işaretleri tek tek sayıyor) ve
+telefon başka çözünürlükteyse `docs/index.html`'deki üç `<img>` etiketinin
+`width`/`height` değerleri — şu an 1080x2400 yazıyor.
 
 Bir uyarıyı betik kendisi veriyor: Play'in ölçüsünde **uzun kenar kısa kenarın
 iki katını geçemez**. 1080x2400'lük bir telefonun ekranı 2,22 oranıyla bu

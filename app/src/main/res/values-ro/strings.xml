@@ -82,7 +82,7 @@
     <string name="settings_course">Tipul direcției</string>
     <string name="settings_course_great_circle">Cerc mare (cel mai scurt)</string>
     <string name="settings_course_rhumb">Loxodromă (cap constant)</string>
-    <string name="settings_course_note">Se aplică punctelor salvate. Locurile fixe rămân pe cercul mare — exact asta înseamnă qibla.</string>
+    <string name="settings_course_note">Se aplică punctelor salvate. Locurile fixe folosesc întotdeauna cercul mare, indiferent de această setare.</string>
     <string name="settings_smoothing">Netezire</string>
     <string name="settings_smoothing_calm">Calm</string>
     <string name="settings_smoothing_balanced">Echilibrat</string>

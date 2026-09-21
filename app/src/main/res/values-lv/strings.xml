@@ -82,7 +82,7 @@
     <string name="settings_course">Azimuta veids</string>
     <string name="settings_course_great_circle">Lielais loks (īsākais ceļš)</string>
     <string name="settings_course_rhumb">Loksodroma (nemainīgs kurss)</string>
-    <string name="settings_course_note">Attiecas uz saglabātajiem punktiem. Nemainīgas vietas paliek uz lielā loka — tieši to kibla arī nozīmē.</string>
+    <string name="settings_course_note">Attiecas uz saglabātajiem punktiem. Nemainīgas vietas vienmēr izmanto lielo loku neatkarīgi no šī iestatījuma.</string>
     <string name="settings_smoothing">Izlīdzināšana</string>
     <string name="settings_smoothing_calm">Mierīga</string>
     <string name="settings_smoothing_balanced">Līdzsvarota</string>

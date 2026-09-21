@@ -82,7 +82,7 @@
     <string name="settings_course">Tip ta\' direzzjoni</string>
     <string name="settings_course_great_circle">Ċirku kbir (l-iqsar)</string>
     <string name="settings_course_rhumb">Loksodroma (rotta kostanti)</string>
-    <string name="settings_course_note">Japplika għall-punti salvati. Il-postijiet fissi jibqgħu fuq iċ-ċirku l-kbir — dak eżatt tfisser il-qibla.</string>
+    <string name="settings_course_note">Japplika għall-punti salvati. Il-postijiet fissi dejjem jużaw iċ-ċirku l-kbir, tkun xi tkun din l-għażla.</string>
     <string name="settings_smoothing">Illixxar</string>
     <string name="settings_smoothing_calm">Kalm</string>
     <string name="settings_smoothing_balanced">Bilanċjat</string>

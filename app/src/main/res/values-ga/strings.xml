@@ -82,7 +82,7 @@
     <string name="settings_course">Cineál treo</string>
     <string name="settings_course_great_circle">Ciorcal mór (an tslí is giorra)</string>
     <string name="settings_course_rhumb">Lócsadróm (cúrsa seasta)</string>
-    <string name="settings_course_note">Baineann le pointí sábháilte. Fanann na háiteanna seasta ar an gciorcal mór — sin é a chiallaíonn qibla.</string>
+    <string name="settings_course_note">Baineann le pointí sábháilte. Úsáideann na háiteanna seasta an ciorcal mór i gcónaí, is cuma cad atá socraithe anseo.</string>
     <string name="settings_smoothing">Míniú</string>
     <string name="settings_smoothing_calm">Socair</string>
     <string name="settings_smoothing_balanced">Cothrom</string>

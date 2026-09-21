@@ -82,7 +82,7 @@
     <string name="settings_course">Type de cap</string>
     <string name="settings_course_great_circle">Orthodromie (le plus court)</string>
     <string name="settings_course_rhumb">Loxodromie (cap constant)</string>
-    <string name="settings_course_note">S’applique aux points enregistrés. Les lieux fixes restent sur l’orthodromie — c’est ce que signifie la qibla.</string>
+    <string name="settings_course_note">S’applique aux points enregistrés. Les lieux fixes utilisent toujours l’orthodromie, quel que soit ce réglage.</string>
     <string name="settings_smoothing">Lissage</string>
     <string name="settings_smoothing_calm">Doux</string>
     <string name="settings_smoothing_balanced">Équilibré</string>
