@@ -1332,7 +1332,7 @@ kaydettiği noktaları kaybetmesi.
 **İzin beyanı.** Uygulama yalnızca ön planda konum istiyor (`ACCESS_COARSE_-`
 ve `ACCESS_FINE_LOCATION`); arka plan konumu, SMS, arama kaydı gibi ayrı beyan
 formu gerektiren izinlerin hiçbiri yok. Yine de mağaza açıklamasında konumun
-ne işe yaradığı yazmalı: sapma, kıble, Güneş ve Ay.
+ne işe yaradığı yazmalı: sapma, sabit yerlere yön, Güneş ve Ay.
 
 **Hedef API düzeyi.** Play yeni uygulamalardan belli bir `targetSdk` eşiğini
 şart koşuyor ve eşik her yıl yükseliyor. Depoda `targetSdk = 35`; yüklemeden
@@ -1343,9 +1343,101 @@ için 12 test kullanıcısıyla 14 gün kapalı test şartı var; kurum
 (Organization) hesaplarında yok. **Bu şart uygulamanın ücretli ya da ücretsiz
 olmasına bağlı değil**, hesap türüne bağlı.
 
+**Fiyat: 1,99 €.** İki ucun arasında duruyor. Aşağı baskı: APK zaten burada,
+MIT lisansıyla ücretsiz; 3 €'nun üstü "madem açık kaynak, neden paralı"
+sorusunu davet eder. Yukarı baskı: Play'deki pusulaların neredeyse tamamı
+reklamlı-ücretsiz ve bu uygulamayı ayıran şey 0,99 €'nun küçümsediği şey —
+reklam yok, izleme yok, internet izni yok.
+
+Türkiye fiyatı otomatik çevirime bırakılmamalı, Console'dan elle girilmeli:
+Play'in Türkiye alt sınırı dolar karşılığının çok altında. Google'ın payı
+indirimli katmanda yıllık ilk 1 M$ için %15.
+
 **Ücretsiz mi, ücretli mi.** Bu tek yönlü bir kapı: ücretsiz yayımlanan bir
-uygulama sonradan ücretli yapılamaz, tersi yapılabilir. Ücretli seçilirse
-ayrıca bir ödeme profili (merchant account) ve vergi bilgisi gerekir.
+uygulama sonradan ücretli yapılamaz, tersi yapılabilir. Ücretli başlamak bu
+yüzden her iki kapıyı da açık tutuyor. Ücretli seçildiğinde ayrıca bir ödeme
+profili (merchant account) ve vergi bilgisi gerekir.
+
+### Mağaza metinleri
+
+Play'in sınırları: başlık 30, kısa açıklama 80, uzun açıklama 4000 karakter.
+Üçü de dil başına ayrı yazılabiliyor — uygulamanın içindeki ad marka olduğu
+için her dilde "Kerteriz", ama mağaza başlığı yanına o dilde bir tanım
+alabilir.
+
+| | İngilizce | Türkçe |
+|---|---|---|
+| Başlık | `Kerteriz — Advanced Compass` (27) | `Kerteriz — Gelişmiş Pusula` (26) |
+| Kısa açıklama | `An advanced compass: true north, bearings, the sun and the moon. No tracking.` (77) | `Gelişmiş bir pusula: gerçek kuzey, sabit yerlere yön, Güneş ve Ay. İzleme yok.` (78) |
+
+Uzun açıklama (İngilizce):
+
+```
+Kerteriz is a compass for Android that does one thing carefully.
+
+TRUE NORTH, NOT MAGNETIC NORTH
+Once your location is known the magnetic declination is applied, so north on
+the dial is the geographic pole. Magnetic north stays on the rim as a blue M,
+so you can see the difference for yourself.
+
+BEARINGS TO FIXED PLACES
+Great-circle bearings to fixed places, marked on the rim with the distance.
+Worked out on the device: nothing is looked up, nothing is fetched.
+
+LOCK A BEARING
+Tap the dial to lock the direction you are facing. The bottom line then says
+how far you have drifted, left or right, and a double tick tells you when you
+are back on it.
+
+SPIRIT LEVEL
+A bubble in the middle of the dial. A tilted phone reads wrong — this is the
+thing that tells you it is tilted.
+
+SUN AND MOON
+Their bearings on the rim, the arc from sunrise to sunset, and the moon drawn
+with its phase, faint while it is below the horizon.
+
+SAVED POINTS
+Long-press the dial to save where you are, or paste coordinates or a shared
+map link. The rim then carries the bearing and the distance back.
+
+NIGHT MODE
+Black background, red dial. Marks are told apart by hue rather than
+brightness, so night vision survives a glance at the screen. It can switch by
+itself at the end of civil twilight.
+
+SAYS IT OUT LOUD
+Every reading is announced to screen readers in the language of the phone, and
+a short tick passes north, east, south and west, so a bearing can be held
+without looking.
+
+TWENTY-EIGHT LANGUAGES
+Every official language of the European Union, plus Icelandic, both written
+standards of Norwegian, and Turkish. The app opens in whatever language the
+phone is set to.
+
+SMALL, AND OFFLINE BY DESIGN
+No frameworks, no dependencies, no advertising, no analytics. The app holds no
+internet permission at all: Android will not give it a network connection, so
+it cannot send your location anywhere. That is not a promise in a policy — you
+can check it in ten seconds under Settings > Apps > Kerteriz > Permissions.
+
+Location is used on the device for the declination, the bearings to fixed
+places, and the positions of the sun and the moon. Nothing leaves the phone.
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/
+```
+
+Türkçesi aynı başlıklarla yazılır; sitedeki Türkçe metinler (`docs/assets/
+i18n.js`) hazır cümleleri veriyor.
+
+**Dini motifler mağaza tarafında geçmiyor.** Kâbe, Mescid-i Aksa ve Vatikan
+uygulamanın içinde duruyor ve ayarlardan açılıp kapanıyor; mağaza başlığı,
+açıklamaları, ekran görüntüleri ve tanıtım sayfası "sabit yerlere yön" diyor.
+Özellik gizlenmiyor — adı genel. Gizlilik metni bunun dışında: orası konum
+izninin neden istendiğini sayan bir belge ve doğruluğu konumlandırmadan önce
+geliyor.
 
 ### Mağaza ekran görüntüleri
 
@@ -1365,6 +1457,13 @@ kıble, güneş ve ay görünsün diye), durum çubuğu demo kipiyle düzene sok
 Gece modu ile ayarlar ekranı dokunma gerektirdiği için `-i` kipinde betik her
 sahnede durup bekler; dokunma yerini betiğe gömmek telefon değişince sessizce
 yanlış yere basardı.
+
+**Çekimden önce `Ayarlar → işaretler → Kıble`'yi kapatın.** Mağaza görsellerinde
+dini motif olmaması kararı gereği; özellik yerinde duruyor, yalnızca o karede
+görünmüyor. Depodaki `docs/ekran-*.png` dosyaları eski çekimler ve kadranda
+yeşil "Kıble" etiketi duruyor — tanıtım sayfasının metinleri "sabit yerlere
+yön" dediği hâlde resimler henüz demiyor. Yeni çekimler alınınca o üç dosya da
+değiştirilmeli.
 
 Bir uyarıyı betik kendisi veriyor: Play'in ölçüsünde **uzun kenar kısa kenarın
 iki katını geçemez**. 1080x2400'lük bir telefonun ekranı 2,22 oranıyla bu
