@@ -42,10 +42,15 @@ locales=("$@")
 # boyutuna göre değişiyor — oraya "input tap x y" yazmak telefon değişince
 # sessizce yanlış yere basardı.
 scenes_interactive=(
-  "gunduz:Gündüz kadranı — kıble, güneş ve ay işaretleri görünsün"
+  "gunduz:Gündüz kadranı — güneş, ay ve kaydedilmiş bir nokta görünsün"
   "gece:Gece modu — siyah zemin, kırmızı kadran"
   "ayarlar:Ayarlar ekranı"
 )
+
+# Mağaza görselleri için: çekimden önce Ayarlar → işaretler altından Kıble'yi
+# kapatın. Özellik duruyor ve varsayılanı açık; kapatılmasının tek sebebi
+# mağaza sayfasında dini bir motif göstermemek. Uygulamanın içinde ve
+# README'de yerinde duruyor.
 
 say() { printf '%s\n' "$*" >&2; }
 die() { printf 'hata: %s\n' "$*" >&2; exit 1; }
