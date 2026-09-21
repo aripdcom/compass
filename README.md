@@ -213,11 +213,11 @@ kaymaması için yerini her zaman ayırır (`minLines="2"`); aksi hâlde uyarı 
 
 ## 5. Kıble, hedef kilidi, su terazisi, konum ve nokta
 
-**Yönler (kıble, Mescid-i Aksa, Vatikan).** Konum bilinince kadranda yeşil
-işaretler ve üst satırda dereceleri çıkar. Varsayılan olarak yalnızca kıble
-açıktır; diğerleri ayarlardan açılır. Hesap, bulunduğunuz noktadan hedefe giden
-büyük daire yayının çıkış açısıdır — kıblenin tanımı da budur, düz haritadaki
-"sağ alt köşe" yönü değil:
+**Sabit yerlere yön.** Konum bilinince seçilen yerler kadranda yeşil işaret ve
+üst satırda derece olarak çıkar. **Hiçbiri varsayılan olarak açık değildir**;
+`Ayarlar → Sabit yerler` altından seçilir (bkz. 6. bölüm). Hesap, bulunduğunuz
+noktadan hedefe giden büyük daire yayının çıkış açısıdır — kıblenin tanımı da
+budur, düz haritadaki "sağ alt köşe" yönü değil:
 
 ```
 θ = atan2( sin Δλ · cos φ₂ ,  cos φ₁ · sin φ₂ − sin φ₁ · cos φ₂ · cos Δλ )
@@ -225,6 +225,24 @@ büyük daire yayının çıkış açısıdır — kıblenin tanımı da budur, 
 
 Açı gerçek kuzeye göredir. İstanbul'dan ölçülen değerler: Kâbe 152,0°,
 Mescid-i Aksa 150,1°, Vatikan 279,7°.
+
+Listede on bir yer var, üç kategoride:
+
+| Kategori | Yerler |
+|---|---|
+| Seyir | Greenwich Kraliyet Gözlemevi, Nemo Noktası |
+| Denizde | Horn Burnu, Agulhas Burnu |
+| İbadet yerleri | Kâbe, Mescid-i Aksa, Vatikan, Bodh Gaya, Harmandir Sahib, Kashi Vishwanath, Ise |
+
+Koordinatlar yapıların kendisine aittir ve kaynağın verdiği hassasiyetin
+ötesine geçilmez: Horn Burnu dakika mertebesinde yayımlanıyor (ve zaten bir
+burun, nokta değil), Nemo Noktası 0,1′ ile hesaplanmış bir nokta.
+
+**Greenwich'te bir incelik var.** Koordinat Airy Geçiş Dairesi'nindir, yani
+*tarihî* başlangıç meridyeni. GPS'in sıfır boylamı (IERS Referans Meridyeni)
+bunun yaklaşık 102 m doğusundan geçer. Yön olarak binlerce kilometre öteden
+102 m görünmez, ama etiket bu yüzden "0° boylam" demiyor, "Greenwich" diyor —
+diyen bir uygulama yanlış söylemiş olurdu.
 
 İlk ikisi arasında **yalnızca 1,9° var** ve bu, kadran yerleşiminin tamamını
 belirledi. Kadranın kenarında altı ayrı işaret yarışıyor: **M** ve yer yazıları,
@@ -562,8 +580,11 @@ hesaplanıp simge ekrana dik çiziliyor.
 ## 6. Ayarlar
 
 Sağ üstteki dişliden açılır. Dış bağımlılık olmadığı için `PreferenceFragment`
-yok; arayüz `SettingsActivity` içinde kodla kuruluyor ve aynı paleti kullanıyor,
-yani gece modunda ayarlar ekranı da kırmızıya dönüyor.
+yok; arayüz kodla kuruluyor ve aynı paleti kullanıyor, yani gece modunda
+ayarlar ekranı da kırmızıya dönüyor. İskelet ve satır kurucuları
+`RowsActivity`'de: iki ekran (Ayarlar ve Sabit yerler) aynı satırları
+kullanıyor ve ikincisi için yüz elli satır kopyalamak, er geç ikisinin
+ayrışması demekti.
 
 | Ayar | Ne yapar |
 |---|---|
@@ -575,14 +596,37 @@ yani gece modunda ayarlar ekranı da kırmızıya dönüyor.
 | **Gerçek kuzeyi kullan** | Kapatılırsa kadran manyetik kuzeye oturur. |
 | **Yumuşatma** | Sakin (0,35 sn) / Dengeli (0,17 sn) / Çevik (0,08 sn). Saklanan şey katsayı değil **zaman sabiti**; gerekçesi 11. bölümde. Ortadaki, uygulamanın başından beri kullandığı 0,12 katsayısının 50 Hz'deki karşılığıdır. |
 | **Yön geçişlerinde titreşim** | Hem ana yön tıkını hem hedef çift tıkını kapatır. |
-| **Kadran işaretleri** | Manyetik kuzey (M), su terazisi, güneş, güneşin yolu, ay ve yön noktalarını (Kâbe, Mescid-i Aksa, Vatikan) ayrı ayrı açar/kapatır. |
+| **Kadran işaretleri** | Manyetik kuzey (M), su terazisi, güneş, güneşin yolu ve ayı ayrı ayrı açar/kapatır. |
+| **Sabit yerler** | Kendi ekranını açar; altında seçilenlerin kadran etiketleri yazar, hiçbiri seçili değilse "Yok". |
 | **Hareketler** | Hakkında bölümünde; her dokunuş ve uzun basışın ne yaptığını tek diyalogda sayar. Yedi gizli hareket yalnızca bu belgede yazıyordu, uygulamanın içinde hiçbir yerde. |
 
 Hedef ve nokta işaretleri o listede yok, çünkü zaten kadrana dokunarak ya da uzun
 basarak açılıp kapanıyorlar; ayrıca bir anahtar koymak "kilitli ama görünmez
 hedef" gibi kafa karıştırıcı bir durum üretirdi.
 
-Kuzey türü ayarı göründüğünden daha derin: kıble, güneş ve nokta **gerçek kuzeye
+### Sabit yerler ekranı
+
+On bir yer, ayarların ortasında on bir anahtar satırı olarak duruyordu ve liste
+ancak uzayacak. Kendi ekranına taşındılar: kategorili, arama kutulu ve hepsi
+kapalı başlayan bir liste.
+
+Arama aksanı ve büyük/küçük harfi yok sayar — "kabe" yazan **Kâbe**'yi bulur.
+Harf katlaması `PlaceSearch.kt`'te ve ekrandan ayrı tutuldu, çünkü saf metin
+işlemi ve JVM testinden koşturulabiliyor. Küçültme cihazın diliyle değil
+`Locale.ROOT` ile yapılıyor: Türkçe yerelinde `I` harfi `ı`ya düşer ve "kashi"
+yazan **Kashi**'yi bulamazdı, yani uygulamanın dilini Türkçe yapmak aramayı
+bozardı. NFD'nin ayrıştırmadığı harflerin (`ø`, `æ`, `ł`, `đ`, noktasız `ı`)
+karşılıkları elle veriliyor.
+
+Ekran bir sınırı da açıkça söylüyor. Kadranın kenarında yazılar için **üç
+kademe** var (`RIM_RADII`) ve bunları manyetik kuzey, güneş, ay ve kaydedilen
+noktalar da paylaşıyor; sığmayan işaret en içteki kademeye düşüyor, yani
+sessizce bir başkasının üstüne biniyor. Üçüncüden sonrası için uyarı beliriyor
+ama **engellenmiyor**: kullanıcı ne yaptığını bilerek dördüncüyü açabilmeli.
+Sayı iki yerde yazılı olmasın diye `Places.COMFORTABLE` sabiti var ve bir test
+onu `RIM_RADII`nin uzunluğuna bağlıyor.
+
+Kuzey türü ayarı göründüğünden daha derin: sabit yerler, güneş ve nokta **gerçek kuzeye
 göre** hesaplanır, kadran ise manyetik kuzeye oturmuş olabilir. Bu yüzden her
 işaret çizilmeden önce `toDialFrame()` ile kadranın çerçevesine çevrilir — manyetik
 moddayken sapma kadar geri alınır. Manyetik moddayken kadranın "M" işareti de
@@ -606,7 +650,8 @@ kimlikler aynı olduğu için kod değişmez.
 | `app/src/main/java/com/aripd/kerteriz/CompassView.kt` | Kadranın `Canvas` ile çizimi: ibre, işaretler, su terazisi |
 | `app/src/main/java/com/aripd/kerteriz/Sun.kt` | Güneşin azimut, yükseklik, doğuş ve batış yönleri (NOAA) |
 | `app/src/main/java/com/aripd/kerteriz/Moon.kt` | Ayın azimut, yükseklik ve evresi (Schlyter) |
-| `app/src/main/java/com/aripd/kerteriz/Places.kt` | Kâbe, Mescid-i Aksa, Vatikan koordinatları |
+| `app/src/main/java/com/aripd/kerteriz/Places.kt` | On bir sabit yerin koordinatları ve kategorileri |
+| `app/src/main/java/com/aripd/kerteriz/PlaceSearch.kt` | Yer aramasının harf katlaması (aksan, noktasız ı) |
 | `app/src/main/java/com/aripd/kerteriz/Waypoints.kt` | Kaydedilen noktaların saklanması |
 | `app/src/main/java/com/aripd/kerteriz/Geo.kt` | Yön, açı ve birim dönüşümleri (Android'e dokunmaz) |
 | `app/src/main/java/com/aripd/kerteriz/RimLayout.kt` | Kadran işaretlerinin yarıçap dağıtımı |
@@ -618,7 +663,9 @@ kimlikler aynı olduğu için kod değişmez.
 | `app/src/main/java/com/aripd/kerteriz/Coordinates.kt` | Paylaşılan metinden koordinat okuma |
 | `app/src/main/java/com/aripd/kerteriz/Palette.kt` | Gündüz ve gece renk düzenleri |
 | `app/src/main/java/com/aripd/kerteriz/Prefs.kt` | Ayar anahtarları ve varsayılanları |
-| `app/src/main/java/com/aripd/kerteriz/SettingsActivity.kt` | Ayarlar ekranı (kodla kurulan arayüz) |
+| `app/src/main/java/com/aripd/kerteriz/RowsActivity.kt` | İki ayar ekranının ortak iskeleti ve satır kurucuları |
+| `app/src/main/java/com/aripd/kerteriz/SettingsActivity.kt` | Ayarlar ekranının içeriği |
+| `app/src/main/java/com/aripd/kerteriz/PlacesActivity.kt` | Sabit yer seçimi: kategorili, aranabilir liste |
 | `app/src/main/res/layout/activity_main.xml` | Dikey yerleşim: yazılar üstte, kadran altta |
 | `app/src/main/res/layout-land/activity_main.xml` | Yatay yerleşim: yazılar solda, kadran sağda |
 
@@ -895,7 +942,7 @@ değişince kuruluyor; önceden içerik aynıyken her derece değişiminde başt
 ## 12. Testler
 
 ```bash
-./gradlew test          # 93 test, saniyeler içinde, cihaz gerekmez
+./gradlew test          # 105 test, saniyeler içinde, cihaz gerekmez
 ```
 
 Testler JVM'de koşar; Android çalışma zamanı gerekmez. Bunun için uygulamanın
@@ -919,6 +966,8 @@ Her koşuda ayrıca `./gradlew lintDebug` koşulur (CI'da da); şu an 0 hata.
 | `DisturbanceTest` | Kısa sıçramanın uyarı çıkarmaması, histerezis bandında uyarının açık kalması |
 | `CoordinatesTest` | Uygulamanın kendi paylaşımının geri okunması, `geo:0,0?q=` tuzağı, harita bağlantıları, DMS |
 | `MarksTest` | Yakın işaretlerin birleşmesi, zincirleme birleşmenin olmaması, sıfır geçişinde ortalama |
+| `PlacesTest` | Ayar anahtarlarının benzersizliği, koordinat aralıkları, hiçbir yerin varsayılan açık olmaması |
+| `PlaceSearchTest` | Aksanın yok sayılması, noktasız ı tuzağı, NFD'nin ayrıştırmadığı harfler |
 | `FixesTest` | Yeni fix ile hassas fix arasındaki tercih, hata payı bilinmeyen fix'in kusursuz sayılmaması, "buradasınız" eşiğinin sınırlanması |
 
 Testlerin çoğu **fiziksel sabitlere** dayanır — uygulamadan bağımsız, ölçülmüş

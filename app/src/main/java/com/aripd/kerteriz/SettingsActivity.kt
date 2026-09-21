@@ -1,71 +1,28 @@
 package com.aripd.kerteriz
 
-import android.app.Activity
 import android.app.AlertDialog
-import android.content.Context
-import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
-import android.view.WindowInsets
-import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.ScrollView
-import android.widget.Switch
-import android.widget.TextView
 
 /**
- * Ayarlar. Arayüz elle kuruluyor: projenin hiç dış bağımlılığı yok, dolayısıyla
- * `PreferenceFragmentCompat` de yok. Satırlar tek tip olduğu için kodla üretmek
- * XML'den hem kısa hem de paleti uygulaması kolay.
+ * Ayarlar. İskelet ve satır kurucuları `RowsActivity`'de; burada yalnızca
+ * ekranın içeriği var.
  *
- * Bütün değerler ana ekranla aynı `SharedPreferences` dosyasında durur; ana ekran
- * `onResume`'da yeniden okuyup uygular, o yüzden burada bir "kaydet" adımı yok.
+ * Bütün değerler ana ekranla aynı `SharedPreferences` dosyasında durur; ana
+ * ekran `onResume`'da yeniden okuyup uygular, o yüzden burada bir "kaydet"
+ * adımı yok.
  */
-class SettingsActivity : Activity() {
+class SettingsActivity : RowsActivity() {
 
-    private lateinit var palette: Palette
-    private lateinit var column: LinearLayout
-
-    /** Ekranda duran diyalog; etkinlik yıkılırken kapatılmalı. */
-    private var dialog: AlertDialog? = null
+    /** Sabit yerler satırı: özeti seçim ekranından dönünce tazelenir. */
+    private var placesRow: Row? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        palette = Palette.of(prefs().getBoolean(Prefs.KEY_NIGHT, false))
+        frame()
 
-        val scroll = ScrollView(this)
-        scroll.setBackgroundColor(palette.background)
-        column = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(dp(20), dp(20), dp(20), dp(28))
-        }
-        scroll.addView(
-            column,
-            ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-        )
-        setContentView(scroll)
-
-        // Android 15'ten itibaren pencere sistem çubuklarının altına çiziliyor;
-        // boşluğu kendimiz bırakmazsak ilk satır durum çubuğunun altında kalır.
-        // R öncesinde içeriğe sıfır boşluk bildirildiği için bu yol zararsız.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            scroll.setOnApplyWindowInsetsListener { view, insets ->
-                val bars = insets.getInsets(
-                    WindowInsets.Type.systemBars() or WindowInsets.Type.displayCutout()
-                )
-                view.setPadding(bars.left, bars.top, bars.right, bars.bottom)
-                insets
-            }
-        }
-
-        backRow()
+        backRow(getString(R.string.app_name))
         header(getString(R.string.settings_section_display))
         switchRow(
             R.string.settings_night, R.string.settings_night_summary,
@@ -122,8 +79,10 @@ class SettingsActivity : Activity() {
             R.string.settings_show_level, R.string.settings_show_level_summary,
             Prefs.KEY_SHOW_LEVEL, Prefs.DEFAULT_SHOW_LEVEL
         )
-        Places.ALL.forEach { place ->
-            switchRow(place.nameRes, 0, place.prefKey, place.defaultVisible)
+        // On bir yer için on bir anahtar satırı listeyi ekrandan taşırıyordu ve
+        // liste ancak uzayacak. Tek satır, arkasında kendi ekranı.
+        placesRow = actionRow(getString(R.string.settings_places), placesSummary()) {
+            startActivity(Intent(this, PlacesActivity::class.java))
         }
         switchRow(R.string.settings_show_sun, 0, Prefs.KEY_SHOW_SUN, Prefs.DEFAULT_SHOW_SUN)
         switchRow(
@@ -154,6 +113,29 @@ class SettingsActivity : Activity() {
         note(getString(R.string.settings_privacy_note))
     }
 
+    /** Seçim ekranından dönülüyor olabilir; satırın özeti oradaki seçimi yansıtmalı. */
+    override fun onResume() {
+        super.onResume()
+        placesRow?.summary(placesSummary())
+    }
+
+    /**
+     * Satırın altına seçilenlerin kadrandaki etiketleri yazılır, sayısı değil:
+     * "2 seçili" için kullanıcının ekranı açması gerekirdi, "Kıble, Greenwich"
+     * için gerekmiyor. Ayrıca sayı çoğul eki isteyen dillerde ayrı bir iş
+     * açardı.
+     */
+    private fun placesSummary(): String {
+        val chosen = Places.ALL
+            .filter { prefs().getBoolean(it.prefKey, Places.DEFAULT_VISIBLE) }
+            .map { getString(it.labelRes) }
+        // Ayırıcı kodda: yirmi sekiz dilin hepsi virgül kullanıyor (Latin,
+        // Kiril, Yunan), yani çevrilecek bir yanı yok. Arapça gibi başka bir
+        // ayırıcı kullanan bir dil eklenirse buraya dönülmeli.
+        return if (chosen.isEmpty()) getString(R.string.settings_places_none)
+        else chosen.joinToString(", ")
+    }
+
     /**
      * Sürüm paketten okunur, elle yazılmış bir sabitten değil: sürüm yükseltince
      * burayı güncellemeyi unutmak diye bir şey olmasın.
@@ -168,190 +150,6 @@ class SettingsActivity : Activity() {
         }
         return getString(R.string.settings_version_format, info.versionName ?: "", code)
     }
-
-    /**
-     * Geri satırı. Tema `NoActionBar` olduğu için sistem yukarı okunu
-     * göstermiyor; `parentActivityName` tanımlı olduğu hâlde görünür bir geri
-     * yolu yoktu. Kendi paletiyle çizilen bir satır hem gece modunda doğru
-     * renkte kalıyor hem de dokunma hedefi 48dp'yi tutuyor.
-     */
-    private fun backRow() {
-        column.addView(TextView(this).apply {
-            text = getString(R.string.settings_back, getString(R.string.app_name))
-            setTextColor(palette.textDim)
-            textSize = 16f
-            minHeight = dp(48)
-            gravity = Gravity.CENTER_VERTICAL
-            isClickable = true
-            isFocusable = true
-            setOnClickListener { finish() }
-        })
-    }
-
-    /** Dokununca bir iş yapan satır; anahtar yok, okunacak düğüm satırın kendisi. */
-    private fun actionRow(title: String, summary: String?, onClick: () -> Unit) {
-        val row = rowContainer()
-        val labels = labelColumn(title, summary)
-        labels.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
-        row.isFocusable = true
-        row.contentDescription = if (summary == null) title else "$title. $summary"
-        row.addView(labels, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
-        row.setOnClickListener { onClick() }
-        column.addView(row)
-    }
-
-    /**
-     * Diyaloğu gösterir ve izler. Etkinlik yıkılırken (döndürme, gece moduna
-     * geçince gelen `recreate()`) açık kalan diyalog pencereyi sızdırıp
-     * logcat'e `WindowLeaked` düşürüyordu.
-     */
-    private fun show(builder: AlertDialog.Builder) {
-        dialog?.dismiss()
-        dialog = builder.show()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        dialog?.dismiss()
-        dialog = null
-    }
-
-    /** Dokunulamayan bilgi satırı. */
-    private fun infoRow(title: String, value: String) {
-        val row = rowContainer()
-        val labels = labelColumn(title, value)
-        labels.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
-        row.isFocusable = true
-        row.contentDescription = "$title. $value"
-        row.isClickable = false
-        row.addView(labels, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
-        column.addView(row)
-    }
-
-    /** Dokununca tarayıcıda açılan satır. Tarayıcı yoksa sessizce hiçbir şey olmaz. */
-    private fun linkRow(title: String, value: String, url: String) {
-        val row = rowContainer()
-        val labels = labelColumn(title, value)
-        labels.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
-        row.isFocusable = true
-        row.contentDescription = "$title. $value"
-        row.addView(labels, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
-        row.setOnClickListener {
-            try {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-            } catch (_: ActivityNotFoundException) {
-            }
-        }
-        column.addView(row)
-    }
-
-    /** Bölümün altına açıklama satırı. */
-    private fun note(text: String) {
-        column.addView(TextView(this).apply {
-            this.text = text
-            setTextColor(palette.hint)
-            textSize = 13f
-            setPadding(0, dp(10), 0, 0)
-        })
-    }
-
-    private fun header(text: String) {
-        column.addView(TextView(this).apply {
-            this.text = text
-            setTextColor(palette.text)
-            textSize = 13f
-            setPadding(0, dp(20), 0, dp(6))
-            letterSpacing = 0.08f
-        })
-    }
-
-    private fun switchRow(
-        titleRes: Int,
-        summaryRes: Int,
-        key: String,
-        default: Boolean,
-        onChange: (Boolean) -> Unit = {}
-    ) {
-        val row = rowContainer()
-        val title = getString(titleRes)
-        val summary = if (summaryRes == 0) null else getString(summaryRes)
-        val labels = labelColumn(title, summary)
-        val toggle = Switch(this).apply {
-            isChecked = prefs().getBoolean(key, default)
-            // Ekran okuyucu satırı tek durakta okusun: yazılar anahtarın
-            // açıklamasına taşınır, kendileri erişilebilirlik ağacından çıkar.
-            // Aksi hâlde her satır üç ayrı durak oluyordu.
-            contentDescription = if (summary == null) title else "$title. $summary"
-            setOnCheckedChangeListener { _, checked ->
-                prefs().edit().putBoolean(key, checked).apply()
-                onChange(checked)
-            }
-        }
-        labels.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
-        row.addView(labels, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
-        row.addView(toggle)
-        row.setOnClickListener { toggle.toggle() }
-        column.addView(row)
-    }
-
-    private fun choiceRow(titleRes: Int, key: String, default: Int, optionRes: IntArray) {
-        val options = optionRes.map { getString(it) }.toTypedArray()
-        // Kayıtlı değer sınırlanarak okunur: daha yeni bir sürümden geri
-        // yüklenen yedek listede olmayan bir seçenek taşıyabilir ve korumasız
-        // indeks ayarlar ekranını daha açılışta çökertirdi. Ana ekran aynı
-        // değeri zaten sınırlayarak okuyor (bkz. applySettings'teki smoothing).
-        fun selected() = prefs().getInt(key, default).coerceIn(0, options.lastIndex)
-        val row = rowContainer()
-        val labels = labelColumn(getString(titleRes), options[selected()])
-        labels.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
-        // Seçim satırında anahtar yok; okunacak düğüm satırın kendisi olur.
-        row.isFocusable = true
-        row.contentDescription = "${getString(titleRes)}. ${options[selected()]}"
-        row.addView(labels, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
-        row.setOnClickListener {
-            show(
-                AlertDialog.Builder(this)
-                    .setTitle(getString(titleRes))
-                    .setSingleChoiceItems(options, selected()) { shown, which ->
-                        prefs().edit().putInt(key, which).apply()
-                        (labels.getChildAt(1) as TextView).text = options[which]
-                        row.contentDescription = "${getString(titleRes)}. ${options[which]}"
-                        shown.dismiss()
-                    }
-            )
-        }
-        column.addView(row)
-    }
-
-    private fun rowContainer(): LinearLayout = LinearLayout(this).apply {
-        orientation = LinearLayout.HORIZONTAL
-        gravity = Gravity.CENTER_VERTICAL
-        // Dokunma alanı en az 48dp: küçük hedefler el titremesinde ıskalanıyor.
-        minimumHeight = dp(48)
-        setPadding(0, dp(12), 0, dp(12))
-        isClickable = true
-    }
-
-    /** Başlık ve altındaki açıklama; açıklama yoksa yalnızca başlık. */
-    private fun labelColumn(title: String, summary: String?): LinearLayout =
-        LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            addView(TextView(context).apply {
-                text = title
-                setTextColor(palette.text)
-                textSize = 16f
-            })
-            addView(TextView(context).apply {
-                text = summary ?: ""
-                setTextColor(palette.textDim)
-                textSize = 13f
-                visibility = if (summary == null) View.GONE else View.VISIBLE
-            })
-        }
-
-    private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
-
-    private fun prefs() = getSharedPreferences("kerteriz", Context.MODE_PRIVATE)
 
     private companion object {
         const val SOURCE_URL = "https://github.com/aripdcom/kerteriz"
