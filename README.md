@@ -1245,10 +1245,11 @@ tablosu kullanır. Play, yayımlanan bir uygulamadan gizlilik metnini herkese
 açık ve sabit bir adreste istiyor; adres burasıdır.
 
 Tablonun ayrılmasının sebebi ağırlık: gizlilik metni ana sayfanın metninden
-uzun ve ana sayfada hiç kullanılmıyor, ikisi tek dosyada olsaydı tanıtım
-sayfasına bakan herkes iki yüz kilobaytı aşan bir JavaScript indirirdi — 300
-KB'lık bir uygulamayı anlatan sayfa için tuhaf olurdu. `site.js` ikisinde de
-aynı çalışıyor, çünkü tablonun adı (`window.COMPASS_I18N`) ikisinde de aynı.
+uzun (195 KB'a karşı 125 KB) ve ana sayfada hiç kullanılmıyor. İkisi tek
+dosyada olsaydı tanıtım sayfasına bakan herkes 320 KB'lık bir JavaScript
+indirirdi — 300 KB'lık bir uygulamayı anlatan sayfa için tuhaf olurdu.
+`site.js` ikisinde de aynı çalışıyor, çünkü tablonun adı
+(`window.COMPASS_I18N`) ikisinde de aynı.
 Dil seçimi de ortak: `localStorage` aynı anahtarı kullandığından Almanca
 açılmış ana sayfadan geçilen gizlilik sayfası da Almanca açılır.
 
