@@ -2,13 +2,16 @@
 <!--
   Compass'ın tanıtım sayfası. GitHub Pages bu klasörü (`docs/`) olduğu gibi
   yayımlıyor; derleme adımı yok, çünkü sayfanın kendisinin de uygulama gibi
-  bağımlılığı yok: tek HTML, tek CSS, iki küçük JS dosyası.
+  bağımlılığı yok: HTML, CSS ve iki küçük JS dosyası.
 
   Sayfadaki İngilizce metin doğrudan bu dosyada duruyor. Diğer yirmi yedi dil
   `assets/i18n.js` içinde; `assets/site.js` açılışta tarayıcının dilini okuyup
   metinleri değiştiriyor. İngilizce ayrı bir tabloda tekrarlanmıyor: site.js
   ilk yüklemede buradaki metinleri anlık görüntü olarak alıyor, İngilizceye
   dönüş o görüntüden yapılıyor.
+
+  Gizlilik metni ayrı bir sayfa (`privacy/`) ve ayrı bir çeviri tablosu
+  kullanıyor; sebebi ağırlık, bkz. `assets/privacy-i18n.js`'in başı.
 -->
 <html lang="en">
 <head>
@@ -199,6 +202,9 @@
   <section class="band narrow" id="privacy">
     <h2 data-i18n="secPrivacy">Privacy</h2>
     <p data-i18n="privacy">The app declares no internet permission, so it cannot send anything anywhere — that is enforced by Android, not promised in a policy. Location is read on the device only, for the declination, the qibla, the sun and the moon, and nothing is kept beyond the points you save yourself.</p>
+    <p class="actions">
+      <a class="button" href="privacy/" data-i18n="privacyMore">Read the full privacy policy</a>
+    </p>
   </section>
 
   <section class="band narrow" id="languages">

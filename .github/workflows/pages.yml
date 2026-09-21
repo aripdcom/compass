@@ -1,7 +1,8 @@
 # Tanıtım sayfasını GitHub Pages'e yayımlar.
 #
-# Sayfanın kaynağı `docs/` klasörü: tek HTML, tek CSS, iki JS ve ekran
-# görüntüleri. Derleme adımı yok — klasör olduğu gibi yükleniyor.
+# Sayfanın kaynağı `docs/` klasörü: iki HTML (tanıtım ve gizlilik), tek CSS,
+# üç JS ve ekran görüntüleri. Derleme adımı yok — klasör olduğu gibi
+# yükleniyor.
 #
 # Bir kereye mahsus ayar: depo ayarlarında Settings -> Pages -> "Build and
 # deployment" altında Source olarak **GitHub Actions** seçilmeli. Orada

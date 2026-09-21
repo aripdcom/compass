@@ -8,7 +8,8 @@ ve Kotlin standart kütüphanesi kullanılıyor, kadran `Canvas` ile elle çizil
 Gerçek kuzey, kıble yönü, dokununca yön kilitleyen hedef göstergesi ve kadranın
 göbeğinde su terazisi.
 
-**Tanıtım sayfası: https://compass.aripd.com/** (16. bölüm)
+**Tanıtım sayfası: https://compass.aripd.com/** (16. bölüm) ·
+**Gizlilik: https://compass.aripd.com/privacy/** (13. ve 16. bölüm)
 
 - `minSdk 24` (Android 7.0) — **Android 15 dahil** tüm sürümlerde çalışır
 - `targetSdk 35` (Android 15). Bu seviyeden itibaren kenardan kenara çizim
@@ -30,7 +31,7 @@ compass/
 ├── app/          uygulama kaynağı
 ├── .github/      iş akışları ve yardımcı betikler (bkz. 15. bölüm)
 ├── dist/         üretilen APK'lar          (gitignore'da)
-├── docs/         tanıtım sayfası + ekran görüntüleri (bkz. 16. bölüm)
+├── docs/         tanıtım sayfası, gizlilik metni, ekran görüntüleri (16. bölüm)
 ├── tools/        depo denetimleri: çeviri tutarlılığı (9. ve 16. bölüm)
 ├── keys/         imzalama anahtarı         (gitignore'da)
 └── keystore.properties                     (gitignore'da)
@@ -962,9 +963,22 @@ kullanıcı bunu telefonun izin listesinden kendisi görebilir. Ağ kullanan tek
 satır kod da yoktur. Paylaşma özelliğindeki harita bağlantısı yalnızca metindir;
 onu açan, paylaşımı alan taraftaki uygulamadır.
 
+Bir istisnası var ve gizlilik metni bunu açıkça yazar: **`allowBackup` açık**.
+Telefonda Android yedeklemesi açıksa ayar dosyası — kaydedilen noktalar ve
+koordinatları dâhil — kullanıcının kendi Google hesabına kopyalanır. Bunu yapan
+uygulama değil işletim sistemidir, kapsamı `backup_rules.xml` ile tek dosyayla
+sınırlandırılmıştır ve ayar kullanıcının elindedir; yine de "hiçbir şey
+telefondan çıkmıyor" cümlesinin yanına yazılması gereken bir şeydir. Açık
+bırakılmasının sebebi telefon değiştirenin noktalarını kaybetmemesi.
+
 Ayarların altındaki **Hakkında** bölümü sürümü, kaynak kod adresini, lisansı ve
 bu gizlilik notunu gösterir. Sürüm `PackageManager`'dan okunur, elle yazılmış bir
 sabitten değil.
+
+Metnin tamamı, yirmi sekiz dilde, **https://compass.aripd.com/privacy/**
+adresinde. Play yayımlanan uygulamalardan gizlilik metnini böyle sabit ve
+herkese açık bir adreste istediği için sayfa depoda (`docs/privacy/`) duruyor
+ve siteyle birlikte yayımlanıyor; ayrıntısı 16. bölümde.
 
 ## 14. Sorun giderme
 
@@ -1189,13 +1203,15 @@ derleme adımı olmadan, dört dosya.
 
 ```
 docs/
-├── index.html          sayfanın kendisi; İngilizce metinler burada duruyor
-├── assets/style.css    renkler uygulamanın paletinden (Palette.kt) alındı
-├── assets/i18n.js      diğer yirmi yedi dilin çevirileri
-├── assets/site.js      dil seçimi
-├── .nojekyll           GitHub sayfayı Jekyll'e sokmasın diye
-├── CNAME               özel alan adı: compass.aripd.com
-└── ekran-*.png         README'nin de kullandığı ekran görüntüleri
+├── index.html               sayfanın kendisi; İngilizce metinler burada duruyor
+├── privacy/index.html       gizlilik metni; İngilizcesi yine kendi içinde
+├── assets/style.css         renkler uygulamanın paletinden (Palette.kt) alındı
+├── assets/i18n.js           ana sayfanın diğer yirmi yedi dildeki çevirisi
+├── assets/privacy-i18n.js   gizlilik metninin diğer yirmi yedi dildeki çevirisi
+├── assets/site.js           dil seçimi; iki sayfada da aynısı
+├── .nojekyll                GitHub sayfayı Jekyll'e sokmasın diye
+├── CNAME                    özel alan adı: compass.aripd.com
+└── ekran-*.png              README'nin de kullandığı ekran görüntüleri
 ```
 
 Sayfadaki mutlak adresler (`canonical`, Open Graph ve yirmi sekiz `hreflang`
@@ -1222,13 +1238,38 @@ boş kutu yerine İngilizce görünüyor. JavaScript kapalıysa sayfa tümüyle
 İngilizce kalır ve baştan sona okunur — dil seçici o durumda gizlenir, çünkü
 çalışmayan bir kutu göstermenin anlamı yok.
 
-`tools/check-site.js` sayfadaki `data-i18n` anahtarlarıyla çeviri tablosunu
-karşılaştırır: eksik anahtar, sayfanın artık kullanmadığı anahtar ve
-`hreflang` listesiyle tablonun ayrışması. CI'da ve yayımdan önce koşar:
+### Gizlilik sayfası
+
+**https://compass.aripd.com/privacy/** ayrı bir sayfadır ve ayrı bir çeviri
+tablosu kullanır. Play, yayımlanan bir uygulamadan gizlilik metnini herkese
+açık ve sabit bir adreste istiyor; adres burasıdır.
+
+Tablonun ayrılmasının sebebi ağırlık: gizlilik metni ana sayfanın metninden
+uzun ve ana sayfada hiç kullanılmıyor, ikisi tek dosyada olsaydı tanıtım
+sayfasına bakan herkes iki yüz kilobaytı aşan bir JavaScript indirirdi — 300
+KB'lık bir uygulamayı anlatan sayfa için tuhaf olurdu. `site.js` ikisinde de
+aynı çalışıyor, çünkü tablonun adı (`window.COMPASS_I18N`) ikisinde de aynı.
+Dil seçimi de ortak: `localStorage` aynı anahtarı kullandığından Almanca
+açılmış ana sayfadan geçilen gizlilik sayfası da Almanca açılır.
+
+Metin, uygulamanın gerçekten yaptığını anlatır; söylenen her şey manifest'ten,
+`compass.xml`'den ya da kaynak koddan doğrulanabilir. Buna **yedekleme** de
+dâhil: `allowBackup` açık olduğu için, telefonda Android yedeklemesi açıksa
+kaydedilen noktalar koordinatlarıyla birlikte kullanıcının kendi Google
+hesabına kopyalanır. Bunu yapan uygulama değil işletim sistemidir ve ayar
+kullanıcının elindedir — ama "hiçbir şey telefondan çıkmıyor" diyen bir metnin
+bundan söz etmemesi eksiklik olurdu, o yüzden kendi paragrafı var.
+
+`tools/check-site.js` her iki sayfayı da denetler: sayfadaki `data-i18n`
+anahtarlarıyla o sayfanın çeviri tablosunu karşılaştırır (eksik anahtar,
+sayfanın artık kullanmadığı anahtar, `hreflang` listesiyle tablonun ayrışması)
+ve sonra iki tabloyu birbirine karşı — aynı diller, aynı dil adları. Ayrı
+tutulan şey er geç ayrışır; bu denetim onu engellemek için var. CI'da ve
+yayımdan önce koşar:
 
 ```bash
 node tools/check-site.js
-# 28 dil, 43 metin — site çevirileri tutuyor.
+# 28 dil — index.html: 44 metin, privacy/index.html: 48 metin — site çevirileri tutuyor.
 ```
 
 ### Yayımı açmak
@@ -1249,3 +1290,58 @@ Aynı yerde **Deploy from a branch** → `main` / `/docs` da seçilebilir: klas�
 hazır olduğu için o yol da çalışır, ama yayımdan önce denetim koşmaz ve
 `pages.yml` "Pages is not enabled" diyerek kırılır — o seçenek tercih edilirse
 iş akışı silinmeli.
+
+## 17. Google Play'e yüklemek
+
+Play yeni uygulamalarda APK kabul etmiyor; istediği **AAB**. Onu her sürüm
+koşusu üretiyor (15. bölüm): koşunun çıktısında
+`compass-<sürüm>-<kod>-<commit>.aab` adıyla duruyor, boyutu ve SHA-256'sı da
+koşu özetinde. Sürüm sayfasına eklenmiyor, çünkü bir AAB telefona kurulamaz;
+Releases'ten indirilen dosya her zaman kurulabilir bir APK olmalı.
+
+**İmza.** AAB, release APK'sıyla aynı anahtarla imzalanıyor. Play'e ilk yükleme
+yapıldığında bu anahtar **yükleme anahtarı** (upload key) olur: mağazadan
+dağıtılan kopyayı Google kendi anahtarıyla yeniden imzalar. Sonuç şu: Play'den
+kurulan uygulamanın imzası Releases'ten indirilenle **aynı değildir**, yani
+ikisi birbirinin üzerine güncellenemez. Bu bir hata değil, Play App Signing'in
+çalışma biçimi; `keys/pusula-release.jks` yine de kaybedilmemeli, çünkü yeni
+sürüm yüklemek onunla imzalamayı gerektirir.
+
+**Gizlilik metni.** Play, yayımlanan uygulamadan bunu sabit ve herkese açık bir
+adreste ister; adres **https://compass.aripd.com/privacy/**. Console'da
+`App content → Privacy policy` alanına yazılan şey budur.
+
+**Veri güvenliği formu (Data safety).** Uygulamanın verdiği cevap "**Veri
+toplanmıyor, veri paylaşılmıyor**". Dayanağı 13. bölümde: internet izni yok,
+dolayısıyla telefondan hiçbir şey çıkamıyor; konum cihazda okunup cihazda
+kullanılıyor. Google'ın tanımında "toplama" verinin cihazdan çıkması demek,
+cihazda kalan işleme bunun dışında.
+
+Formda ayrıca şunlar işaretlenir: şifreleme — veri zaten aktarılmadığı için
+soru geçersiz; silme talebi — hesap olmadığı için yok, kullanıcı `Verileri
+temizle` ile kendisi siler.
+
+Yedeklemeyi soran bir denetmen çıkarsa cevap dürüst olmalı: `allowBackup`
+açık, yani Android yedeklemesi açık bir telefonda ayar dosyası kullanıcının
+**kendi** Google hesabına kopyalanır. Bunu uygulama değil işletim sistemi yapar
+ve kullanıcı ayarı kapatabilir. Bu belirsizliğin hiç olmaması isteniyorsa
+`android:allowBackup="false"` yapılır — bedeli, telefon değiştirenin
+kaydettiği noktaları kaybetmesi.
+
+**İzin beyanı.** Uygulama yalnızca ön planda konum istiyor (`ACCESS_COARSE_-`
+ve `ACCESS_FINE_LOCATION`); arka plan konumu, SMS, arama kaydı gibi ayrı beyan
+formu gerektiren izinlerin hiçbiri yok. Yine de mağaza açıklamasında konumun
+ne işe yaradığı yazmalı: sapma, kıble, Güneş ve Ay.
+
+**Hedef API düzeyi.** Play yeni uygulamalardan belli bir `targetSdk` eşiğini
+şart koşuyor ve eşik her yıl yükseliyor. Depoda `targetSdk = 35`; yüklemeden
+önce Console'daki güncel eşiğe bakılmalı, düşük kalırsa yükleme reddedilir.
+
+**Kapalı test.** Kişisel (Personal) geliştirici hesaplarında yeni uygulamalar
+için 12 test kullanıcısıyla 14 gün kapalı test şartı var; kurum
+(Organization) hesaplarında yok. **Bu şart uygulamanın ücretli ya da ücretsiz
+olmasına bağlı değil**, hesap türüne bağlı.
+
+**Ücretsiz mi, ücretli mi.** Bu tek yönlü bir kapı: ücretsiz yayımlanan bir
+uygulama sonradan ücretli yapılamaz, tersi yapılabilir. Ücretli seçilirse
+ayrıca bir ödeme profili (merchant account) ve vergi bilgisi gerekir.
