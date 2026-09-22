@@ -11,6 +11,9 @@ keys/
 # Üretilen APK'lar
 dist/
 
+# tools/ altındaki betikler içe aktarılınca Python bunu bırakıyor
+__pycache__/
+
 .idea/
 *.iml
 .DS_Store

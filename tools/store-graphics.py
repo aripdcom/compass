@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Play mağaza görsellerini üretir: 512x512 ikon ve 1024x500 öne çıkan görsel.
+"""Play mağaza görsellerini üretir: ikon, öne çıkan görsel ve ekran görüntüleri.
 
     python3 tools/store-graphics.py          # store/ altına yazar
 
@@ -79,7 +79,11 @@ def icon(path, size=512, supersample=4):
     draw.polygon([p(54, 32), p(59.4, 54), p(48.6, 54)], fill=NORTH)
     draw.polygon([p(54, 75.8), p(59.4, 54), p(48.6, 54)], fill=SOUTH)
     disc(draw, cx, cy, 2.5 * unit, HUB)
-    image.resize((size, size), Image.LANCZOS).save(path, optimize=True)
+    # Play mağaza ikonu 32 bit PNG istiyor; alfa baştan sona opak, yalnızca
+    # kanal var olsun diye. Öne çıkan görsel ile ekran görüntülerinde tersi
+    # geçerli, onlar 24 bit kalıyor.
+    resized = image.resize((size, size), Image.LANCZOS).convert("RGBA")
+    resized.save(path, optimize=True)
 
 
 def feature(path, width=1024, height=500, supersample=3):
@@ -141,10 +145,56 @@ def feature(path, width=1024, height=500, supersample=3):
     image.resize((width, height), Image.LANCZOS).save(path, optimize=True)
 
 
+def edge_color(shot):
+    """Karenin kendi kenar rengi — dolgu buna uymazsa yanlarda bant görünür.
+
+    Sabit bir renk yazmak yetmiyor: gündüz karesinin zemini #101418, gece
+    karesininki tam siyah. Gecenin yanına #101418 konsaydı siyah şeridin
+    iki yanında gri bir çerçeve belirirdi, mağaza sayfasında hata gibi durur.
+    Kenar sütunları tek renk değilse (ki uygulamanın zemini düz, ama bir gün
+    değişebilir) karar vermeye çalışmıyoruz, palet rengine düşüyoruz.
+    """
+    width, height = shot.size
+    found = set()
+    for box in ((0, 0, 1, height), (width - 1, 0, width, height)):
+        # getcolors sınırı aşılınca None döner: sütun düz değil demektir.
+        counted = shot.crop(box).getcolors(maxcolors=2)
+        if not counted:
+            return BG
+        found.update(color for _, color in counted)
+    return found.pop() if len(found) == 1 else BG
+
+
+def padded_shots():
+    """Ekran görüntülerinin Play sürümü.
+
+    Play'in ölçüsünde uzun kenar kısa kenarın iki katını geçemiyor; 1080x2400
+    bir telefon 2,22 ile sınırın dışında kalıyor. Kırpmak kadranın bir kısmını
+    götürürdü, o yüzden yanlara karenin kendi zemin rengi ekleniyor — içerik
+    bozulmuyor, yalnızca oran düzeliyor.
+
+    Genişlik: uzun kenarın yarısı (en dar geçerli genişlik), artı sınıra bitişik
+    durmamak için kırk piksel. 1080x2400 için 1240, yani oran 1,94.
+
+    Kuralın tek uygulaması burası. `screenshots.sh` bir zamanlar kendi kopyasını
+    üretiyordu; ikisinin ayrı düşmesi yanlış olanın yüklenmesi demek olurdu.
+    """
+    for source in sorted((ROOT / "docs").glob("ekran-*.png")):
+        shot = Image.open(source).convert("RGB")
+        width, height = shot.size
+        if max(width, height) <= 2 * min(width, height):
+            continue
+        target = (height + 1) // 2 + 40
+        frame = Image.new("RGB", (target, height), edge_color(shot))
+        frame.paste(shot, ((target - width) // 2, 0))
+        frame.save(OUT / f"{source.stem}-play.png", optimize=True)
+
+
 def main():
     OUT.mkdir(exist_ok=True)
     icon(OUT / "ikon-512.png")
     feature(OUT / "one-cikan-1024x500.png")
+    padded_shots()
     for f in sorted(OUT.glob("*.png")):
         with f.open("rb") as fh:
             head = fh.read(26)

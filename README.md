@@ -32,7 +32,7 @@ kerteriz/
 ├── .github/      iş akışları ve yardımcı betikler (bkz. 15. bölüm)
 ├── dist/         üretilen APK'lar          (gitignore'da)
 ├── docs/         tanıtım sayfası, gizlilik metni, ekran görüntüleri (16. bölüm)
-├── store/        Play mağaza görselleri: ikon ve öne çıkan görsel (17. bölüm)
+├── store/        Play'e yüklenecek görseller: ikon, öne çıkan görsel, çekimler (17. bölüm)
 ├── tools/        depo denetimleri ve yardımcılar (9., 16. ve 17. bölüm)
 ├── keys/         imzalama anahtarı         (gitignore'da)
 └── keystore.properties                     (gitignore'da)
@@ -1625,17 +1625,26 @@ Gizlilik metni: kerteriz.aripd.com/privacy/
 
 ### Mağaza görselleri
 
-Play iki görsel daha istiyor ve ikisi de `store/` altında duruyor:
+Console'a yüklenecek her görsel `store/` altında hazır duruyor; başka yerden
+bir şey toplanmasına gerek yok:
 
 | | Ölçü | Dosya |
 |---|---|---|
 | Uygulama ikonu | 512x512 | `store/ikon-512.png` |
 | Öne çıkan görsel | 1024x500 | `store/one-cikan-1024x500.png` |
+| Ekran görüntüleri | 1240x2400 | `store/ekran-{gunduz,gece,ayarlar}-play.png` |
 
-İkisini de `python3 tools/store-graphics.py` üretiyor (Pillow gerekiyor, CI'da
-koşmaz). Elle çizilmediler: geometri `ic_launcher_foreground.xml`'den, renkler
-`Palette.kt`'nin gündüz paletinden geliyor, yani ikon uygulamanın ikonundan
-ayrı düşmüyor.
+Üçünü de `python3 tools/store-graphics.py` üretiyor (Pillow gerekiyor, CI'da
+koşmaz). İlk ikisi elle çizilmedi: geometri `ic_launcher_foreground.xml`'den,
+renkler `Palette.kt`'nin gündüz paletinden geliyor, yani ikon uygulamanın
+ikonundan ayrı düşmüyor. Sonuncular `docs/ekran-*.png`'nin oranı düzeltilmiş
+kopyası (aşağıda).
+
+**Renk derinliği ikonda ötekilerden farklı.** Play ikonu 32 bit PNG olarak
+istiyor, yani alfa kanalı bulunsun — ikonun alfası baştan sona opak, kanal
+yalnızca bu şart için var. Öne çıkan görselle çekimler 24 bit kalıyor. Betiğin
+sonundaki döküm ölçüyü yazdırıyor; derinliği değiştirmek gerekirse `icon()`
+içindeki `convert("RGBA")` tek dokunulacak yer.
 
 **İkon 108 birimlik tuvalin tamamından değil, ortadaki 72 birimlik güvenli
 bölgeden ölçekleniyor.** Uyarlanabilir ikonun dışı telefonda maskeyle
@@ -1698,5 +1707,17 @@ telefon başka çözünürlükteyse `docs/index.html`'deki üç `<img>` etiketin
 Bir uyarıyı betik kendisi veriyor: Play'in ölçüsünde **uzun kenar kısa kenarın
 iki katını geçemez**. 1080x2400'lük bir telefonun ekranı 2,22 oranıyla bu
 sınırın dışında, yani ham görüntü olduğu gibi yüklenemez. Kırpmak kadranın bir
-kısmını götüreceği için betik yanlara uygulamanın zemin rengini ekleyen bir
-kopya üretir (ImageMagick varsa kendisi, yoksa komutu yazar).
+kısmını götüreceği için yanlara karenin kendi zemin rengi eklenir; genişlik
+uzun kenarın yarısı artı kırk piksel, yani 1240 — sınıra bitişik durmasın diye.
+
+Dolgu rengi sabit yazılamıyor: gündüz karesinin zemini `#101418`, gece
+karesininki tam siyah. Sabit yazılsaydı siyah şeridin iki yanında gri bir
+çerçeve belirir, mağaza sayfasında hata gibi dururdu. Renk her karenin kendi
+kenarından okunuyor.
+
+**Kuralın tek uygulaması `tools/store-graphics.py` içinde.** `screenshots.sh`
+yalnızca ölçüyü söyleyip betiği hatırlatıyor; bir zamanlar kendi kopyasını da
+üretiyordu ama iki uygulamanın ayrı düşmesi, yanlış olanın yüklenmesi demekti.
+Kaynak `docs/ekran-*.png`, yani README'nin ve tanıtım sayfasının gösterdiği
+karelerin ta kendisi. **Yeni çekim alındığında betiği yeniden koşturmak
+gerekiyor**, yoksa mağazadaki kareler siteyle ayrı düşer.
