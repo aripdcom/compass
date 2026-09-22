@@ -116,11 +116,15 @@ shoot() {
 # Play'in ölçüsü: her kenar 320-3840 piksel arasında ve uzun kenar kısa kenarın
 # iki katını geçmeyecek. 1080x2400'lük bir telefonun ekranı 2,22 oranıyla bu
 # sınırın dışında kalıyor — yani ham ekran görüntüsü olduğu gibi yüklenemiyor.
-# Kırpmak kadranın bir kısmını götürürdü; yanlara uygulamanın kendi zemin
-# rengini eklemek içeriği bozmadan oranı düzeltir.
-BG_DARK="#101418"
-report_and_pad() {
-  local file="$1" bg="$2"
+#
+# Düzeltmeyi bu betik yapmıyor, yalnızca haber veriyor. Kırpmak kadranın bir
+# kısmını götürürdü; doğrusu yanlara karenin kendi zemin rengini eklemek ve o
+# renk sabit yazılamıyor — gündüz karesininki #101418, gece karesininki tam
+# siyah, sabit yazılsaydı gecenin iki yanında gri bir çerçeve belirirdi. Kuralın
+# tek uygulaması `tools/store-graphics.py` içinde; buradan da bir kopya
+# üretilseydi ikisi ayrı düşer ve yanlış olan yüklenirdi.
+report_size() {
+  local file="$1"
   local size w h
   size=$(python3 - "$file" <<'PY'
 import struct, sys
@@ -132,22 +136,11 @@ PY
 )
   w=${size% *}; h=${size#* }
 
-  local ok=1
-  python3 -c "import sys; sys.exit(0 if max($w,$h) <= 2*min($w,$h) else 1)" || ok=0
-  if [ "$ok" = "1" ]; then
+  if python3 -c "import sys; sys.exit(0 if max($w,$h) <= 2*min($w,$h) else 1)"; then
     say "    ${w}x${h} — Play ölçüsüne uyuyor"
-    return 0
-  fi
-
-  local need=$(( (h + 1) / 2 ))   # uzun kenarın yarısı: en dar geçerli genişlik
-  local target=$(( need + 40 ))   # sınırın tam üstünde durmayalım
-  if command -v magick >/dev/null || command -v convert >/dev/null; then
-    local im; im=$(command -v magick || command -v convert)
-    "$im" "$file" -background "$bg" -gravity center -extent "${target}x${h}" "${file%.png}-play.png"
-    say "    ${w}x${h} — oran 2:1'i aşıyor; ${target}x${h} kopyası: $(basename "${file%.png}-play.png")"
   else
-    say "    ${w}x${h} — oran 2:1'i aşıyor, Play kabul etmez. ImageMagick kurulunca:"
-    say "      magick '$file' -background '$bg' -gravity center -extent ${target}x${h} '${file%.png}-play.png'"
+    say "    ${w}x${h} — oran 2:1'i aşıyor, Play ham hâlini kabul etmez."
+    say "      Kare depoya girdikten sonra: python3 tools/store-graphics.py"
   fi
 }
 
@@ -168,12 +161,12 @@ for locale in "${locales[@]}"; do
       read -r _ </dev/tty
       shoot "$OUT/$locale-$name.png"
       say "  $OUT/$locale-$name.png"
-      report_and_pad "$OUT/$locale-$name.png" "$BG_DARK"
+      report_size "$OUT/$locale-$name.png"
     done
   else
     shoot "$OUT/$locale-gunduz.png"
     say "  $OUT/$locale-gunduz.png"
-    report_and_pad "$OUT/$locale-gunduz.png" "$BG_DARK"
+    report_size "$OUT/$locale-gunduz.png"
   fi
 done
 
