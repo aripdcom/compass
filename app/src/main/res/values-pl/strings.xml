@@ -199,5 +199,5 @@
     <string name="settings_source">Kod źródłowy</string>
     <string name="settings_license">Licencja</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">Aplikacja nie ma uprawnienia do internetu. Lokalizacja jest używana tylko na urządzeniu — do deklinacji, kibli, Słońca i Księżyca — i nigdy nigdzie nie jest wysyłana.</string>
+    <string name="settings_privacy_note">Aplikacja nie ma uprawnienia do internetu. Lokalizacja jest używana tylko na urządzeniu — do deklinacji, stałych miejsc, Słońca i Księżyca — i nigdy nigdzie nie jest wysyłana.</string>
 </resources>

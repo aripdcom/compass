@@ -199,5 +199,5 @@
     <string name="settings_source">Lähtekood</string>
     <string name="settings_license">Litsents</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">Rakendusel pole interneti luba. Asukohta kasutatakse ainult seadmes — deklinatsiooni, qibla, päikese ja kuu jaoks — ja seda ei saadeta kuhugi.</string>
+    <string name="settings_privacy_note">Rakendusel pole interneti luba. Asukohta kasutatakse ainult seadmes — deklinatsiooni, paiksete kohtade, päikese ja kuu jaoks — ja seda ei saadeta kuhugi.</string>
 </resources>

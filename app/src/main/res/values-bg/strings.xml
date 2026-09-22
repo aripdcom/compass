@@ -199,5 +199,5 @@
     <string name="settings_source">Изходен код</string>
     <string name="settings_license">Лиценз</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">Приложението няма разрешение за интернет. Местоположението се използва само на устройството — за отклонението, киблата, Слънцето и Луната — и не се изпраща никъде.</string>
+    <string name="settings_privacy_note">Приложението няма разрешение за интернет. Местоположението се използва само на устройството — за отклонението, постоянните места, Слънцето и Луната — и не се изпраща никъде.</string>
 </resources>

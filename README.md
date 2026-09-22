@@ -802,7 +802,7 @@ Uygulama **yirmi sekiz dilde**:
 
 Uygulama içinde dil ayarı yoktur — sistemde hangisi seçiliyse o kullanılır.
 Android 13'ten itibaren `locales_config.xml` sayesinde
-`Ayarlar → Uygulamalar → Pusula → Dil` altında uygulamaya özel bir seçici de
+`Ayarlar → Uygulamalar → Kerteriz → Dil` altında uygulamaya özel bir seçici de
 çıkar.
 
 Varsayılan (`values/`) **İngilizce**, Türkçe ise `values-tr/` altındadır. Sebep:
@@ -1055,7 +1055,7 @@ dağıtır; tek şart telif bildiriminin korunması.
 Uygulamanın **internet izni yoktur**. İstediği izinler bunlardan ibaret:
 
 ```
-ACCESS_COARSE_LOCATION    sapma, kıble, güneş ve ay hesabı için
+ACCESS_COARSE_LOCATION    sapma, sabit yerler, güneş ve ay hesabı için
 ACCESS_FINE_LOCATION      koordinat paneli ve nokta mesafesi için
 VIBRATE                   ana yön geçişlerindeki tık için
 ```
@@ -1074,6 +1074,14 @@ sınırlandırılmıştır ve ayar kullanıcının elindedir; yine de "hiçbir �
 telefondan çıkmıyor" cümlesinin yanına yazılması gereken bir şeydir. Açık
 bırakılmasının sebebi telefon değiştirenin noktalarını kaybetmemesi.
 
+Gizlilik metni konum izninin gerekçesini sayarken **"sabit yerler"** diyor,
+"kıble" demiyor — ne uygulama içindeki notta ne sayfada. Sebebi konumlandırma
+değil doğruluk: uygulama on bir sabit yere yön hesaplıyor ve bunlardan yalnızca
+birini adıyla saymak, iznin ne için istendiğini eksik anlatmak olurdu. Terim
+sitenin ve mağazanın zaten kullandığı terim. Yerlerin hepsi adlarıyla
+uygulamanın içinde, `Ayarlar → Kadran işaretleri → Sabit yerler` altında
+duruyor; gizlenen bir şey yok.
+
 Ayarların altındaki **Hakkında** bölümü sürümü, kaynak kod adresini, lisansı ve
 bu gizlilik notunu gösterir. Sürüm `PackageManager`'dan okunur, elle yazılmış bir
 sabitten değil.
@@ -1089,15 +1097,15 @@ ve siteyle birlikte yayımlanıyor; ayrıntısı 16. bölümde.
 
 Önce hangi durumda olduğunuzu ayırın:
 
-`Ayarlar → Uygulamalar → Tüm uygulamaları göster` listesinde **Pusula** var mı?
+`Ayarlar → Uygulamalar → Tüm uygulamaları göster` listesinde **Kerteriz** var mı?
 
 - **Varsa:** uygulama kurulu, sorun launcher'da. Aynı ekrandaki **Aç** düğmesiyle
   hemen çalıştırabilirsiniz. Çekmecede görünmesi için: ana ekranı kapatıp açın
   (ya da telefonu yeniden başlatın) ve launcher'ın **gizli uygulamalar**
   ayarına bakın (Samsung: `Ana ekran ayarları → Uygulamaları gizle`,
   Xiaomi: `Ayarlar → Uygulamalar → Uygulama kilidi → Gizli uygulamalar`).
-  Çekmece alfabetikse **P** harfinde arayın, ya da çekmecenin arama kutusuna
-  "Pusula" yazın.
+  Çekmece alfabetikse **K** harfinde arayın, ya da çekmecenin arama kutusuna
+  "Kerteriz" yazın.
 - **Yoksa:** kurulum aslında tamamlanmamış. Genelde Play Protect sessizce
   engellemiştir: `Play Store → profil simgesi → Play Protect → Ayarlar →
   Uygulamaları Play Protect ile tara` seçeneğini geçici olarak kapatıp APK'ya
@@ -1113,7 +1121,7 @@ kendi `label`/`icon` değerleri var — v1.0'da launcher'ın ikonu çözemeyip u
 Sırasıyla şunlara bakın:
 
 1. **Önce eski sürümü kaldırın.** En sık sebep budur. `Ayarlar → Uygulamalar →
-   Tüm uygulamaları göster → Pusula → Kaldır`. Aynı paket adına (`com.aripd.kerteriz`)
+   Tüm uygulamaları göster → Kerteriz → Kaldır`. Aynı paket adına (`com.aripd.kerteriz`)
    sahip, farklı bir anahtarla imzalanmış bir kurulum varsa Android yeni APK'yı
    "Uygulama yüklenmedi" diyerek reddeder. **Debug APK ile release APK'nın
    imzaları farklıdır**, dolayısıyla debug'dan release'e geçerken kaldırma adımı
@@ -1538,9 +1546,11 @@ i18n.js`) hazır cümleleri veriyor.
 **Dini motifler mağaza tarafında geçmiyor.** Kâbe, Mescid-i Aksa ve Vatikan
 uygulamanın içinde duruyor ve ayarlardan açılıp kapanıyor; mağaza başlığı,
 açıklamaları, ekran görüntüleri ve tanıtım sayfası "sabit yerlere yön" diyor.
-Özellik gizlenmiyor — adı genel. Gizlilik metni bunun dışında: orası konum
-izninin neden istendiğini sayan bir belge ve doğruluğu konumlandırmadan önce
-geliyor.
+Özellik gizlenmiyor — adı genel. **Gizlilik metni de aynı terimi kullanıyor**
+ama başka bir gerekçeyle: orası konum izninin neden istendiğini sayan bir belge
+ve doğruluğu konumlandırmadan önce gelir. On bir yerden yalnızca birini adıyla
+saymak iznin gerekçesini eksik anlatırdı; "sabit yerler" hepsini kapsıyor.
+Ayrıntısı 13. bölümde.
 
 ### Mağaza ekran görüntüleri
 

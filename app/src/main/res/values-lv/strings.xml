@@ -199,5 +199,5 @@
     <string name="settings_source">Pirmkods</string>
     <string name="settings_license">Licence</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">Lietotnei nav interneta atļaujas. Atrašanās vieta tiek izmantota tikai ierīcē — deklinācijai, kiblai, Saulei un Mēnesim — un netiek nekur sūtīta.</string>
+    <string name="settings_privacy_note">Lietotnei nav interneta atļaujas. Atrašanās vieta tiek izmantota tikai ierīcē — deklinācijai, nemainīgajām vietām, Saulei un Mēnesim — un netiek nekur sūtīta.</string>
 </resources>

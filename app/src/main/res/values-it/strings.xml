@@ -199,5 +199,5 @@
     <string name="settings_source">Codice sorgente</string>
     <string name="settings_license">Licenza</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">L’app non ha il permesso di accedere a internet. La posizione è usata solo sul dispositivo per declinazione, qibla, sole e luna, e non viene mai inviata.</string>
+    <string name="settings_privacy_note">L’app non ha il permesso di accedere a internet. La posizione è usata solo sul dispositivo per declinazione, luoghi fissi, sole e luna, e non viene mai inviata.</string>
 </resources>

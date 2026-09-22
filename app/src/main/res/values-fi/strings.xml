@@ -199,5 +199,5 @@
     <string name="settings_source">Lähdekoodi</string>
     <string name="settings_license">Lisenssi</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">Sovelluksella ei ole internet-lupaa. Sijaintia käytetään vain laitteessa — erantoon, qiblaan, aurinkoon ja kuuhun — eikä sitä lähetetä mihinkään.</string>
+    <string name="settings_privacy_note">Sovelluksella ei ole internet-lupaa. Sijaintia käytetään vain laitteessa — erantoon, kiinteisiin paikkoihin, aurinkoon ja kuuhun — eikä sitä lähetetä mihinkään.</string>
 </resources>

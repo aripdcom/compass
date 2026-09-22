@@ -199,5 +199,5 @@
     <string name="settings_source">Kjeldekode</string>
     <string name="settings_license">Lisens</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">Appen har ikkje internettløyve. Posisjonen vert berre nytta på eininga — til misvising, qibla, sol og måne — og vert aldri sendt vidare.</string>
+    <string name="settings_privacy_note">Appen har ikkje internettløyve. Posisjonen vert berre nytta på eininga — til misvising, faste stader, sol og måne — og vert aldri sendt vidare.</string>
 </resources>

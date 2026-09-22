@@ -214,5 +214,5 @@
     <string name="settings_source">Source code</string>
     <string name="settings_license">License</string>
     <string name="settings_license_value">MIT</string>
-    <string name="settings_privacy_note">The app has no internet permission. Location is used on the device only, for declination, qibla, sun and moon, and is never sent anywhere.</string>
+    <string name="settings_privacy_note">The app has no internet permission. Location is used on the device only, for declination, fixed places, sun and moon, and is never sent anywhere.</string>
 </resources>
