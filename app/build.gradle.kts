@@ -7,18 +7,23 @@ plugins {
 
 android {
     namespace = "com.aripd.kerteriz"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.aripd.kerteriz"
         minSdk = 24          // Android 7.0
-        // Android 15. Play Store yeni sürümler için 35 istiyor; ayrıca bu
-        // seviyeden itibaren kenardan kenara çizim zorunlu ve
+        // Android 16. Play Store yeni sürümler için 36 istiyor ve eşiği her yıl
+        // yükseltiyor; 35 ile yüklemeye kalkıldığında Console sürümü baştan
+        // reddediyor.
+        //
+        // 35'ten beri kenardan kenara çizim zorunlu ve
         // setDecorFitsSystemWindows(true) yok sayılıyor — pencere boşluklarını
-        // uygulama kendisi bırakmak zorunda (bkz. MainActivity.applyInsets).
-        targetSdk = 35
-        versionCode = 35
-        versionName = "5.0"
+        // uygulama kendisi bırakıyor (bkz. MainActivity.applyInsets). 36'da bu
+        // zorunluluğun muafiyeti de kalktı; uygulama zaten muafiyet
+        // kullanmadığı için değişen bir şey yok.
+        targetSdk = 36
+        versionCode = 36
+        versionName = "5.1"
     }
 
 
