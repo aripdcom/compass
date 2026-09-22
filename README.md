@@ -1680,6 +1680,17 @@ Privacy policy: kerteriz.aripd.com/privacy/
 Yukarıdaki İngilizce metin bölümlerin ne anlattığını gösteriyor; Console'a
 kopyalanacak olan dosyalar.
 
+**Ama mağaza yirmi altı dil taşıyor, yirmi sekiz değil.** Play'in mağaza
+listesi dil listesinde **Norsk nynorsk** (`nn`) ile **Gaeilge** (`ga`) yok;
+ikisi uygulamanın içinde ve tanıtım sayfasında duruyor, mağaza sayfasında
+duramıyor. Nynorsk konuşanına Play muhtemelen bokmål listesini gösterecek,
+İrlandacaya İngilizceyi.
+
+İki dosya yine de üretiliyor ve denetim yine yirmi sekizini birden istiyor.
+Sebebi şu: metinler siteden kuruluyor, site yirmi sekiz dilde, ve Play listesini
+bir gün genişletirse dosya hazır olur. Eksik tutmak, "acaba neden yok" diye
+bakılacak bir boşluk bırakırdı — bu not o boşluğun yerini alıyor.
+
 Sıfırdan çevrilmediler. `tools/store-texts.py` onları depoda **zaten
 yayımlanmış** cümlelerden kuruyor: on bir bölümün onu tanıtım sayfasının
 çevirilerinden geliyor (`docs/assets/i18n.js` — giriş için `tagline`,
