@@ -1505,8 +1505,25 @@ sorusunu davet eder. Yukarı baskı: Play'deki pusulaların neredeyse tamamı
 reklamlı-ücretsiz ve bu uygulamayı ayıran şey 0,99 €'nun küçümsediği şey —
 reklam yok, izleme yok, internet izni yok.
 
-Türkiye fiyatı otomatik çevirime bırakılmamalı, Console'dan elle girilmeli:
-Play'in Türkiye alt sınırı dolar karşılığının çok altında.
+**Türkiye fiyatı otomatik çevirime bırakıldı — bu bir düzeltme.** Bölüm eskiden
+"elle girilmeli, Play'in Türkiye alt sınırı dolar karşılığının çok altında"
+diyordu. Fiyat tablosu doldurulunca gerekçenin tutmadığı görüldü: Play alt
+sınıra düşürmüyor, **geliştirici gelirini eşitleyecek** bir kurla çeviriyor.
+
+Console'un KDV sütunu hesabı yapılabilir kılıyor (listelenen fiyat KDV dâhil):
+
+| | Müşteri öder | KDV'siz | Google'ın %15'i düşünce |
+|---|---|---|---|
+| Türkiye (KDV %20) | 134,99 TRY | 112,49 | **95,62 TRY** |
+| Togo (KDV yok) | 1,99 EUR | 1,99 | **1,69 EUR** |
+
+İma edilen kur 56,5 TRY/EUR — yani gerçek bir kur, taban değil.
+
+Geriye kalan soru doğruluk değil **tercih**: Türk alıcı %20 KDV'yi de üstlendiği
+için euro paritesi ona daha pahalıya geliyor. Yerel alım gücüne göre indirmek
+savunulabilir bir seçenekti; bu sürüm için parite tercih edildi. **Fiyat
+sonradan değiştirilebiliyor** (ücretsiz/ücretli kapısının aksine), yani karar
+geri alınabilir.
 
 **Google'ın payı: varsayılan %30, indirimli katmanda yıllık ilk 1 M$ için %15
 — ama indirim kendiliğinden gelmiyor, kaydolmak gerekiyor.** İki adımı var,
