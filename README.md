@@ -32,6 +32,7 @@ kerteriz/
 ├── .github/      iş akışları ve yardımcı betikler (bkz. 15. bölüm)
 ├── dist/         üretilen APK'lar          (gitignore'da)
 ├── docs/         tanıtım sayfası, gizlilik metni, ekran görüntüleri (16. bölüm)
+├── store/        Play mağaza görselleri: ikon ve öne çıkan görsel (17. bölüm)
 ├── tools/        depo denetimleri ve yardımcılar (9., 16. ve 17. bölüm)
 ├── keys/         imzalama anahtarı         (gitignore'da)
 └── keystore.properties                     (gitignore'da)
@@ -1512,6 +1513,12 @@ SAVED POINTS
 Long-press the dial to save where you are, or paste coordinates or a shared
 map link. The rim then carries the bearing and the distance back.
 
+NAUTICAL MILES AND A STEADY HEADING
+Distances in metres and kilometres, or metres and nautical miles. Bearings to
+your own saved points can follow the great circle — the shortest way — or a
+rhumb line, the single heading you can hold from start to finish. The distance
+follows whichever you pick.
+
 NIGHT MODE
 Black background, red dial. Marks are told apart by hue rather than
 brightness, so night vision survives a glance at the screen. It can switch by
@@ -1551,6 +1558,95 @@ ama başka bir gerekçeyle: orası konum izninin neden istendiğini sayan bir be
 ve doğruluğu konumlandırmadan önce gelir. On bir yerden yalnızca birini adıyla
 saymak iznin gerekçesini eksik anlatırdı; "sabit yerler" hepsini kapsıyor.
 Ayrıntısı 13. bölümde.
+
+Uzun açıklama (Türkçe):
+
+```
+Kerteriz, tek bir işi özenle yapan bir Android pusulası.
+
+MANYETİK KUZEY DEĞİL, GERÇEK KUZEY
+Konum bilindiği anda manyetik sapma uygulanır; kadrandaki kuzey coğrafi
+kutuptur. Manyetik kuzey kenarda mavi bir M olarak durur, aradaki farkı
+kendiniz görürsünüz.
+
+SABİT YERLERE YÖN
+Sabit yerlere büyük daire kerterizi, kenarda mesafesiyle birlikte işaretli.
+Hesap cihazda yapılır: hiçbir şey sorulmaz, hiçbir şey indirilmez.
+
+KERTERİZ KİLİTLE
+Kadrana dokunun, baktığınız yön kilitlenir. Alt satır ne kadar saptığınızı
+sağa mı sola mı olduğuyla birlikte yazar; yöne döndüğünüzde çift tık haber
+verir.
+
+SU TERAZİSİ
+Kadranın göbeğinde bir kabarcık. Eğik tutulan telefon yanlış okur — bunu size
+söyleyen şey odur.
+
+GÜNEŞ VE AY
+İkisinin de yönü kenarda, güneşin doğuştan batışa yayı, ay ise evresiyle
+çizili; ufkun altındayken sönük durur.
+
+KAYDEDİLEN NOKTALAR
+Kadrana uzun basın, bulunduğunuz yer kaydedilsin; ya da koordinat veya
+paylaşılmış bir harita bağlantısı yapıştırın. Kenar bundan sonra o noktanın
+yönünü ve uzaklığını taşır.
+
+DENİZ MİLİ VE SABİT PRUVA
+Mesafe metre ve kilometre ya da metre ve deniz mili olarak yazılabilir. Kendi
+kaydettiğiniz noktalara yön iki türlü verilebilir: en kısa yol olan büyük
+daire, ya da baştan sona tutabileceğiniz tek açı olan loksodrom. Mesafe de
+seçtiğiniz yola göre ölçülür.
+
+GECE MODU
+Siyah zemin, kırmızı kadran. İşaretler parlaklıkla değil tonla ayrılır, ekrana
+bir bakış gece görüşünü bozmaz. Sivil alacakaranlığın sonunda kendiliğinden de
+geçebilir.
+
+SESLİ SÖYLER
+Her okuma telefonun dilinde ekran okuyuculara bildirilir; kuzey, doğu, güney ve
+batı geçilirken kısa bir tık gelir, yani bir kerteriz bakmadan tutulabilir.
+
+YİRMİ SEKİZ DİL
+Avrupa Birliği'nin bütün resmî dilleri, artı İzlandaca, Norveççenin iki yazı
+dili ve Türkçe. Uygulama telefon hangi dile ayarlıysa onunla açılır.
+
+KÜÇÜK, VE TASARIM GEREĞİ ÇEVRİMDIŞI
+Çatı yok, bağımlılık yok, reklam yok, ölçümleme yok. Uygulamanın internet izni
+hiç yoktur: Android ona ağ bağlantısı vermez, yani konumunuzu hiçbir yere
+gönderemez. Bu bir metinde verilmiş söz değil — on saniyede kendiniz
+bakabilirsiniz: Ayarlar > Uygulamalar > Kerteriz > İzinler.
+
+Konum cihazda sapma, sabit yerlere yön ve güneşle ayın konumu için kullanılır.
+Telefondan hiçbir şey çıkmaz.
+
+Kaynak kod: github.com/aripdcom/kerteriz
+Gizlilik metni: kerteriz.aripd.com/privacy/
+```
+
+### Mağaza görselleri
+
+Play iki görsel daha istiyor ve ikisi de `store/` altında duruyor:
+
+| | Ölçü | Dosya |
+|---|---|---|
+| Uygulama ikonu | 512x512 | `store/ikon-512.png` |
+| Öne çıkan görsel | 1024x500 | `store/one-cikan-1024x500.png` |
+
+İkisini de `python3 tools/store-graphics.py` üretiyor (Pillow gerekiyor, CI'da
+koşmaz). Elle çizilmediler: geometri `ic_launcher_foreground.xml`'den, renkler
+`Palette.kt`'nin gündüz paletinden geliyor, yani ikon uygulamanın ikonundan
+ayrı düşmüyor.
+
+**İkon 108 birimlik tuvalin tamamından değil, ortadaki 72 birimlik güvenli
+bölgeden ölçekleniyor.** Uyarlanabilir ikonun dışı telefonda maskeyle
+kırpılıyor; tuvalin tamamı alınsaydı mağazadaki halka telefondakinden belirgin
+biçimde küçük görünürdü.
+
+**Öne çıkan görselde tek metin marka adı.** "Kerteriz" yirmi sekiz dilde aynı,
+yani tek görsel hepsine yetiyor. Kadranda yön harfi de yok — uygulama onları
+çeviriyor (K/D/G/B), görsele konsaydı dile bağlanır ve yirmi sekiz görsel
+gerekirdi. Play bu görseli bazı yerlerde 16:9'a kırptığı için içerik ortada
+tutuldu; yanlardan 67'şer piksel gitse de ne kadran ne yazı kesiliyor.
 
 ### Mağaza ekran görüntüleri
 
