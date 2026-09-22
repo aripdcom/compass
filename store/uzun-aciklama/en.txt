@@ -1,0 +1,39 @@
+An advanced compass for Android. True north, bearings to fixed places, the sun and the moon — drawn by hand on a dial, with nothing else in the way.
+
+TRUE NORTH
+Once the location is known the magnetic declination is added, so north on the dial is the geographic pole and not the magnetic one. Magnetic north stays on the rim as a blue M.
+
+BEARINGS TO FIXED PLACES
+Great-circle bearings to fixed places, marked on the rim with the distance. Worked out on the device: nothing is looked up, nothing is fetched.
+
+LOCK A BEARING
+Tap the dial to lock the direction you are facing. The bottom line then says how far you have drifted, left or right, and a double tick tells you when you are back on it.
+
+SPIRIT LEVEL
+A bubble in the middle of the dial. A tilted phone reads wrong — this is the thing that tells you it is tilted.
+
+SUN AND MOON
+Their bearings on the rim, the arc from sunrise to sunset, and the moon drawn with its phase — faint while it is below the horizon.
+
+SAVED POINTS
+Long-press the dial to save where you are, or paste coordinates or a shared map link. The rim then carries the bearing and the distance back.
+
+NAUTICAL MILES AND A STEADY HEADING
+Distances in metres and kilometres, or metres and nautical miles. Bearings to your own saved points can follow the great circle — the shortest way — or a rhumb line, the single heading you can hold from start to finish. The distance follows whichever you pick.
+
+NIGHT MODE
+Black background, red dial. Marks are told apart by hue rather than brightness, so night vision survives a glance at the screen. It can switch by itself at the end of civil twilight.
+
+SAYS IT OUT LOUD
+Every reading is announced to screen readers in the language of the phone, and a short tick passes north, east, south and west — so a bearing can be held without looking.
+
+TWENTY-EIGHT LANGUAGES
+English is the default. Every official language of the European Union is there, together with Icelandic and both written standards of Norwegian, and Turkish. The app opens in whatever language the phone is set to and falls back to English for anything else; from Android 13 on, the system settings can also give the app a language of its own.
+
+SMALL, AND OFFLINE BY DESIGN
+The app declares no internet permission, so it cannot send anything anywhere — that is enforced by Android, not promised in a policy. Location is read on the device only, for the declination, the bearings to fixed places, the sun and the moon, and nothing is kept beyond the points you save yourself.
+
+MIT licensed · no ads · no tracking · no internet permission
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

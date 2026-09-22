@@ -1,0 +1,39 @@
+Compás ardleibhéil do Android. An tuaisceart geografach, treonna chuig áiteanna seasta, an Ghrian agus an Ghealach — tarraingthe de láimh ar dhiailphláta, gan aon rud eile sa bhealach.
+
+FÍORTHUAISCEART
+Chomh luath is atá an suíomh ar eolas cuirtear an diallas maighnéadach leis, agus is é an pol geografach atá ó thuaidh ar an diail, ní an ceann maighnéadach. Fanann an tuaisceart maighnéadach ar an imeall mar M gorm.
+
+TREONNA CHUIG ÁITEANNA SEASTA
+Treonna ciorcail mhóir chuig áiteanna seasta, marcáilte ar an imeall leis an achar. Ríomhtar ar an ngléas iad: ní chuardaítear tada, ní íoslódáiltear tada.
+
+TREO A GHLASÁIL
+Tapáil an diail chun an treo atá romhat a ghlasáil. Insíonn an líne íochtarach ansin cé chomh fada is a chuaigh tú ar strae, ar dheis nó ar chlé, agus fógraíonn cniog dúbailte go bhfuil tú ar ais air.
+
+LEIBHÉAL BOILGEOIGE
+Bolgán i lár an diail. Tugann fón claonta léamh mícheart — seo an rud a insíonn go bhfuil sé claonta.
+
+AN GHRIAN AGUS AN GHEALACH
+A dtreonna ar an imeall, an stua ó éirí go luí na gréine, agus an Ghealach líortha lena céim — go lag fad is atá sí faoin léaslíne.
+
+POINTÍ SÁBHÁILTE
+Sábhálann brú fada ar an diail an áit a bhfuil tú; is féidir comhordanáidí nó nasc léarscáile comhroinnte a ghreamú freisin. Iompraíonn an t-imeall ansin an treo agus an t-achar ar ais.
+
+MÍLTE MARA AGUS CÚRSA SEASTA
+Faid i méadair agus ciliméadair, nó i méadair agus mílte mara. Is féidir leis na treonna chuig na pointí a shábháil tú féin an ciorcal mór a leanúint — an tslí is giorra — nó lócsadróm, an t-aon chúrsa is féidir a choinneáil ó thús deireadh. Leanann an fhad cibé rud a roghnaíonn tú.
+
+MÓD OÍCHE
+Cúlra dubh, diail dhearg. Aithnítear na marcanna ar a lí seachas ar a ngile, agus mar sin maireann radharc na hoíche tar éis spléachadh ar an scáileán. Féadann sé athrú uaidh féin ag deireadh an chlapsholais shibhialta.
+
+DEIR SÉ OS ARD É
+Fógraítear gach léamh do léitheoirí scáileáin i dteanga an fhóin, agus téann cniog gairid thar thuaidh, thoir, theas agus thiar — is féidir treo a choinneáil gan breathnú.
+
+OCHT DTEANGA IS FICHE
+Is é an Béarla an réamhshocrú. Tá teangacha oifigiúla uile an Aontais Eorpaigh ann, mar aon leis an Íoslainnis agus dhá chaighdeán scríofa na hIorua, agus an Tuircis. Osclaíonn an aip sa teanga atá ar an bhfón agus filleann sí ar an mBéarla i ngach cás eile; ó Android 13 ar aghaidh is féidir le socruithe an chórais teanga dá cuid féin a thabhairt di.
+
+BEAG, AGUS AS LÍNE D’AON GHNÓ
+Ní dhearbhaíonn an aip cead idirlín ar bith, mar sin ní féidir léi aon rud a sheoladh áit ar bith — cuireann Android é sin i bhfeidhm, ní gealltanas i bpolasaí é. Ní léitear an suíomh ach ar an ngléas, don diallas, do na treonna chuig áiteanna seasta, don Ghrian agus don Ghealach, agus ní choinnítear aon rud seachas na pointí a shábhálann tú féin.
+
+Ceadúnas MIT · gan fógraí · gan rianú · gan chead idirlín
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

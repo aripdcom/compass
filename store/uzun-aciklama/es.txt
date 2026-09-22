@@ -1,0 +1,39 @@
+Una brújula avanzada para Android. Norte geográfico, rumbos a lugares fijos, el Sol y la Luna, dibujados a mano sobre una rosa y nada más de por medio.
+
+NORTE GEOGRÁFICO
+En cuanto se conoce la ubicación se suma la declinación magnética, y el norte de la esfera es el polo geográfico, no el magnético. El norte magnético se queda en el borde como una M azul.
+
+RUMBOS A LUGARES FIJOS
+Rumbos de círculo máximo a lugares fijos, marcados en el borde junto con la distancia. Se calculan en el dispositivo: no se consulta nada ni se descarga nada.
+
+FIJAR UN RUMBO
+Toca la esfera para fijar la dirección en la que estás. La línea inferior dice cuánto te has desviado a la derecha o a la izquierda, y un doble toque avisa de que has vuelto a ella.
+
+NIVEL DE BURBUJA
+Una burbuja en el centro de la esfera. Un teléfono inclinado mide mal; esto es lo que te dice que está inclinado.
+
+SOL Y LUNA
+Sus rumbos en el borde, el arco del amanecer al ocaso y la Luna dibujada con su fase — tenue mientras está bajo el horizonte.
+
+PUNTOS GUARDADOS
+Una pulsación larga sobre la esfera guarda dónde estás; también puedes pegar coordenadas o un enlace de mapa compartido. El borde lleva entonces el rumbo y la distancia de vuelta.
+
+MILLAS NÁUTICAS Y RUMBO CONSTANTE
+Distancias en metros y kilómetros, o en metros y millas náuticas. Los rumbos a sus propios puntos guardados pueden seguir el círculo máximo — el más corto — o la loxodrómica, el único rumbo que puede mantener de principio a fin. La distancia sigue lo que elija.
+
+MODO NOCTURNO
+Fondo negro, esfera roja. Las marcas se distinguen por el tono y no por el brillo, así que la visión nocturna sobrevive a una mirada a la pantalla. Puede cambiar solo al final del crepúsculo civil.
+
+LO DICE EN VOZ ALTA
+Cada lectura se anuncia a los lectores de pantalla en el idioma del teléfono, y un toque breve pasa por el norte, el este, el sur y el oeste — así se mantiene un rumbo sin mirar.
+
+VEINTIOCHO IDIOMAS
+El inglés es el idioma por defecto. Están todas las lenguas oficiales de la Unión Europea, junto con el islandés y las dos normas escritas del noruego, además del turco. La aplicación se abre en el idioma al que esté puesto el teléfono y recurre al inglés para todo lo demás; desde Android 13, los ajustes del sistema también pueden darle un idioma propio.
+
+PEQUEÑA Y SIN CONEXIÓN POR DISEÑO
+La aplicación no declara permiso de internet, así que no puede enviar nada a ninguna parte; lo impone Android, no es una promesa en una política. La ubicación se lee solo en el dispositivo, para la declinación, los rumbos a lugares fijos, el Sol y la Luna, y no se guarda nada más allá de los puntos que usted mismo guarde.
+
+Licencia MIT · sin anuncios · sin rastreo · sin permiso de internet
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

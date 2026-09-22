@@ -1,0 +1,39 @@
+Uzlabots kompass operētājsistēmai Android. Ģeogrāfiskie ziemeļi, azimuti uz nemainīgām vietām, Saule un Mēness — ar roku uzzīmēti uz ciparnīcas, un nekas cits nestāv ceļā.
+
+ĢEOGRĀFISKIE ZIEMEĻI
+Tiklīdz atrašanās vieta ir zināma, tiek pieskaitīta magnētiskā deklinācija, un ziemeļi uz ciparnīcas ir ģeogrāfiskais pols, nevis magnētiskais. Magnētiskie ziemeļi paliek uz malas kā zils M.
+
+AZIMUTI UZ NEMAINĪGĀM VIETĀM
+Lielā loka azimuti uz nemainīgām vietām, atzīmēti uz malas kopā ar attālumu. Aprēķina ierīcē: nekas netiek meklēts un nekas lejupielādēts.
+
+AZIMUTA FIKSĒŠANA
+Pieskarieties ciparnīcai, lai fiksētu virzienu, kurā skatāties. Apakšējā rinda tad saka, cik tālu esat novirzījies pa labi vai pa kreisi, un dubults klikšķis paziņo, ka esat atgriezies.
+
+LĪMEŅRĀDIS
+Burbulis ciparnīcas vidū. Sasvērts tālrunis rāda nepareizi — tieši tas to nodod.
+
+SAULE UN MĒNESS
+To azimuti uz malas, loks no lēkta līdz rietam un Mēness, zīmēts ar savu fāzi — blāvi, kamēr tas ir zem horizonta.
+
+SAGLABĀTIE PUNKTI
+Ilgs turējums uz ciparnīcas saglabā, kur esat; tikpat labi var ielīmēt koordinātas vai kopīgotu kartes saiti. Mala tad nes azimutu un attālumu atpakaļceļam.
+
+JŪRAS JŪDZES UN NEMAINĪGS KURSS
+Attālumi metros un kilometros vai metros un jūras jūdzēs. Azimuti uz jūsu pašu saglabātajiem punktiem var sekot lielajam lokam — īsākajam ceļam — vai loksodromai, tam vienīgajam kursam, ko var noturēt no sākuma līdz beigām. Attālums seko tam, ko izvēlaties.
+
+NAKTS REŽĪMS
+Melns fons, sarkana ciparnīca. Atzīmes atšķir tonis, nevis spilgtums, tāpēc nakts redze pārdzīvo skatienu uz ekrānu. Civilās krēslas beigās tas var ieslēgties pats.
+
+PASAKA TO SKAĻI
+Katrs rādījums tiek nolasīts ekrānlasītājiem tālruņa valodā, un īss klikšķis šķērso ziemeļus, austrumus, dienvidus un rietumus — tā virzienu var noturēt, neskatoties.
+
+DIVDESMIT ASTOŅAS VALODAS
+Noklusējuma valoda ir angļu. Ir visas Eiropas Savienības oficiālās valodas, kā arī islandiešu un abi norvēģu rakstu standarti un turku valoda. Lietotne atveras valodā, uz kuru iestatīts tālrunis, un visam pārējam atgriežas pie angļu; sākot ar Android 13, sistēmas iestatījumi var piešķirt tai arī savu valodu.
+
+MAZS UN AR NODOMU BEZSAISTĒ
+Lietotne nepieprasa interneta atļauju, tātad neko nekur nevar nosūtīt — to nodrošina Android, nevis solījums kādos noteikumos. Atrašanās vietu nolasa tikai ierīcē — deklinācijai, azimutiem uz nemainīgām vietām, Saulei un Mēnesim —, un nekas netiek glabāts, izņemot punktus, ko saglabājat pats.
+
+MIT licence · bez reklāmām · bez izsekošanas · bez interneta atļaujas
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

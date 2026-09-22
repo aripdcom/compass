@@ -1,0 +1,39 @@
+Uma bússola avançada para Android. Norte geográfico, rumos para lugares fixos, o Sol e a Lua — desenhados à mão numa rosa, e mais nada pelo meio.
+
+NORTE GEOGRÁFICO
+Assim que a localização é conhecida soma-se a declinação magnética, e o norte do mostrador é o polo geográfico, não o magnético. O norte magnético fica na borda como um M azul.
+
+RUMOS PARA LUGARES FIXOS
+Rumos de círculo máximo para lugares fixos, marcados na borda com a distância. Calculados no dispositivo: nada é consultado nem transferido.
+
+FIXAR UM RUMO
+Toque no mostrador para fixar a direção para onde olha. A linha de baixo diz então quanto se desviou para a direita ou para a esquerda, e um toque duplo anuncia o regresso.
+
+NÍVEL DE BOLHA
+Uma bolha no centro do mostrador. Um telemóvel inclinado lê mal — é ela que denuncia a inclinação.
+
+SOL E LUA
+Os seus rumos na borda, o arco do nascer ao pôr do sol e a Lua desenhada com a sua fase — esbatida enquanto está abaixo do horizonte.
+
+PONTOS GUARDADOS
+Um toque longo no mostrador guarda onde está; também se podem colar coordenadas ou uma ligação de mapa partilhada. A borda passa então a levar o rumo e a distância de volta.
+
+MILHAS NÁUTICAS E RUMO CONSTANTE
+Distâncias em metros e quilómetros, ou em metros e milhas náuticas. Os rumos para os seus próprios pontos guardados podem seguir o círculo máximo — o mais curto — ou a loxodrómica, o único rumo que se consegue manter do início ao fim. A distância segue o que escolher.
+
+MODO NOTURNO
+Fundo preto, mostrador vermelho. As marcas distinguem-se pelo tom e não pelo brilho, por isso a visão noturna sobrevive a um olhar ao ecrã. Pode mudar sozinho no fim do crepúsculo civil.
+
+DI-LO EM VOZ ALTA
+Cada leitura é anunciada aos leitores de ecrã na língua do telemóvel, e um toque curto passa norte, este, sul e oeste — assim mantém-se um rumo sem olhar.
+
+VINTE E OITO IDIOMAS
+O inglês é a predefinição. Estão lá todas as línguas oficiais da União Europeia, com o islandês e as duas normas escritas do norueguês, além do turco. A aplicação abre na língua para que o telemóvel está configurado e recorre ao inglês para tudo o resto; a partir do Android 13, as definições do sistema também lhe podem dar uma língua própria.
+
+PEQUENA, E OFFLINE POR DESENHO
+A aplicação não declara permissão de internet, por isso não consegue enviar nada para lado nenhum — é o Android que o impõe, não é uma promessa numa política. A localização é lida apenas no dispositivo, para a declinação, os rumos para lugares fixos, o Sol e a Lua, e nada é guardado para além dos pontos que o próprio utilizador guardar.
+
+Licença MIT · sem anúncios · sem rastreio · sem permissão de internet
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

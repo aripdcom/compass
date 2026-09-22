@@ -1,0 +1,39 @@
+Fullkominn áttaviti fyrir Android. Landfræðilegt norður, stefnur á fasta staði, sólin og tunglið — handteiknuð á skífu, og ekkert annað fyrir.
+
+RÉTTVÍSANDI NORÐUR
+Um leið og staðsetningin er þekkt bætist misvísunin við, og norðrið á skífunni er landfræðilegi póllinn en ekki sá segulmagnaði. Misvísandi norður situr áfram á brúninni sem blátt M.
+
+STEFNUR Á FASTA STAÐI
+Stórbaugsstefnur á fasta staði, merktar á brúnina ásamt fjarlægðinni. Reiknað í tækinu: ekkert er flett upp og ekkert sótt.
+
+LÆSA STEFNU
+Ýttu á skífuna til að læsa stefnunni sem þú horfir í. Neðsta línan segir þá hversu langt þú hefur rekið til hægri eða vinstri, og tvöfalt tikk tilkynnir að þú sért kominn aftur á hana.
+
+HALLAMÁL
+Kúla í miðri skífunni. Hallandi sími mælir skakkt — þetta er það sem segir að hann halli.
+
+SÓL OG TUNGL
+Stefnur þeirra á brúninni, boginn frá sólarupprás til sólseturs og tunglið teiknað með kvartili sínu — dauft á meðan það er undir sjóndeildarhring.
+
+VISTAÐIR PUNKTAR
+Löng snerting á skífuna vistar hvar þú ert; einnig má líma inn hnit eða deildan kortatengil. Brúnin ber þá stefnuna og fjarlægðina til baka.
+
+SJÓMÍLUR OG FÖST STEFNA
+Vegalengdir í metrum og kílómetrum, eða í metrum og sjómílum. Stefnur á þína eigin vistuðu punkta geta fylgt stórbaug — stystu leið — eða loxodrómu, þeirri einu stefnu sem hægt er að halda frá upphafi til enda. Vegalengdin fylgir því sem þú velur.
+
+NÆTURHAMUR
+Svartur bakgrunnur, rauð skífa. Merkin þekkjast á blæ frekar en birtu, svo nætursjónin lifir af augnaráð á skjáinn. Hann getur skipt sjálfur við lok borgaralegs rökkurs.
+
+SEGIR ÞAÐ UPPHÁTT
+Hver mæling er lesin skjálesurum á tungumáli símans, og stutt tikk fer fram hjá norðri, austri, suðri og vestri — þannig má halda stefnu án þess að líta.
+
+TUTTUGU OG ÁTTA TUNGUMÁL
+Enska er sjálfgefin. Öll opinber tungumál Evrópusambandsins eru með, ásamt íslensku og báðum ritmálum norsku, og tyrknesku. Forritið opnast á því tungumáli sem síminn er stilltur á og fellur aftur í ensku fyrir allt annað; frá Android 13 geta kerfisstillingarnar líka gefið því sitt eigið tungumál.
+
+LÍTILL OG ÓNETTENGDUR AÐ YFIRLÖGÐU RÁÐI
+Forritið lýsir yfir engri internetheimild og getur því ekkert sent neitt — Android framfylgir því, það er ekki loforð í stefnu. Staðsetningin er aðeins lesin í tækinu, fyrir misvísunina, stefnurnar á fasta staði, sólina og tunglið, og ekkert er geymt umfram þá punkta sem þú vistar sjálf.
+
+MIT-leyfi · engar auglýsingar · engin rakning · engin internetheimild
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

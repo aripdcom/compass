@@ -1,0 +1,39 @@
+Kehittynyt kompassi Androidille. Maantieteellinen pohjoinen, suuntimat kiinteisiin paikkoihin, Aurinko ja Kuu — käsin kehälle piirrettyinä, eikä mitään muuta tiellä.
+
+TOSIPOHJOINEN
+Kun sijainti tiedetään, eranto lisätään ja kehän pohjoinen on maantieteellinen napa eikä magneettinen. Magneettinen pohjoinen jää reunalle sinisenä M-kirjaimena.
+
+SUUNTIMAT KIINTEISIIN PAIKKOIHIN
+Isoympyräsuunnat kiinteisiin paikkoihin, reunalla etäisyyden kanssa. Lasketaan laitteessa: mitään ei haeta eikä ladata.
+
+SUUNNAN LUKITUS
+Napauta kehää lukitaksesi suunnan, johon katsot. Alin rivi kertoo sitten, kuinka paljon olet ajautunut oikealle tai vasemmalle, ja kaksoisnaps ilmoittaa paluusta.
+
+VESIVAAKA
+Kupla kehän keskellä. Kallistunut puhelin näyttää väärin — tämä on se, mikä kallistuksen paljastaa.
+
+AURINKO JA KUU
+Niiden suunnat reunalla, kaari auringonnoususta auringonlaskuun ja Kuu vaiheineen — himmeänä, kun se on horisontin alapuolella.
+
+TALLENNETUT PISTEET
+Pitkä painallus kehälle tallentaa, missä olet; yhtä hyvin voi liittää koordinaatit tai jaetun karttalinkin. Reunalla on sen jälkeen suunta ja matka takaisin.
+
+MERIPENINKULMAT JA TASAINEN KURSSI
+Etäisyydet metreinä ja kilometreinä tai metreinä ja meripeninkulmina. Suuntimat omiin tallennettuihin pisteisiisi voivat seurata isoympyrää — lyhintä reittiä — tai loksodromia, sitä yhtä kurssia, jonka voi pitää alusta loppuun. Etäisyys määräytyy sen mukaan, kumman valitset.
+
+YÖTILA
+Musta tausta, punainen kehä. Merkit erottuvat sävystä eivätkä kirkkaudesta, joten hämäränäkö kestää vilkaisun näyttöön. Se voi vaihtua itsestään siviilihämärän lopussa.
+
+SANOO SEN ÄÄNEEN
+Jokainen lukema luetaan ruudunlukijalle puhelimen kielellä, ja lyhyt naps ohittaa pohjoisen, idän, etelän ja lännen — niin suunnan voi pitää katsomatta.
+
+KAKSIKYMMENTÄKAHDEKSAN KIELTÄ
+Oletuksena on englanti. Mukana ovat kaikki Euroopan unionin viralliset kielet sekä islanti ja norjan molemmat kirjakielet ja turkki. Sovellus avautuu sillä kielellä, jolle puhelin on asetettu, ja palaa muissa tapauksissa englantiin; Android 13:sta alkaen järjestelmän asetukset voivat antaa sille myös oman kielen.
+
+PIENI JA TARKOITUKSELLA VERKOTON
+Sovellus ei pyydä internet-lupaa, joten se ei voi lähettää mitään minnekään — tämän pakottaa Android, se ei ole lupaus käytännössä. Sijainti luetaan vain laitteessa, erannosta, kiinteiden paikkojen suuntimia sekä Aurinkoa ja Kuuta varten, eikä mitään säilytetä niiden pisteiden lisäksi, jotka itse tallennat.
+
+MIT-lisenssi · ei mainoksia · ei seurantaa · ei internet-lupaa
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

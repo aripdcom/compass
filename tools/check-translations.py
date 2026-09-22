@@ -39,6 +39,25 @@ RES = ROOT / "app" / "src" / "main" / "res"
 SHORT_LIMIT = 80
 STORE_SHORT = ROOT / "store" / "kisa-aciklama.tsv"
 
+# Uzun açıklamanın sınırı ve yeri (tools/store-texts.py üretiyor).
+LONG_LIMIT = 4000
+STORE_LONG = ROOT / "store" / "uzun-aciklama"
+
+# Dini motifler mağaza ve site metinlerinde geçmez (README 17). Bu kural bir
+# kez çiğnendi: uygulama içi bir ayar notu kıbleden söz ediyordu ve doğrudan
+# mağaza ekran görüntüsüne düştü. Metin tarafında aynısı olmasın diye özel
+# adlar ve "kıble"nin dillerdeki karşılıkları burada taranıyor. Liste
+# uygulamanın ne yaptığını gizlemek için değil: on bir sabit yerin hepsi
+# adlarıyla uygulamanın içinde duruyor, dışarıya dönük metin "sabit yerler"
+# diyor çünkü terim on birini birden kapsıyor.
+RELIGIOUS = re.compile(
+    r"k[ıi]ble|qibla|kibla|kiblat|qybl|"
+    r"k[âa]be|kaaba|mecca|mekke|"
+    r"mescid|masjid|aqsa|aksa|"
+    r"vatican|vatikan|vatikaan|vatikanas",
+    re.IGNORECASE,
+)
+
 # %1$s, %2$d, %% ... — sıraları ve türleri diller arasında birebir aynı olmalı.
 FORMAT = re.compile(r"%(?:%|(\d+)\$([a-zA-Z]))")
 
@@ -87,11 +106,42 @@ def check_store_short(expected: set[str], problems: list[str]) -> int:
             problems.append(
                 f"kisa-aciklama: `{locale}` {len(text)} karakter, sınır {SHORT_LIMIT}"
             )
+        if match := RELIGIOUS.search(text):
+            problems.append(
+                f"kisa-aciklama: `{locale}` dini motif — `{match.group()}` (17. bölüm)"
+            )
 
     for locale in sorted(expected - found):
         problems.append(f"kisa-aciklama: `{locale}` eksik")
     for locale in sorted(found - expected):
         problems.append(f"kisa-aciklama: `{locale}` fazla — uygulamada böyle bir dil yok")
+    return len(found)
+
+
+def check_store_long(expected: set[str], problems: list[str]) -> int:
+    """Uzun açıklamalar: diller, Play'in karakter sınırı, dini motif kuralı."""
+    if not STORE_LONG.is_dir():
+        problems.append(f"{STORE_LONG.relative_to(ROOT)} yok")
+        return 0
+
+    found: set[str] = set()
+    for path in sorted(STORE_LONG.glob("*.txt")):
+        locale = path.stem
+        found.add(locale)
+        text = path.read_text(encoding="utf-8")
+        if len(text) > LONG_LIMIT:
+            problems.append(
+                f"uzun-aciklama/{locale}: {len(text)} karakter, sınır {LONG_LIMIT}"
+            )
+        if match := RELIGIOUS.search(text):
+            problems.append(
+                f"uzun-aciklama/{locale}: dini motif — `{match.group()}` (17. bölüm)"
+            )
+
+    for locale in sorted(expected - found):
+        problems.append(f"uzun-aciklama: `{locale}` eksik")
+    for locale in sorted(found - expected):
+        problems.append(f"uzun-aciklama: `{locale}` fazla — uygulamada böyle bir dil yok")
     return len(found)
 
 
@@ -163,6 +213,7 @@ def main() -> int:
         problems.append(f"locales_config: `{locale}` çevirisi var ama listede yok")
 
     store_count = check_store_short(present, problems)
+    long_count = check_store_long(present, problems)
 
     if problems:
         print(f"{len(problems)} sorun:", file=sys.stderr)
@@ -172,8 +223,8 @@ def main() -> int:
 
     print(
         f"{len(locales) + 1} dil, {len(base_strings)} metin, "
-        f"{len(base_arrays)} dizi, {store_count} mağaza kısa açıklaması "
-        f"— hepsi tutuyor."
+        f"{len(base_arrays)} dizi, {store_count} kısa ve {long_count} uzun "
+        f"mağaza açıklaması — hepsi tutuyor."
     )
     return 0
 

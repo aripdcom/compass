@@ -1,0 +1,39 @@
+Pažangus kompasas Android sistemai. Geografinė šiaurė, azimutai iki pastovių vietų, Saulė ir Mėnulis — ranka nupiešti ant skalės, ir niekas kitas netrukdo.
+
+TIKROJI ŠIAURĖ
+Kai tik vieta žinoma, pridedama magnetinė deklinacija, ir šiaurė ciferblate yra geografinis ašigalis, o ne magnetinis. Magnetinė šiaurė lieka krašte kaip mėlyna M.
+
+AZIMUTAI IKI PASTOVIŲ VIETŲ
+Didžiojo rato azimutai į pastovias vietas, pažymėti krašte kartu su atstumu. Skaičiuojama įrenginyje: nieko neieškoma ir nieko neatsisiunčiama.
+
+AZIMUTO UŽFIKSAVIMAS
+Palieskite ciferblatą, kad užfiksuotumėte kryptį, į kurią žiūrite. Apatinė eilutė tada pasako, kiek nukrypote į dešinę ar į kairę, o dvigubas spragtelėjimas praneša, kad grįžote.
+
+GULSČIUKAS
+Burbuliukas ciferblato viduryje. Pakrypęs telefonas rodo neteisingai — būtent jis tai išduoda.
+
+SAULĖ IR MĖNULIS
+Jų azimutai krašte, lankas nuo saulėtekio iki saulėlydžio ir Mėnulis su savo faze — blankiai, kol yra žemiau horizonto.
+
+IŠSAUGOTI TAŠKAI
+Ilgas paspaudimas ciferblate išsaugo, kur esate; taip pat galima įklijuoti koordinates ar bendrintą žemėlapio nuorodą. Kraštas tada rodo azimutą ir atstumą atgal.
+
+JŪRMYLĖS IR PASTOVUS KURSAS
+Atstumai metrais ir kilometrais arba metrais ir jūrmylėmis. Azimutai iki jūsų pačių išsaugotų taškų gali eiti ortodrome — trumpiausiu keliu — arba loksodrome, tuo vieninteliu kursu, kurio galima laikytis nuo pradžios iki galo. Atstumas skaičiuojamas pagal tai, ką pasirinksite.
+
+NAKTIES REŽIMAS
+Juodas fonas, raudonas ciferblatas. Žymes skiria atspalvis, o ne ryškumas, todėl nakties regėjimas atlaiko žvilgsnį į ekraną. Civilinių sutemų pabaigoje jis gali įsijungti pats.
+
+PASAKO GARSIAI
+Kiekvienas rodmuo perskaitomas ekrano skaitytuvams telefono kalba, o trumpas spragtelėjimas praeina šiaurę, rytus, pietus ir vakarus — taip kryptį galima išlaikyti nežiūrint.
+
+DVIDEŠIMT AŠTUONIOS KALBOS
+Numatytoji kalba yra anglų. Yra visos oficialios Europos Sąjungos kalbos, taip pat islandų ir abu norvegų rašto standartai bei turkų kalba. Programa atsiveria ta kalba, kuri nustatyta telefone, o visais kitais atvejais grįžta prie anglų; nuo Android 13 sistemos nustatymai gali duoti jai ir atskirą kalbą.
+
+MAŽAS IR SĄMONINGAI NEPRIJUNGTAS
+Programėlė neprašo interneto leidimo, tad nieko niekur negali išsiųsti — tai užtikrina Android, o ne pažadas taisyklėse. Buvimo vieta skaitoma tik įrenginyje: deklinacijai, azimutams iki pastovių vietų, Saulei ir Mėnuliui, ir nieko nesaugoma, išskyrus taškus, kuriuos patys išsaugote.
+
+MIT licencija · be reklamų · be sekimo · be interneto leidimo
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/
