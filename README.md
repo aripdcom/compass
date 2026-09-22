@@ -1515,6 +1515,11 @@ oluşturmak (aynı tüzel kişiliğin başka Play hesapları varsa onları bildi
 ve hizmet bedeli şartlarını kabul etmek. Birincisini yapıp ikincisini atlamak
 kaydı tamamlamıyor.
 
+**Bu yapıldı** (22 Eylül 2026, ilk satıştan önce). Durumu aynı sayfanın altında
+"Programs and services you're enrolled in" başlığı gösteriyor. Aşağıdaki
+uyarılar bir daha yapılacak iş olduğu için değil, **hesap grubu değiştirilirse**
+neyin tehlikeye girdiğini söylediği için duruyor.
+
 **Zamanlaması geri alınamaz:** indirim kaydın tamamlandığı tarihten işliyor,
 geriye dönmüyor. Yani kayıt **ilk satıştan önce** bitmeli, yoksa o satışlar
 %30'dan kesilir ve sonradan düzeltilemez. 1,99 €'da fark satış başına otuz
