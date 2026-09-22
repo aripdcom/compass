@@ -32,7 +32,7 @@ kerteriz/
 ├── .github/      iş akışları ve yardımcı betikler (bkz. 15. bölüm)
 ├── dist/         üretilen APK'lar          (gitignore'da)
 ├── docs/         tanıtım sayfası, gizlilik metni, ekran görüntüleri (16. bölüm)
-├── store/        Play'e yüklenecek görseller: ikon, öne çıkan görsel, çekimler (17. bölüm)
+├── store/        Play'e yüklenecek her şey: görseller ve 28 dilde metinler (17. bölüm)
 ├── tools/        depo denetimleri ve yardımcılar (9., 16. ve 17. bölüm)
 ├── keys/         imzalama anahtarı         (gitignore'da)
 └── keystore.properties                     (gitignore'da)
@@ -1613,8 +1613,26 @@ Source code: github.com/aripdcom/kerteriz
 Privacy policy: kerteriz.aripd.com/privacy/
 ```
 
-Türkçesi aynı başlıklarla yazılır; sitedeki Türkçe metinler (`docs/assets/
-i18n.js`) hazır cümleleri veriyor.
+**Uzun açıklamanın yirmi sekiz dili `store/uzun-aciklama/<dil>.txt`'te.**
+Yukarıdaki İngilizce metin bölümlerin ne anlattığını gösteriyor; Console'a
+kopyalanacak olan dosyalar.
+
+Sıfırdan çevrilmediler. `tools/store-texts.py` onları depoda **zaten
+yayımlanmış** cümlelerden kuruyor: on bir bölümün onu tanıtım sayfasının
+çevirilerinden geliyor (`docs/assets/i18n.js` — giriş için `tagline`,
+özellikler için `f1`–`f9`, diller için `langsBody`, gizlilik için `privacy`,
+kapanış için `heroNote`). Site metni değişince betik yeniden koşturulur.
+
+Eksik olan tek bölüm deniz mili ve loksodrom: o özellik PR #12'de geldi,
+siteye girmedi. Betiğin içindeki `NAUTICAL` sözlüğü onu taşıyor ve elle
+yazıldı — ama terimleri uydurulmadı, `values-*/strings.xml`'deki onaylı
+karşılıklardan alındı.
+
+**Başlıklar büyük harfe çevrilirken iki dilin kendi kuralı var.** Türkçede
+`i`nin büyüğü `İ`; Python'ın varsayılanıyla "SABIT YERLERE YÖN" çıkardı.
+Yunancada tümü büyük yazımda tonos düşer: `ΑΛΗΘΗΣ ΒΟΡΡΑΣ`, `ΑΛΗΘΉΣ` değil.
+İkisi de `upper()` içinde ayrıca ele alınıyor; Fransızcadaki É ise anlam
+taşıdığı için hiçbir yerde düşürülmüyor.
 
 **Dini motifler mağaza tarafında geçmiyor.** Kâbe, Mescid-i Aksa ve Vatikan
 uygulamanın içinde duruyor ve ayarlardan açılıp kapanıyor; mağaza başlığı,

@@ -1,0 +1,39 @@
+Android için gelişmiş bir pusula. Gerçek kuzey, sabit yerlere yön, Güneş ve Ay — kadrana elle çizilmiş, araya başka hiçbir şey girmeden.
+
+GERÇEK KUZEY
+Konum bilinir bilinmez manyetik sapma eklenir; kadrandaki kuzey manyetik kutup değil, coğrafi kutuptur. Manyetik kuzey kenarda mavi bir M olarak kalır.
+
+SABİT YERLERE YÖN
+Sabit yerlere büyük daire üzerinden yön, kenarda mesafesiyle birlikte işaretlenir. Cihazda hesaplanır: hiçbir şey sorgulanmaz, hiçbir şey indirilmez.
+
+YÖN KİLİDİ
+Baktığınız yönü kilitlemek için kadrana dokunun. Alt satır bundan sonra sağa mı sola mı ne kadar saptığınızı söyler, çift tık da yeniden yöne girdiğinizi bildirir.
+
+SU TERAZİSİ
+Kadranın göbeğindeki kabarcık. Eğik tutulan telefon yanlış okur — eğimi ele veren şey budur.
+
+GÜNEŞ VE AY
+Kenarda yönleri, doğuştan batışa uzanan yay ve evresiyle çizilen Ay — ufkun altındayken soluk.
+
+KAYDEDİLEN NOKTALAR
+Kadrana uzun basmak bulunduğunuz yeri kaydeder; koordinat ya da paylaşılmış bir harita bağlantısı da yapıştırılabilir. Kenar bundan sonra dönüş yönünü ve mesafeyi taşır.
+
+DENİZ MİLİ VE SABİT PRUVA
+Uzaklıklar metre ve kilometre ya da metre ve deniz mili. Kendi kaydettiğiniz noktalara kerteriz, büyük daireyi — en kısa yolu — ya da loksodromu, baştan sona koruyabileceğiniz tek pruvayı izleyebilir. Mesafe hangisini seçtiyseniz ona göre ölçülür.
+
+GECE MODU
+Siyah zemin, kırmızı kadran. İşaretler parlaklıkla değil tonla ayrılır, böylece ekrana bakınca gece görüşü bozulmaz. Sivil alacakaranlığın sonunda kendiliğinden geçebilir.
+
+SESLİ SÖYLER
+Her okuma ekran okuyucuya telefonun dilinde bildirilir; kısa bir tık kuzeyi, doğuyu, güneyi ve batıyı geçer — yön bakmadan da tutulur.
+
+YİRMİ SEKİZ DİL
+Varsayılan İngilizce. Avrupa Birliği'nin bütün resmî dilleri, yanlarında İzlandaca ile Norveççenin iki yazı dili ve Türkçe var. Uygulama telefonda hangi dil seçiliyse onunla açılır, listede olmayan dillerde İngilizceye döner; Android 13'ten itibaren sistem ayarları ona ayrı bir dil de verebilir.
+
+KÜÇÜK VE BİLEREK ÇEVRİMDIŞI
+Uygulama internet izni istemiyor, dolayısıyla hiçbir şeyi hiçbir yere gönderemiyor — bunu bir metindeki söz değil, Android'in kendisi zorluyor. Konum yalnızca cihazda okunuyor: sapma, sabit yerlere yön, Güneş ve Ay için. Kendi kaydettiğiniz noktaların dışında hiçbir şey saklanmıyor.
+
+MIT lisansı · reklam yok · izleme yok · internet izni yok
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

@@ -1,0 +1,39 @@
+Et avanceret kompas til Android. Retvisende nord, pejlinger til faste steder, Solen og Månen — tegnet i hånden på en skive, uden noget andet i vejen.
+
+RETVISENDE NORD
+Så snart positionen kendes, lægges misvisningen til, og nord på skiven er den geografiske pol, ikke den magnetiske. Misvisende nord bliver på randen som et blåt M.
+
+PEJLINGER TIL FASTE STEDER
+Storcirkelpejlinger til faste steder, markeret på randen med afstanden. De regnes ud på enheden: intet slås op, intet hentes.
+
+LÅS EN PEJLING
+Tryk på skiven for at låse den retning, du står i. Den nederste linje siger så, hvor langt du er drevet til højre eller venstre, og et dobbelt tik melder, at du er tilbage på den.
+
+VATERPAS
+En boble midt på skiven. En hældende telefon viser forkert — det er den her, der siger, at den hælder.
+
+SOL OG MÅNE
+Deres pejlinger på randen, buen fra solopgang til solnedgang og månen tegnet med sin fase — svagt, mens den er under horisonten.
+
+GEMTE PUNKTER
+Hold skiven nede for at gemme, hvor du er, eller indsæt koordinater eller et delt kortlink. Randen bærer derefter pejlingen og afstanden tilbage.
+
+SØMIL OG FAST KURS
+Afstande i meter og kilometer, eller i meter og sømil. Pejlinger til dine egne gemte punkter kan følge storcirklen — den korteste vej — eller en loksodrom, den ene kurs du kan holde fra start til slut. Afstanden følger det, du vælger.
+
+NATTILSTAND
+Sort baggrund, rød skive. Mærkerne skelnes på farvetone frem for lysstyrke, så nattesynet overlever et blik på skærmen. Den kan skifte af sig selv, når det borgerlige tusmørke slutter.
+
+SIGER DET HØJT
+Hver aflæsning meldes til skærmlæsere på telefonens sprog, og et kort tik passerer nord, øst, syd og vest — så en pejling kan holdes uden at kigge.
+
+OTTEOGTYVE SPROG
+Engelsk er standard. Alle EU-landenes officielle sprog er med, sammen med islandsk og begge norske skriftsprog samt tyrkisk. Appen åbner på det sprog, telefonen er sat til, og falder tilbage til engelsk for alt andet; fra Android 13 kan systemindstillingerne også give appen sit eget sprog.
+
+LILLE, OG OFFLINE MED VILJE
+Appen erklærer ingen internettilladelse, så den kan ikke sende noget nogen steder hen — det håndhæves af Android, ikke lovet i en politik. Placeringen læses kun på enheden, til misvisningen, pejlingerne til faste steder, Solen og Månen, og intet gemmes ud over de punkter, du selv gemmer.
+
+MIT-licens · ingen reklamer · ingen sporing · ingen internettilladelse
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

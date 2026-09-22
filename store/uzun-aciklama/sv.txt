@@ -1,0 +1,39 @@
+En avancerad kompass för Android. Geografisk norr, bäringar till fasta platser, solen och månen — ritade för hand på en tavla, utan något annat i vägen.
+
+GEOGRAFISK NORD
+Så snart platsen är känd läggs missvisningen till, och nord på tavlan är den geografiska polen, inte den magnetiska. Magnetisk nord ligger kvar på randen som ett blått M.
+
+BÄRINGAR TILL FASTA PLATSER
+Storcirkelbäringar till fasta platser, markerade på randen med avståndet. Uträknade på enheten: ingenting slås upp, ingenting hämtas.
+
+LÅS EN BÄRING
+Tryck på tavlan för att låsa riktningen du står i. Nedersta raden säger sedan hur långt du drivit åt höger eller vänster, och en dubbel knäpp meddelar att du är tillbaka.
+
+VATTENPASS
+En bubbla mitt på tavlan. En lutande telefon visar fel — det är den här som avslöjar lutningen.
+
+SOL OCH MÅNE
+Deras bäringar på randen, bågen från soluppgång till solnedgång och månen ritad med sin fas — blekt medan den är under horisonten.
+
+SPARADE PUNKTER
+Ett långt tryck på tavlan sparar var du är; lika gärna kan du klistra in koordinater eller en delad kartlänk. Randen bär sedan bäringen och avståndet tillbaka.
+
+NAUTISKA MIL OCH FAST KURS
+Avstånd i meter och kilometer, eller i meter och nautiska mil. Bäringar till dina egna sparade punkter kan följa storcirkeln — den kortaste vägen — eller en loxodrom, den enda kurs du kan hålla från början till slut. Avståndet följer det du väljer.
+
+NATTLÄGE
+Svart bakgrund, röd tavla. Märkena skiljs åt på färgton snarare än ljusstyrka, så mörkerseendet överlever en blick på skärmen. Vid den borgerliga skymningens slut kan det slå om av sig självt.
+
+SÄGER DET HÖGT
+Varje avläsning annonseras för skärmläsare på telefonens språk, och en kort knäpp passerar norr, öst, syd och väst — så kan en bäring hållas utan att titta.
+
+TJUGOÅTTA SPRÅK
+Engelska är standard. Alla Europeiska unionens officiella språk finns med, tillsammans med isländska och båda norska skriftspråken, samt turkiska. Appen öppnas på det språk telefonen är inställd på och faller tillbaka på engelska för allt annat; från Android 13 kan systeminställningarna också ge den ett eget språk.
+
+LITEN, OCH OFFLINE MED FLIT
+Appen begär ingen internetbehörighet och kan därför inte skicka något någonstans — det upprätthålls av Android, det är inget löfte i en policy. Positionen läses bara i telefonen, för missvisningen, bäringarna till fasta platser, solen och månen, och ingenting sparas utöver de punkter du själv sparar.
+
+MIT-licens · ingen reklam · ingen spårning · ingen internetbehörighet
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

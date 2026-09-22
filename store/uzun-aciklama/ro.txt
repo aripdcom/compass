@@ -1,0 +1,39 @@
+O busolă avansată pentru Android. Nordul geografic, azimuturi către locuri fixe, Soarele și Luna — desenate de mână pe un cadran, fără nimic altceva în cale.
+
+NORDUL GEOGRAFIC
+De îndată ce poziția este cunoscută se adaugă declinația magnetică, iar nordul de pe cadran este polul geografic, nu cel magnetic. Nordul magnetic rămâne pe margine ca un M albastru.
+
+AZIMUTURI CĂTRE LOCURI FIXE
+Direcții pe cerc mare către locuri fixe, marcate pe margine împreună cu distanța. Calculate pe dispozitiv: nimic nu este căutat și nimic descărcat.
+
+BLOCAREA UNEI DIRECȚII
+Atinge cadranul pentru a bloca direcția în care privești. Rândul de jos spune atunci cu cât ai deviat la dreapta sau la stânga, iar un clic dublu anunță revenirea.
+
+NIVELĂ CU BULĂ
+O bulă în mijlocul cadranului. Un telefon înclinat citește greșit — ea este cea care trădează înclinarea.
+
+SOARE ȘI LUNĂ
+Direcțiile lor pe margine, arcul de la răsărit la apus și Luna desenată cu faza ei — estompată cât timp este sub orizont.
+
+PUNCTE SALVATE
+O apăsare lungă pe cadran salvează unde ești; la fel de bine se pot lipi coordonate sau un link de hartă partajat. Marginea poartă apoi direcția și distanța înapoi.
+
+MILE MARINE ȘI CAP CONSTANT
+Distanțele în metri și kilometri sau în metri și mile marine. Azimuturile către propriile puncte salvate pot urma cercul mare — drumul cel mai scurt — sau o loxodromă, singurul cap pe care îl puteți ține de la început până la sfârșit. Distanța urmează ce alegeți.
+
+MOD DE NOAPTE
+Fundal negru, cadran roșu. Semnele se disting prin nuanță, nu prin luminozitate, așa că vederea de noapte supraviețuiește unei priviri pe ecran. La sfârșitul crepusculului civil poate comuta singur.
+
+O SPUNE CU VOCE TARE
+Fiecare citire este anunțată cititoarelor de ecran în limba telefonului, iar un clic scurt trece nordul, estul, sudul și vestul — astfel direcția se ține fără a privi.
+
+DOUĂZECI ȘI OPT DE LIMBI
+Engleza este limba implicită. Sunt toate limbile oficiale ale Uniunii Europene, alături de islandeză și de ambele standarde scrise ale norvegienei, plus turca. Aplicația se deschide în limba la care este setat telefonul și revine la engleză pentru orice altceva; de la Android 13, setările sistemului îi pot da și o limbă proprie.
+
+MICĂ ȘI OFFLINE DIN CONSTRUCȚIE
+Aplicația nu cere permisiune de internet, deci nu poate trimite nimic nicăieri — o impune Android, nu e o promisiune dintr-o politică. Poziția e citită doar pe dispozitiv, pentru declinație, azimuturile către locuri fixe, Soare și Lună, și nu se păstrează nimic în afara punctelor pe care le salvați singur.
+
+Licență MIT · fără reclame · fără urmărire · fără permisiune de internet
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

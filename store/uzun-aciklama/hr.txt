@@ -1,0 +1,39 @@
+Napredni kompas za Android. Zemljopisni sjever, azimuti do stalnih mjesta, Sunce i Mjesec — rukom nacrtani na ruži, i ništa drugo na putu.
+
+ZEMLJOPISNI SJEVER
+Čim je lokacija poznata, pribraja se magnetska deklinacija i sjever na ruži je zemljopisni pol, a ne magnetski. Magnetski sjever ostaje na rubu kao plavi M.
+
+AZIMUTI DO STALNIH MJESTA
+Azimuti po velikoj kružnici do stalnih mjesta, označeni na rubu s udaljenošću. Računaju se na uređaju: ništa se ne traži i ništa ne preuzima.
+
+ZAKLJUČAVANJE AZIMUTA
+Dodirnite ružu da zaključate smjer u koji gledate. Donji redak tada govori koliko ste skrenuli desno ili lijevo, a dvostruki klik javlja da ste se vratili.
+
+LIBELA
+Mjehurić u sredini ruže. Nagnut telefon pokazuje krivo — ovo je ono što nagib otkriva.
+
+SUNCE I MJESEC
+Njihovi azimuti na rubu, luk od izlaska do zalaska i Mjesec nacrtan sa svojom mijenom — blijedo dok je ispod obzora.
+
+SPREMLJENE TOČKE
+Dugi pritisak na ružu sprema gdje ste; jednako se mogu zalijepiti koordinate ili podijeljena poveznica karte. Rub zatim nosi azimut i udaljenost natrag.
+
+NAUTIČKE MILJE I STALNI KURS
+Udaljenosti u metrima i kilometrima ili u metrima i nautičkim miljama. Azimuti do vlastitih spremljenih točaka mogu ići ortodromom — najkraćim putem — ili loksodromom, jedinim kursom koji možete držati od početka do kraja. Udaljenost se mjeri prema onome što odaberete.
+
+NOĆNI NAČIN
+Crna pozadina, crvena ruža. Oznake se razlikuju po tonu, a ne po svjetlini, pa noćni vid preživi pogled na zaslon. Može se prebaciti sam na kraju građanskog sumraka.
+
+IZGOVARA NAGLAS
+Svako očitanje najavljuje se čitačima zaslona na jeziku telefona, a kratki klik prolazi sjever, istok, jug i zapad — tako se smjer drži i bez gledanja.
+
+DVADESET OSAM JEZIKA
+Engleski je zadani. Tu su svi službeni jezici Europske unije, uz islandski i oba norveška pisana standarda te turski. Aplikacija se otvara na jeziku na koji je telefon postavljen, a za sve ostalo vraća se na engleski; od Androida 13 postavke sustava mogu joj dati i vlastiti jezik.
+
+MALEN I NAMJERNO BEZ MREŽE
+Aplikacija ne traži dopuštenje za internet, pa ne može ništa nikamo poslati — to nameće Android, nije obećanje u pravilima. Lokacija se čita samo na uređaju, za deklinaciju, azimute do stalnih mjesta, Sunce i Mjesec, i ne čuva se ništa osim točaka koje sami spremite.
+
+Licencija MIT · bez oglasa · bez praćenja · bez dopuštenja za internet
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

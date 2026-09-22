@@ -1,0 +1,39 @@
+Una bussola avanzata per Android. Nord geografico, rilevamenti verso luoghi fissi, il Sole e la Luna — disegnati a mano su una rosa, e nient'altro di mezzo.
+
+NORD GEOGRAFICO
+Appena la posizione è nota si somma la declinazione magnetica, e il nord sul quadrante è il polo geografico, non quello magnetico. Il nord magnetico resta sul bordo come una M blu.
+
+RILEVAMENTI VERSO LUOGHI FISSI
+Rilevamenti per cerchio massimo verso luoghi fissi, segnati sul bordo con la distanza. Calcolati sul dispositivo: niente viene consultato, niente scaricato.
+
+BLOCCARE UN RILEVAMENTO
+Tocca il quadrante per bloccare la direzione in cui guardi. La riga in basso dice di quanto sei uscito, a destra o a sinistra, e un doppio tic annuncia il rientro.
+
+LIVELLA A BOLLA
+Una bolla al centro del quadrante. Un telefono inclinato legge male — è lei a dire che è inclinato.
+
+SOLE E LUNA
+I loro rilevamenti sul bordo, l’arco dall’alba al tramonto e la Luna disegnata con la sua fase — pallida finché è sotto l’orizzonte.
+
+PUNTI SALVATI
+Una pressione lunga sul quadrante salva dove ti trovi; si possono anche incollare coordinate o un link di mappa condiviso. Il bordo porta poi il rilevamento e la distanza del ritorno.
+
+MIGLIA NAUTICHE E ROTTA COSTANTE
+Distanze in metri e chilometri, oppure in metri e miglia nautiche. I rilevamenti verso i punti che avete salvato possono seguire il cerchio massimo — il più breve — o la lossodromia, l'unica rotta che si può tenere dall'inizio alla fine. La distanza segue quello che scegliete.
+
+MODALITÀ NOTTURNA
+Sfondo nero, quadrante rosso. I segni si distinguono per tinta e non per luminosità, così la visione notturna sopravvive a un’occhiata allo schermo. Può passarci da sola alla fine del crepuscolo civile.
+
+LO DICE AD ALTA VOCE
+Ogni lettura viene annunciata agli screen reader nella lingua del telefono, e un tic breve passa nord, est, sud e ovest — così una rotta si tiene senza guardare.
+
+VENTOTTO LINGUE
+L’inglese è la lingua predefinita. Ci sono tutte le lingue ufficiali dell’Unione europea, insieme all’islandese e ai due standard scritti del norvegese, oltre al turco. L’app si apre nella lingua impostata sul telefono e ripiega sull’inglese per tutto il resto; da Android 13 le impostazioni di sistema possono anche darle una lingua propria.
+
+PICCOLA, E OFFLINE PER SCELTA
+L'applicazione non dichiara alcun permesso di internet, quindi non può inviare nulla da nessuna parte: lo impone Android, non è una promessa in un'informativa. La posizione viene letta solo sul dispositivo, per la declinazione, i rilevamenti verso luoghi fissi, il Sole e la Luna, e non viene conservato nulla oltre ai punti che lei stesso salva.
+
+Licenza MIT · senza pubblicità · senza tracciamento · senza permesso internet
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

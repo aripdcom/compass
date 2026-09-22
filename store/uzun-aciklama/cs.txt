@@ -1,0 +1,39 @@
+Pokročilý kompas pro Android. Zeměpisný sever, azimuty ke stálým místům, Slunce a Měsíc — nakreslené na růžici a nic navíc.
+
+ZEMĚPISNÝ SEVER
+Jakmile je známa poloha, přičte se magnetická deklinace a sever na růžici je zeměpisný pól, ne magnetický. Magnetický sever zůstává na okraji jako modré M.
+
+AZIMUTY KE STÁLÝM MÍSTŮM
+Azimuty po ortodromě ke stálým místům, vyznačené na okraji i se vzdáleností. Počítají se v zařízení: nic se nevyhledává, nic nestahuje.
+
+ZÁMEK AZIMUTU
+Klepnutím na růžici zamknete směr, kterým stojíte. Spodní řádek pak říká, o kolik jste sešli doprava nebo doleva, a dvojité cvaknutí ohlásí návrat na kurz.
+
+VODOVÁHA
+Bublina uprostřed růžice. Nakloněný telefon ukazuje špatně — tohle je to, co naklonění prozradí.
+
+SLUNCE A MĚSÍC
+Jejich azimuty na okraji, oblouk od východu k západu Slunce a Měsíc nakreslený s fází — slabě, dokud je pod obzorem.
+
+ULOŽENÉ BODY
+Dlouhým stiskem růžice uložíte, kde jste, nebo vložíte souřadnice či sdílený odkaz na mapu. Okraj pak nese azimut a vzdálenost zpět.
+
+NÁMOŘNÍ MÍLE A STÁLÝ KURZ
+Vzdálenosti v metrech a kilometrech, nebo v metrech a námořních mílích. Azimuty k vlastním uloženým bodům mohou vést po ortodromě — nejkratší cestě — nebo po loxodromě, jediném kurzu, který lze udržet od začátku do konce. Vzdálenost se počítá podle toho, co zvolíte.
+
+NOČNÍ REŽIM
+Černé pozadí, červená růžice. Značky se rozlišují odstínem, ne jasem, takže noční vidění pohled na displej přežije. Umí se přepnout sám na konci občanského soumraku.
+
+ŘEKNE TO NAHLAS
+Každý údaj se ohlásí odečítačům obrazovky v jazyce telefonu a krátké cvaknutí míjí sever, východ, jih a západ — azimut tak lze držet i bez dívání.
+
+DVACET OSM JAZYKŮ
+Výchozí je angličtina. Jsou tu všechny úřední jazyky Evropské unie, k tomu islandština a obě psané normy norštiny a turečtina. Aplikace se otevře v jazyce, na který je telefon nastaven, a u všeho ostatního se vrátí k angličtině; od Androidu 13 jí lze v nastavení systému přidělit i vlastní jazyk.
+
+MALÝ A OFFLINE ZÁMĚRNĚ
+Aplikace nedeklaruje oprávnění k internetu, takže nemůže nic nikam odeslat — vynucuje to Android, není to slib v zásadách. Poloha se čte jen v zařízení, pro deklinaci, azimuty ke stálým místům, Slunce a Měsíc, a nic se neuchovává kromě bodů, které si uložíte sami.
+
+Licence MIT · bez reklam · bez sledování · bez oprávnění k internetu
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

@@ -1,0 +1,39 @@
+Fejlett iránytű Androidra. Földrajzi észak, irányok rögzített helyekhez, a Nap és a Hold — kézzel a számlapra rajzolva, és semmi más nincs útban.
+
+FÖLDRAJZI ÉSZAK
+Amint a helyzet ismert, hozzáadódik a mágneses elhajlás, és a számlapon az észak a földrajzi pólus, nem a mágneses. A mágneses észak kék M-ként marad a peremen.
+
+IRÁNYOK RÖGZÍTETT HELYEKHEZ
+Főkör szerinti irányok állandó helyekre, a peremen a távolsággal együtt. Az eszközön számolódnak: semmit nem keres ki és nem tölt le.
+
+IRÁNY RÖGZÍTÉSE
+Koppintson a számlapra, hogy rögzítse a nézett irányt. Az alsó sor ekkor megmondja, mennyit sodródott jobbra vagy balra, dupla kattanás pedig jelzi, hogy visszatért rá.
+
+VÍZMÉRTÉK
+Buborék a számlap közepén. A megdöntött telefon rosszul mér — ez az, ami elárulja a dőlést.
+
+NAP ÉS HOLD
+Irányuk a peremen, a napkeltétől napnyugtáig tartó ív, és a Hold a fázisával megrajzolva — halványan, amíg a horizont alatt van.
+
+MENTETT PONTOK
+A számlap hosszú nyomása elmenti, hol van; ugyanígy beilleszthetők koordináták vagy megosztott térképhivatkozás. A perem ezután az irányt és a visszafelé vezető távolságot mutatja.
+
+TENGERI MÉRFÖLD ÉS ÁLLANDÓ IRÁNY
+A távolságok méterben és kilométerben, vagy méterben és tengeri mérföldben. A saját mentett pontjaihoz vezető irányok követhetik a főkört — a legrövidebb utat — vagy egy loxodromát, azt az egyetlen irányt, amelyet elejétől végéig tartani tud. A távolság ahhoz igazodik, amit választ.
+
+ÉJSZAKAI MÓD
+Fekete háttér, vörös számlap. A jeleket árnyalat különbözteti meg, nem fényerő, így az éjszakai látás túlél egy pillantást a képernyőre. A polgári szürkület végén magától is átválthat.
+
+HANGOSAN KIMONDJA
+Minden érték felolvasásra kerül a képernyőolvasóknak a telefon nyelvén, és egy rövid kattanás jelzi északot, keletet, délt és nyugatot — így az irány odanézés nélkül is tartható.
+
+HUSZONNYOLC NYELV
+Az alapértelmezés az angol. Az Európai Unió minden hivatalos nyelve megvan, mellettük az izlandi és a norvég mindkét írott változata, valamint a török. Az alkalmazás azon a nyelven indul, amelyre a telefon be van állítva, minden másnál pedig angolra vált; az Android 13-tól a rendszerbeállítások saját nyelvet is adhatnak neki.
+
+KICSI, ÉS SZÁNDÉKOSAN OFFLINE
+Az alkalmazás nem kér internetjogosultságot, tehát semmit nem tud sehová küldeni — ezt az Android tartatja be, nem egy tájékoztatóban tett ígéret. A helyzetet csak az eszközön olvassa, az elhajláshoz, a rögzített helyek irányaihoz, a Naphoz és a Holdhoz, és semmit nem tart meg a saját maga mentette pontokon túl.
+
+MIT-licenc · reklám nélkül · követés nélkül · internet-jogosultság nélkül
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

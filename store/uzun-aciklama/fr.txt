@@ -1,0 +1,39 @@
+Une boussole avancée pour Android. Nord géographique, azimuts vers des lieux fixes, le Soleil et la Lune — tracés à la main sur une rose, et rien d'autre en travers.
+
+NORD GÉOGRAPHIQUE
+Dès que la position est connue, la déclinaison magnétique est ajoutée : le nord du cadran est le pôle géographique et non le pôle magnétique. Le nord magnétique reste sur le pourtour, un M bleu.
+
+AZIMUTS VERS DES LIEUX FIXES
+Des caps orthodromiques vers des lieux fixes, marqués sur le pourtour avec la distance. Calculés sur l’appareil : rien n’est consulté, rien n’est téléchargé.
+
+VERROUILLER UN CAP
+Touchez le cadran pour verrouiller la direction que vous visez. La ligne du bas indique alors de combien vous avez dérivé, à droite ou à gauche, et un double tic annonce le retour.
+
+NIVEAU À BULLE
+Une bulle au centre du cadran. Un téléphone incliné se trompe — c’est elle qui le dit.
+
+SOLEIL ET LUNE
+Leurs caps sur le pourtour, l’arc du lever au coucher du soleil et la Lune dessinée avec sa phase — pâle tant qu’elle est sous l’horizon.
+
+POINTS ENREGISTRÉS
+Un appui long sur le cadran enregistre où vous êtes ; on peut aussi coller des coordonnées ou un lien de carte partagé. Le pourtour porte ensuite le cap et la distance du retour.
+
+MILLES MARINS ET CAP CONSTANT
+Les distances en mètres et kilomètres, ou en mètres et milles marins. Les azimuts vers vos propres points enregistrés peuvent suivre l'orthodromie — le plus court — ou la loxodromie, le seul cap que vous pouvez tenir du début à la fin. La distance suit ce que vous choisissez.
+
+MODE NUIT
+Fond noir, cadran rouge. Les marques se distinguent par la teinte plutôt que par la clarté, de sorte que la vision nocturne survit à un coup d’œil. Il peut basculer seul à la fin du crépuscule civil.
+
+ELLE LE DIT À VOIX HAUTE
+Chaque lecture est annoncée aux lecteurs d’écran dans la langue du téléphone, et un tic bref passe le nord, l’est, le sud et l’ouest — de quoi tenir un cap sans regarder.
+
+VINGT-HUIT LANGUES
+L’anglais est la langue par défaut. Toutes les langues officielles de l’Union européenne sont là, avec l’islandais et les deux normes écrites du norvégien, ainsi que le turc. L’application s’ouvre dans la langue du téléphone et revient à l’anglais pour tout le reste ; depuis Android 13, les réglages du système peuvent aussi lui donner une langue à elle.
+
+PETITE, ET HORS LIGNE PAR CONSTRUCTION
+L'application ne déclare aucune permission internet, elle ne peut donc rien envoyer nulle part — c'est Android qui l'impose, ce n'est pas une promesse dans une politique. La position n'est lue que sur l'appareil, pour la déclinaison, les azimuts vers des lieux fixes, le Soleil et la Lune, et rien n'est conservé au-delà des points que vous enregistrez vous-même.
+
+Licence MIT · sans publicité · sans pistage · sans autorisation internet
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

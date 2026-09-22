@@ -1,0 +1,39 @@
+Boxxla avvanzata għal Android. It-tramuntana ġeografika, direzzjonijiet lejn postijiet fissi, ix-Xemx u l-Qamar — impinġija bl-idejn fuq dial, u xejn aktar fin-nofs.
+
+IT-TRAMUNTANA VERA
+Hekk kif il-post ikun magħruf tiżdied id-deklinazzjoni manjetika, u t-tramuntana fuq id-dial tkun il-pol ġeografiku, mhux dak manjetiku. It-tramuntana manjetika tibqa’ fuq it-tarf bħala M blu.
+
+DIREZZJONIJIET LEJN POSTIJIET FISSI
+Direzzjonijiet ta’ ċirku kbir lejn postijiet fissi, immarkati fuq it-tarf bid-distanza. Jinħadmu fuq l-apparat: xejn ma jitfittex u xejn ma jitniżżel.
+
+AQFEL DIREZZJONI
+Messu d-dial biex taqfel id-direzzjoni li qed tħares lejha. Il-linja t’isfel imbagħad tgħidlek kemm ħriġt lejn il-lemin jew ix-xellug, u tektika doppja tgħidlek li erġajt fuqha.
+
+LIVELLA
+Bużżieqa f’nofs id-dial. Telefon mejjel jaqra ħażin — din hi li tikxef il-mejl.
+
+XEMX U QAMAR
+Id-direzzjonijiet tagħhom fuq it-tarf, l-ark minn tlugħ ix-xemx sa nżulha, u l-Qamar impinġi bil-fażi tiegħu — ħafif sakemm ikun taħt l-orizzont.
+
+PUNTI SALVATI
+Żamma twila fuq id-dial tissejvja fejn qiegħed; jistgħu jitwaħħlu wkoll koordinati jew link ta’ mappa maqsum. It-tarf imbagħad iġorr id-direzzjoni u d-distanza lura.
+
+MILI NAWTIĊI U ROTTA KOSTANTI
+Id-distanzi f'metri u kilometri, jew f'metri u mili nawtiċi. Id-direzzjonijiet lejn il-punti li ssalva int stess jistgħu jsegwu ċ-ċirku kbir — l-iqsar triq — jew loksodroma, l-unika rotta li tista' żżomm mill-bidu sal-aħħar. Id-distanza ssegwi dak li tagħżel.
+
+MOD BIL-LEJL
+Sfond iswed, dial aħmar. Il-marki jingħarfu mill-kulur u mhux mid-dawl, u għalhekk il-vista bil-lejl tibqa’ sħiħa wara ħarsa lejn l-iskrin. Jista’ jinbidel waħdu fi tmiem l-għabex ċivili.
+
+TGĦIDHA B’LEĦEN GĦOLI
+Kull qari jitħabbar lill-qarrejja tal-iskrin bil-lingwa tat-telefon, u tektika qasira tgħaddi t-tramuntana, il-lvant, in-nofsinhar u l-punent — hekk id-direzzjoni tinżamm bla ma tħares.
+
+TMIENJA U GĦOXRIN LINGWA
+L-Ingliż huwa l-lingwa awtomatika. Hemm il-lingwi uffiċjali kollha tal-Unjoni Ewropea, flimkien mal-Iżlandiż u ż-żewġ standards miktuba tan-Norveġiż, kif ukoll it-Tork. L-app tinfetaħ bil-lingwa li fiha jkun issettjat it-telefon u taqa’ lura għall-Ingliż għal kull ħaġa oħra; minn Android 13 ’il quddiem, l-issettjar tas-sistema jista’ jagħtiha wkoll lingwa tagħha.
+
+ŻGĦIRA, U OFFLINE APPOSTA
+L-app ma tiddikjara ebda permess għall-internet, allura ma tista' tibgħat xejn imkien — dan jinfurzah Android, mhuwiex wegħda f'xi politika. Il-post fejn tinsab jinqara biss fuq l-apparat, għad-deklinazzjoni, id-direzzjonijiet lejn postijiet fissi, ix-Xemx u l-Qamar, u ma jinżamm xejn ħlief il-punti li tissejvja int.
+
+Liċenzja MIT · bla reklami · bla traċċar · bla permess għall-internet
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

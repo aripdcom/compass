@@ -1,0 +1,39 @@
+Ein fortgeschrittener Kompass für Android. Geografisch Nord, Peilungen zu festen Orten, Sonne und Mond — von Hand auf eine Rose gezeichnet, und sonst nichts im Weg.
+
+GEOGRAFISCH NORD
+Sobald der Standort bekannt ist, wird die Deklination addiert, und Nord auf dem Zifferblatt ist der geografische Pol, nicht der magnetische. Magnetisch Nord bleibt als blaues M am Rand.
+
+PEILUNGEN ZU FESTEN ORTEN
+Großkreis-Kurse zu festen Orten, am Rand mit der Entfernung markiert. Auf dem Gerät gerechnet: nichts wird nachgeschlagen, nichts geladen.
+
+KURS SPERREN
+Tippen Sie auf das Zifferblatt, um die Blickrichtung zu sperren. Die untere Zeile sagt dann, wie weit Sie nach rechts oder links abgekommen sind, und ein doppelter Tick meldet die Rückkehr.
+
+WASSERWAAGE
+Eine Blase in der Mitte des Zifferblatts. Ein geneigtes Telefon zeigt falsch — sie ist das, was die Neigung verrät.
+
+SONNE UND MOND
+Ihre Kurse am Rand, der Bogen von Sonnenauf- bis Sonnenuntergang und der Mond mit seiner Phase — blass, solange er unter dem Horizont steht.
+
+GESPEICHERTE PUNKTE
+Langes Drücken auf das Zifferblatt speichert, wo Sie sind; Koordinaten oder ein geteilter Kartenlink lassen sich ebenso einfügen. Der Rand trägt dann Kurs und Entfernung zurück.
+
+SEEMEILEN UND EIN FESTER KURS
+Entfernungen in Meter und Kilometer oder Meter und Seemeilen. Peilungen zu Ihren eigenen gespeicherten Punkten können dem Großkreis folgen — dem kürzesten Weg — oder einer Loxodrome, dem einen Kurs, den Sie von Anfang bis Ende halten können. Die Entfernung richtet sich danach, was Sie wählen.
+
+NACHTMODUS
+Schwarzer Hintergrund, rotes Zifferblatt. Die Marken unterscheiden sich im Farbton statt in der Helligkeit, so übersteht die Nachtsicht einen Blick auf den Bildschirm. Am Ende der bürgerlichen Dämmerung schaltet er von selbst.
+
+SAGT ES LAUT
+Jede Anzeige wird Screenreadern in der Sprache des Telefons angesagt, und ein kurzer Tick passiert Nord, Ost, Süd und West — so lässt sich ein Kurs halten, ohne hinzusehen.
+
+ACHTUNDZWANZIG SPRACHEN
+Englisch ist die Vorgabe. Alle Amtssprachen der Europäischen Union sind dabei, dazu Isländisch und beide norwegischen Schriftsprachen sowie Türkisch. Die App startet in der Sprache, auf die das Telefon eingestellt ist, und fällt für alles andere auf Englisch zurück; ab Android 13 kann ihr die Systemeinstellung auch eine eigene Sprache geben.
+
+KLEIN UND ABSICHTLICH OFFLINE
+Die App verlangt keine Internetberechtigung, also kann sie nichts irgendwohin senden — das erzwingt Android, es ist kein Versprechen in einer Erklärung. Der Standort wird nur auf dem Gerät gelesen, für die Deklination, die Peilungen zu festen Orten, Sonne und Mond, und nichts wird behalten außer den Punkten, die Sie selbst speichern.
+
+MIT-Lizenz · keine Werbung · kein Tracking · keine Internetberechtigung
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

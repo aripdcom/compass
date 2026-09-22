@@ -1,0 +1,39 @@
+Zaawansowany kompas na Androida. Północ geograficzna, azymuty do stałych miejsc, Słońce i Księżyc — narysowane ręcznie na tarczy i nic więcej na drodze.
+
+PÓŁNOC GEOGRAFICZNA
+Gdy tylko lokalizacja jest znana, dodawana jest deklinacja magnetyczna, a północ na tarczy to biegun geograficzny, nie magnetyczny. Północ magnetyczna zostaje na obrzeżu jako niebieskie M.
+
+AZYMUTY DO STAŁYCH MIEJSC
+Azymuty po kole wielkim do stałych miejsc, zaznaczone na obrzeżu wraz z odległością. Liczone na urządzeniu: nic nie jest wyszukiwane ani pobierane.
+
+BLOKADA AZYMUTU
+Dotknij tarczy, aby zablokować kierunek, w którym patrzysz. Dolny wiersz mówi wtedy, o ile zboczyłeś w prawo lub w lewo, a podwójne stuknięcie oznajmia powrót.
+
+POZIOMICA
+Bąbelek pośrodku tarczy. Przechylony telefon wskazuje źle — to on zdradza przechylenie.
+
+SŁOŃCE I KSIĘŻYC
+Ich azymuty na obrzeżu, łuk od wschodu do zachodu i Księżyc narysowany ze swoją fazą — blado, dopóki jest pod horyzontem.
+
+ZAPISANE PUNKTY
+Długie przytrzymanie tarczy zapisuje, gdzie jesteś; równie dobrze można wkleić współrzędne albo udostępniony link do mapy. Obrzeże niesie potem azymut i odległość powrotu.
+
+MILE MORSKIE I STAŁY KURS
+Odległości w metrach i kilometrach albo w metrach i milach morskich. Azymuty do własnych zapisanych punktów mogą biec ortodromą — najkrótszą drogą — albo loksodromą, jedynym kursem, który da się utrzymać od początku do końca. Odległość liczy się zgodnie z wyborem.
+
+TRYB NOCNY
+Czarne tło, czerwona tarcza. Znaczniki różnią się odcieniem, a nie jasnością, więc widzenie nocne przetrwa spojrzenie na ekran. Pod koniec zmierzchu cywilnego potrafi przełączyć się sam.
+
+MÓWI TO NA GŁOS
+Każdy odczyt jest zapowiadany czytnikom ekranu w języku telefonu, a krótkie stuknięcie mija północ, wschód, południe i zachód — tak trzyma się azymut bez patrzenia.
+
+DWADZIEŚCIA OSIEM JĘZYKÓW
+Domyślny jest angielski. Są wszystkie języki urzędowe Unii Europejskiej, a obok nich islandzki i oba norweskie standardy pisane oraz turecki. Aplikacja otwiera się w języku ustawionym w telefonie, a dla wszystkiego innego wraca do angielskiego; od Androida 13 ustawienia systemu mogą też nadać jej własny język.
+
+MAŁY I CELOWO BEZ SIECI
+Aplikacja nie deklaruje uprawnienia do internetu, więc nie może niczego nigdzie wysłać — wymusza to Android, a nie obietnica w polityce. Położenie odczytywane jest wyłącznie na urządzeniu: do deklinacji, azymutów do stałych miejsc, Słońca i Księżyca, i nic nie jest przechowywane poza punktami, które sam zapiszesz.
+
+Licencja MIT · bez reklam · bez śledzenia · bez uprawnienia do internetu
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

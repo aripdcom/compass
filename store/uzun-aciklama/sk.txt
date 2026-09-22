@@ -1,0 +1,39 @@
+Pokročilý kompas pre Android. Zemepisný sever, azimuty k stálym miestam, Slnko a Mesiac — nakreslené na ružici a nič navyše.
+
+ZEMEPISNÝ SEVER
+Len čo je poloha známa, pripočíta sa magnetická deklinácia a sever na ružici je zemepisný pól, nie magnetický. Magnetický sever zostáva na okraji ako modré M.
+
+AZIMUTY K STÁLYM MIESTAM
+Azimuty po ortodróme k stálym miestam, vyznačené na okraji aj so vzdialenosťou. Počítajú sa v zariadení: nič sa nevyhľadáva ani nesťahuje.
+
+ZÁMOK AZIMUTU
+Ťuknutím na ružicu zamknete smer, ktorým stojíte. Spodný riadok potom hovorí, o koľko ste sa odchýlili doprava alebo doľava, a dvojité cvaknutie ohlási návrat.
+
+VODOVÁHA
+Bublina v strede ružice. Naklonený telefón ukazuje zle — práve ona naklonenie prezradí.
+
+SLNKO A MESIAC
+Ich azimuty na okraji, oblúk od východu po západ Slnka a Mesiac nakreslený s fázou — slabo, kým je pod obzorom.
+
+ULOŽENÉ BODY
+Dlhé stlačenie ružice uloží, kde ste; rovnako sa dajú vložiť súradnice alebo zdieľaný odkaz na mapu. Okraj potom nesie azimut a vzdialenosť späť.
+
+NÁMORNÉ MÍLE A STÁLY KURZ
+Vzdialenosti v metroch a kilometroch, alebo v metroch a námorných míľach. Azimuty k vlastným uloženým bodom môžu viesť po ortodróme — najkratšej ceste — alebo po loxodróme, jedinom kurze, ktorý sa dá udržať od začiatku do konca. Vzdialenosť sa počíta podľa toho, čo zvolíte.
+
+NOČNÝ REŽIM
+Čierne pozadie, červená ružica. Značky sa rozlišujú odtieňom, nie jasom, takže nočné videnie prežije pohľad na displej. Na konci občianskeho súmraku sa vie prepnúť sám.
+
+POVIE TO NAHLAS
+Každý údaj sa ohlási čítačkám obrazovky v jazyku telefónu a krátke cvaknutie míňa sever, východ, juh a západ — azimut sa tak dá držať aj bez pozerania.
+
+DVADSAŤOSEM JAZYKOV
+Predvolená je angličtina. Sú tu všetky úradné jazyky Európskej únie, k tomu islandčina a obe písané normy nórčiny a turečtina. Aplikácia sa otvorí v jazyku, na ktorý je telefón nastavený, a pri všetkom ostatnom sa vráti k angličtine; od Androidu 13 jej môžu nastavenia systému prideliť aj vlastný jazyk.
+
+MALÝ A ZÁMERNE BEZ SIETE
+Aplikácia nedeklaruje povolenie na internet, takže nemôže nič nikam odoslať — vynucuje to Android, nie je to sľub v zásadách. Poloha sa číta len v zariadení, pre deklináciu, azimuty k stálym miestam, Slnko a Mesiac, a nič sa neuchováva okrem bodov, ktoré si uložíte sami.
+
+Licencia MIT · bez reklám · bez sledovania · bez povolenia na internet
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

@@ -1,0 +1,39 @@
+Täiustatud kompass Androidile. Geograafiline põhi, suunad paiksete kohtadeni, Päike ja Kuu — käsitsi sõõrile joonistatud, ilma et miski muu ees oleks.
+
+GEOGRAAFILINE PÕHI
+Niipea kui asukoht on teada, liidetakse magnetiline deklinatsioon ja põhi sihverplaadil on geograafiline poolus, mitte magnetiline. Magnetiline põhi jääb äärele sinise M-na.
+
+SUUNAD PAIKSETE KOHTADENI
+Suurringjoone suunad püsivatele kohtadele, äärel koos kaugusega. Arvutatakse seadmes: midagi ei otsita ega laadita.
+
+SUUNA LUKUSTAMINE
+Puuduta sihverplaati, et lukustada suund, kuhu vaatad. Alumine rida ütleb siis, kui palju oled paremale või vasakule kaldunud, ja topeltnaks teatab, et oled tagasi.
+
+VESILOOD
+Mull sihverplaadi keskel. Kaldus telefon näitab valesti — see on see, mis kalde välja annab.
+
+PÄIKE JA KUU
+Nende suunad äärel, kaar tõusust loojanguni ja Kuu oma faasiga — kahvatu, kuni ta on horisondi all.
+
+SALVESTATUD PUNKTID
+Pikk vajutus sihverplaadile salvestab, kus sa oled; sama hästi saab kleepida koordinaadid või jagatud kaardilingi. Ääres on siis suund ja tagasitee pikkus.
+
+MEREMIILID JA PÜSIV KURSS
+Vahemaad meetrites ja kilomeetrites või meetrites ja meremiilides. Suunad sinu enda salvestatud kohtadeni võivad järgida suurringi — lühimat teed — või loksodroomi, seda ainsat kurssi, mida saab algusest lõpuni hoida. Vahemaa järgib seda, mille valid.
+
+ÖÖREŽIIM
+Must taust, punane sihverplaat. Märke eristab toon, mitte heledus, nii et hämaranägemine peab pilgu ekraanile vastu. Tsiviilhämaruse lõpus lülitub see ise sisse.
+
+ÜTLEB SELLE VÄLJA
+Iga näit loetakse ekraanilugejale telefoni keeles ette ja lühike naks möödub põhjast, idast, lõunast ja läänest — nii saab suunda hoida ka ilma vaatamata.
+
+KAKSKÜMMEND KAHEKSA KEELT
+Vaikimisi on inglise keel. Kõik Euroopa Liidu ametlikud keeled on olemas, koos islandi keele ja norra mõlema kirjakeelega ning türgi keelega. Rakendus avaneb keeles, millele telefon on seatud, ja langeb kõige muu puhul tagasi inglise keelele; alates Android 13-st saab süsteemi seadetes anda talle ka oma keele.
+
+VÄIKE JA MEELEGA VÕRGUTA
+Rakendus ei küsi internetiluba, seega ei saa ta midagi kuhugi saata — seda tagab Android, mitte lubadus mingis eeskirjas. Asukohta loetakse ainult seadmes, deklinatsiooni, paiksete kohtade suundade, Päikese ja Kuu jaoks, ning midagi ei hoita peale punktide, mille ise salvestad.
+
+MIT-litsents · reklaamideta · jälgimiseta · interneti loata
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

@@ -1,0 +1,39 @@
+Napredni kompas za Android. Zemljepisni sever, azimuti do stalnih krajev, Sonce in Luna — z roko narisani na številčnici, in nič drugega na poti.
+
+GEOGRAFSKI SEVER
+Takoj ko je lokacija znana, se prišteje magnetna deklinacija, in sever na številčnici je geografski pol, ne magnetni. Magnetni sever ostane na robu kot moder M.
+
+AZIMUTI DO STALNIH KRAJEV
+Azimuti po veliki krožnici do stalnih krajev, označeni na robu skupaj z razdaljo. Izračunani v napravi: nič se ne išče in nič ne prenaša.
+
+ZAKLEP AZIMUTA
+Tapnite številčnico, da zaklenete smer, v katero gledate. Spodnja vrstica tedaj pove, koliko ste zašli desno ali levo, dvojni klik pa sporoči, da ste spet na njej.
+
+VODNA TEHTNICA
+Mehurček na sredini številčnice. Nagnjen telefon kaže napačno — prav ta izda nagib.
+
+SONCE IN LUNA
+Njuna azimuta na robu, lok od vzhoda do zahoda in Luna, narisana s svojo meno — bledo, dokler je pod obzorjem.
+
+SHRANJENE TOČKE
+Dolg pritisk na številčnico shrani, kje ste; prav tako lahko prilepite koordinate ali deljeno povezavo do zemljevida. Rob tedaj nosi azimut in razdaljo nazaj.
+
+NAVTIČNE MILJE IN STALNI KURZ
+Razdalje v metrih in kilometrih ali v metrih in navtičnih miljah. Azimuti do lastnih shranjenih točk lahko sledijo ortodromi — najkrajši poti — ali loksodromi, edinemu kurzu, ki ga lahko držite od začetka do konca. Razdalja sledi temu, kar izberete.
+
+NOČNI NAČIN
+Črno ozadje, rdeča številčnica. Oznake ločuje odtenek in ne svetlost, zato nočni vid preživi pogled na zaslon. Ob koncu civilnega mraka se zna preklopiti sam.
+
+POVE NA GLAS
+Vsak odčitek se bralnikom zaslona napove v jeziku telefona, kratek klik pa prečka sever, vzhod, jug in zahod — tako se smer drži brez gledanja.
+
+OSEMINDVAJSET JEZIKOV
+Privzeta je angleščina. Tu so vsi uradni jeziki Evropske unije, poleg njih islandščina in obe pisni normi norveščine ter turščina. Aplikacija se odpre v jeziku, na katerega je nastavljen telefon, za vse drugo pa se vrne k angleščini; od Androida 13 ji lahko sistemske nastavitve dajo tudi lasten jezik.
+
+MAJHEN IN NAMERNO BREZ OMREŽJA
+Aplikacija ne zahteva dovoljenja za internet, zato ne more ničesar nikamor poslati — to uveljavlja Android, ni obljuba v pravilniku. Lokacija se bere samo na napravi, za deklinacijo, azimute do stalnih krajev, Sonce in Luno, in nič se ne hrani razen točk, ki jih shranite sami.
+
+Licenca MIT · brez oglasov · brez sledenja · brez dovoljenja za internet
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

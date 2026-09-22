@@ -1,0 +1,39 @@
+Et avansert kompass for Android. Geografisk nord, peilinger til faste steder, sola og månen — tegnet for hånd på en skive, uten noe annet i veien.
+
+GEOGRAFISK NORD
+Så snart posisjonen er kjent, legges misvisningen til, og nord på skiva er den geografiske polen, ikke den magnetiske. Magnetisk nord blir liggende på randen som en blå M.
+
+PEILINGER TIL FASTE STEDER
+Storsirkelkurser til faste steder, merket på randen med avstanden. Regnet ut på enheten: ingenting slås opp, ingenting lastes ned.
+
+LÅS EN KURS
+Trykk på skiva for å låse retningen du står i. Nederste linje sier da hvor langt du har drevet til høyre eller venstre, og et dobbelt klikk melder at du er tilbake.
+
+VATER
+En boble midt på skiva. En skjev telefon viser feil — det er denne som sier at den er skjev.
+
+SOL OG MÅNE
+Kursene deres på randen, buen fra soloppgang til solnedgang og månen tegnet med fasen sin — svakt mens den er under horisonten.
+
+LAGREDE PUNKTER
+Et langt trykk på skiva lagrer hvor du er; du kan like gjerne lime inn koordinater eller en delt kartlenke. Randen bærer så kursen og avstanden tilbake.
+
+NAUTISKE MIL OG FAST KURS
+Avstander i meter og kilometer, eller i meter og nautiske mil. Peilinger til dine egne lagrede punkter kan følge storsirkelen — korteste vei — eller en loksodrom, den ene kursen du kan holde fra start til slutt. Avstanden følger det du velger.
+
+NATTMODUS
+Svart bakgrunn, rød skive. Merkene skilles på fargetone framfor lysstyrke, så nattsynet overlever et blikk på skjermen. Den kan slå om av seg selv når den borgerlige skumringen er over.
+
+SIER DET HØYT
+Hver avlesning meldes til skjermlesere på språket telefonen står på, og et kort klikk passerer nord, øst, sør og vest — slik kan en kurs holdes uten å se.
+
+TJUEÅTTE SPRÅK
+Engelsk er standard. Alle de offisielle språkene i Den europeiske union er med, sammen med islandsk og begge norske skriftspråk, og tyrkisk. Appen åpner på språket telefonen står på og faller tilbake til engelsk for alt annet; fra Android 13 kan systeminnstillingene også gi den et eget språk.
+
+LITEN, OG FRAKOBLET MED VILJE
+Appen erklærer ingen internettillatelse, så den kan ikke sende noe noe sted — det håndheves av Android, det er ikke et løfte i en erklæring. Posisjonen leses bare på enheten, til misvisningen, peilingene til faste steder, sola og månen, og ingenting beholdes utover punktene du selv lagrer.
+
+MIT-lisens · ingen reklame · ingen sporing · ingen internettillatelse
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/

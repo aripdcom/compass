@@ -1,0 +1,39 @@
+Een geavanceerd kompas voor Android. Geografisch noorden, peilingen naar vaste plaatsen, de zon en de maan — met de hand op een roos getekend, en verder niets in de weg.
+
+GEOGRAFISCH NOORDEN
+Zodra de locatie bekend is wordt de declinatie erbij geteld, en het noorden op de roos is de geografische pool, niet de magnetische. Het magnetische noorden blijft als een blauwe M op de rand staan.
+
+PEILINGEN NAAR VASTE PLAATSEN
+Grootcirkelkoersen naar vaste plaatsen, met de afstand op de rand gemarkeerd. Op het toestel berekend: er wordt niets opgezocht en niets opgehaald.
+
+EEN KOERS VASTZETTEN
+Tik op de roos om de richting waarin u staat vast te zetten. De onderste regel zegt dan hoever u naar rechts of links bent afgeweken, en een dubbele tik meldt dat u er weer op zit.
+
+WATERPAS
+Een bel in het midden van de roos. Een scheve telefoon leest verkeerd af — dit is wat verraadt dat hij scheef staat.
+
+ZON EN MAAN
+Hun koersen op de rand, de boog van zonsopkomst tot zonsondergang en de maan getekend met haar schijngestalte — vaag zolang ze onder de horizon staat.
+
+OPGESLAGEN PUNTEN
+Lang drukken op de roos slaat op waar u bent; u kunt net zo goed coördinaten of een gedeelde kaartlink plakken. De rand draagt dan de koers en de afstand terug.
+
+ZEEMIJLEN EN EEN VASTE KOERS
+Afstanden in meters en kilometers, of in meters en zeemijlen. Peilingen naar uw eigen opgeslagen punten kunnen de grootcirkel volgen — de kortste weg — of een loxodroom, de ene koers die u van begin tot eind kunt aanhouden. De afstand volgt wat u kiest.
+
+NACHTMODUS
+Zwarte achtergrond, rode roos. De markeringen verschillen in tint en niet in helderheid, zodat het nachtzicht een blik op het scherm overleeft. Aan het einde van de burgerlijke schemering kan hij vanzelf omschakelen.
+
+ZEGT HET HARDOP
+Elke aflezing wordt aan schermlezers voorgelezen in de taal van de telefoon, en een korte tik passeert noord, oost, zuid en west — zo houdt u een koers zonder te kijken.
+
+ACHTENTWINTIG TALEN
+Engels is de standaard. Alle officiële talen van de Europese Unie zitten erin, samen met het IJslands en beide Noorse schrijftalen, en het Turks. De app opent in de taal waarop de telefoon staat en valt voor al het andere terug op Engels; vanaf Android 13 kunnen de systeeminstellingen de app ook een eigen taal geven.
+
+KLEIN, EN MET OPZET OFFLINE
+De app vraagt geen internettoestemming, dus hij kan niets ergens naartoe sturen — dat wordt door Android afgedwongen, het is geen belofte in een verklaring. De locatie wordt alleen op het toestel gelezen, voor de declinatie, de peilingen naar vaste plaatsen, de zon en de maan, en er wordt niets bewaard behalve de punten die u zelf opslaat.
+
+MIT-licentie · geen advertenties · geen tracking · geen internettoestemming
+
+Source code: github.com/aripdcom/kerteriz
+Privacy policy: kerteriz.aripd.com/privacy/
