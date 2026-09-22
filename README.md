@@ -1526,6 +1526,28 @@ alabilir.
 | Başlık | `Kerteriz — Advanced Compass` (27) | `Kerteriz — Gelişmiş Pusula` (26) |
 | Kısa açıklama | `An advanced compass: true north, bearings, the sun and the moon. No tracking.` (77) | `Gelişmiş bir pusula: gerçek kuzey, sabit yerlere yön, Güneş ve Ay. İzleme yok.` (78) |
 
+**Kısa açıklamanın yirmi sekiz dili `store/kisa-aciklama.tsv`'de.** Console'un
+"Import translations with AI" düğmesi dururken bunların elle yazılmasının
+sebebi terimler: denizcilik sözcüklerinin dile göre yerleşik karşılıkları var
+ve genel amaçlı bir çevirici onları birebir çeviriyor.
+
+| | "great circle" | "rhumb line" |
+|---|---|---|
+| Lehçe | Ortodroma | Loksodroma |
+| Fransızca | Orthodromie | Loxodromie |
+| Yunanca | Μέγιστος κύκλος | Λοξοδρομία |
+
+Bunlar uydurulmadı: uygulamanın `values-*/strings.xml` dosyalarında ve tanıtım
+sayfasının çevirilerinde (`docs/assets/i18n.js`) zaten duruyorlar. Mağaza
+metni de oradan kuruldu, yani **mağazada yazan kelime uygulamanın içinde
+yazanla aynı**. Makine çevirisi bunu tutturamaz ve tutturmadığı yer tam da
+uygulamanın iddia ettiği özenin göründüğü yerdir.
+
+Sınırı `tools/check-translations.py` sayıyor: yirmi sekiz dilin hepsi var mı,
+hiçbiri seksen karakteri aşıyor mu. Almanca ile Bulgarcada "gelişmiş" sıfatı
+sığmadı; sıfat yerine "izleme yok" tutuldu, çünkü ayırt edici olan o ve sıfat
+zaten başlıkta geçiyor.
+
 Uzun açıklama (İngilizce):
 
 ```
