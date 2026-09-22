@@ -11,10 +11,10 @@ göbeğinde su terazisi.
 **Tanıtım sayfası: https://kerteriz.aripd.com/** (16. bölüm) ·
 **Gizlilik: https://kerteriz.aripd.com/privacy/** (13. ve 16. bölüm)
 
-- `minSdk 24` (Android 7.0) — **Android 15 dahil** tüm sürümlerde çalışır
-- `targetSdk 35` (Android 15). Bu seviyeden itibaren kenardan kenara çizim
-  zorunlu ve `setDecorFitsSystemWindows(true)` yok sayılıyor; pencere
-  boşluklarını uygulama kendisi bırakıyor.
+- `minSdk 24` (Android 7.0) — **Android 16 dahil** tüm sürümlerde çalışır
+- `targetSdk 36` (Android 16). 35'ten itibaren kenardan kenara çizim zorunlu ve
+  `setDecorFitsSystemWindows(true)` yok sayılıyor; pencere boşluklarını uygulama
+  kendisi bırakıyor. 36'da bu zorunluluğun muafiyeti de kaldırıldı.
 - Paket adı: `com.aripd.kerteriz`
 - İzinler: `VIBRATE` (yön geçişi tıkı) ile `ACCESS_COARSE_LOCATION` ve `ACCESS_FINE_LOCATION` (gerçek kuzey, kıble
   ve koordinat paneli için; reddedilirse uygulama manyetik kuzeyle çalışmaya devam
@@ -1447,8 +1447,12 @@ formu gerektiren izinlerin hiçbiri yok. Yine de mağaza açıklamasında konumu
 ne işe yaradığı yazmalı: sapma, sabit yerlere yön, Güneş ve Ay.
 
 **Hedef API düzeyi.** Play yeni uygulamalardan belli bir `targetSdk` eşiğini
-şart koşuyor ve eşik her yıl yükseliyor. Depoda `targetSdk = 35`; yüklemeden
-önce Console'daki güncel eşiğe bakılmalı, düşük kalırsa yükleme reddedilir.
+şart koşuyor ve eşik her yıl yükseliyor. Depoda `targetSdk = 36`.
+
+Bu eşik bir kez yaşandı: 5.0 (versionCode 35) `targetSdk = 35` ile yüklendiğinde
+Console sürümü "must target at least API level 36" diyerek reddetti, yani eşik
+yükleme anında ve geri dönülmez biçimde uygulanıyor. Yüklemeden önce Console'daki
+güncel eşiğe bakmak bir CI turundan ucuz.
 
 **Kapalı test.** Kişisel (Personal) geliştirici hesaplarında yeni uygulamalar
 için 12 test kullanıcısıyla 14 gün kapalı test şartı var; kurum
