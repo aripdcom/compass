@@ -870,13 +870,44 @@ seçicisinde görünür ama uygulama İngilizce açılır.
 
 ## 10. Boyut
 
-Release APK **300.266 bayt** (~293 KB, sürüm 4.3 — Releases sayfasındaki
-imzalı dosya). Bunun yaklaşık dörtte üçü yirmi sekiz dilin metinleri; kod,
-ikonlar ve imza toplam 65 KB tutuyor.
+Release APK **351.142 bayt** (~343 KB, sürüm 5.1 — Releases sayfasındaki
+imzalı dosya). Bunun yaklaşık dörtte üçü yirmi sekiz dilin metinleri.
 
-Aşağıdaki küçültme hikâyesi hâlâ geçerli, ama **4.2 sürümüne** ait: o APK
-112.089 bayttı ve başlangıç noktası 854.752 bayta göre **%87 küçülmüştü**.
-İki adımda gelmişti.
+Aşağıdaki dağılım yayımlanan dört APK'nın içinden okundu (`zipfile`, her
+girdinin **sıkıştırılmış** boyutu — APK'da gerçekten yer kaplayan da odur).
+Satırların toplamı dosya boyutunu tutmaz; aradaki fark zip dizini ve imza
+bloğudur.
+
+| | 4.2 | 4.3 | 5.0 | 5.1 |
+|---|---:|---:|---:|---:|
+| `resources.arsc` (metinler) | 48.148 | 205.552 | 253.124 | 253.124 |
+| kod (`classes.dex`) | 50.572 | 50.572 | 54.419 | 53.834 |
+| `res/` (ikon, düzen, vektör) | 18.993 | 19.333 | 19.342 | 19.342 |
+| imza (`META-INF`) | 4.421 | 4.419 | 4.421 | 4.417 |
+| manifest | 1.368 | 1.369 | 1.406 | 1.406 |
+| diğer | 10.752 | 10.752 | 10.752 | 10.752 |
+| **APK dosya boyutu** | **142.522** | **300.266** | **351.730** | **351.142** |
+
+**Araç zinciri yükseltmesi büyütmedi, küçülttü.** 5.1 yalnızca `targetSdk`
+35→36 ve AGP 8.7.3→8.9.0 getiriyor, kod satırı değişmedi — ve APK **588 bayt
+küçüldü**. İki paketin girdileri karşılaştırıldığında 36 girdinin **29'u
+birebir aynı** (CRC'leri tutuyor): `resources.arsc` dâhil bütün metinler,
+bütün `res/` varlıkları. Değişen tek anlamlı parça `classes.dex`
+(54.419 → 53.834, **−585 bayt**), yani AGP 8.9'un R8'i bir tık daha iyi
+kırpıyor. Manifest aynı uzunlukta ama farklı içerikte — `targetSdk` değerinin
+kendisi. Geri kalanı imzanın yeniden hesaplanması.
+
+Buradan çıkan kural: **APK'yı büyüten şey araç zinciri değil, metin.**
+
+**4.2 için kayıtlı olan 112.089 sayısı yayımlanan dosyayla tutmuyor**
+(v4.2 varlığı 142.522 bayt). Aşağıdaki küçültme hikâyesi o ölçüme ait ve
+kendi içinde tutarlı; ama ölçüm etiketten önceki bir derlemeye ait olmalı,
+çünkü yayımlanan 4.2'de hem `resources.arsc` hem `classes.dex` kayıtlı
+dağılımdakinden büyük. Hikâyenin anlattığı **iki adım** ve oranları geçerli;
+mutlak sayı için tablodaki 142.522 esas alınmalı.
+
+Küçültme başlangıç noktası 854.752 bayta göre **%87**'ydi ve iki adımda
+gelmişti.
 
 **R8** (kullanılmayan kodu ve kaynakları atar, kalanı küçültüp karıştırır):
 854.752 → 238.872 bayt. Uygulamada yansıma kullanılmadığı için
@@ -902,22 +933,31 @@ Vektöre geçmek **temalı ikonu** da bedavaya getirdi: `<monochrome>` katmanı 
 şekli tek renkte gösterir, Android 13'te ana ekran temasına uyar. Tek renkte
 ibrenin iki yarısı ayrılamadığı için kuzey dolu, güney içi boş çizilir.
 
-4.2'de geriye kalan dağılım şuydu: `resources.arsc` (altı dilin metinleri)
-37 KB, bütün kod 33 KB, ikonlar 16 KB, imza ve diğer 16 KB. En büyük parça
-artık metinlerdi.
+O ölçümde geriye kalan dağılım şuydu: `resources.arsc` (altı dilin metinleri)
+37 KB, bütün kod 33 KB, ikonlar 16 KB, imza ve diğer 16 KB — yani metin ile kod
+başa baş.
+
+Yayımlanan 4.2'de sıra ucu ucuna kodun lehine: `classes.dex` 50.572,
+`resources.arsc` 48.148. **Metnin açık ara önde olması 4.3'le başlıyor**, altı
+dilden yirmi sekize çıkıldığında; bu bölümün bütün argümanı oradan sonrası
+için geçerli.
 
 ### Dil sayısının bedeli
 
-4.3'te diller altıdan yirmi sekize çıktı ve APK **112.089 → 300.266 bayta**
-(2,7 katı) büyüdü. Kod, ikonlar ve imza bu sürümde değişmediğine göre
-188.177 baytlık artışın tamamı `resources.arsc`'ye ait: o parça 37 KB'tan
-yaklaşık **228 KB**'a çıkmış oluyor (toplamdan değişmeyen 65 KB'ın düşülmesiyle;
-dosya ayrı ayrı ölçülmedi). Yani APK'nın dörtte üçü artık metin.
+4.3'te diller altıdan yirmi sekize çıktı ve APK **142.522 → 300.266 bayta**
+(2,1 katı) büyüdü. Artışın nereden geldiği artık çıkarım değil, ölçüm:
+`classes.dex` **bayt bayt aynı kaldı** (50.572), `res/` 340 bayt oynadı,
+`resources.arsc` ise **48.148 → 205.552** bayta çıktı. Yani 157.744 baytlık
+büyümenin 157.404'ü, yüzde **99,8**'i metin.
 
-Metinlerin ham hâli 281 KB; `resources.arsc` bunu dizge havuzunda toplayıp
-sıkıştırdığı için APK'ya 228 KB olarak giriyor. Yunanca ve Bulgarca'nın
-Kiril/Yunan harfleri UTF-8'de latin harflerin iki katı yer tutuyor, o da payın
-bir kısmını açıklıyor.
+Yunanca ve Bulgarca'nın Kiril/Yunan harfleri UTF-8'de latin harflerin iki katı
+yer tutuyor, payın bir kısmını o açıklıyor.
+
+5.0'da metin bir kez daha büyüdü: **205.552 → 253.124** bayt (+47.572). Sebebi
+o sürümün getirdikleri — on bir sabit yer, kendi ekranına taşınan seçim, deniz
+mili ve loksodrom ayarları, hepsi yirmi sekiz dilde. Aynı sürümde kod da
+50.572 → 54.419'a çıktı (+3.847): `Geo`'nun loksodrom matematiği ve
+`PlacesActivity`. Yani 4.3→5.0 büyümesinin **%92'si yine metin**, %7'si kod.
 
 Bunu küçültmenin iki yolu var; biri yapıldı, biri bilerek yapılmadı:
 
@@ -925,14 +965,14 @@ Bunu küçültmenin iki yolu var; biri yapıldı, biri bilerek yapılmadı:
   bloğu dil, yoğunluk ve ABI parçalarını açık tutuyor, sürüm iş akışı da
   `bundleRelease` ile paketi üretiyor. Google her dil için ayrı bir parça
   hazırlar, kullanıcı yalnızca kendi dilininkini indirir — kurulan boyut
-  yeniden ~110 KB'a iner. Bu yalnızca Play'den kurulanlar için geçerli:
+  metnin yirmi sekizde birine düştüğü için yeniden 100-150 KB bandına iner. Bu yalnızca Play'den kurulanlar için geçerli:
   Releases sayfasından indirilen tek parça APK yirmi sekiz dili birlikte
   taşımayı sürdürür, çünkü oradan indiren kişinin dili önceden bilinmiyor.
 - **`resConfigs`** — **yapılmadı**: derlemede dil listesini kısmak. Uygulamanın
   tamamı sistemin dilini kullandığı için bu, desteklenen dili silmek demek;
   boyut için dilden vazgeçmek bu projede tercih edilmedi.
 
-Üç yüz kilobayt hâlâ küçük: karşılaştırma için bir fotoğraf bundan büyük.
+Üç yüz elli kilobayt hâlâ küçük: karşılaştırma için bir fotoğraf bundan büyük.
 
 Buradaki sayı **yayımlanan** APK'nındır. Aynı commit iki kez derlenip
 imzalandığında boyut bir iki bayt oynayabilir: imza bloğundaki DER kodlaması
