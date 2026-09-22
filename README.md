@@ -1460,6 +1460,32 @@ ikisi birbirinin üzerine güncellenemez. Bu bir hata değil, Play App Signing'i
 çalışma biçimi; `keys/pusula-release.jks` yine de kaybedilmemeli, çünkü yeni
 sürüm yüklemek onunla imzalamayı gerektirir.
 
+**Anahtar ayrıca Android geliştirici doğrulamasına kaydedildi.** Google, Play
+dışından dağıtılan uygulamalar için paket adı ve imza anahtarı kaydı istiyor;
+kaydedilmeyen paketler sertifikalı cihazlarda kurulamaz hâle geliyor. Play'den
+kurulanı Console kendisi hallediyor, ama **Releases'ten indirilen APK'yı
+imzalayan anahtar bu** ve onu elle kaydetmek gerekti.
+
+| | |
+|---|---|
+| Nerede | Hesap düzeyi → `Android developer verification` (uygulamanın içinde değil) |
+| Paket | `com.aripd.kerteriz` |
+| SHA-256 | `BE:02:5C:...:A2:D0` (aşağıdaki komut tamamını verir) |
+
+Parmak izi keystore'a gerek kalmadan yayımlanan APK'dan okunabiliyor:
+
+```bash
+keytool -printcert -jarfile kerteriz-5.1-36-release-6889a16.apk
+```
+
+**Alan SHA-256 istiyor, SHA-1 değil** — `keytool` ikisini alt alta yazdığı için
+karıştırmak kolay ve Console yalnızca "Invalid" diyor, hangisini beklediğini
+söylemiyor. Ayırt etmenin yolu uzunluk: SHA-256'da 32 çift var, SHA-1'de 20.
+
+Dört sürümün (4.2, 4.3, 5.0, 5.1) dördü de aynı sertifikayla imzalanmış, yani
+kaydedilecek tek parmak izi var. Anahtar bir gün değişirse buraya yenisi de
+eklenmeli.
+
 **Gizlilik metni.** Play, yayımlanan uygulamadan bunu sabit ve herkese açık bir
 adreste ister; adres **https://kerteriz.aripd.com/privacy/**. Console'da
 `App content → Privacy policy` alanına yazılan şey budur.
