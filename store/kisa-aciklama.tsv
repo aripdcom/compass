@@ -1,0 +1,48 @@
+# Play mağaza listesindeki kısa açıklama, yirmi sekiz dilde.
+#
+# Biçim: dil kodu, sekme, metin. Play'in sınırı 80 karakter; en uzunu burada
+# 80. `tools/check-translations.py` her satırı sayıyor.
+#
+# Bunlar makine çevirisi DEĞİL. Her terim uygulamanın kendi yayımlanmış
+# metinlerinden alındı — tanıtım sayfasının çevirileri (docs/assets/i18n.js:
+# tagline, f1t, f2t, f5t, heroNote) ve gerektiğinde values-*/strings.xml.
+# Sebebi denizcilik terimlerinin dile göre yerleşik karşılıkları olması:
+# "great circle" Lehçede Ortodroma, Fransızcada Orthodromie; genel amaçlı bir
+# çevirici bunları birebir çevirir ve mağazada yazan kelime uygulamanın içinde
+# yazandan farklı olur.
+#
+# Almanca ve Bulgarcada "gelişmiş" sıfatı seksen karaktere sığmadı. Sıfat
+# yerine "izleme yok" tutuldu: ayırt edici olan o, sıfat zaten başlıkta
+# geçiyor.
+#
+# Dini motifler mağaza metinlerinde geçmez (17. bölüm); "sabit yerler" terimi
+# İngilizcede uzunluk için "bearings"e indi, diğer dillerde de öyle.
+
+en	An advanced compass: true north, bearings, the sun and the moon. No tracking.
+bg	Компас: географски север, азимути, Слънце и Луна. Без проследяване.
+cs	Pokročilý kompas: zeměpisný sever, azimuty, Slunce a Měsíc. Bez sledování.
+da	Avanceret kompas: retvisende nord, pejlinger, Solen og Månen. Ingen sporing.
+de	Kompass: Geografisch Nord, Peilungen, Sonne und Mond. Kein Tracking.
+el	Προηγμένη πυξίδα: αληθής βορράς, αζιμούθια, Ήλιος, Σελήνη. Χωρίς παρακολούθηση.
+es	Brújula avanzada: norte geográfico, rumbos, el Sol y la Luna. Sin rastreo.
+et	Täiustatud kompass: geograafiline põhi, suunad, Päike ja Kuu. Jälgimiseta.
+fi	Kehittynyt kompassi: tosipohjoinen, suuntimat, Aurinko ja Kuu. Ei seurantaa.
+fr	Boussole avancée : nord géographique, azimuts, Soleil et Lune. Sans pistage.
+ga	Compás ardleibhéil: fíorthuaisceart, treonna, Grian is Gealach. Gan rianú.
+hr	Napredni kompas: zemljopisni sjever, azimuti, Sunce i Mjesec. Bez praćenja.
+hu	Fejlett iránytű: földrajzi észak, irányok, a Nap és a Hold. Követés nélkül.
+is	Fullkominn áttaviti: réttvísandi norður, stefnur, sól og tungl. Engin rakning.
+it	Bussola avanzata: nord geografico, rilevamenti, Sole e Luna. Senza tracciamento.
+lt	Pažangus kompasas: tikroji šiaurė, azimutai, Saulė ir Mėnulis. Be sekimo.
+lv	Uzlabots kompass: ģeogrāfiskie ziemeļi, azimuti, Saule, Mēness. Bez izsekošanas.
+mt	Boxxla avvanzata: it-tramuntana vera, direzzjonijiet, Xemx u Qamar. Bla traċċar.
+nb	Avansert kompass: geografisk nord, peilinger, sola og månen. Ingen sporing.
+nl	Geavanceerd kompas: geografisch noorden, peilingen, zon en maan. Geen tracking.
+nn	Avansert kompass: geografisk nord, peilingar, sola og månen. Utan sporing.
+pl	Zaawansowany kompas: północ geograficzna, azymuty, Słońce i Księżyc. Nie śledzi.
+pt	Bússola avançada: norte geográfico, rumos, o Sol e a Lua. Sem rastreio.
+ro	Busolă avansată: nordul geografic, azimuturi, Soarele și Luna. Fără urmărire.
+sk	Pokročilý kompas: zemepisný sever, azimuty, Slnko a Mesiac. Bez sledovania.
+sl	Napredni kompas: geografski sever, azimuti, Sonce in Luna. Brez sledenja.
+sv	Avancerad kompass: geografisk nord, bäringar, sol och måne. Ingen spårning.
+tr	Gelişmiş bir pusula: gerçek kuzey, sabit yerlere yön, Güneş ve Ay. İzleme yok.

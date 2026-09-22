@@ -13,6 +13,11 @@ Uygulama yirmi sekiz dilde ve metinler elle tutuluyor; gözden kaçması en kola
 
 Üçü de derlemeyi kırmaz, testlerde de görünmez. Bu betik CI'da koşar.
 
+Dördüncü olarak `store/kisa-aciklama.tsv` denetleniyor: mağaza listesindeki
+kısa açıklama uygulamanın dışında yaşıyor ama aynı dil kümesini taşımalı ve
+Play'in seksen karakter sınırına uymalı. Yeni bir dil eklenip orası
+unutulursa mağaza o dilde İngilizce görünür, ve bunu kimse fark etmez.
+
     python3 tools/check-translations.py
 
 Bir sorun bulursa çıkış kodu 1 olur ve hepsini tek seferde listeler.
@@ -25,7 +30,14 @@ import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-RES = Path(__file__).resolve().parent.parent / "app" / "src" / "main" / "res"
+ROOT = Path(__file__).resolve().parent.parent
+RES = ROOT / "app" / "src" / "main" / "res"
+
+# Play'in kısa açıklama sınırı. Console fazlasını kabul etmiyor, ama hatayı
+# ancak yapıştırma anında veriyor — yirmi sekiz dili tek tek denemek yerine
+# burada sayılıyor.
+SHORT_LIMIT = 80
+STORE_SHORT = ROOT / "store" / "kisa-aciklama.tsv"
 
 # %1$s, %2$d, %% ... — sıraları ve türleri diller arasında birebir aynı olmalı.
 FORMAT = re.compile(r"%(?:%|(\d+)\$([a-zA-Z]))")
@@ -47,6 +59,40 @@ def read(path: Path) -> tuple[dict[str, str], dict[str, list[str]]]:
         for e in root.findall("string-array")
     }
     return strings, arrays
+
+
+def check_store_short(expected: set[str], problems: list[str]) -> int:
+    """Mağaza kısa açıklamaları: diller tutuyor mu, hiçbiri sınırı aşıyor mu.
+
+    Dosya uygulamanın metinlerinden ayrı yaşıyor ama aynı dil kümesini
+    taşımalı: yeni bir dil eklenip burası unutulursa mağaza o dilde İngilizce
+    görünür ve bunu kimse fark etmez.
+    """
+    if not STORE_SHORT.exists():
+        problems.append(f"{STORE_SHORT.relative_to(ROOT)} yok")
+        return 0
+
+    found: set[str] = set()
+    for number, line in enumerate(STORE_SHORT.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip() or line.startswith("#"):
+            continue
+        if "\t" not in line:
+            problems.append(f"kisa-aciklama {number}. satırda sekme yok")
+            continue
+        locale, text = line.split("\t", 1)
+        if locale in found:
+            problems.append(f"kisa-aciklama: `{locale}` iki kez geçiyor")
+        found.add(locale)
+        if len(text) > SHORT_LIMIT:
+            problems.append(
+                f"kisa-aciklama: `{locale}` {len(text)} karakter, sınır {SHORT_LIMIT}"
+            )
+
+    for locale in sorted(expected - found):
+        problems.append(f"kisa-aciklama: `{locale}` eksik")
+    for locale in sorted(found - expected):
+        problems.append(f"kisa-aciklama: `{locale}` fazla — uygulamada böyle bir dil yok")
+    return len(found)
 
 
 def main() -> int:
@@ -116,6 +162,8 @@ def main() -> int:
     for locale in sorted(present - listed):
         problems.append(f"locales_config: `{locale}` çevirisi var ama listede yok")
 
+    store_count = check_store_short(present, problems)
+
     if problems:
         print(f"{len(problems)} sorun:", file=sys.stderr)
         for problem in problems:
@@ -124,7 +172,8 @@ def main() -> int:
 
     print(
         f"{len(locales) + 1} dil, {len(base_strings)} metin, "
-        f"{len(base_arrays)} dizi — hepsi tutuyor."
+        f"{len(base_arrays)} dizi, {store_count} mağaza kısa açıklaması "
+        f"— hepsi tutuyor."
     )
     return 0
 
