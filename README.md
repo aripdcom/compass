@@ -1506,8 +1506,23 @@ reklamlı-ücretsiz ve bu uygulamayı ayıran şey 0,99 €'nun küçümsediği 
 reklam yok, izleme yok, internet izni yok.
 
 Türkiye fiyatı otomatik çevirime bırakılmamalı, Console'dan elle girilmeli:
-Play'in Türkiye alt sınırı dolar karşılığının çok altında. Google'ın payı
-indirimli katmanda yıllık ilk 1 M$ için %15.
+Play'in Türkiye alt sınırı dolar karşılığının çok altında.
+
+**Google'ın payı: varsayılan %30, indirimli katmanda yıllık ilk 1 M$ için %15
+— ama indirim kendiliğinden gelmiyor, kaydolmak gerekiyor.** İki adımı var,
+ikisi de `Developer account → Manage account group` altında: bir hesap grubu
+oluşturmak (aynı tüzel kişiliğin başka Play hesapları varsa onları bildirmek)
+ve hizmet bedeli şartlarını kabul etmek. Birincisini yapıp ikincisini atlamak
+kaydı tamamlamıyor.
+
+**Zamanlaması geri alınamaz:** indirim kaydın tamamlandığı tarihten işliyor,
+geriye dönmüyor. Yani kayıt **ilk satıştan önce** bitmeli, yoksa o satışlar
+%30'dan kesilir ve sonradan düzeltilemez. 1,99 €'da fark satış başına otuz
+sent, yani gelirin yaklaşık beşte biri.
+
+Başka hesap sorusuna doğru cevap vermenin bedeli yok: "evet" demek indirimi
+kaybettirmiyor, yalnızca 1 M$ tavanını hesaplar arasında paylaştırıyor.
+Tavanın bu uygulama için pratik bir anlamı zaten yok.
 
 **Ücretsiz mi, ücretli mi.** Bu tek yönlü bir kapı: ücretsiz yayımlanan bir
 uygulama sonradan ücretli yapılamaz, tersi yapılabilir. Ücretli başlamak bu
